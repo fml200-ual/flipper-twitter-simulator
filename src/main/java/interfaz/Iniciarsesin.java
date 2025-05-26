@@ -1,9 +1,9 @@
 package interfaz;
 
 public class Iniciarsesin {
-	private event _mensajedeerroriniciosesin;
-	private event _contraseaolvidada;
-	private event _reenviarcorreo;
+	// private event _mensajedeerroriniciosesin;
+	// private event _contraseaolvidada;
+	// private event _reenviarcorreo;
 	public ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado;
 	public Registrarse _registrarse;
 	public ACT05Google _aCT05Google;

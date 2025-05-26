@@ -1,7 +1,7 @@
 package interfaz;
 
 public class Registrarse {
-	private event _mensajedeerrorregistro;
+	// private event _mensajedeerrorregistro;
 	public ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado;
 	public Iniciarsesin _iniciarsesin;
 	public Introducircdigodeverificacin _introducircdigodeverificacin;

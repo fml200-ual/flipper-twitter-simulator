@@ -1,9 +1,9 @@
 package interfaz;
 
 public class Verperfiladministrador extends Verperfil {
-	private event _eliminarperfil;
-	private event _banearusuario;
-	private event _detallarlongitudbaneo;
+	// private event _eliminarperfil;
+	// private event _banearusuario;
+	// private event _detallarlongitudbaneo;
 	public Vertweetadministrador _vertweetadministrador;
 	public Verretweetadministrador _verretweetadministrador;
 

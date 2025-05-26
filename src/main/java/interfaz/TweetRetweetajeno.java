@@ -1,8 +1,8 @@
 package interfaz;
 
 public class TweetRetweetajeno extends TweetRetweetregistrado {
-	private event _darmegusta;
-	private event _eliminarmegusta;
+	// private event _darmegusta;
+	// private event _eliminarmegusta;
 	public Darretweet _darretweet;
 	public Escribircomentario _escribircomentario;
 
