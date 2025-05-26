@@ -1,0 +1,5 @@
+package interfaz;
+
+public class Vercomentarioadministrador extends Publicacinvistaadministrador {
+	public Listadecomentariosadministrador_item _listadecomentariosadministrador;
+}

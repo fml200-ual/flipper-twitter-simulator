@@ -1,0 +1,6 @@
+package interfaz;
+
+public class Perspectivabloqueado {
+	public Listafijadeusuariosregistrado _listafijadeusuariosregistrado;
+	public Verlistaampliadadeusuariosregistrado _verlistaampliadadeusuariosregistrado;
+}
