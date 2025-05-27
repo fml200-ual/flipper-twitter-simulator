@@ -2,6 +2,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Debug using Hotswap Agent",
+            "request": "launch",
+            "javaExec": "/home/vscode/.vaadin/jdk/jbrsdk-21.0.7-linux-x64-b992.24/bin/java",
+            "mainClass": "org.vaadin.example.Application",
+            "vmArgs": "-XX:+AllowEnhancedClassRedefinition -XX:+ClassUnloading -XX:HotswapAgent=fatjar"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-Application<twitter-grupo-20>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
