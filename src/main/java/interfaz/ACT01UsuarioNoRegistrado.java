@@ -1,6 +1,8 @@
 package interfaz;
 
-public class ACT01UsuarioNoRegistrado {
+import vistas.VistaAct01usuarionoregistrado;
+
+public class ACT01UsuarioNoRegistrado extends VistaAct01usuarionoregistrado {
 	public IniciarsesinconGoogle _iniciarsesinconGoogle;
 	public Registrarse _registrarse;
 	public Listafijadeusuariosnoregistrado _listafijadeusuariosnoregistrado;

@@ -1,7 +1,8 @@
-import {Flow} from '@vaadin/flow-frontend/Flow';
-import {Router} from '@vaadin/router';
+import { Flow } from '@vaadin/flow-frontend/Flow';
+import { Router } from '@vaadin/router';
+import './views/vista-act01usuarionoregistrado';
 
-const {serverSideRoutes} = new Flow({
+const { serverSideRoutes } = new Flow({
   imports: () => import('../target/frontend/generated-flow-imports')
 });
 

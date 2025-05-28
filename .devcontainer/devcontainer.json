@@ -12,19 +12,25 @@
       "installGradle": "false"
     },
     "ghcr.io/devcontainers/features/node:1": {
-      "version": "16",
+      "version": "18.12",
       "nodeGypDependencies": true
     }
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [8080]
+  "forwardPorts": [8080],
 
   // Use 'postCreateCommand' to run commands after the container is created.
   //   "postCreateCommand": "java -version",
 
   // Configure tool-specific properties.
-  //   "customizations": {}
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "vaadin.vaadin-vscode"
+        ]
+      }
+    }
 
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
   // "remoteUser": "root"
