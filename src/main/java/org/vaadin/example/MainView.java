@@ -12,6 +12,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
 import interfaz.ACT01UsuarioNoRegistrado;
+import interfaz.ACT02UsuarioRegistrado;
+import interfaz.ACT03Administrador;
 import interfaz.Test;
 
 /**
@@ -44,7 +46,7 @@ public class MainView extends VerticalLayout {
         // Use custom CSS classes to apply styling. This is defined in
         // shared-styles.css.
         // addClassName("centered-content");
-        Test test = new Test();
+    	ACT03Administrador test = new ACT03Administrador(null);
         add(test);
     }
 

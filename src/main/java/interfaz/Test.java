@@ -1,10 +1,12 @@
 package interfaz;
 
-public class Test extends ACT01UsuarioNoRegistrado {
+import vistas.VistaAct06sesininiciada;
 
-    public Test() {
-        // Constructor vacío para inicializar la clase
-        // Aquí podrías agregar lógica de inicialización si es necesario
-    }
+public class Test extends ACT02UsuarioRegistrado {
 
+	public Test(org.vaadin.example.MainView mainView) {
+		super(mainView);
+	}
+
+   
 }
