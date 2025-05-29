@@ -27,10 +27,6 @@ export class VistaListadenotificaciones extends LitElement {
     // Instancias de vista-listadenotificaciones_item codificadas directamente en el HTML
     return html`
 <vaadin-vertical-layout id="mainContainer">
- <vista-listadenotificaciones_item></vista-listadenotificaciones_item>
- <vista-listadenotificaciones_item></vista-listadenotificaciones_item>
- <vista-listadenotificaciones_item></vista-listadenotificaciones_item>
- <vista-listadenotificaciones_item></vista-listadenotificaciones_item>
 </vaadin-vertical-layout>
 `;
   }

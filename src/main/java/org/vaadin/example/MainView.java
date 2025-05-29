@@ -21,6 +21,10 @@ import vistas.VistaListadehashtags;
 import vistas.VistaListadehashtags_item;
 import vistas.VistaListadenotificaciones;
 import vistas.VistaListadenotificaciones_item;
+import vistas.VistaListadetweetsyretweets;
+import vistas.VistaListadetweetsyretweets_item;
+import vistas.VistaListadeusuarios;
+import vistas.VistaListadeusuarios_item;
 
 /**
  * A sample Vaadin view class.
@@ -45,23 +49,17 @@ public class MainView extends VerticalLayout {
      * Build the initial UI state for the user accessing the application.
      *
      * @param service
-     *                The message service. Automatically injected Spring managed
+     *                The message service. Automatically injected Spring managed  
      *                bean.
      */
     public MainView(@Autowired GreetService service) {
         // Use custom CSS classes to apply styling. This is defined in
         // shared-styles.css.
-        // addClassName("centered-content");
+        // addClassName("centered-content"); 
 //    	Test test = new Test();
 //        add(test);
     	
-    	VistaListadecomentarios list = new VistaListadecomentarios();
-    	VistaListadecomentarios_item it1 = new VistaListadecomentarios_item();
-    	VistaListadecomentarios_item it2 = new VistaListadecomentarios_item();
-    	list.getContentLayout().add(new VistaListadehashtags_item());
-    	list.getContentLayout().add(new VistaListadehashtags_item());
-    	list.getContentLayout().add(new VistaListadehashtags_item());
-    	add(new VistaListadenotificaciones());
+    	add(new VistaListadeusuarios());	
     }
 
 }
