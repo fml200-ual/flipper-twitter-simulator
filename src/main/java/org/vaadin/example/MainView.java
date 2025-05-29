@@ -17,6 +17,8 @@ import interfaz.ACT03Administrador;
 import interfaz.Test;
 import vistas.VistaListadecomentarios;
 import vistas.VistaListadecomentarios_item;
+import vistas.VistaListadehashtags;
+import vistas.VistaListadehashtags_item;
 
 /**
  * A sample Vaadin view class.
@@ -54,10 +56,10 @@ public class MainView extends VerticalLayout {
     	VistaListadecomentarios list = new VistaListadecomentarios();
     	VistaListadecomentarios_item it1 = new VistaListadecomentarios_item();
     	VistaListadecomentarios_item it2 = new VistaListadecomentarios_item();
-    	list.getContentLayout().add(new VistaListadecomentarios_item());
-    	list.getContentLayout().add(new VistaListadecomentarios_item());
-    	list.getContentLayout().add(new VistaListadecomentarios_item());
-    	add(list);
+    	list.getContentLayout().add(new VistaListadehashtags_item());
+    	list.getContentLayout().add(new VistaListadehashtags_item());
+    	list.getContentLayout().add(new VistaListadehashtags_item());
+    	add(new VistaListadehashtags());
     }
 
 }

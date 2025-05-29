@@ -16,7 +16,7 @@ export class VistaListadecomentarios extends LitElement {
   render() {
     return html`
 <vaadin-vertical-layout id="mainContainer" theme="" style="width: 100%; height: 100%;">
- <vaadin-horizontal-layout id="contentLayout" style="width: 100%; height: 100%; flex-direction: column;"></vaadin-horizontal-layout>
+ <vaadin-horizontal-layout id="contentLayout" style="width: 100%; height: 100%; flex-direction: column; align-items: stretch;"></vaadin-horizontal-layout>
 </vaadin-vertical-layout>
 `;
   }
