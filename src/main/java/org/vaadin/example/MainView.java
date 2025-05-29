@@ -15,6 +15,8 @@ import interfaz.ACT01UsuarioNoRegistrado;
 import interfaz.ACT02UsuarioRegistrado;
 import interfaz.ACT03Administrador;
 import interfaz.Test;
+import vistas.VistaListadecomentarios;
+import vistas.VistaListadecomentarios_item;
 
 /**
  * A sample Vaadin view class.
@@ -46,8 +48,16 @@ public class MainView extends VerticalLayout {
         // Use custom CSS classes to apply styling. This is defined in
         // shared-styles.css.
         // addClassName("centered-content");
-    	ACT03Administrador test = new ACT03Administrador(null);
-        add(test);
+//    	Test test = new Test();
+//        add(test);
+    	
+    	VistaListadecomentarios list = new VistaListadecomentarios();
+    	VistaListadecomentarios_item it1 = new VistaListadecomentarios_item();
+    	VistaListadecomentarios_item it2 = new VistaListadecomentarios_item();
+    	list.getContentLayout().add(new VistaListadecomentarios_item());
+    	list.getContentLayout().add(new VistaListadecomentarios_item());
+    	list.getContentLayout().add(new VistaListadecomentarios_item());
+    	add(list);
     }
 
 }
