@@ -19,6 +19,8 @@ import vistas.VistaListadecomentarios;
 import vistas.VistaListadecomentarios_item;
 import vistas.VistaListadehashtags;
 import vistas.VistaListadehashtags_item;
+import vistas.VistaListadenotificaciones;
+import vistas.VistaListadenotificaciones_item;
 
 /**
  * A sample Vaadin view class.
@@ -59,7 +61,7 @@ public class MainView extends VerticalLayout {
     	list.getContentLayout().add(new VistaListadehashtags_item());
     	list.getContentLayout().add(new VistaListadehashtags_item());
     	list.getContentLayout().add(new VistaListadehashtags_item());
-    	add(new VistaListadehashtags());
+    	add(new VistaListadenotificaciones());
     }
 
 }
