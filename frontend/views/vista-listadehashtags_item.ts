@@ -3,16 +3,18 @@ import '@vaadin/icons';
 
 @customElement('vista-listadehashtags_item')
 export class VistaListadehashtags_item extends LitElement {
- static get styles() {
+  static get styles() {
     return css`
       :host {
         display: block;
         width: 100%;
+        height: 100%; /* ¡CLAVE AÑADIDA! Asegura que el host del componente ocupe el 100% de la altura de su padre. */
         box-sizing: border-box;
       }
 
       #hashtagContainer {
         width: 100%;
+        height: 100%; /* ¡CLAVE AÑADIDA! Asegura que el contenedor interno ocupe el 100% del espacio del host. */
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -21,7 +23,7 @@ export class VistaListadehashtags_item extends LitElement {
         border-radius: 8px;
         padding: 12px 16px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        margin-bottom: 10px;
+        margin-bottom: 10px; /* Si necesitas espacio entre ítems, puedes ajustarlo. Si cada ítem debe llenar su espacio, esto podría no ser necesario. */
       }
 
       #hashtagText {
@@ -37,7 +39,7 @@ export class VistaListadehashtags_item extends LitElement {
         flex-shrink: 0;
       }
 
-      vaadin-icon { /* Estilos para el icono */
+      vaadin-icon {
         width: 24px;
         height: 24px;
         color: black;
@@ -49,17 +51,12 @@ export class VistaListadehashtags_item extends LitElement {
 
   render() {
     return html`
-<vaadin-horizontal-layout id="hashtagContainer" style="justify-content: center;">
- <label id="hashtagText">#hashtag1</label>
- <label id="postCount">180k</label>
- <vaadin-icon icon="vaadin:comment" id="iconComment" size="16"></vaadin-icon>
-</vaadin-horizontal-layout>
-`;
+      <vaadin-horizontal-layout id="hashtagContainer" style="justify-content: center;">
+        <label id="hashtagText">#hashtag1</label>
+        <label id="postCount">180k</label>
+        <vaadin-icon icon="vaadin:comment" id="iconComment" size="16"></vaadin-icon>
+      </vaadin-horizontal-layout>
+    `;
   }
-
-  // Si estás integrando con Vaadin Flow y quieres que los estilos se apliquen
-  // dentro del Shadow DOM para encapsulamiento, ELIMINA o comenta esta línea:
-  // createRenderRoot() {
-  // return this;
-  // }
+  // createRenderRoot() { return this; } // Mantén esta línea comentada para usar Shadow DOM
 }

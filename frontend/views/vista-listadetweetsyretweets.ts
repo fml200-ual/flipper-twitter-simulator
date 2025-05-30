@@ -7,6 +7,7 @@ export class VistaListadetweetsyretweets extends LitElement {
       :host {
           display: block;
           height: 100%;
+    	  width: 100%; /* Asegura que el host también ocupe el 100% del ancho. */
           padding: 10px; /* Un poco de padding alrededor de la lista */
           box-sizing: border-box;
           background-color: #f0f0f0; /* Fondo claro para ver la lista */
@@ -30,6 +31,6 @@ export class VistaListadetweetsyretweets extends LitElement {
   
   // ¡Recuerda comentar o eliminar esta línea para que los estilos funcionen!
   // createRenderRoot() {
-  //   return this;
+  // return this;
   // }
 }

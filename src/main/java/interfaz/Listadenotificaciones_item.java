@@ -1,9 +1,16 @@
 package interfaz;
 
-public class Listadenotificaciones_item {
+import vistas.VistaListadenotificaciones_item;
+
+public class Listadenotificaciones_item extends VistaListadenotificaciones_item{
 	// private event _eliminarnotificacin;
 	// private event _mostrarmsnotificaciones;
 	public Listadenotificaciones _listadenotificaciones;
+
+	public Listadenotificaciones_item(Listadenotificaciones _listadenotificaciones) {
+		super();
+		this._listadenotificaciones = _listadenotificaciones;
+	}
 
 	public void Eliminarnotificacin() {
 		throw new UnsupportedOperationException();

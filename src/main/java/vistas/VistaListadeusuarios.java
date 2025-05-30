@@ -10,19 +10,19 @@ import com.vaadin.flow.component.template.Id;
 @JsModule("./views/vista-listadeusuarios.ts")
 public class VistaListadeusuarios extends LitTemplate {
 
-    @Id("listaUsuariosContainer")
-	private Element listaUsuariosContainer;
+	@Id("mainContainer")
+	private Element mainContainer;
 
 	public VistaListadeusuarios() {
-        // You can initialise any data required for the connected UI components here.
-    }
-
-	public Element getListaUsuariosContainer() {
-		return listaUsuariosContainer;
+		// You can initialise any data required for the connected UI components here.
 	}
 
-	public void setListaUsuariosContainer(Element listaUsuariosContainer) {
-		this.listaUsuariosContainer = listaUsuariosContainer;
+	public Element getMainContainer() {
+		return mainContainer;
+	}
+
+	public void setMainContainer(Element mainContainer) {
+		this.mainContainer = mainContainer;
 	}
 
 }

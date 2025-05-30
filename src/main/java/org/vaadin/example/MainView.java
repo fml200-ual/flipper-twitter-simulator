@@ -14,7 +14,27 @@ import com.vaadin.flow.router.Route;
 import interfaz.ACT01UsuarioNoRegistrado;
 import interfaz.ACT02UsuarioRegistrado;
 import interfaz.ACT03Administrador;
+import interfaz.Agrupartweets;
+import interfaz.Agrupartweetsgustados;
+import interfaz.Listadecomentarios_item;
+import interfaz.Listadecomentariosadministrador;
+import interfaz.Listadecomentariosadministrador_item;
+import interfaz.Listadecomentariosnoregistrado;
+import interfaz.Listadecomentariosnoregistrado_item;
+import interfaz.Listadehashtags;
+import interfaz.Listadehashtags_item;
+import interfaz.Listadenotificaciones;
+import interfaz.Listadenotificaciones_item;
+import interfaz.Listadetweetsyretweets;
+import interfaz.Listadetweetsyretweetsadministrador;
+import interfaz.Listadetweetsyretweetsadministrador_item;
+import interfaz.Listadetweetsyretweetsnoregistrado;
+import interfaz.Listadetweetsyretweetsnoregistrado_item;
+import interfaz.Listadeusuarios;
+import interfaz.Listadeusuarios_item;
 import interfaz.Test;
+import interfaz.Verlistaampliadadeusuarios;
+import interfaz.Vernotificacionesderetweets;
 import vistas.VistaListadecomentarios;
 import vistas.VistaListadecomentarios_item;
 import vistas.VistaListadehashtags;
@@ -48,18 +68,23 @@ public class MainView extends VerticalLayout {
      * <p>
      * Build the initial UI state for the user accessing the application.
      *
-     * @param service
+     * @param service 
      *                The message service. Automatically injected Spring managed  
      *                bean.
      */
     public MainView(@Autowired GreetService service) {
         // Use custom CSS classes to apply styling. This is defined in
-        // shared-styles.css.
+        // shared-styles.css. 
         // addClassName("centered-content"); 
 //    	Test test = new Test();
 //        add(test);
+    	Listadeusuarios test = new Listadeusuarios((Verlistaampliadadeusuarios) null);
+    	test.getMainContainer().as(VerticalLayout.class).add(new Listadeusuarios_item(null));
+    	test.getMainContainer().as(VerticalLayout.class).add(new Listadeusuarios_item(null));
+    	test.getMainContainer().as(VerticalLayout.class).add(new Listadeusuarios_item(null));
+    	test.getMainContainer().as(VerticalLayout.class).add(new Listadeusuarios_item(null));
     	
-    	add(new VistaListadeusuarios());	
+    	add(test);
     }
 
 }
