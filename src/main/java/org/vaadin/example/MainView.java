@@ -6,19 +6,6 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
-import interfaz.ACT01UsuarioNoRegistrado;
-import interfaz.Listadehashtags;
-import interfaz.Listafijadetweetsadministrador;
-import interfaz.Listafijadeusuarios;
-import interfaz.Listafijadeusuariosnoregistrado;
-import interfaz.Listafijadeusuariosregistrado;
-import interfaz.Perspectivabloqueado;
-import interfaz.Publicacinvistaadministrador;
-import interfaz.Registrarse;
-import interfaz.Restablecercontrasea;
-import interfaz.Vercomentarioadministrador;
-import interfaz.Verlistaampliadadeusuariosregistrado;
-import interfaz.Verretweetadministrador;
 import interfaz.Vertweetadministrador;
 import vistas.VistaPublicacinvistaadministrador;
 
