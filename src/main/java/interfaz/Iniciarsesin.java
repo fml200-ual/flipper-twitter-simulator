@@ -1,6 +1,8 @@
 package interfaz;
 
-public class Iniciarsesin {
+import vistas.VistaIniciarsesin;
+
+public class Iniciarsesin extends VistaIniciarsesin{
 	// private event _mensajedeerroriniciosesin;
 	// private event _contraseaolvidada;
 	// private event _reenviarcorreo;
@@ -9,6 +11,11 @@ public class Iniciarsesin {
 	public ACT05Google _aCT05Google;
 	public IniciarsesinconGoogle _iniciarsesinconGoogle;
 	public ACT04SistemadeCorreo _aCT04SistemadeCorreo;
+
+	public Iniciarsesin(ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado) {
+		super();
+		this._aCT01UsuarioNoRegistrado = _aCT01UsuarioNoRegistrado;
+	}
 
 	public void Validardatos() {
 		throw new UnsupportedOperationException();

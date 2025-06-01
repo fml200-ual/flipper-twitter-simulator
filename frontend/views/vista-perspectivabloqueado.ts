@@ -10,12 +10,17 @@ export class VistaPerspectivabloqueado extends LitElement {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
-        height: 100%;
-        min-height: 100vh; /* Asegura que el host ocupe al menos el 100% de la altura del viewport */
+        width: 100vw; /* Ocupa todo el ancho del viewport */
+        height: 100vh; /* Ocupa toda la altura del viewport */
         background-color: #000; /* Fondo negro */
         font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
         box-sizing: border-box;
+        margin: 0; /* Elimina márgenes */
+        padding: 0; /* Elimina padding */
+        position: fixed; /* Fija la posición para ocupar toda la ventana */
+        top: 0;
+        left: 0;
+        overflow-y: auto; /* Permite scroll si es necesario */
       }
 
       #profileHeader {
@@ -25,6 +30,7 @@ export class VistaPerspectivabloqueado extends LitElement {
         align-items: center;
         position: relative; /* Para posicionar elementos absolutos dentro */
         box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3); /* Mejora: Sombra sutil para el encabezado */
+        flex-shrink: 0; /* Evita que se comprima */
       }
 
       #bannerImage {
@@ -61,6 +67,7 @@ export class VistaPerspectivabloqueado extends LitElement {
         color: #fff;
         /* CAMBIO: Ajusta el margen superior para que el texto se alinee correctamente debajo de la imagen de perfil */
         margin-top: calc(100px - 75px + var(--lumo-space-s)); /* (Altura img - top img) + espacio */
+        flex-shrink: 0; /* Evita que se comprima */
       }
 
       #usernameText {
@@ -89,6 +96,7 @@ export class VistaPerspectivabloqueado extends LitElement {
         box-sizing: border-box;
         box-shadow: 0 0 25px rgba(0, 255, 255, 0.5); /* Mejora: Mayor brillo para el mensaje */
         text-shadow: 0 0 5px rgba(0, 255, 255, 0.7); /* Mejora: Sombra de texto para el mensaje */
+        flex-shrink: 0; /* Evita que se comprima */
       }
 
       #embarrassingText, #blockedText {
@@ -100,7 +108,9 @@ export class VistaPerspectivabloqueado extends LitElement {
         width: 150px; /* Ajusta el tamaño del pájaro */
         height: auto;
         margin-top: var(--lumo-space-xl); /* Espacio entre el mensaje y el pájaro */
+        margin-bottom: var(--lumo-space-xl); /* Espacio inferior */
         filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.7)); /* Mejora: Efecto de brillo alrededor del pájaro */
+        flex-shrink: 0; /* Evita que se comprima */
       }
 
       /* Ajustes responsivos */
@@ -156,5 +166,4 @@ export class VistaPerspectivabloqueado extends LitElement {
       <img id="birdLogoImage" src="./img/imagenIcon.png" alt="Pájaro">
     `;
   }
-
 }

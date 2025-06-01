@@ -1,4 +1,6 @@
 package interfaz;
 
-public class Listafijadeusuarios {
+import vistas.VistaListafijadeusuarios;
+
+public class Listafijadeusuarios extends VistaListafijadeusuarios{
 }

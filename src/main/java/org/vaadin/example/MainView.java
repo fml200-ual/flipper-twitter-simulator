@@ -6,17 +6,21 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
-import vistas.VistaAgrupartweetsgustados;
-import vistas.VistaEditarcuenta;
-import vistas.VistaEscribirgeneral;
-import vistas.VistaIniciarsesin;
-import vistas.VistaIntroducircdigodeverificacin;
-import vistas.VistaListafijadehashtags;
-import vistas.VistaListafijadetweetsadministrador;
-import vistas.VistaListafijadeusuarios;
-import vistas.VistaPerspectivabloqueado;
-import vistas.VistaRegistrarse;
-import vistas.VistaRestablecercontrasea;
+import interfaz.ACT01UsuarioNoRegistrado;
+import interfaz.Listadehashtags;
+import interfaz.Listafijadetweetsadministrador;
+import interfaz.Listafijadeusuarios;
+import interfaz.Listafijadeusuariosnoregistrado;
+import interfaz.Listafijadeusuariosregistrado;
+import interfaz.Perspectivabloqueado;
+import interfaz.Publicacinvistaadministrador;
+import interfaz.Registrarse;
+import interfaz.Restablecercontrasea;
+import interfaz.Vercomentarioadministrador;
+import interfaz.Verlistaampliadadeusuariosregistrado;
+import interfaz.Verretweetadministrador;
+import interfaz.Vertweetadministrador;
+import vistas.VistaPublicacinvistaadministrador;
 
 /**
  * A sample Vaadin view class.
@@ -36,7 +40,7 @@ import vistas.VistaRestablecercontrasea;
 public class MainView extends VerticalLayout {
 
 	/**
-	 * Construct a new Vaadin view. 
+	 * Construct a new Vaadin view.
 	 * <p>
 	 * Build the initial UI state for the user accessing the application.
 	 *
@@ -47,10 +51,9 @@ public class MainView extends VerticalLayout {
 		// Use custom CSS classes to apply styling. This is defined in
 		// shared-styles.css.
 		// addClassName("centered-content");
-//    	Test test = new Test(); 
-//      add(test);
 
-		add(new VistaRestablecercontrasea());
+		Vertweetadministrador test = new Vertweetadministrador(null);
+		add(test);
 	}
 
 }

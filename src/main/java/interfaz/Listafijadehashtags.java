@@ -1,4 +1,6 @@
 package interfaz;
 
-public class Listafijadehashtags {
+import vistas.VistaListafijadehashtags;
+
+public class Listafijadehashtags extends VistaListafijadehashtags {
 }

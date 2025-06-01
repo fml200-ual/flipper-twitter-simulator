@@ -5,10 +5,15 @@ export class VistaAgrupartweetsgustados extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: block;
-        width: 100%; /* El host ocupa todo el ancho de su padre */
-        height: 100%; /* El host ocupa todo el alto de su padre */
-        box-sizing: border-box; /* Incluye padding y border en el tamaño total */
+        display: block; /* Sigue siendo buena práctica */
+        position: fixed; /* <<-- CLAVE: Posicionamiento fijo respecto al viewport */
+        top: 0;          /* <<-- Ancla el elemento al borde superior de la ventana */
+        left: 0;         /* <<-- Ancla el elemento al borde izquierdo de la ventana */
+        right: 0;        /* <<-- Ancla el elemento al borde derecho de la ventana */
+        bottom: 0;       /* <<-- Ancla el elemento al borde inferior de la ventana */
+        /* No necesitamos width/height 100%/100vw/100vh aquí si usamos top/left/right/bottom: 0 */
+        box-sizing: border-box; /* Asegura que el padding/border no aumenten el tamaño */
+        z-index: 1;      /* Controla el orden de apilamiento (ajusta si tienes otros elementos fijos) */
       }
 
       #mainContainer {

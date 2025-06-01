@@ -1,8 +1,10 @@
 package interfaz;
 
-public class Publicacinvistaadministrador {
-	// private event _eliminarpublicacin;
+import vistas.VistaPublicacinvistaadministrador;
 
+public class Publicacinvistaadministrador extends VistaPublicacinvistaadministrador{
+	// private event _eliminarpublicacin;
+	
 	public void Eliminarpublicacin() {
 		throw new UnsupportedOperationException();
 	}

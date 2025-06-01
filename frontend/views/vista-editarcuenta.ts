@@ -10,13 +10,16 @@ export class VistaEditarcuenta extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: block;
-        width: 100%; /* Ensures the host occupies the full width of its parent */
-        height: 100%; /* Ensures the host occupies the full height of its parent */
-        box-sizing: border-box; /* Includes padding and border in the total size */
-        background-color: #000; /* Black background as in the image */
-        color: #fff; /* Default white text color */
-        font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif; /* Font from the image */
+        display: block; /* Sigue siendo buena práctica */
+        position: fixed; /* <<-- CLAVE: Posicionamiento fijo respecto al viewport */
+        top: 0;          /* <<-- Ancla el elemento al borde superior de la ventana */
+        left: 0;         /* <<-- Ancla el elemento al borde izquierdo de la ventana */
+        right: 0;        /* <<-- Ancla el elemento al borde derecho de la ventana */
+        bottom: 0;       /* <<-- Ancla el elemento al borde inferior de la ventana */
+        /* No necesitamos width/height 100%/100vw/100vh aquí si usamos top/left/right/bottom: 0 */
+        box-sizing: border-box; /* Asegura que el padding/border no aumenten el tamaño */
+        z-index: 1;      /* Controla el orden de apilamiento (ajusta si tienes otros elementos fijos) */
+    	background-color: black;
       }
 
       #mainContainer {
@@ -47,12 +50,14 @@ export class VistaEditarcuenta extends LitElement {
         margin-top: 0;
         margin-bottom: var(--lumo-space-s);
         text-align: center;
+    	color: white;
       }
 
       #subtitleText { /* Added ID */
         font-size: 1.2em; /* Font size for the subtitle */
         margin-bottom: var(--lumo-space-l);
         text-align: center;
+    	color: white;
       }
 
       /* Form fields container */
@@ -155,7 +160,7 @@ export class VistaEditarcuenta extends LitElement {
     return html`
 <vaadin-vertical-layout id="mainContainer">
  <vaadin-button theme="error" id="eliminarCuentaButton" tabindex="0">
-  Eliminar cuenta
+   Eliminar cuenta 
  </vaadin-button>
  <h2 id="profileConfigTitle">Configuración de tu perfil</h2>
  <p id="subtitleText">Introduce información en los campos que deseas cambiar</p>
@@ -165,14 +170,14 @@ export class VistaEditarcuenta extends LitElement {
   <vaadin-text-area label="Descripción" placeholder="Describe tu perfil" id="descripcionField"></vaadin-text-area>
   <vaadin-text-field label="Fondo" placeholder="URL de la imagen de fondo" id="fondoField" type="text"></vaadin-text-field>
   <div class="preview-container" id="fondoPreviewContainer">
-   <label id="fondoPreviewLabel">Previsualización :</label>
+   <label id="fondoPreviewLabel" style="color: white;">Previsualización :</label>
    <div class="image-placeholder" id="fondoImagePlaceholder">
      Fondo 
    </div>
   </div>
   <vaadin-text-field label="Foto de perfil" placeholder="URL de la foto de perfil" id="fotoPerfilField" type="text"></vaadin-text-field>
   <div class="preview-container" id="perfilPreviewContainer">
-   <label id="perfilPreviewLabel">Previsualización :</label>
+   <label id="perfilPreviewLabel" style="color: white;">Previsualización :</label>
    <div class="image-placeholder" id="perfilImagePlaceholder">
      Perfil 
    </div>
