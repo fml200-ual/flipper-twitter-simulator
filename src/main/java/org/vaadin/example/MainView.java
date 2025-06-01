@@ -8,6 +8,7 @@ import com.vaadin.flow.router.Route;
 
 import interfaz.Vertweetadministrador;
 import vistas.VistaPublicacinvistaadministrador;
+import vistas.VistaVerperfil;
 
 /**
  * A sample Vaadin view class.
@@ -22,8 +23,6 @@ import vistas.VistaPublicacinvistaadministrador;
  * that shows a greeting message in a notification.
  */
 @Route
-@CssImport("./styles/shared-styles.css")
-@CssImport(value = "./styles/vaadin-text-field-styles.css", themeFor = "vaadin-text-field")
 public class MainView extends VerticalLayout {
 
 	/**
@@ -39,7 +38,7 @@ public class MainView extends VerticalLayout {
 		// shared-styles.css.
 		// addClassName("centered-content");
 
-		Vertweetadministrador test = new Vertweetadministrador(null);
+		VistaVerperfil test = new VistaVerperfil(); 
 		add(test);
 	}
 
