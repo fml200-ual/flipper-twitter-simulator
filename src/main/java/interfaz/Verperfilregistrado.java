@@ -10,6 +10,22 @@ public class Verperfilregistrado extends Verperfil {
 	public Verlistadeseguidosregistrado _verlistadeseguidosregistrado;
 	public Verlistadeseguidoresregistrado _verlistadeseguidoresregistrado;
 
+	public Verperfilregistrado(Listafijadeusuariosregistrado _listafijadeusuariosregistrado) {
+		super();
+		this._listafijadeusuariosregistrado = _listafijadeusuariosregistrado;
+		this.getBanProfileButton().setVisible(false);
+		this.getDeleteProfileButton().setVisible(false);
+		this.getEditAccountButton().setVisible(false);
+	}
+
+	public Verperfilregistrado(Verlistaampliadadeusuariosregistrado _verlistaampliadadeusuariosregistrado) {
+		super();
+		this._verlistaampliadadeusuariosregistrado = _verlistaampliadadeusuariosregistrado;
+		this.getBanProfileButton().setVisible(false);
+		this.getDeleteProfileButton().setVisible(false);
+		this.getEditAccountButton().setVisible(false);
+	}
+
 	public void Verlistadeseguidosregistrado() {
 		throw new UnsupportedOperationException();
 	}
