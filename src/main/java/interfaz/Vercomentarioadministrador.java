@@ -6,10 +6,14 @@ public class Vercomentarioadministrador extends Publicacinvistaadministrador {
 	public Vercomentarioadministrador(Listadecomentariosadministrador_item _listadecomentariosadministrador) {
 		super();
 		this._listadecomentariosadministrador = _listadecomentariosadministrador;
-		this.getBotonAccionY().setVisible(false);
-		this.getBotonAccionComentario().setVisible(false);
-		this.getBotonEliminarInferior().setText("Eliminar comentario");
-		this.getPublicacionCitadaContenedor().setVisible(false);
+		this.getSpanContadorRetweet().setVisible(false);
+		this.getIconoRetweet().setVisible(false);
+		this.getSpanContadorComentarios().setVisible(false);
+		this.getIconoComentar().setVisible(false);
+		this.getLayoutPublicacionCitada().setVisible(false);
+		this.getContenedorComentarios().setVisible(false);
+		this.getLinkMostrarMas().setVisible(false);
+		this.getBotonEliminarTweet().setText("Eliminar comentario");
 	}
 
 }

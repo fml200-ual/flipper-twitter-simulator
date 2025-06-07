@@ -11,13 +11,20 @@ export class VistaPublicacinvistaadministrador extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: flex;
+    	display: flex;
         flex-direction: column;
-        align-items: center; /* Centra el contenido en el host */
-        font-family: Arial, sans-serif;
-        background-color: #000;
-        padding: 20px;
+        align-items: center;
+        width: 100vw; /* Ocupa todo el ancho del viewport */
+        height: 100vh; /* Ocupa toda la altura del viewport */
+        background-color: #000; /* Fondo negro */
+        font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
         box-sizing: border-box;
+        margin: 0; /* Elimina márgenes */
+        padding: 20px; /* Elimina padding */
+        position: fixed; /* Fija la posición para ocupar toda la ventana */
+        top: 0;
+        left: 0;
+        overflow-y: auto; /* Permite scroll si es necesario */
       }
 
       .contenedor-principal {

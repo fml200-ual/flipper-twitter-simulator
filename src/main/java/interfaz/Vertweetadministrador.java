@@ -7,6 +7,7 @@ public class Vertweetadministrador extends TweetRetwetadministrador {
 	public Vertweetadministrador(Listadetweetsyretweetsadministrador_item _listadetweetsyretweetsadministrador) {
 		this._listadetweetsyretweetsadministrador = _listadetweetsyretweetsadministrador;
 //		this.getPublicacionCitadaContenedor().setVisible(false);
+		this.getLayoutPublicacionCitada().setVisible(false);
 	}
 
 	public void Verperfiladministrador() {
