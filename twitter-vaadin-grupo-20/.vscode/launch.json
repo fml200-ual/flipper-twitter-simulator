@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<twitter-vaadin-grupo-20>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "mds2.Application",
+            "projectName": "twitter-vaadin-grupo-20",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
