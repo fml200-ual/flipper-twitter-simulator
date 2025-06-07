@@ -2,7 +2,7 @@ package interfaz;
 
 import vistas.VistaEscribirgeneral;
 
-public class Escribirgeneral extends VistaEscribirgeneral{
+public class Escribirgeneral extends VistaEscribirgeneral {
 	// private event _introducirURLvdeo;
 	// private event _introducirURLfoto;
 	// private event _previsualizarmultimedia;
