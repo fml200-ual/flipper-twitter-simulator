@@ -1,4 +1,0 @@
-{
-    "lit-plugin.strict": true,
-    "java.debug.settings.hotCodeReplace": "auto"
-}

@@ -1,5 +1,0 @@
-package interfaz;
-
-public class Vertweetnoregistrado extends TweetRetweetnoregistrado {
-	public Listadetweetsyretweetsnoregistrado_item _listadetweetsyretweetsnoregistrado;
-}
