@@ -5,6 +5,11 @@ public class Verlistaampliadadeusuariosregistrado extends Verlistaampliadadeusua
 	public Perspectivabloqueado _perspectivabloqueado;
 	public Verperfilregistrado _verperfilregistrado;
 
+	public Verlistaampliadadeusuariosregistrado(Listafijadeusuariosregistrado _listafijadeusuariosregistrado) {
+		super();
+		this._listafijadeusuariosregistrado = _listafijadeusuariosregistrado;
+	}
+
 	public void Perspectivabloqueado() {
 		throw new UnsupportedOperationException();
 	}

@@ -15,6 +15,8 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 
 import interfaz.ACT03Administrador;
+import interfaz.ACT02UsuarioRegistrado;
+import interfaz.ACT01UsuarioNoRegistrado;
 
 
 /**
@@ -90,5 +92,9 @@ public class MainView extends VerticalLayout {
 ////    	lista.getVerticalLayoutListaUsuarios().as(VerticalLayout.class).add(item1);
 ////    	lista.getVerticalLayoutListaUsuarios().as(VerticalLayout.class).add(item2);
 //    	add(lista);
+    	
+    	// Estancia fija para administrador
+    	ACT01UsuarioNoRegistrado administradorUsuarioRegistrado = new ACT01UsuarioNoRegistrado(this);
+    	add(administradorUsuarioRegistrado);
     }
 }

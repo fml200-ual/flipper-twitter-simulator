@@ -1,8 +1,13 @@
 import { LitElement, html, css, customElement } from 'lit-element';
+import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
+import '@vaadin/horizontal-layout/src/vaadin-horizontal-layout.js';
+import '@vaadin/icons';
+import '@vaadin/avatar/src/vaadin-avatar.js';
+import '@vaadin/button/src/vaadin-button.js';
 
 @customElement('vista-verlistaampliadadehashtags')
 export class VistaVerlistaampliadadehashtags extends LitElement {
-static get styles() {
+    static get styles() {
         return css`
             :host {
                 display: block;
@@ -10,8 +15,10 @@ static get styles() {
                 width: 100%;
                 background-color: black; /* Fondo oscuro como en la imagen */
                 color: white; /* Texto blanco */
-                font-family: 'Arial', sans-serif; /* O la fuente que desees */
+                font-family: 'Inter', sans-serif; /* Usar Inter como fuente principal */
                 --lumo-space-m: 1rem; /* Define la variable de espacio lumo para padding */
+                --lumo-space-l: 1.5rem;
+                --lumo-space-s: 0.5rem;
             }
 
             #main-layout {
@@ -28,77 +35,56 @@ static get styles() {
             h1 {
                 font-size: 2.5em;
                 margin-bottom: var(--lumo-space-l);
-                color: #50b7f5; /* Color similar al azul de Twitter o un turquesa */
+                color: #00FFFF; /* Color turquesa como en la imagen */
                 font-family: 'Comic Sans MS', cursive; /* Estilo de fuente divertido como en la imagen */
+                text-align: center;
+                width: 100%;
             }
 
-            .tweet-card {
-                background-color: #333; /* Fondo más claro para cada tweet */
+            .hashtags-list-container {
+                background-color: #333; /* Fondo más oscuro para el contenedor de la lista */
                 border: 2px solid #00FFFF; /* Borde turquesa como en la imagen */
                 border-radius: 8px;
-                padding: var(--lumo-space-s) var(--lumo-space-m);
+                padding: var(--lumo-space-s) 0; /* Padding vertical, horizontal 0 para los elementos */
                 margin-bottom: var(--lumo-space-m);
                 width: 100%;
                 box-sizing: border-box;
-            }
-
-            .tweet-header {
-                display: flex;
-                align-items: center;
-                margin-bottom: var(--lumo-space-s);
-            }
-
-            .profile-pic {
-                width: 40px;
-                height: 40px;
-                background-color: #555; /* Placeholder para foto de perfil */
-                border-radius: 50%;
-                margin-right: var(--lumo-space-s);
-            }
-
-            .user-info {
                 display: flex;
                 flex-direction: column;
-                font-size: 0.9em;
             }
 
-            .user-info .name {
-                font-weight: bold;
-                color: #00FFFF; /* Nombre en turquesa */
-            }
-
-            .user-info .handle, .user-info .date {
-                color: #AAA;
-            }
-
-            .tweet-content {
-                font-size: 1.1em;
-                margin-bottom: var(--lumo-space-s);
-                word-wrap: break-word; /* Para que el texto se ajuste si es largo */
-            }
-
-            .tweet-actions {
+            .hashtag-item {
                 display: flex;
-                justify-content: space-around;
-                margin-top: var(--lumo-space-s);
+                justify-content: space-between;
+                align-items: center;
+                padding: var(--lumo-space-s) var(--lumo-space-m); /* Relleno a los lados */
+                border-bottom: 1px solid rgba(0, 255, 255, 0.2); /* Línea divisoria suave */
             }
 
-            .action-button {
-                background: none;
-                border: none;
-                color: white;
-                cursor: pointer;
+            .hashtag-item:last-child {
+                border-bottom: none; /* No hay línea en el último elemento */
+            }
+
+            .hashtag-name {
                 font-size: 1.1em;
+                font-weight: bold;
+                color: white; /* Texto blanco */
+            }
+
+            .hashtag-count {
+                font-size: 1em;
+                color: #AAA; /* Color de texto más claro para el conteo */
                 display: flex;
                 align-items: center;
                 gap: 5px;
             }
 
-            .action-button vaadin-icon {
-                color: #00FFFF; /* Color de los iconos */
+            .hashtag-count vaadin-icon {
+                color: white; /* Color del icono del cuadrito */
+                font-size: 0.8em; /* Tamaño del icono */
             }
 
-            #show-more-button {
+            #show-more-hashtags-button {
                 background-color: #00FFFF; /* Botón "Mostrar más" turquesa */
                 color: black;
                 padding: var(--lumo-space-s) var(--lumo-space-l);
@@ -108,53 +94,51 @@ static get styles() {
                 cursor: pointer;
                 border: none;
                 font-size: 1.1em;
+                text-transform: uppercase; /* Para que coincida con el estilo de la imagen */
+                transition: background-color 0.2s ease-in-out;
+            }
+
+            #show-more-hashtags-button:hover {
+                background-color: #00b3b3; /* Un tono más oscuro al pasar el ratón */
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 600px) {
+                h1 {
+                    font-size: 2em;
+                }
+                .hashtag-name {
+                    font-size: 1em;
+                }
+                .hashtag-count {
+                    font-size: 0.9em;
+                }
+                #show-more-hashtags-button {
+                    font-size: 1em;
+                    padding: var(--lumo-space-s) var(--lumo-space-m);
+                }
             }
         `;
     }
 
-    render() {
-        // Función auxiliar para renderizar una "tarjeta" de tweet
-        const renderTweetCard = (name: string, handle: string, date: string, content: string) => html`
-            <div class="tweet-card">
-                <div class="tweet-header">
-                    <div class="profile-pic"></div>
-                    <div class="user-info">
-                        <span class="name">${name}</span>
-                        <span class="handle">${handle}</span>
-                        <span class="date">${date}</span>
-                    </div>
-                </div>
-                <div class="tweet-content">
-                    ${content}
-                </div>
-                <div class="tweet-actions">
-                    <button class="action-button">
-                        <vaadin-icon icon="lumo:heart"></vaadin-icon>
-                        <span></span>
-                    </button>
-                    <button class="action-button">
-                        <vaadin-icon icon="lumo:redo"></vaadin-icon>
-                        <span></span>
-                    </button>
-                    <button class="action-button">
-                        <vaadin-icon icon="lumo:chat"></vaadin-icon>
-                        <span>2</span>
-                    </button>
-                </div>
-            </div>
-        `;
+    createRenderRoot() {
+        return this;
+    }
 
+    render() {
         return html`
-<vaadin-vertical-layout style="width: 100%; height: 100%;">
- <h1 style="align-self: center; width: 100%;">#Hashtag</h1>
- <vaadin-vertical-layout id="main-layout" style="width: 100%; height: 100%;"></vaadin-vertical-layout>
- <button id="show-more-button" style="align-self: center;">Mostrar más</button>
+<vaadin-vertical-layout id="mainLayout" style="width: 100%; height: 100%;" theme="spacing">
+ <h1 id="pageTitle">#Hashtag</h1>
+ <div id="hashtagsListContainer" class="hashtags-list-container"></div>
+ <vaadin-button id="showMoreHashtagsButton" style="align-self: center;" tabindex="0">
+  Mostrar más hashtags
+ </vaadin-button>
 </vaadin-vertical-layout>
 `;
     }
 
-    // Remove this method to render the contents of this view inside Shadow DOM
-    createRenderRoot() {
-        return this;
-    }
-} 
+    // Este método se elimina para que el contenido de esta vista se renderice dentro del Shadow DOM
+    // createRenderRoot() {
+    //     return this;
+    // }
+}

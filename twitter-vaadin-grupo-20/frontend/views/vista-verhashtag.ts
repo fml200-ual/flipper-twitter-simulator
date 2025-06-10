@@ -150,8 +150,8 @@ export class VistaVerhashtag extends LitElement {
         `;
 
         return html`
-<vaadin-vertical-layout style="width: 100%; height: 100%;">
- <h1 style="align-self: center;">#Hashtag</h1>
+<vaadin-vertical-layout style="width: 100%; height: 100%;" id="vaadinVerticalLayout">
+ <h1 style="align-self: center;" id="h1">#Hashtag</h1>
  <vaadin-vertical-layout id="main-layout" style="width: 100%; height: 100%; flex-shrink: 1;"></vaadin-vertical-layout>
  <button id="show-more-button" style="align-self: center;">Mostrar más</button>
 </vaadin-vertical-layout>

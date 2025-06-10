@@ -1,6 +1,8 @@
 package interfaz;
 
-public class Verlistaseguidoresnoregistrado {
+import vistas.VistaVerlistaseguidoresnoregistrado;
+
+public class Verlistaseguidoresnoregistrado extends VistaVerlistaseguidoresnoregistrado{
 	public Verperfilnoregistrado _verperfilnoregistrado;
 	public Listadeusuarios _listadeusuarios;
 

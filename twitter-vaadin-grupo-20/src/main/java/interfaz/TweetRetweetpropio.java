@@ -4,6 +4,10 @@ public class TweetRetweetpropio extends TweetRetweetregistrado {
 	public Darretweet _darretweet;
 	public Escribircomentario _escribircomentario;
 
+	public TweetRetweetpropio() {
+		// Constructor logic if needed
+	}
+	
 	public void Darretweet() {
 		throw new UnsupportedOperationException();
 	}

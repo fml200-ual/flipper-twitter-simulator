@@ -1,5 +1,6 @@
 package interfaz;
 import mds2.MainView;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class ACT03Administrador extends ACT06SesinIniciada {
 	
@@ -15,9 +16,12 @@ public class ACT03Administrador extends ACT06SesinIniciada {
 		this.getSpanRecomendadoParaTi().setVisible(false);
 		this.getBotonEscribirTweet().setVisible(false);
 		this.getVerticalLayoutDerechoSesionIniciada().setVisible(false);
+		// Ensamblado de componentes fijos
+		Listafijadetweetsadministrador();
 	}
 	
 	public void Listafijadetweetsadministrador() {
-		throw new UnsupportedOperationException();
+		_listafijadetweetsadministrador = new Listafijadetweetsadministrador(this);
+		this.getVerticalLayoutCentralSesionIniciada().as(VerticalLayout.class).add(_listafijadetweetsadministrador);
 	}
 }

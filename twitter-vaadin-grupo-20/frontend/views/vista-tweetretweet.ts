@@ -163,49 +163,49 @@ export class VistaTweetretweet extends LitElement {
 
   render() {
     return html`
-<div class="contenedor-principal">
- <vaadin-vertical-layout class="publicacion-principal-contenedor">
-  <vaadin-horizontal-layout class="cabecera">
-   <div class="avatar">
-    <img src="images/bird-avatar.svg" alt="Avatar">
+<div class="contenedor-principal" id="mainLayout">
+ <vaadin-vertical-layout class="publicacion-principal-contenedor" id="mainVerticalLayout" style="width: 100%; height: 100%;">
+  <vaadin-horizontal-layout class="cabecera" id="cabeceraPrincipal">
+   <div class="avatar" id="divAvatar">
+    <img src="images/bird-avatar.svg" alt="Avatar" id="img">
    </div>
-   <vaadin-vertical-layout class="info-usuario">
-    <span class="nombre-usuario">Nic</span>
-    <span class="handle-usuario">@arroba</span>
+   <vaadin-vertical-layout class="info-usuario" id="contendorNombreArroba">
+    <span class="nombre-usuario" id="nombreUsuario">Nic</span>
+    <span class="handle-usuario" id="arrobaUsuario">@arroba</span>
    </vaadin-vertical-layout>
+   <button class="boton-eliminar-tweet" id="botonEliminarTweet">Eliminar tweet</button>
   </vaadin-horizontal-layout>
-  <div class="contenido">
-   <p class="texto-publicacion">#hashtag texto texto</p>
-   <vaadin-vertical-layout class="publicacion-citada-contenedor">
-    <vaadin-horizontal-layout class="cabecera">
-     <div class="avatar">
-      <img src="images/bird-avatar.svg" alt="Avatar Citado">
+  <div class="contenido" id="contenidoTweet">
+   <p class="texto-publicacion" id="textoPublicacion">#hashtag texto texto</p>
+   <vaadin-vertical-layout class="publicacion-citada-contenedor" id="contenedorPublicacionCitada">
+    <vaadin-horizontal-layout class="cabecera" id="cabeceraPublicacionCitada">
+     <div class="avatar" id="div">
+      <img src="images/bird-avatar.svg" alt="Avatar Citado" id="img1">
      </div>
-     <vaadin-vertical-layout class="info-usuario">
-      <span class="nombre-usuario">Nic</span>
-      <span class="handle-usuario">@arroba</span>
+     <vaadin-vertical-layout class="info-usuario" id="contenedorDatosUsuarioCitado">
+      <span class="nombre-usuario" id="nombreUsuarioCitado">Nic</span>
+      <span class="handle-usuario" id="arrobaUsuarioCitado">@arroba</span>
      </vaadin-vertical-layout>
     </vaadin-horizontal-layout>
-    <div class="contenido">
-     <p class="texto-publicacion">#hashtag texto texto</p>
+    <div class="contenido" id="div1">
+     <p class="texto-publicacion" id="textoPublicacionCitada">#hashtag texto texto</p>
     </div>
    </vaadin-vertical-layout>
   </div>
-  <div class="pie">
-   <span>3 sept 2023</span>
-   <div class="acciones">
-    <span>12</span>
-    <vaadin-icon title="Me gusta" icon="vaadin:heart" size="16"></vaadin-icon>
-    <span>12</span>
-    <vaadin-icon title="Retweet" icon="vaadin:retweet" size="16"></vaadin-icon>
-    <button class="boton-eliminar-tweet">Eliminar tweet</button>
-    <span>12</span>
-    <vaadin-icon title="Comentar" icon="vaadin:comment" size="16"></vaadin-icon>
+  <div class="pie" id="div2">
+   <span id="fechaPublicacion">3 sept 2023</span>
+   <div class="acciones" id="div3">
+    <span id="numMegusta">12</span>
+    <vaadin-icon title="Me gusta" icon="vaadin:heart" size="16" id="iconoMeGusta"></vaadin-icon>
+    <span id="numeroRetweets">12</span>
+    <vaadin-icon title="Retweet" icon="vaadin:retweet" size="16" id="iconoRetweet"></vaadin-icon>
+    <span id="numeroRetweets1">12</span>
+    <vaadin-icon title="Comentar" icon="vaadin:comment" size="16" id="iconoComentarios"></vaadin-icon>
    </div>
   </div>
  </vaadin-vertical-layout>
- <div class="comentarios-contenedor"></div>
- <a href="#" class="mostrar-mas">Mostrar más comentarios</a>
+ <div class="comentarios-contenedor" id="div4"></div>
+ <a href="#" class="mostrar-mas" id="mostrarMasComentarios">Mostrar más comentarios</a>
 </div>
 `;
   }

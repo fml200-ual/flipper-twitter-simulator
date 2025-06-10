@@ -1,4 +1,8 @@
 package interfaz;
 
-public class Vercomentario {
+import vistas.VistaVercomentario;
+
+public class Vercomentario extends VistaVercomentario{
+
+    
 }

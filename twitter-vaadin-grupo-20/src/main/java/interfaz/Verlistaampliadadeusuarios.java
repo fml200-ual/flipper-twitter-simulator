@@ -1,6 +1,8 @@
 package interfaz;
 
-public class Verlistaampliadadeusuarios {
+import vistas.VistaVerlistaampliadadeusuarios;
+
+public class Verlistaampliadadeusuarios extends VistaVerlistaampliadadeusuarios {
 	public Listadeusuarios _listadeusuarios;
 
 	public void Listadeusuarios() {

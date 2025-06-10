@@ -1,5 +1,6 @@
 package interfaz;
 import mds2.MainView;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 	public Listafijadeusuariosregistrado _listafijadeusuariosregistrado;
@@ -13,30 +14,42 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 	public ACT02UsuarioRegistrado(MainView mainView) {
 		super(mainView);
 		this.getSpanListaTweetsRecientes().setVisible(false);
-		
+		// Ensamblado de componentes fijos
+		Listafijadeusuariosregistrado();
+		Listafijadehashtagsregistrado();
+		Verpropioperfil();
+		Escribirtweet();
+		Vernotificaciones();
+		Listadetweetsyretweetsregistrado();
 	}
 
 	public void Listafijadeusuariosregistrado() {
-		throw new UnsupportedOperationException();
+		_listafijadeusuariosregistrado = new Listafijadeusuariosregistrado(this);
+		this.getVerticalLayoutListaUsuarios().as(VerticalLayout.class).add(_listafijadeusuariosregistrado);
 	}
 
 	public void Listafijadehashtagsregistrado() {
-		throw new UnsupportedOperationException();
+		_listafijadehashtagsregistrado = new Listafijadehashtagsregistrado(this);
+		this.getVerticalLayoutListaHashtagsSesionIniciada().as(VerticalLayout.class).add(_listafijadehashtagsregistrado);
 	}
 
 	public void Verpropioperfil() {
-		throw new UnsupportedOperationException();
+		_verpropioperfil = new Verpropioperfil(this);
+		this.getVerticalLayoutCentralSesionIniciada().as(VerticalLayout.class).add(_verpropioperfil);
 	}
 
 	public void Escribirtweet() {
-		throw new UnsupportedOperationException();
+		_escribirtweet = new Escribirtweet(this);
+		this.getVerticalLayoutCentralSesionIniciada().as(VerticalLayout.class).add(_escribirtweet);
 	}
 
 	public void Vernotificaciones() {
-		throw new UnsupportedOperationException();
+		_vernotificaciones = new Vernotificaciones(this);
+		this.getVerticalLayoutDerechoSesionIniciada().as(VerticalLayout.class).add(_vernotificaciones);
 	}
 
 	public void Listadetweetsyretweetsregistrado() {
-		throw new UnsupportedOperationException();
+		_listadetweetsyretweetsregistrado = new Listadetweetsyretweetsregistrado(this);
+		this.getVerticalLayoutListaTweets().as(VerticalLayout.class).add(_listadetweetsyretweetsregistrado);
 	}
 }

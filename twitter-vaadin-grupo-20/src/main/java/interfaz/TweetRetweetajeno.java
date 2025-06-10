@@ -6,6 +6,11 @@ public class TweetRetweetajeno extends TweetRetweetregistrado {
 	public Darretweet _darretweet;
 	public Escribircomentario _escribircomentario;
 
+	public TweetRetweetajeno() {
+		super();
+		// Initialize the events or actions if necessary
+	}
+
 	public void Darretweet() {
 		throw new UnsupportedOperationException();
 	}

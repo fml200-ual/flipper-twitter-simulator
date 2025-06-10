@@ -1,6 +1,8 @@
 package interfaz;
 
-public class Verlistaampliadadetweetsadministrador {
+import vistas.VistaVerlistaampliadadetweetsadministrador;
+
+public class Verlistaampliadadetweetsadministrador extends VistaVerlistaampliadadetweetsadministrador{
 	public Listafijadetweetsadministrador _listafijadetweetsadministrador;
 	public Listadetweetsyretweetsadministrador _listadetweetsyretweetsadministrador;
 
