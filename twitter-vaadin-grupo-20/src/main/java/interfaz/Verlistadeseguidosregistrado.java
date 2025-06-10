@@ -1,6 +1,8 @@
 package interfaz;
 
-public class Verlistadeseguidosregistrado {
+import vistas.VistaVerlistadeseguidosregistrado;
+
+public class Verlistadeseguidosregistrado extends VistaVerlistadeseguidosregistrado{
 	public Verperfilregistrado _verperfilregistrado;
 	public Verpropioperfil _verpropioperfil;
 	public Listadeusuarios _listadeusuarios;

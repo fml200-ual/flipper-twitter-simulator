@@ -1,7 +1,10 @@
 package interfaz;
 
-public class Verlistaampliadadehashtags {
+import vistas.VistaVerlistaampliadadehashtags;
+
+public class Verlistaampliadadehashtags extends VistaVerlistaampliadadehashtags{
 	public Listadehashtags _listadehashtags;
+
 
 	public void Listadehashtags() {
 		throw new UnsupportedOperationException();

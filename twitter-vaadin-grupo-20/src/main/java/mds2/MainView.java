@@ -16,6 +16,8 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 
 import interfaz.ACT02UsuarioRegistrado;
 import interfaz.ACT03Administrador;
+import interfaz.ACT02UsuarioRegistrado;
+import interfaz.ACT01UsuarioNoRegistrado;
 
 /**
  * A sample Vaadin view class.
@@ -53,5 +55,4 @@ public class MainView extends VerticalLayout {
 		add(test);
 		Pantalla.MainView = this;
 	}
-
 }

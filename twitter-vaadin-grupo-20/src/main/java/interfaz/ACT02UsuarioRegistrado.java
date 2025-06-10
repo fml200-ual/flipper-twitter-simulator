@@ -4,6 +4,7 @@ import com.github.fge.jsonschema.main.cli.Main;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import mds2.MainView;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 	public Listafijadeusuariosregistrado _listafijadeusuariosregistrado;

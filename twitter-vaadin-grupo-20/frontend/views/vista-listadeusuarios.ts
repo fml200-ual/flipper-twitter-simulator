@@ -19,6 +19,7 @@ export class VistaListadeusuarios extends LitElement {
         padding: 0;
         align-items: stretch; /* Asegura que los items se estiren a lo ancho */
         gap: 10px; /* Espacio entre los ítems */
+        position: absolute; /* Permite que el contenedor ocupe todo el espacio disponible */
       }
       `;
   }

@@ -1,99 +1,72 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 import '@vaadin/horizontal-layout/src/vaadin-horizontal-layout.js';
-import '@vaadin/text-field/src/vaadin-text-field.js';
-import '@vaadin/button/src/vaadin-button.js';
-import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
+import '@vaadin/icon/src/vaadin-icon.js';
+import '@vaadin/avatar/src/vaadin-avatar.js';
 
 @customElement('vista-verlistaampliadadeusuarios')
 export class VistaVerListaAmpliadaDeUsuarios extends LitElement {
-    static get styles() {
-        return css`
-            :host {
-                display: block;
-                height: 100%;
-                width: 100%;
-                background-color: black; /* Fondo negro como en la imagen */
-                color: white; /* Color de texto predeterminado */
-                font-family: 'Arial', sans-serif; /* Fuente consistente con las otras vistas */
-                --lumo-space-m: 1rem;
-                --lumo-space-l: 1.5rem;
-                --lumo-space-xl: 2rem;
-            }
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+        font-family: sans-serif;
+        background-color: #000000;
+        color: white;
+        padding: 16px;
+      }
 
-            #main-layout {
-                width: 100%;
-                max-width: 600px; /* Ancho máximo para la lista de usuarios */
-                margin: 0 auto; /* Centrar el contenido */
-                padding: var(--lumo-space-l);
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                align-items: center; /* Centrar elementos horizontalmente */
-            }
+      .title {
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 16px;
+      }
 
-            #list-title {
-                font-size: 2em;
-                font-weight: bold;
-                color: #00FFFF; /* Color turquesa para el título */
-                margin-bottom: var(--lumo-space-l);
-                text-align: center;
-                font-family: 'Comic Sans MS', cursive; /* Estilo de fuente divertido */
-            }
+      .user-list {
+        border: 2px solid cyan;
+        border-radius: 10px;
+        padding: 10px;
+        background-color: #1a1a1a;
+      }
 
-            #user-list-container {
-                width: 100%;
-                /* Puedes añadir un borde o fondo para visualizar el área donde irán los usuarios */
-                /* border: 1px dashed gray; */
-                /* min-height: 300px; /* Altura mínima para que se vea el contenedor vacío */ */
-                background-color: #333; /* Fondo para el contenedor de la lista */
-                border: 2px solid #00FFFF; /* Borde turquesa */
-                border-radius: 8px;
-                padding: var(--lumo-space-m);
-                box-sizing: border-box;
-                margin-bottom: var(--lumo-space-l);
-                display: flex;
-                flex-direction: column;
-                justify-content: center; /* Centrar verticalmente el mensaje si está vacío */
-                align-items: center; /* Centrar horizontalmente el mensaje si está vacío */
-                text-align: center;
-            }
+      vaadin-horizontal-layout.user-entry {
+        border: 1px solid #00f0f0;
+        border-radius: 6px;
+        margin: 5px 0;
+        padding: 5px;
+        align-items: center;
+        background-color: #222;
+        justify-content: space-between;
+      }
 
-            #no-users-message {
-                color: gray;
-                font-size: 1.1em;
-                padding: var(--lumo-space-xl);
-            }
+      .avatar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
-            #show-more-users-button {
-                background-color: #00FFFF; /* Botón "Mostrar más usuarios" turquesa */
-                color: black;
-                padding: var(--lumo-space-s) var(--lumo-space-l);
-                border-radius: 20px;
-                font-weight: bold;
-                margin-top: var(--lumo-space-m);
-                cursor: pointer;
-                border: none;
-                font-size: 1.1em;
-            }
-        `;
-    }
+      .description {
+        background-color: #333;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        flex-grow: 1;
+        margin-left: 10px;
+        text-align: center;
+      }
 
-    render() {
-        return html`
-<vaadin-vertical-layout id="main-layout">
- <h1 id="list-title">Lista de usuarios:</h1>
- <vaadin-vertical-layout id="user-list-container">
-  <span id="no-users-message">No hay usuarios para mostrar.</span>
- </vaadin-vertical-layout>
- <vaadin-button id="show-more-users-button">
-  Mostrar más usuarios
- </vaadin-button>
-</vaadin-vertical-layout>
+      vaadin-button.load-more {
+        margin-top: 16px;
+        background-color: #000;
+        color: cyan;
+        border: none;
+      }
+    `;
+  }
+
+  render() {
+    return html`
+
 `;
-    }
-
-    // Mantener esta configuración para renderizar directamente en el DOM ligero.
-    createRenderRoot() {
-        return this;
-    }
+  }
 }

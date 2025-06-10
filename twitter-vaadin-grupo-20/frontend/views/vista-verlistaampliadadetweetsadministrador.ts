@@ -108,33 +108,25 @@ export class VistaVerlistaampliadadetweetsadministrador extends LitElement {
     render() {
         return html`
 <vaadin-vertical-layout id="main-layout">
- <!-- Icono de pájaro de Twitter (o similar) -->
  <div id="twitter-bird-icon"></div>
- <!-- Sección de Cabecera (ej: "Ver Hashtag" o "Administrar Tweets") -->
  <h2 id="main-header">Administrar Tweets</h2>
- <!-- Sección de búsqueda o filtro (si aplica) -->
  <vaadin-horizontal-layout id="search-section">
-  <!-- Ejemplo de campo de búsqueda, puedes usar vaadin-text-field si es necesario -->
   <vaadin-text-field id="search-field" placeholder="Buscar tweets..." style="flex-grow: 1;" type="text"></vaadin-text-field>
-  <vaadin-button id="search-button">
-   Buscar
+  <vaadin-button id="search-button" tabindex="0">
+    Buscar 
   </vaadin-button>
  </vaadin-horizontal-layout>
- <!-- Controles del administrador (ej: "Crear Nuevo", "Eliminar Seleccionados") -->
  <vaadin-horizontal-layout id="controls-layout">
   <vaadin-button id="create-new-button" class="vaadin-button" tabindex="0">
-   Crear Nuevo
+    Crear Nuevo 
   </vaadin-button>
   <vaadin-button id="delete-selected-button" class="vaadin-button secondary" tabindex="0">
-   Eliminar Seleccionados
+    Eliminar Seleccionados 
   </vaadin-button>
  </vaadin-horizontal-layout>
- <!-- Contenedor donde irían los tweets (vacío como se solicitó) -->
  <vaadin-vertical-layout id="tweet-list-container">
-  <!-- Aquí irían los tweets, cuando se añadan dinámicamente -->
-  <span style="color: gray; margin: var(--lumo-space-xl);">No hay tweets para mostrar en esta vista de administrador.</span>
+  <span style="color: gray; margin: var(--lumo-space-xl);" id="span">No hay tweets para mostrar en esta vista de administrador.</span>
  </vaadin-vertical-layout>
- <!-- Botón "Mostrar más" -->
  <button id="show-more-button">Mostrar más</button>
 </vaadin-vertical-layout>
 `;

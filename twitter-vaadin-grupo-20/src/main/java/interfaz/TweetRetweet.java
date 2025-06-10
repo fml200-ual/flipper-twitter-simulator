@@ -1,4 +1,6 @@
 package interfaz;
 
-public class TweetRetweet {
+import vistas.VistaTweetretweet;
+
+public class TweetRetweet extends VistaTweetretweet{
 }

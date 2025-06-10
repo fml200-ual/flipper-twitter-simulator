@@ -1,10 +1,10 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
 import '@vaadin/horizontal-layout/src/vaadin-horizontal-layout.js';
-import '@vaadin/icon/src/vaadin-icon.js';
 import '@vaadin/icons';
 import '@vaadin/avatar/src/vaadin-avatar.js';
 import '@vaadin/button/src/vaadin-button.js';
+import '@vaadin/icon/src/vaadin-icon.js';
 
 @customElement('vista-vercomentario')
 export class VistaVercomentario extends LitElement {
@@ -165,7 +165,6 @@ export class VistaVercomentario extends LitElement {
         return html`
 <div id="commentMainContainer" class="comment-container">
  <vaadin-horizontal-layout id="commentHeader" class="header-section" theme="spacing">
-  <vaadin-icon id="mailIcon" icon="lumo:mail" class="mail-icon"></vaadin-icon>
   <vaadin-avatar id="commenterAvatar" img="https://placehold.co/40x40/cccccc/ffffff?text=Nic"></vaadin-avatar>
   <vaadin-vertical-layout id="commenterInfo">
    <span id="commenterUsername" class="username">Nick</span>
@@ -174,10 +173,10 @@ export class VistaVercomentario extends LitElement {
  </vaadin-horizontal-layout>
  <div id="commentContentArea" class="comment-content">
   <div id="characterCount" class="character-count">
-   200
+    200 
   </div>
   <div id="commentText">
-   texto texto
+    texto texto 
   </div>
  </div>
  <vaadin-horizontal-layout id="commentFooter" class="footer-section" theme="spacing">
@@ -186,8 +185,8 @@ export class VistaVercomentario extends LitElement {
    <vaadin-icon id="commentLikeButton" icon="vaadin:heart" class="like-button" size="1000"></vaadin-icon>
    <span id="commentLikeCount" class="like-count">12</span>
   </vaadin-horizontal-layout>
-  <vaadin-button id="deleteCommentButton" class="delete-button">
-   Eliminar
+  <vaadin-button id="deleteCommentButton" class="delete-button" tabindex="0">
+    Eliminar 
   </vaadin-button>
  </vaadin-horizontal-layout>
 </div>
