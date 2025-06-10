@@ -1,5 +1,6 @@
 package interfaz;
 
+import mds2.MainView.Pantalla;
 import vistas.VistaEditarcuenta;
 
 public class Editarcuenta extends VistaEditarcuenta {
@@ -10,10 +11,13 @@ public class Editarcuenta extends VistaEditarcuenta {
 	public Editarcuenta(Verpropioperfil _verpropioperfil) {
 		super();
 		this._verpropioperfil = _verpropioperfil;
+
+		this.getCancelarButton()
+				.addClickListener(event -> Cancelar());
 	}
 
 	public void Eliminarcuenta() {
-		throw new UnsupportedOperationException();
+
 	}
 
 	public void Errordeedicin() {
@@ -22,5 +26,10 @@ public class Editarcuenta extends VistaEditarcuenta {
 
 	public void Comprobarnoduplicadodearrobaynick() {
 		throw new UnsupportedOperationException();
+	}
+
+	public void Cancelar() {
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(Pantalla.Anterior);
 	}
 }

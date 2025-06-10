@@ -62,7 +62,7 @@ export class VistaAct06sesininiciada extends LitElement {
   }
 
   // Remove this method to render the contents of this view inside Shadow DOM
-  createRenderRoot() {
-    return this;
-  }
+  // createRenderRoot() {
+  //   return this;
+  // }
 }
