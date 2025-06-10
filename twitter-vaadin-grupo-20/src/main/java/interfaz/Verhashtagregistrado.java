@@ -5,10 +5,16 @@ public class Verhashtagregistrado extends Verhashtag {
 	public Listafijadehashtagsregistrado _listafijadehashtagsregistrado;
 	public Listadetweetsyretweetsregistrado _listadetweetsyretweetsregistrado;
 
+	public Verhashtagregistrado(Verlistaampliadadehashtagsregistrado _verlistaampliadadehashtagsregistrado) {
+		super();
+		this._verlistaampliadadehashtagsregistrado = _verlistaampliadadehashtagsregistrado;
+	}
+
 	public Verhashtagregistrado(Listafijadehashtagsregistrado _listafijadehashtagsregistrado) {
 		super();
 		this._listafijadehashtagsregistrado = _listafijadehashtagsregistrado;
 	}
+
 	public void Listadetweetsyretweetsregistrado() {
 		throw new UnsupportedOperationException();
 	}

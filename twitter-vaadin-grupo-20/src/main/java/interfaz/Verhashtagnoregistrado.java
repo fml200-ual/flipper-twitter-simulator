@@ -9,7 +9,12 @@ public class Verhashtagnoregistrado extends Verhashtag {
 		super();
 		this._listafijadehashtagsnoregistrado = _listafijadehashtagsnoregistrado;
 	}
-	
+
+	public Verhashtagnoregistrado(Verlistaampliadadehashtagsnoregistrado _verlistaampliadadehashtagsnoregistrado) {
+		super();
+		this._verlistaampliadadehashtagsnoregistrado = _verlistaampliadadehashtagsnoregistrado;
+	}
+
 	public void Listadetweetsyretweetsnoregistrado() {
 		throw new UnsupportedOperationException();
 	}
