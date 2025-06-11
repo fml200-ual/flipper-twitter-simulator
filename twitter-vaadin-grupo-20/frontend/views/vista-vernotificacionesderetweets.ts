@@ -1,5 +1,4 @@
 import { LitElement, html, css, customElement } from 'lit-element';
-
 @customElement('vista-vernotificacionesderetweets')
 export class VistaVernotificacionesderetweets extends LitElement {
   static get styles() {
@@ -18,10 +17,8 @@ export class VistaVernotificacionesderetweets extends LitElement {
         top: 0;
         left: 0;
         overflow-y: auto; /* Permite scroll si es necesario */
-
         font-family: 'Comic Sans MS', 'Chalkduster', 'cursive', sans-serif;
       }
-
       .wrapper {
         display: flex;
         flex-direction: column;
@@ -33,7 +30,6 @@ export class VistaVernotificacionesderetweets extends LitElement {
         padding: 2rem;
         box-sizing: border-box;
       }
-
       h1 {
         font-size: 1.8rem;
         border: 2px solid #fff;
@@ -42,7 +38,6 @@ export class VistaVernotificacionesderetweets extends LitElement {
         /* Hacemos que el título no se encoja */
         flex-shrink: 0;
       }
-
       .button-container {
         display: flex;
         justify-content: center;
@@ -52,7 +47,6 @@ export class VistaVernotificacionesderetweets extends LitElement {
         /* Hacemos que este contenedor no se encoja */
         flex-shrink: 0;
       }
-
       .filter-button {
         background-color: #333;
         color: #fff;
@@ -64,14 +58,12 @@ export class VistaVernotificacionesderetweets extends LitElement {
         border-radius: 5px;
         transition: background-color 0.2s;
       }
-
       .filter-button:hover, .filter-button:focus {
         background-color: #444;
         outline-color: #20c2c2;
       }
-
       /* --- CAMBIOS PRINCIPALES AQUÍ --- */
-      #notification-list {
+      #notification-list-retweets {
         width: 100%;
         max-width: 800px;
         border: 3px solid #fff;
@@ -80,10 +72,8 @@ export class VistaVernotificacionesderetweets extends LitElement {
         box-sizing: border-box;
         margin-bottom: 2rem;
         overflow-y: auto;
-
         /* 1. Hacemos que la lista crezca para ocupar el espacio disponible */
         flex-grow: 1;
-
         /* 2. Para evitar problemas de desbordamiento en algunos navegadores con flexbox */
         min-height: 0; 
         
@@ -91,13 +81,10 @@ export class VistaVernotificacionesderetweets extends LitElement {
         display: flex;
         flex-direction: column;
       }
-
       /* Importante: El componente hijo debe ocupar todo el alto del contenedor */
-      #notification-list > vista-listadehashtags {
+      #notification-list-retweets > vista-listadehashtags {
           height: 100%;
       }
-
-
       .show-more-link {
         color: #20c2c2;
         font-size: 1.3rem;
@@ -108,24 +95,22 @@ export class VistaVernotificacionesderetweets extends LitElement {
          /* Hacemos que el enlace no se encoja */
         flex-shrink: 0;
       }
-
       .show-more-link:hover {
         color: #4dfdfd;
       }
     `;
   }
-
   render() {
     return html`
-<div class="wrapper">
- <h1>NOTIFICACIONES</h1>
- <div class="button-container">
-  <button class="filter-button">Notificaciones de seguimiento</button>
-  <button class="filter-button">Notificaciones de menciones</button>
-  <button class="filter-button">Notificaciones de retweets</button>
+<div class="wrapper" id="wrapper_retweets">
+ <h1 id="titulo_notificaciones_retweets">NOTIFICACIONES</h1>
+ <div class="button-container" id="contenedor_botones_retweets">
+  <button class="filter-button" id="boton_seguimiento_retweets">Notificaciones de seguimiento</button>
+  <button class="filter-button" id="boton_menciones_retweets">Notificaciones de menciones</button>
+  <button class="filter-button" id="boton_retweets_retweets">Notificaciones de retweets</button>
  </div>
- <div id="notification-list"></div>
- <a class="show-more-link">Mostrar más notificaciones</a>
+ <div id="notification-list-retweets"></div>
+ <a class="show-more-link" id="enlace_mostrar_mas_retweets">Mostrar más notificaciones</a>
 </div>
 `;
   }
