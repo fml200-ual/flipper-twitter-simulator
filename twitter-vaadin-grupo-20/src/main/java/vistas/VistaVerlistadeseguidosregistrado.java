@@ -13,7 +13,7 @@ import com.vaadin.flow.component.button.Button;
 @JsModule("./views/vista-verlistadeseguidosregistrado.ts")
 public class VistaVerlistadeseguidosregistrado extends LitTemplate {
 
-    public Element getMainLayout() {
+	public Element getMainLayout() {
 		return mainLayout;
 	}
 
@@ -105,7 +105,7 @@ public class VistaVerlistadeseguidosregistrado extends LitTemplate {
 	private Button showMoreFollowedButton;
 
 	public VistaVerlistadeseguidosregistrado() {
-        // You can initialise any data required for the connected UI components here.
-    }
+		// You can initialise any data required for the connected UI components here.
+	}
 
 }

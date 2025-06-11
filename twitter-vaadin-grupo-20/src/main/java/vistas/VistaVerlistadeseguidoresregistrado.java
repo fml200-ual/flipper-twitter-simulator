@@ -13,7 +13,7 @@ import com.vaadin.flow.component.button.Button;
 @JsModule("./views/vista-verlistadeseguidoresregistrado.ts")
 public class VistaVerlistadeseguidoresregistrado extends LitTemplate {
 
-    public Element getMainLayout() {
+	public Element getMainLayout() {
 		return mainLayout;
 	}
 
@@ -105,7 +105,7 @@ public class VistaVerlistadeseguidoresregistrado extends LitTemplate {
 	private Button showMoreFollowersButton;
 
 	public VistaVerlistadeseguidoresregistrado() {
-        // You can initialise any data required for the connected UI components here.
-    }
+		// You can initialise any data required for the connected UI components here.
+	}
 
 }

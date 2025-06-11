@@ -23,27 +23,27 @@ public class VistaRestablecercontrasea extends LitTemplate {
 		// You can initialise any data required for the connected UI components here.
 	}
 
-	private Element getResetPasswordContainer() {
+	public Element getResetPasswordContainer() {
 		return resetPasswordContainer;
 	}
 
-	private void setResetPasswordContainer(Element resetPasswordContainer) {
+	public void setResetPasswordContainer(Element resetPasswordContainer) {
 		this.resetPasswordContainer = resetPasswordContainer;
 	}
 
-	private Div getMessageBox() {
+	public Div getMessageBox() {
 		return messageBox;
 	}
 
-	private void setMessageBox(Div messageBox) {
+	public void setMessageBox(Div messageBox) {
 		this.messageBox = messageBox;
 	}
 
-	private PasswordField getPasswordField() {
+	public PasswordField getPasswordField() {
 		return passwordField;
 	}
 
-	private void setPasswordField(PasswordField passwordField) {
+	public void setPasswordField(PasswordField passwordField) {
 		this.passwordField = passwordField;
 	}
 
