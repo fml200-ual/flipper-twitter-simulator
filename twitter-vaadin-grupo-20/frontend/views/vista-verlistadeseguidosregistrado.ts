@@ -1,9 +1,8 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
-import '@vaadin/horizontal-layout/src/vaadin-horizontal-layout.js'; // Aunque no se use directamente con @Id, es útil para el layout.
+import '@vaadin/horizontal-layout/src/vaadin-horizontal-layout.js';
 import '@vaadin/button/src/vaadin-button.js';
-// Si necesitas un icono (como el sobre), asegúrate de importarlo o usar un SVG/imagen.
-// import '@vaadin/icons'; // Si vas a usar iconos de Vaadin
+import '@vaadin/icons';
 
 @customElement('vista-verlistadeseguidosregistrado')
 export class VistaVerlistadeseguidosregistrado extends LitElement {
@@ -107,23 +106,22 @@ export class VistaVerlistadeseguidosregistrado extends LitElement {
 
     render() {
         return html`
-            <vaadin-vertical-layout id="main-layout">
-                <div id="header-container">
-                    <div id="message-icon"></div>
-
-                    <div id="title-layout">
-                        <span id="list-title">Lista de seguidos de</span>
-                        <span id="username">@usuario</span>
-                    </div>
-                </div>
-
-                <vaadin-vertical-layout id="followed-list-container">
-                    <span id="no-followed-message">No hay seguidos para mostrar.</span>
-                    </vaadin-vertical-layout>
-
-                <vaadin-button id="show-more-followed-button">Mostrar más seguidos</vaadin-button>
-            </vaadin-vertical-layout>
-        `;
+<vaadin-vertical-layout id="main-layout">
+ <div id="header-container">
+  <div id="message-icon"></div>
+  <div id="title-layout">
+   <span id="list-title">Lista de seguidos de</span>
+   <span id="username">@usuario</span>
+  </div>
+ </div>
+ <vaadin-vertical-layout id="followed-list-container">
+  <span id="no-followed-message">No hay seguidos para mostrar.</span>
+ </vaadin-vertical-layout>
+ <vaadin-button id="show-more-followed-button" tabindex="0">
+  Mostrar más seguidos
+ </vaadin-button>
+</vaadin-vertical-layout>
+`;
     }
 
     // Mantener esta configuración para renderizar directamente en el DOM ligero.

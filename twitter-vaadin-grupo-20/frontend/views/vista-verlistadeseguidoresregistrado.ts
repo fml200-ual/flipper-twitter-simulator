@@ -117,8 +117,8 @@ export class VistaVerlistadeseguidoresregistrado extends LitElement {
  <vaadin-vertical-layout id="followers-list-container">
   <span id="no-followers-message">No hay seguidores para mostrar.</span>
  </vaadin-vertical-layout>
- <vaadin-button id="show-more-followers-button">
-  Mostrar más seguidores
+ <vaadin-button id="show-more-followers-button" tabindex="0">
+   Mostrar más seguidores 
  </vaadin-button>
 </vaadin-vertical-layout>
 `;
