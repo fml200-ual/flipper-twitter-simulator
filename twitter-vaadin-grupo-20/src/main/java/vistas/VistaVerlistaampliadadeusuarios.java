@@ -12,7 +12,7 @@ import com.vaadin.flow.component.html.Div;
 @JsModule("./views/vista-verlistaampliadadeusuarios.ts")
 public class VistaVerlistaampliadadeusuarios extends LitTemplate {
 
-    @Id("vaadinVerticalLayout")
+	@Id("vaadinVerticalLayout")
 	private Element vaadinVerticalLayout;
 	@Id("vaadinHorizontalLayout")
 	private HorizontalLayout vaadinHorizontalLayout;
@@ -20,7 +20,31 @@ public class VistaVerlistaampliadadeusuarios extends LitTemplate {
 	private Div div;
 
 	public VistaVerlistaampliadadeusuarios() {
-        // You can initialise any data required for the connected UI components here.
-    }
+		// You can initialise any data required for the connected UI components here.
+	}
+
+	public Element getVaadinVerticalLayout() {
+		return vaadinVerticalLayout;
+	}
+
+	public void setVaadinVerticalLayout(Element vaadinVerticalLayout) {
+		this.vaadinVerticalLayout = vaadinVerticalLayout;
+	}
+
+	public HorizontalLayout getVaadinHorizontalLayout() {
+		return vaadinHorizontalLayout;
+	}
+
+	public void setVaadinHorizontalLayout(HorizontalLayout vaadinHorizontalLayout) {
+		this.vaadinHorizontalLayout = vaadinHorizontalLayout;
+	}
+
+	public Div getDiv() {
+		return div;
+	}
+
+	public void setDiv(Div div) {
+		this.div = div;
+	}
 
 }
