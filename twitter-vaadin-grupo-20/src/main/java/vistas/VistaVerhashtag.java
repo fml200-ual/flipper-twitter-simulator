@@ -12,8 +12,9 @@ import com.vaadin.flow.component.html.NativeButton;
 @JsModule("./views/vista-verhashtag.ts")
 public class VistaVerhashtag extends LitTemplate {
 
-    @Id("vaadinVerticalLayout")
+	@Id("vaadinVerticalLayout")
 	private Element vaadinVerticalLayout;
+
 	public Element getVaadinVerticalLayout() {
 		return vaadinVerticalLayout;
 	}
@@ -54,7 +55,7 @@ public class VistaVerhashtag extends LitTemplate {
 	private NativeButton showMoreButton;
 
 	public VistaVerhashtag() {
-        // You can initialise any data required for the connected UI components here.
-    }
+		// You can initialise any data required for the connected UI components here.
+	}
 
 }

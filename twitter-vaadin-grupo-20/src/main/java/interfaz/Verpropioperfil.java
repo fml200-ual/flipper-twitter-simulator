@@ -1,6 +1,5 @@
 package interfaz;
 
-import mds2.MainView;
 import mds2.MainView.Pantalla;
 
 public class Verpropioperfil extends Verperfil {
@@ -28,6 +27,9 @@ public class Verpropioperfil extends Verperfil {
 		this.getEditAccountButton().addClickListener(event -> {
 			Editarcuenta();
 		});
+		this.getShowMoreButton().addClickListener(event -> {
+			VerlistafijatweetsRetweets();
+		});
 	}
 
 	public void Editarcuenta() {
@@ -38,11 +40,17 @@ public class Verpropioperfil extends Verperfil {
 	}
 
 	public void Verlistadeseguidoresregistrado() {
-		throw new UnsupportedOperationException();
+		_verlistadeseguidoresregistrado = new Verlistadeseguidoresregistrado(this);
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_verlistadeseguidoresregistrado);
 	}
 
 	public void Verlistadeseguidosregistrado() {
-		throw new UnsupportedOperationException();
+		_verlistadeseguidosregistrado = new Verlistadeseguidosregistrado(this);
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_verlistadeseguidosregistrado);
 	}
 
 	public void VerlistatweetsRetweets() {
@@ -51,5 +59,11 @@ public class Verpropioperfil extends Verperfil {
 				.add(new Listadetweetsyretweets_item(listadetweetsyretweets));
 
 		this.getTweetsListLayout().add(listadetweetsyretweets);
+	}
+
+	public void VerlistafijatweetsRetweets() {
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(new Vertweetpropio(null));
 	}
 }

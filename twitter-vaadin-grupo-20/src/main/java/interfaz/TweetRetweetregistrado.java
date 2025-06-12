@@ -4,7 +4,6 @@ public class TweetRetweetregistrado extends TweetRetweet {
 	public Listadecomentariosregistrado _listadecomentariosregistrado;
 
 	public TweetRetweetregistrado() {
-
 	}
 
 	public TweetRetweetregistrado(Listadecomentariosregistrado listadecomentariosregistrado) {

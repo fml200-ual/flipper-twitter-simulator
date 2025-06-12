@@ -8,17 +8,26 @@ import '@vaadin/avatar/src/vaadin-avatar.js';
 @customElement('vista-tweetretweet')
 export class VistaTweetretweet extends LitElement {
 
-    // Define los estilos del componente
-    static get styles() {
+  // Define los estilos del componente
+  static get styles() {
     return css`
       :host {
         display: flex;
         flex-direction: column;
-        align-items: center; /* Centra el contenido en el host */
+        align-items: center;
+        width: 100vw; /* Ocupa todo el ancho del viewport */
+        height: 100vh; /* Ocupa toda la altura del viewport */
+        background-color: #000; /* Fondo negro */
+        font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+        box-sizing: border-box;
+        margin: 0; /* Elimina márgenes */
+        padding: 0; /* Elimina padding */
+        position: fixed; /* Fija la posición para ocupar toda la ventana */
+        top: 0;
+        left: 0;
+        overflow-y: auto; /* Permite scroll si es necesario */
         font-family: Arial, sans-serif;
         background-color: #000;
-        padding: 20px;
-        box-sizing: border-box;
       }
 
       .contenedor-principal {
@@ -154,12 +163,6 @@ export class VistaTweetretweet extends LitElement {
       .mostrar-mas:hover { text-decoration: underline; }
     `;
   }
-
-    // `createRenderRoot()` se utiliza para evitar el Shadow DOM
-    // de modo que los estilos globales (como los importados de los temas de Vaadin) se apliquen directamente.
-    createRenderRoot() {
-        return this;
-    }
 
   render() {
     return html`

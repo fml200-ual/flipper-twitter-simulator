@@ -10,9 +10,21 @@ export class VistaVerhashtag extends LitElement {
     static get styles() {
         return css`
             :host {
-                display: block;
-                height: 100%;
-                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100vw; /* Ocupa todo el ancho del viewport */
+                height: 100vh; /* Ocupa toda la altura del viewport */
+                background-color: #000; /* Fondo negro */
+                font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+                box-sizing: border-box;
+                margin: 0; /* Elimina márgenes */
+                padding: 0; /* Elimina padding */
+                position: fixed; /* Fija la posición para ocupar toda la ventana */
+                top: 0;
+                left: 0;
+                overflow-y: auto; /* Permite scroll si es necesario */
+
                 background-color: black; /* Fondo oscuro como en la imagen */
                 color: white; /* Texto blanco */
                 font-family: 'Arial', sans-serif; /* O la fuente que desees */
@@ -118,37 +130,6 @@ export class VistaVerhashtag extends LitElement {
     }
 
     render() {
-        // Función auxiliar para renderizar una "tarjeta" de tweet
-        const renderTweetCard = (name: string, handle: string, date: string, content: string) => html`
-            <div class="tweet-card">
-                <div class="tweet-header">
-                    <div class="profile-pic"></div>
-                    <div class="user-info">
-                        <span class="name">${name}</span>
-                        <span class="handle">${handle}</span>
-                        <span class="date">${date}</span>
-                    </div>
-                </div>
-                <div class="tweet-content">
-                    ${content}
-                </div>
-                <div class="tweet-actions">
-                    <button class="action-button">
-                        <vaadin-icon icon="lumo:heart"></vaadin-icon>
-                        <span></span>
-                    </button>
-                    <button class="action-button">
-                        <vaadin-icon icon="lumo:redo"></vaadin-icon>
-                        <span></span>
-                    </button>
-                    <button class="action-button">
-                        <vaadin-icon icon="lumo:chat"></vaadin-icon>
-                        <span>2</span>
-                    </button>
-                </div>
-            </div>
-        `;
-
         return html`
 <vaadin-vertical-layout style="width: 100%; height: 100%;" id="vaadinVerticalLayout">
  <h1 style="align-self: center;" id="h1">#Hashtag</h1>
@@ -158,8 +139,5 @@ export class VistaVerhashtag extends LitElement {
 `;
     }
 
-    // Remove this method to render the contents of this view inside Shadow DOM
-    createRenderRoot() {
-        return this;
-    }
+
 }

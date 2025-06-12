@@ -3,21 +3,11 @@ package mds2;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 
 import interfaz.ACT02UsuarioRegistrado;
-import interfaz.ACT03Administrador;
-import interfaz.ACT02UsuarioRegistrado;
-import interfaz.ACT01UsuarioNoRegistrado;
 
 /**
  * A sample Vaadin view class.
@@ -39,6 +29,7 @@ public class MainView extends VerticalLayout {
 	public static class Pantalla {
 		public static VerticalLayout MainView;
 		public static Component Anterior;
+		public static int usuario;
 	}
 
 	/**
@@ -51,8 +42,9 @@ public class MainView extends VerticalLayout {
 	 *                bean.
 	 */
 	public MainView(@Autowired GreetService service) {
+		Pantalla.MainView = this;
+		Pantalla.usuario = 2;
 		ACT02UsuarioRegistrado test = new ACT02UsuarioRegistrado(this);
 		add(test);
-		Pantalla.MainView = this;
 	}
 }

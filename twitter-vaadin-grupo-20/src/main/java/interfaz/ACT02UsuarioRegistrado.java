@@ -39,6 +39,10 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 					MainView.removeAll();
 					MainView.add(new ACT01UsuarioNoRegistrado(mainView));
 				});
+		this.getBotonEscribirTweet().addClickListener(event -> {
+			Escribirtweet();
+		});
+
 	}
 
 	public void Listadeusuariosregistrado() {

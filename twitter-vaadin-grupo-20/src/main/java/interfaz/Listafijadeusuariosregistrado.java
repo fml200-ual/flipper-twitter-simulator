@@ -1,5 +1,7 @@
 package interfaz;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
 public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 	public ACT02UsuarioRegistrado _aCT02UsuarioRegistrado;
 	public Verperfilregistrado _verperfilregistrado;
@@ -9,10 +11,14 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 	public Listafijadeusuariosregistrado(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado) {
 		super();
 		this._aCT02UsuarioRegistrado = _aCT02UsuarioRegistrado;
+
+		Verlistadeusuarios();
 	}
 
 	public void Verperfilregistrado() {
-		throw new UnsupportedOperationException();
+		_verperfilregistrado = new Verperfilregistrado(this);
+		mds2.MainView.Pantalla.MainView.removeAll();
+		mds2.MainView.Pantalla.MainView.add(_verperfilregistrado);
 	}
 
 	public void Perspectivabloqueado() {
@@ -21,5 +27,11 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 
 	public void Verlistaampliadadeusuariosregistrado() {
 		throw new UnsupportedOperationException();
+	}
+
+	public void Verlistadeusuarios() {
+		this.getUsersListContainer().as(VerticalLayout.class)
+				.add(new Listadeusuarios(
+						(Verlistaampliadadeusuarios) null));
 	}
 }

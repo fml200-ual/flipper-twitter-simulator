@@ -89,9 +89,6 @@ export class VistaListadehashtags extends LitElement {
   render() {
     return html`
 <vaadin-vertical-layout id="mainContainer" style="justify-content: flex-start; align-items: stretch;">
- <vista-listadehashtags_item data-new></vista-listadehashtags_item>
- <vista-listadehashtags_item data-new></vista-listadehashtags_item>
- <vista-listadehashtags_item data-new></vista-listadehashtags_item>
 </vaadin-vertical-layout>
 `;
   }

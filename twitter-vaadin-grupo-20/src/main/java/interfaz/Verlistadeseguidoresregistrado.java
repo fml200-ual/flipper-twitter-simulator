@@ -7,6 +7,14 @@ public class Verlistadeseguidoresregistrado extends VistaVerlistadeseguidoresreg
 	public Verpropioperfil _verpropioperfil;
 	public Listadeusuarios _listadeusuarios;
 
+	public Verlistadeseguidoresregistrado(Verperfilregistrado verperfilregistrado) {
+		this._verperfilregistrado = verperfilregistrado;
+	}
+
+	public Verlistadeseguidoresregistrado(Verpropioperfil verpropioperfil) {
+		this._verpropioperfil = verpropioperfil;
+	}
+
 	public void Listadeusuarios() {
 		throw new UnsupportedOperationException();
 	}
