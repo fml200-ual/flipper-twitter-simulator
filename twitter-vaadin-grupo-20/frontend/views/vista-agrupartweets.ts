@@ -5,45 +5,39 @@ export class VistaAgrupartweets extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: block; /* Sigue siendo buena práctica */
-        position: fixed; /* <<-- CLAVE: Posicionamiento fijo respecto al viewport */
-        top: 0;          /* <<-- Ancla el elemento al borde superior de la ventana */
-        left: 0;         /* <<-- Ancla el elemento al borde izquierdo de la ventana */
-        right: 0;        /* <<-- Ancla el elemento al borde derecho de la ventana */
-        bottom: 0;       /* <<-- Ancla el elemento al borde inferior de la ventana */
-        /* No necesitamos width/height 100%/100vw/100vh aquí si usamos top/left/right/bottom: 0 */
-        box-sizing: border-box; /* Asegura que el padding/border no aumenten el tamaño */
-        z-index: 1;      /* Controla el orden de apilamiento (ajusta si tienes otros elementos fijos) */
+        display: flex;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
       }
 
       #mainContainer {
         width: 100%;
         height: 100%;
-        display: flex; /* Usar flexbox para el layout vertical */
-        flex-direction: column; /* Apilar elementos verticalmente */
-        align-items: stretch; /* Los hijos se estiran para ocupar el ancho completo */
-        background-color: #333; /* Color de fondo oscuro como en la imagen */
-        border: 2px solid #00FFFF; /* Borde cian como en la imagen */
-        padding: var(--lumo-space-m); /* Espaciado interno */
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        background-color: #333;
+        border: 2px solid #00FFFF;
+        padding: var(--lumo-space-m);
         box-sizing: border-box;
-        overflow-y: auto; /* Permite desplazamiento vertical si el contenido excede el espacio de la vista completa */
       }
 
       #tweetsContainer {
-        flex-grow: 1; /* Este contenedor de tweets crecerá para ocupar todo el espacio disponible */
+        flex: 1;
         width: 100%;
-        overflow-y: auto; /* Permite desplazamiento interno si hay muchos tweets */
         display: flex;
         flex-direction: column;
-        gap: var(--lumo-space-m); /* Espacio entre los tweets */
+        gap: var(--lumo-space-m);
+        overflow-y: auto;
       }
 
       #moreTweetsButtonContainer {
+        flex-shrink: 0;
         width: 100%;
-        flex-shrink: 0; /* Evita que este contenedor se encoja */
         display: flex;
-        justify-content: center; /* Centra el botón horizontalmente */
-        padding-top: var(--lumo-space-m); /* Espacio por encima del botón */
+        justify-content: center;
+        padding-top: var(--lumo-space-m);
       }
 
       #mostrarMasTweetsButton {
@@ -70,7 +64,7 @@ export class VistaAgrupartweets extends LitElement {
 </vaadin-vertical-layout>
 `;
   }
-  
+
   // Mantén esta línea comentada para usar Shadow DOM, que es la práctica
   // recomendada.
   // Si deseas Light DOM, descoméntala, pero asegúrate de que los estilos se

@@ -12,6 +12,7 @@ public class Verhashtagregistrado extends Verhashtag {
 		this._verlistaampliadadehashtagsregistrado = _verlistaampliadadehashtagsregistrado;
 
 		Listadetweetsyretweetsregistrado();
+		this.addBackButton();
 	}
 
 	public Verhashtagregistrado(Listafijadehashtagsregistrado _listafijadehashtagsregistrado) {
@@ -19,6 +20,7 @@ public class Verhashtagregistrado extends Verhashtag {
 		this._listafijadehashtagsregistrado = _listafijadehashtagsregistrado;
 
 		Listadetweetsyretweetsregistrado();
+		this.addBackButton();
 	}
 
 	public void Listadetweetsyretweetsregistrado() {

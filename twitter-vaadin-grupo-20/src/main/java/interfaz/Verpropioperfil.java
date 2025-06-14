@@ -11,12 +11,25 @@ public class Verpropioperfil extends Verperfil {
 	public Verpropioperfil(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado) {
 		super();
 		this._aCT02UsuarioRegistrado = _aCT02UsuarioRegistrado;
+
 		this.getBanProfileButton().setVisible(false);
 		this.getDeleteProfileButton().setVisible(false);
+		this.getShowMoreButton().setVisible(false);
 		this.getUserTweetsTab().setText("Mis tweets");
 		this.getLikedTweetsTab().setText("Tweets que me gustan");
 
-		VerlistatweetsRetweets();
+		this.Agrupartweets();
+
+		this.getLikedTweetsTab().addClickListener(event -> {
+			Agrupartweetsgustados();
+		});
+
+		this.getRetweetsTab().addClickListener(event -> {
+			Agruparretweets();
+		});
+		this.getUserTweetsTab().addClickListener(event -> {
+			Agrupartweets();
+		});
 
 		this.getFollowingCount().addClickListener(event -> {
 			Verlistadeseguidosregistrado();
@@ -27,9 +40,9 @@ public class Verpropioperfil extends Verperfil {
 		this.getEditAccountButton().addClickListener(event -> {
 			Editarcuenta();
 		});
-		this.getShowMoreButton().addClickListener(event -> {
-			VerlistafijatweetsRetweets();
-		});
+
+		this.addBackButton();
+
 	}
 
 	public void Editarcuenta() {
@@ -51,19 +64,5 @@ public class Verpropioperfil extends Verperfil {
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verlistadeseguidosregistrado);
-	}
-
-	public void VerlistatweetsRetweets() {
-		Listadetweetsyretweets listadetweetsyretweets = new Listadetweetsyretweets();
-		listadetweetsyretweets.getMainContainer().as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class)
-				.add(new Listadetweetsyretweets_item(listadetweetsyretweets));
-
-		this.getTweetsListLayout().add(listadetweetsyretweets);
-	}
-
-	public void VerlistafijatweetsRetweets() {
-		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
-		Pantalla.MainView.removeAll();
-		Pantalla.MainView.add(new Vertweetpropio(null));
 	}
 }

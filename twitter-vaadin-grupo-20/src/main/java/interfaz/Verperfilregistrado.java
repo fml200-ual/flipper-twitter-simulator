@@ -35,6 +35,19 @@ public class Verperfilregistrado extends Verperfil {
 		this.getFollowersCount().addClickListener(event -> {
 			Verlistadeseguidoresregistrado();
 		});
+
+		this.Agrupartweets();
+
+		this.getLikedTweetsTab().addClickListener(event -> {
+			this.Agrupartweetsgustados();
+		});
+
+		this.getRetweetsTab().addClickListener(event -> {
+			this.Agruparretweets();
+		});
+		this.getUserTweetsTab().addClickListener(event -> {
+			this.Agrupartweets();
+		});
 	}
 
 	public Verperfilregistrado(Verlistaampliadadeusuariosregistrado _verlistaampliadadeusuariosregistrado) {

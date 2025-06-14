@@ -14,7 +14,6 @@ public class Listadehashtags extends VistaListadehashtags {
 		super();
 		this._verlistaampliadadehashtags = _verlistaampliadadehashtags;
 
-		itemsHashtags();
 	}
 
 	public void itemsHashtags() {

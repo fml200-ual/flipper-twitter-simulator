@@ -7,7 +7,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
-import interfaz.ACT02UsuarioRegistrado;
+import interfaz.*;
 
 /**
  * A sample Vaadin view class.

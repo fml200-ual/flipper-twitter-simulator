@@ -19,6 +19,7 @@ public class Listadehashtags_item extends VistaListadehashtags_item {
 	}
 
 	private void mostrarHashtag() {
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		if (Pantalla.usuario == 2) {
 			Pantalla.MainView.add(new Verhashtagregistrado((Listafijadehashtagsregistrado) null));
@@ -30,4 +31,5 @@ public class Listadehashtags_item extends VistaListadehashtags_item {
 	public void Mostrarmshashtags() {
 		throw new UnsupportedOperationException();
 	}
+
 }

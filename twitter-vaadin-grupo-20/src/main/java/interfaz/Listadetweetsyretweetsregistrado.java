@@ -10,7 +10,8 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 	}
 
 	public Listadetweetsyretweetsregistrado(Verhashtagregistrado verhashtagregistrado) {
-		//TODO Auto-generated constructor stub
+		super();
+		this._verhashtagregistrado = verhashtagregistrado;
 	}
 
 	public Verhashtagregistrado get_verhashtagregistrado() {

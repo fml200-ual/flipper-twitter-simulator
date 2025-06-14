@@ -15,7 +15,7 @@ import com.vaadin.flow.component.html.Div;
 @JsModule("./views/vista-listadetweetsyretweets_item.ts")
 public class VistaListadetweetsyretweets_item extends LitTemplate {
 
-    @Id("mainContainer")
+	@Id("mainContainer")
 	private Element mainContainer;
 	@Id("headerLayout")
 	private HorizontalLayout headerLayout;
@@ -53,8 +53,8 @@ public class VistaListadetweetsyretweets_item extends LitTemplate {
 	private Icon commentsIcon;
 
 	public VistaListadetweetsyretweets_item() {
-        // You can initialise any data required for the connected UI components here.
-    }
+		// You can initialise any data required for the connected UI components here.
+	}
 
 	public Element getMainContainer() {
 		return mainContainer;
@@ -199,5 +199,5 @@ public class VistaListadetweetsyretweets_item extends LitTemplate {
 	public void setCommentsIcon(Icon commentsIcon) {
 		this.commentsIcon = commentsIcon;
 	}
-	
+
 }

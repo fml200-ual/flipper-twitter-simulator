@@ -11,7 +11,6 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 	public Listafijadeusuariosregistrado(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado) {
 		super();
 		this._aCT02UsuarioRegistrado = _aCT02UsuarioRegistrado;
-
 		Verlistadeusuarios();
 	}
 
@@ -30,8 +29,15 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 	}
 
 	public void Verlistadeusuarios() {
-		this.getUsersListContainer().as(VerticalLayout.class)
-				.add(new Listadeusuarios(
-						(Verlistaampliadadeusuarios) null));
+		Listadeusuarios listadeusuarios = new Listadeusuarios(
+				_verlistaampliadadeusuariosregistrado);
+
+		listadeusuarios.getMainContainer().as(VerticalLayout.class)
+				.add(new Listadeusuarios_item(listadeusuarios));
+		listadeusuarios.getMainContainer().as(VerticalLayout.class)
+				.add(new Listadeusuarios_item(listadeusuarios));
+
+		this.getMainContainer().as(VerticalLayout.class)
+				.add(listadeusuarios);
 	}
 }
