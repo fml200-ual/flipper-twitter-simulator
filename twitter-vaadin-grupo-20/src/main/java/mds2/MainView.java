@@ -40,7 +40,6 @@ public class MainView extends VerticalLayout {
 		public static VerticalLayout MainView;
 		public static Component Anterior;
 	}
-
 	/**
 	 * Construct a new Vaadin view.
 	 * <p>
@@ -51,8 +50,9 @@ public class MainView extends VerticalLayout {
 	 *                bean.
 	 */
 	public MainView(@Autowired GreetService service) {
-		ACT02UsuarioRegistrado test = new ACT02UsuarioRegistrado(this);
-		add(test);
-		Pantalla.MainView = this;
-	}
+        // Vista inicial: Usuario no registrado
+        ACT01UsuarioNoRegistrado usuarioNoRegistrado = new ACT01UsuarioNoRegistrado(this);
+        add(usuarioNoRegistrado);
+        Pantalla.MainView = this;
+    }
 }

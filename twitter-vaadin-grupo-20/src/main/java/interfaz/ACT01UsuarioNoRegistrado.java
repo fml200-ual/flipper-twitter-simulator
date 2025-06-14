@@ -12,13 +12,21 @@ public class ACT01UsuarioNoRegistrado extends VistaAct01usuarionoregistrado {
 	public Restablecercontrasea _restablecercontrasea;
 	public Listafijadehashtagsnoregistrado _listafijadehashtagsnoregistrado;
 	public Iniciarsesin _iniciarsesin;
+	public MainView _mainView;
 
 	public ACT01UsuarioNoRegistrado(MainView mainView) {
+		_mainView = mainView;
 		// Ensamblado de componentes fijos para usuario no registrado
 		Listafijadeusuariosnoregistrado();
 		//Iniciarsesin();
 		//Registrarse();
 		//Listafijadehashtagsnoregistrado();
+		
+		// Ensamblado de componentes dinámicos - ClickListeners
+		this.getBotonIniciarSesion().addClickListener(event -> Iniciarsesin());
+		this.getBotonRegistrarse().addClickListener(event -> Registrarse());
+		this.getBotonMasUsuarios().addClickListener(event -> VerlistaampliadadeusuariosNoRegistrado());
+		this.getBotonMasHashtags().addClickListener(event -> VerlistaampliadadehashtagsNoRegistrado());
 	}
 
 	public void IniciarsesinconGoogle() {
@@ -27,7 +35,8 @@ public class ACT01UsuarioNoRegistrado extends VistaAct01usuarionoregistrado {
 
 	public void Registrarse() {
 		_registrarse = new Registrarse(this);
-		this.getVerticalLayoutCentralNoRegistrado().as(VerticalLayout.class).add(_registrarse);
+		_mainView.removeAll();
+		_mainView.add(_registrarse);
 	}
 
 	public void Listafijadeusuariosnoregistrado() {
@@ -48,6 +57,19 @@ public class ACT01UsuarioNoRegistrado extends VistaAct01usuarionoregistrado {
 
 	public void Iniciarsesin() {
 		_iniciarsesin = new Iniciarsesin(this);
-		this.getVerticalLayoutCentralNoRegistrado().as(VerticalLayout.class).add(_iniciarsesin);
+		_mainView.removeAll();
+		_mainView.add(_iniciarsesin);
+	}
+
+	public void VerlistaampliadadeusuariosNoRegistrado() {
+		Verlistaampliadadeusuariosnoregistrado verListaUsuarios = new Verlistaampliadadeusuariosnoregistrado(this);
+		_mainView.removeAll();
+		_mainView.add(verListaUsuarios);
+	}
+
+	public void VerlistaampliadadehashtagsNoRegistrado() {
+		Verlistaampliadadehashtagsnoregistrado verListaHashtags = new Verlistaampliadadehashtagsnoregistrado(this);
+		_mainView.removeAll();
+		_mainView.add(verListaHashtags);
 	}
 }

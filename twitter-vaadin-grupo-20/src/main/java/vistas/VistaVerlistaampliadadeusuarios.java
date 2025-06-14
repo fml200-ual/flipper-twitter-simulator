@@ -47,4 +47,16 @@ public class VistaVerlistaampliadadeusuarios extends LitTemplate {
 		this.div = div;
 	}
 
+    public Element getVaadinVerticalLayout() {
+        return vaadinVerticalLayout;
+    }
+
+    public HorizontalLayout getVaadinHorizontalLayout() {
+        return vaadinHorizontalLayout;
+    }
+
+    public Div getDiv() {
+        return div;
+    }
+
 }
