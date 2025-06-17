@@ -77,8 +77,6 @@ public class VistaPublicacinvistaadministrador extends LitTemplate {
 	private Icon iconoComentar;
 	@Id("contenedorComentarios")
 	private Div contenedorComentarios;
-	@Id("itemListaHashtags")
-	private Element itemListaHashtags;
 	@Id("linkMostrarMas")
 	private Element linkMostrarMas;
 
@@ -324,14 +322,6 @@ public class VistaPublicacinvistaadministrador extends LitTemplate {
 
 	public void setContenedorComentarios(Div contenedorComentarios) {
 		this.contenedorComentarios = contenedorComentarios;
-	}
-
-	public Element getItemListaHashtags() {
-		return itemListaHashtags;
-	}
-
-	public void setItemListaHashtags(Element itemListaHashtags) {
-		this.itemListaHashtags = itemListaHashtags;
 	}
 
 	public Element getLinkMostrarMas() {

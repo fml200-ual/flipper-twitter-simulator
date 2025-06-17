@@ -27,7 +27,7 @@
   // Configure tool-specific properties.
   "customizations": {
     "vscode": {
-      "extensions": ["vaadin.vaadin-vscode"]
+      "extensions": ["vaadin.vaadin-vscode", "runem.lit-plugin"]
     }
   },
 

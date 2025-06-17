@@ -3,7 +3,6 @@ import '@vaadin/vertical-layout';
 import '@vaadin/horizontal-layout';
 import '@vaadin/icon';
 import '@vaadin/icons';
-import './vista-listadehashtags_item';
 
 @customElement('vista-publicacinvistaadministrador')
 export class VistaPublicacinvistaadministrador extends LitElement {
@@ -11,21 +10,31 @@ export class VistaPublicacinvistaadministrador extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Centra el contenido en el host */
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
         font-family: Arial, sans-serif;
         background-color: #000;
-        padding: 20px;
+        overflow-y: auto;
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
       .contenedor-principal {
-          max-width: 550px;
           width: 100%;
+          max-width: 100%;
+          height: 100%;
           display: flex;
           flex-direction: column;
           gap: 15px;
+          padding: 20px;
+          box-sizing: border-box;
       }
 
       /* --- ESTILOS PARA LA PUBLICACIÓN PRINCIPAL --- */
@@ -36,6 +45,10 @@ export class VistaPublicacinvistaadministrador extends LitElement {
         background-color: #2D2D2D;
         color: #eee;
         padding: 15px;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        box-sizing: border-box;
       }
 
       .publicacion-principal-contenedor .cabecera {
@@ -74,6 +87,8 @@ export class VistaPublicacinvistaadministrador extends LitElement {
         margin-top: 15px;
         background-color: #202020;
         gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .publicacion-citada-contenedor .cabecera { align-items: center; gap: 8px; }
       .publicacion-citada-contenedor .avatar { width: 25px; height: 25px; }
@@ -117,7 +132,13 @@ export class VistaPublicacinvistaadministrador extends LitElement {
       }
       .boton-eliminar-tweet:hover { background-color: #c71e52; }
       
-      .comentarios-contenedor { display: flex; flex-direction: column; gap: 10px; }
+      .comentarios-contenedor { 
+        display: flex; 
+        flex-direction: column; 
+        gap: 10px; 
+        width: 100%;
+        box-sizing: border-box;
+      }
       
       .mostrar-mas {
         color: #2E8B57;
@@ -175,7 +196,6 @@ export class VistaPublicacinvistaadministrador extends LitElement {
   </div>
  </vaadin-vertical-layout>
  <div class="comentarios-contenedor" id="contenedorComentarios">
-  <vista-listadehashtags_item id="itemListaHashtags"></vista-listadehashtags_item>
  </div>
  <a href="#" class="mostrar-mas" id="linkMostrarMas">Mostrar más comentarios</a>
 </div>

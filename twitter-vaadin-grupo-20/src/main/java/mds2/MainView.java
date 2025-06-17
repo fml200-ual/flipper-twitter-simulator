@@ -44,7 +44,7 @@ public class MainView extends VerticalLayout {
 	public MainView(@Autowired GreetService service) {
 		Pantalla.MainView = this;
 		Pantalla.usuario = 2;
-		ACT02UsuarioRegistrado test = new ACT02UsuarioRegistrado(this);
+		ACT03Administrador test = new ACT03Administrador(this);
 		add(test);
 	}
 }

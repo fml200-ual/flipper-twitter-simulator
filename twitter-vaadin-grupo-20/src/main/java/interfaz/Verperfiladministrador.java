@@ -11,20 +11,65 @@ public class Verperfiladministrador extends Verperfil {
 		super();
 		this._vertweetadministrador = _vertweetadministrador;
 		this.getEditAccountButton().setVisible(false);
+		this.getShowMoreButton().setVisible(false);
+
+		this.Agrupartweets();
+		this.addBackButton();
+
+		this.getDeleteProfileButton().addClickListener(event -> {
+			Eliminarperfil();
+		});
+		this.getBanProfileButton().addClickListener(event -> {
+			Banearusuario();
+		});
+
+		this.getUserTweetsTab().addClickListener(event -> {
+			this.Agrupartweets();
+		});
+
+		this.getLikedTweetsTab().addClickListener(event -> {
+			this.Agrupartweetsgustados();
+		});
+		this.getRetweetsTab().addClickListener(event -> {
+			this.Agruparretweets();
+		});
+
 	}
 
 	public Verperfiladministrador(Verretweetadministrador _verretweetadministrador) {
 		super();
 		this._verretweetadministrador = _verretweetadministrador;
 		this.getEditAccountButton().setVisible(false);
+		this.getShowMoreButton().setVisible(false);
+
+		this.Agrupartweets();
+		this.addBackButton();
+
+		this.getDeleteProfileButton().addClickListener(event -> {
+			Eliminarperfil();
+		});
+		this.getBanProfileButton().addClickListener(event -> {
+			Banearusuario();
+		});
+
+		this.getUserTweetsTab().addClickListener(event -> {
+			this.Agrupartweets();
+		});
+
+		this.getLikedTweetsTab().addClickListener(event -> {
+			this.Agrupartweetsgustados();
+		});
+		this.getRetweetsTab().addClickListener(event -> {
+			this.Agruparretweets();
+		});
 	}
 
 	public void Eliminarperfil() {
-		throw new UnsupportedOperationException();
+		System.out.println("Eliminar perfil");
 	}
 
 	public void Banearusuario() {
-		throw new UnsupportedOperationException();
+		System.out.println("Banear usuario");
 	}
 
 	public void Detallarlongitudbaneo() {
