@@ -95,103 +95,33 @@ export class VistaListadecomentarios_item extends LitElement {
     `;
   }
 
-  createRenderRoot() {
-    return this; // Light DOM para mejor integración
+  // Método para actualizar el contenido del comentario
+  updateCommentContent(username: string, content: string, time: string) {
+    const usernameEl = this.querySelector('.username');
+    const contentEl = this.querySelector('.content');
+    const timeEl = this.querySelector('.time');
+    const avatarEl = this.querySelector('.avatar');
+    
+    if (usernameEl) usernameEl.textContent = username;
+    if (contentEl) contentEl.textContent = content;
+    if (timeEl) timeEl.textContent = time;
+    if (avatarEl) avatarEl.textContent = username.charAt(1).toUpperCase();
   }
-}
 
-      #VL_nickYUsername {
-        flex-grow: 1;
-        line-height: 1.2;
-      }
-
-      #h4_nickUsuario {
-        margin: 0;
-        color: #fff;
-        font-size: var(--lumo-font-size-l);
-        font-weight: bold;
-      }
-
-      #label_username {
-        color: #aaa;
-        font-size: var(--lumo-font-size-s);
-      }
-
-      /* Contenedor del Texto del Comentario */
-      #VL_contenidoComentario {
-        width: 100%;
-        background-color: #fff;
-        padding: var(--lumo-space-m);
-        border-radius: 5px;
-        color: #333;
-        font-size: 1.1em;
-        text-align: center;
-        box-sizing: border-box;
-        border: none;
-        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-grow: 1; /* Permite que el contenido del comentario se estire para llenar el espacio vertical */
-        overflow: auto; /* Si el texto es muy largo, permite desplazamiento interno */
-      }
-
-      /* Pie de página (fecha, avatar, like) */
-      #HL_fechaYMeGusta {
-        width: 100%;
-        height: auto;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--lumo-space-s);
-        padding-top: var(--lumo-space-s); /* Espacio entre el contenido y el footer */
-        flex-shrink: 0; /* Asegura que el footer no se encoja */
-      }
-
-      #label_fechaComentario {
-        color: #aaa;
-        font-size: var(--lumo-font-size-s);
-        flex-grow: 1;
-      }
-
-      vaadin-avatar {
-        --vaadin-avatar-size: 24px;
-        background-color: #aaa;
-        color: #333;
-        font-size: var(--lumo-font-size-s);
-        flex-shrink: 0;
-      }
-
-      #ironIcon_meGusta {
-        width: 24px;
-        height: 24px;
-        color: black;
-        flex-shrink: 0;
-      }
-    `;
-  }
-  render() {
-    return html`
-      <div class="comment-card">
-        <div class="comment-header">
-          <div class="avatar">👤</div>
-          <div class="user-info">
-            <div class="username" id="h4_nickUsuario">Usuario</div>
-            <div class="handle" id="label_username">@usuario</div>
-          </div>
-        </div>
-        <div class="comment-content">
-          <div id="label_comentarioTexto">Este es un comentario de ejemplo. Aquí se mostraría el texto del comentario seleccionado.</div>
-        </div>
-        <div class="comment-footer">
-          <span id="label_fechaComentario" class="date">2h</span>
-          <div class="actions">
-            <button class="action-btn">❤️ <span>5</span></button>
-            <button class="action-btn">💬 <span>2</span></button>
-          </div>
-        </div>
-      </div>
-    `;
+  firstUpdated() {
+    // Configurar efectos hover
+    const commentCard = this.querySelector('.comment-card') as HTMLElement;
+    if (commentCard) {
+      commentCard.addEventListener('mouseenter', () => {
+        commentCard.style.backgroundColor = '#2a2a2a';
+        commentCard.style.borderColor = '#00FFFF';
+      });
+      
+      commentCard.addEventListener('mouseleave', () => {
+        commentCard.style.backgroundColor = '#1a1a1a';
+        commentCard.style.borderColor = '#333';
+      });
+    }
   }
 
   createRenderRoot() {
