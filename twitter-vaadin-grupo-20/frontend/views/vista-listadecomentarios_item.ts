@@ -10,44 +10,95 @@ export class VistaListadecomentarios_item extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: flex; /* Crucial para centrar y expandir */
-        justify-content: center; /* Centra horizontalmente el card */
-        align-items: center; /* Centra verticalmente el card */
-        height: 100%; /* El host ocupa el 100% del alto de su padre */
-        width: 100%; /* El host ocupa el 100% del ancho de su padre */
-        padding: 0; /* Elimina padding del host para que el contenedor interno llegue a los bordes */
-        box-sizing: border-box;
-      }
-
-      #VL_listacomentarios_mainContainer {
-        width: 100%; /* Ocupa el 100% del ancho del host */
-        height: 100%; /* Ocupa el 100% del alto del host */
-        background-color: #333;
-        border: 1px solid #00FFFF;
-        border-radius: 8px; /* Todavía se verán las esquinas redondeadas */
-        padding: var(--lumo-space-m);
-        box-sizing: border-box;
-        display: flex; /* Convertir a flexbox para controlar la distribución vertical */
-        flex-direction: column; /* Apilar los elementos verticalmente */
-        justify-content: space-between; /* Distribuye el espacio entre los elementos: header, content, footer */
-        align-items: stretch; /* Estira los elementos hijos para ocupar el ancho completo */
-      }
-
-      /* Encabezado del comentario (icono, nick, username) */
-      #HL_comentario_header {
+        display: block;
         width: 100%;
-        align-items: center;
-        margin-bottom: var(--lumo-space-m);
-        gap: var(--lumo-space-s);
-        flex-shrink: 0; /* Asegura que el encabezado no se encoja */
+        background-color: transparent;
+        color: white;
+        font-family: 'Arial', sans-serif;
+        margin: 8px 0;
       }
 
-      #ironIcon_avatarUsuario {
-        width: 24px;
-        height: 24px;
-        color: #fff;
-        flex-shrink: 0;
+      .comment-card {
+        background-color: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 12px;
+        width: 100%;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
       }
+      
+      .comment-card:hover {
+        background-color: #2a2a2a;
+        border-color: #00FFFF;
+      }
+
+      .comment-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        gap: 8px;
+      }
+
+      .avatar {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(45deg, #00FFFF, #1da1f2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 0.9em;
+      }
+
+      .user-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .username {
+        font-weight: bold;
+        color: #00FFFF;
+        font-size: 0.9em;
+      }
+
+      .time {
+        color: #999;
+        font-size: 0.8em;
+      }
+
+      .content {
+        font-size: 0.95em;
+        line-height: 1.4;
+        margin-top: 8px;
+        word-wrap: break-word;
+        color: white;
+      }
+      `;
+  }
+
+  render() {
+    return html`
+      <div class="comment-card">
+        <div class="comment-header">
+          <div class="avatar">👤</div>
+          <div class="user-info">
+            <div class="username">@usuario</div>
+            <div class="time">5m</div>
+          </div>
+        </div>
+        <div class="content">Este es un comentario de ejemplo sobre el tweet.</div>
+      </div>
+    `;
+  }
+
+  createRenderRoot() {
+    return this; // Light DOM para mejor integración
+  }
+}
 
       #VL_nickYUsername {
         flex-grow: 1;
@@ -119,30 +170,31 @@ export class VistaListadecomentarios_item extends LitElement {
       }
     `;
   }
-
   render() {
     return html`
-<vaadin-vertical-layout id="VL_listacomentarios_mainContainer">
- <vaadin-horizontal-layout id="HL_comentario_header">
-  <vaadin-icon id="ironIcon_avatarUsuario" icon="vaadin:envelope" size="16"></vaadin-icon>
-  <vaadin-vertical-layout id="VL_nickYUsername">
-   <h4 id="h4_nickUsuario">Nick</h4>
-   <label id="label_username">@arroba</label>
-  </vaadin-vertical-layout>
- </vaadin-horizontal-layout>
- <vaadin-vertical-layout id="VL_contenidoComentario">
-  <label id="label_comentarioTexto"> texto texto. Este es un ejemplo de texto más largo para demostrar cómo el componente se expande y el texto se ajusta dentro del área disponible. Si el texto es demasiado largo para el espacio, aparecerá una barra de desplazamiento. </label>
- </vaadin-vertical-layout>
- <vaadin-horizontal-layout id="HL_fechaYMeGusta">
-  <label id="label_fechaComentario">3 sept 2023</label>
-  <vaadin-avatar abbr="Y" id="avatar"></vaadin-avatar>
-  <vaadin-icon id="ironIcon_meGusta" icon="vaadin:heart" size="16"></vaadin-icon>
- </vaadin-horizontal-layout>
-</vaadin-vertical-layout>
-`;
+      <div class="comment-card">
+        <div class="comment-header">
+          <div class="avatar">👤</div>
+          <div class="user-info">
+            <div class="username" id="h4_nickUsuario">Usuario</div>
+            <div class="handle" id="label_username">@usuario</div>
+          </div>
+        </div>
+        <div class="comment-content">
+          <div id="label_comentarioTexto">Este es un comentario de ejemplo. Aquí se mostraría el texto del comentario seleccionado.</div>
+        </div>
+        <div class="comment-footer">
+          <span id="label_fechaComentario" class="date">2h</span>
+          <div class="actions">
+            <button class="action-btn">❤️ <span>5</span></button>
+            <button class="action-btn">💬 <span>2</span></button>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
-//  createRenderRoot() {
-//    return this;
-//  }
+  createRenderRoot() {
+    return this; // Light DOM para mejor integración
+  }
 }

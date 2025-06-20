@@ -8,28 +8,60 @@ import '@vaadin/button/src/vaadin-button.js';
 @customElement('vista-verlistaampliadadehashtags')
 export class VistaVerlistaampliadadehashtags extends LitElement {
     static get styles() {
-        return css`
-            :host {
-                display: block;
-                height: 100%;
-                width: 100%;
-                background-color: black; /* Fondo oscuro como en la imagen */
-                color: white; /* Texto blanco */
-                font-family: 'Inter', sans-serif; /* Usar Inter como fuente principal */
-                --lumo-space-m: 1rem; /* Define la variable de espacio lumo para padding */
-                --lumo-space-l: 1.5rem;
-                --lumo-space-s: 0.5rem;
-            }
-
-            #main-layout {
-                width: 100%;
-                max-width: 800px; /* Ancho máximo para centrar el contenido */
-                margin: 0 auto; /* Centrar el contenido */
-                padding: var(--lumo-space-m);
-                box-sizing: border-box;
+        return css`            :host {
                 display: flex;
                 flex-direction: column;
-                align-items: center; /* Centrar horizontalmente los elementos */
+                justify-content: center;
+                align-items: center;
+                width: 100vw;
+                height: 100vh;
+                min-height: 100vh;
+                min-width: 100vw;
+                background-color: #000000;
+                color: #ffffff;
+                font-family: 'Inter', sans-serif;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
+                --lumo-space-m: 1rem;
+                --lumo-space-l: 1.5rem;
+                --lumo-space-s: 0.5rem;
+            }            #main-layout {
+                width: 100vw;
+                height: 100vh;
+                background: transparent;
+                align-items: center;
+                justify-content: flex-start;
+                box-sizing: border-box;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            /* Botón de volver */
+            #backButton {
+                position: absolute;
+                top: 30px;
+                left: 30px;
+                background-color: #222;
+                color: #00ffff;
+                border: 1px solid #00ffff;
+                border-radius: 5px;
+                font-size: 1.1em;
+                padding: 10px 24px;
+                z-index: 1100;
+                transition: background 0.2s;
+                --lumo-primary-color: #00ffff;
+                --lumo-primary-text-color: #00ffff;
+            }
+            
+            #backButton:hover {
+                background-color: #00ffff;
+                color: #000;
             }
 
             h1 {
@@ -118,27 +150,16 @@ export class VistaVerlistaampliadadehashtags extends LitElement {
                     padding: var(--lumo-space-s) var(--lumo-space-m);
                 }
             }
+        `;    }    render() {
+        return html`
+            <vaadin-button id="backButton">← Volver</vaadin-button>
+            <vaadin-vertical-layout id="mainLayout" style="width: 100%; height: 100%;" theme="spacing">
+                <h1 id="pageTitle">#Hashtags</h1>
+                <div id="hashtagsListContainer" class="hashtags-list-container"></div>
+                <vaadin-button id="showMoreHashtagsButton" style="align-self: center;" tabindex="0">
+                    Mostrar más hashtags
+                </vaadin-button>
+            </vaadin-vertical-layout>
         `;
     }
-
-    createRenderRoot() {
-        return this;
-    }
-
-    render() {
-        return html`
-<vaadin-vertical-layout id="mainLayout" style="width: 100%; height: 100%;" theme="spacing">
- <h1 id="pageTitle">#Hashtag</h1>
- <div id="hashtagsListContainer" class="hashtags-list-container"></div>
- <vaadin-button id="showMoreHashtagsButton" style="align-self: center;" tabindex="0">
-  Mostrar más hashtags
- </vaadin-button>
-</vaadin-vertical-layout>
-`;
-    }
-
-    // Este método se elimina para que el contenido de esta vista se renderice dentro del Shadow DOM
-    // createRenderRoot() {
-    //     return this;
-    // }
 }

@@ -1,16 +1,89 @@
 import { LitElement, html, css, customElement } from 'lit-element';
+import '@vaadin/horizontal-layout/src/vaadin-horizontal-layout.js';
 import '@vaadin/vaadin-ordered-layout/src/vaadin-horizontal-layout.js';
 import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
 import '@polymer/iron-icon/iron-icon.js';
 import '@vaadin/button/src/vaadin-button.js';
 
 @customElement('vista-act01usuarionoregistrado')
-export class VistaAct01usuarionoregistrado extends LitElement {
-  static get styles() {
+export class VistaAct01usuarionoregistrado extends LitElement {  static get styles() {
     return css`
       :host {
           display: block;
           height: 100%;
+          background-color: #000000;
+          color: #ffffff;
+      }
+      
+      /* Fondo general */
+      .content {
+          background-color: #000000 !important;
+      }
+      
+      /* Títulos de secciones */
+      #spanListaUsuarios,
+      #spanListaHashtagsNoRegistrado {
+          color: #00ffff !important;
+          font-weight: bold;
+          font-size: 1.2em;
+      }
+      
+      /* Botones principales */
+      #botonIniciarSesion,
+      #botonRegistrarse {
+          background-color: #00ffff !important;
+          color: #000000 !important;
+          border: 2px solid #00ffff !important;
+          font-weight: bold;
+          margin: 8px 0;
+          transition: all 0.3s ease;
+      }
+      
+      #botonIniciarSesion:hover,
+      #botonRegistrarse:hover {
+          background-color: #ffffff !important;
+          color: #000000 !important;
+          border-color: #ffffff !important;
+      }
+      
+      /* Botón de Google */
+      #botonIniciarSesionGoogle {
+          background-color: #333333 !important;
+          color: #ffffff !important;
+          border: 2px solid #666666 !important;
+          margin: 8px 0;
+          transition: all 0.3s ease;
+      }
+      
+      #botonIniciarSesionGoogle:hover {
+          background-color: #555555 !important;
+          border-color: #00ffff !important;
+      }
+      
+      /* Botones de "Más" */
+      #botonMasUsuarios,
+      #botonMasHashtags {
+          background-color: #333333 !important;
+          color: #00ffff !important;
+          border: 1px solid #00ffff !important;
+          transition: all 0.3s ease;
+      }
+      
+      #botonMasUsuarios:hover,
+      #botonMasHashtags:hover {
+          background-color: #00ffff !important;
+          color: #000000 !important;
+      }
+      
+      /* Imagen */
+      img {
+          filter: brightness(0.9) contrast(1.1);
+      }
+      
+      /* Layouts */
+      vaadin-horizontal-layout,
+      vaadin-vertical-layout {
+          background-color: #000000 !important;
       }
       `;
   }

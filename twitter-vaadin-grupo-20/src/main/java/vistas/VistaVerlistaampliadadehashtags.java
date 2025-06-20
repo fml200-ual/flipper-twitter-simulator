@@ -29,6 +29,14 @@ public class VistaVerlistaampliadadehashtags extends LitTemplate {
 		this.pageTitle = pageTitle;
 	}
 
+	public Button getBackButton() {
+		return backButton;
+	}
+
+	public void setBackButton(Button backButton) {
+		this.backButton = backButton;
+	}
+
 	public Div getHashtagsListContainer() {
 		return hashtagsListContainer;
 	}
@@ -49,6 +57,8 @@ public class VistaVerlistaampliadadehashtags extends LitTemplate {
 	private Element mainLayout;
 	@Id("pageTitle")
 	private H1 pageTitle;
+	@Id("backButton")
+	private Button backButton;
 	@Id("hashtagsListContainer")
 	private Div hashtagsListContainer;
 	@Id("showMoreHashtagsButton")

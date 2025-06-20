@@ -2,8 +2,7 @@ import { LitElement, html, css, customElement } from 'lit-element';
 import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
 
 @customElement('vista-listadeusuarios')
-export class VistaListadeusuarios extends LitElement {
-  static get styles() {
+export class VistaListadeusuarios extends LitElement {  static get styles() {
     return css`
       :host {
           display: block;
@@ -12,6 +11,7 @@ export class VistaListadeusuarios extends LitElement {
           max-width: 100%; /* Evita que se desborde horizontalmente */
           padding: 5px; /* Padding reducido para evitar desbordamientos */
           box-sizing: border-box;
+          background-color: #000000;
       }
       #mainContainer {
         width: 100%;
@@ -23,6 +23,7 @@ export class VistaListadeusuarios extends LitElement {
         align-items: stretch; /* Asegura que los items se estiren a lo ancho */
         gap: 5px; /* Espacio reducido entre los ítems */
         box-sizing: border-box;
+        background-color: #000000 !important;
         /* Removido position: absolute que causaba que se saliera del layout */
       }
       `;

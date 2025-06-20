@@ -14,6 +14,8 @@ import com.vaadin.flow.component.button.Button;
 @JsModule("./views/vista-iniciarsesin.ts")
 public class VistaIniciarsesin extends LitTemplate {
 
+	@Id("backButton")
+	private Button backButton;
 	@Id("loginContainer")
 	private Div loginContainer;
 	@Id("usernameField")
@@ -28,9 +30,12 @@ public class VistaIniciarsesin extends LitTemplate {
 	private Button loginButton;
 	@Id("registerButton")
 	private Button registerButton;
-
 	public VistaIniciarsesin() {
 		// You can initialise any data required for the connected UI components here.
+	}
+
+	public Button getBackButton() {
+		return backButton;
 	}
 
 	public Div getLoginContainer() {

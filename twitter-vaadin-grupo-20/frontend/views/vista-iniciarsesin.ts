@@ -101,11 +101,26 @@ export class VistaIniciarsesin extends LitElement {
       #loginButton {
         background-color: #00FFFF;
         color: #000;
-      }
-      #registerButton {
+      }      #registerButton {
         background-color: #333;
         color: #00FFFF;
       }
+
+      #backButton {
+        background-color: #666;
+        color: #fff;
+        border: 1px solid #999;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        width: auto;
+      }
+
+      #backButton:hover {
+        background-color: #777;
+      }
+
       @media (max-width: 600px) {
         #loginContainer {
           padding: var(--lumo-space-m);
@@ -120,9 +135,9 @@ export class VistaIniciarsesin extends LitElement {
         }
       }
     `;
-  }
-  render() {
+  }  render() {
     return html`
+<vaadin-button id="backButton" tabindex="0">← Volver</vaadin-button>
 <div id="loginContainer">
  <img src="./img/imagenIcon.png" alt="Bird Logo" class="bird-logo">
  <vaadin-text-field label="Nick o correo electrónico" id="usernameField"></vaadin-text-field>

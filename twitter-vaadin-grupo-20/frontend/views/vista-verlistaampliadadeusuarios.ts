@@ -2,90 +2,86 @@ import { LitElement, html, css, customElement } from 'lit-element';
 import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
 import '@vaadin/horizontal-layout/src/vaadin-horizontal-layout.js';
 import '@vaadin/button/src/vaadin-button.js';
-import '@vaadin/icon/src/vaadin-icon.js';
-import '@vaadin/avatar/src/vaadin-avatar.js';
 
 @customElement('vista-verlistaampliadadeusuarios')
 export class VistaVerListaAmpliadaDeUsuarios extends LitElement {
     static get styles() {
         return css`
             :host {
-                display: block;
-                background-color: black;
-                color: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100vw;
+                height: 100vh;
+                min-height: 100vh;
+                min-width: 100vw;
+                background-color: #000000;
+                color: #ffffff;
                 font-family: sans-serif;
-                padding: 20px;
-                border-radius: 8px;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
             }
 
             vaadin-vertical-layout {
-                align-items: center; /* Center content horizontally within the layout */
-                justify-content: center; /* Center content vertically if space allows */
-                padding: 10px;
-                background-color: black;
-                border-radius: 5px;
+                width: 100vw;
+                height: 100vh;
+                background: transparent;
+                align-items: center;
+                justify-content: flex-start;
+                box-sizing: border-box;
+                padding: 0;
             }
 
-            .list-title-container {
+            vaadin-horizontal-layout {
                 width: 100%;
-                text-align: center;
-                margin-bottom: 15px;
+                justify-content: center;
             }
 
             .list-title {
-                font-size: 1.5em;
-                color: #ADD8E6; /* Light blue for title */
-                margin: 0; /* Remove default margin from div */
-            }
-
-            .no-items-message {
+                font-size: 2em;
+                color: #00ffff;
                 text-align: center;
-                color: #888; /* Grey color for the message */
-                font-style: italic;
-                margin-top: 20px;
-                padding: 10px;
-                border: 1px dashed #555; /* A subtle border for the empty state */
+                margin: 40px 0 20px 0;
+            }
+
+            #backButton {
+                position: absolute;
+                top: 30px;
+                left: 30px;
+                background-color: #222;
+                color: #00ffff;
+                border: 1px solid #00ffff;
                 border-radius: 5px;
-                width: fit-content; /* Adjust width to content */
+                font-size: 1.1em;
+                padding: 10px 24px;
+                z-index: 1100;
+                transition: background 0.2s;
             }
 
-            vaadin-button {
-                margin-top: 20px;
-                background-color: transparent; /* Make button background transparent by default */
-                color: #ADD8E6; /* Light blue for button text */
-                font-size: 1.2em;
-                --vaadin-button-border-radius: 5px; /* Adjust button border radius */
-                padding: 10px 20px;
-                box-shadow: none; /* Remove default shadow */
-                border: 1px solid #ADD8E6; /* Add a border to mimic glow */
-                text-shadow: 0 0 5px #ADD8E6; /* A subtle glow for the text */
-            }
-
-            vaadin-button:hover {
-                background-color: rgba(173, 216, 230, 0.1); /* Slight blue tint on hover */
-                text-decoration: none; /* Vaadin buttons don't typically underline */
-            }
-
-            vaadin-button[theme="tertiary"] {
-                /* Using tertiary theme to keep it minimalist as per previous discussion,
-                   but custom styles will override its background/border for glow effect */
-                border: 1px solid #ADD8E6; /* Re-apply border if tertiary removes it */
-                text-shadow: 0 0 5px #ADD8E6; /* Re-apply text shadow if tertiary removes it */
+            #backButton:hover {
+                background-color: #00ffff;
+                color: #000;
             }
         `;
     }
 
     render() {
-
         return html`
-<vaadin-vertical-layout theme="spacing" class="list-container" id="vaadinVerticalLayout">
- <vaadin-horizontal-layout class="list-title-container" id="vaadinHorizontalLayout">
-  <div class="list-title" id="div">
-   Lista de elementos:
-  </div>
- </vaadin-horizontal-layout>
-</vaadin-vertical-layout>
-`
-}
-
+            <vaadin-button id="backButton">← Volver</vaadin-button>
+            <vaadin-vertical-layout id="vaadinVerticalLayout">
+                <vaadin-horizontal-layout id="vaadinHorizontalLayout">
+                    <div id="div" class="list-title">
+                        Lista de Usuarios
+                    </div>
+                </vaadin-horizontal-layout>
+                <!-- Aquí irán los usuarios -->
+            </vaadin-vertical-layout>
+        `;
+    }
 }

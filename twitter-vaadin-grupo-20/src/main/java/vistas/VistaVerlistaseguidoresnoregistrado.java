@@ -85,6 +85,14 @@ public class VistaVerlistaseguidoresnoregistrado extends LitTemplate {
 		this.showMoreFollowersButton = showMoreFollowersButton;
 	}
 
+	public Button getBackButton() {
+		return backButton;
+	}
+
+	public void setBackButton(Button backButton) {
+		this.backButton = backButton;
+	}
+
 	@Id("main-layout")
 	private Element mainLayout;
 	@Id("header-container")
@@ -103,6 +111,8 @@ public class VistaVerlistaseguidoresnoregistrado extends LitTemplate {
 	private Span noFollowersMessage;
 	@Id("show-more-followers-button")
 	private Button showMoreFollowersButton;
+	@Id("back-button")
+	private Button backButton;
 
 	public VistaVerlistaseguidoresnoregistrado() {
         // You can initialise any data required for the connected UI components here.
