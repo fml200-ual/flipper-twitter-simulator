@@ -13,9 +13,13 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 	public Escribirtweet _escribirtweet;
 	public Vernotificaciones _vernotificaciones;
 	public Listadetweetsyretweetsregistrado _listadetweetsyretweetsregistrado;
+	public basededatos.Usuario_Registrado _usuarioRegistrado;
 
-	public ACT02UsuarioRegistrado(MainView mainView) {
+	public ACT02UsuarioRegistrado(MainView mainView, basededatos.Usuario_Registrado usuarioRegistrado) {
 		super(mainView);
+
+		this._usuarioRegistrado = usuarioRegistrado;
+
 		this.getSpanListaTweetsRecientes().setVisible(false);
 		Listadeusuariosregistrado();
 		Listadehashtagsregistrado();
@@ -39,7 +43,7 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 		this.getBotonCerrarSesionPrimerBoton()
 				.addClickListener(event -> {
 					MainView.removeAll();
-					MainView.add(new ACT01UsuarioNoRegistrado());
+					MainView.add(new ACT01UsuarioNoRegistrado(mainView));
 				});
 	}
 

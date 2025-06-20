@@ -2,6 +2,41 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ListMDS22425PFMurilloSuanesData",
+            "request": "launch",
+            "mainClass": "ormsamples.ListMDS22425PFMurilloSuanesData",
+            "projectName": "twitter-vaadin-grupo-20"
+        },
+        {
+            "type": "java",
+            "name": "DropMDS22425PFMurilloSuanesDatabaseSchema",
+            "request": "launch",
+            "mainClass": "ormsamples.DropMDS22425PFMurilloSuanesDatabaseSchema",
+            "projectName": "twitter-vaadin-grupo-20"
+        },
+        {
+            "type": "java",
+            "name": "DeleteMDS22425PFMurilloSuanesData",
+            "request": "launch",
+            "mainClass": "ormsamples.DeleteMDS22425PFMurilloSuanesData",
+            "projectName": "twitter-vaadin-grupo-20"
+        },
+        {
+            "type": "java",
+            "name": "CreateMDS22425PFMurilloSuanesData",
+            "request": "launch",
+            "mainClass": "ormsamples.CreateMDS22425PFMurilloSuanesData",
+            "projectName": "twitter-vaadin-grupo-20"
+        },
+        {
+            "type": "java",
+            "name": "CreateMDS22425PFMurilloSuanesDatabaseSchema",
+            "request": "launch",
+            "mainClass": "ormsamples.CreateMDS22425PFMurilloSuanesDatabaseSchema",
+            "projectName": "twitter-vaadin-grupo-20"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-Application<twitter-vaadin-grupo-20>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

@@ -9,6 +9,7 @@
     "ghcr.io/devcontainers/features/java:1": {
       "version": "none",
       "installMaven": "true",
+      "mavenVersion": "3.9.8",
       "installGradle": "false"
     },
     "ghcr.io/devcontainers/features/node:1": {
@@ -18,7 +19,7 @@
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [8080],
+  "forwardPorts": [8080, 81, 4433, 3306],
 
   // Use 'postCreateCommand' to run commands after the container is created.
   //   "postCreateCommand": "java -version",
