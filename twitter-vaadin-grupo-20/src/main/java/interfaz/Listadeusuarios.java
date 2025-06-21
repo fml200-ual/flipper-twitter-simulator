@@ -2,6 +2,8 @@ package interfaz;
 
 import java.util.Vector;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
 import vistas.VistaListadeusuarios;
 
 public class Listadeusuarios extends VistaListadeusuarios {
@@ -36,4 +38,17 @@ public class Listadeusuarios extends VistaListadeusuarios {
 		super();
 		this._verlistadeseguidoresregistrado = _verlistadeseguidoresregistrado;
 	}
+
+	public void itemsUsuarios() {
+		this.getMainContainer().as(VerticalLayout.class)
+				.add(new Listadeusuarios_item(this));
+		this.getMainContainer().as(VerticalLayout.class)
+				.add(new Listadeusuarios_item(this));
+		this.getMainContainer().as(VerticalLayout.class)
+				.add(new Listadeusuarios_item(this));
+		for (int i = 0; i < 3; i++) {
+
+		}
+	}
+
 }

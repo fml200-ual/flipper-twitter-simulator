@@ -2,5 +2,5 @@ package interfaz;
 
 import vistas.VistaVerhashtag;
 
-public class Verhashtag extends VistaVerhashtag{
+public class Verhashtag extends VistaVerhashtag {
 }

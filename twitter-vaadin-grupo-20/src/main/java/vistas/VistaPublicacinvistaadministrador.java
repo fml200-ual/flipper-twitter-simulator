@@ -19,6 +19,8 @@ public class VistaPublicacinvistaadministrador extends LitTemplate {
 
 	@Id("contenedorPrincipal")
 	private Div contenedorPrincipal;
+	@Id("botonVolver")
+	private NativeButton botonVolver;
 	@Id("layoutPublicacionPrincipal")
 	private Element layoutPublicacionPrincipal;
 	@Id("cabeceraPublicacion")
@@ -77,8 +79,6 @@ public class VistaPublicacinvistaadministrador extends LitTemplate {
 	private Icon iconoComentar;
 	@Id("contenedorComentarios")
 	private Div contenedorComentarios;
-	@Id("itemListaHashtags")
-	private Element itemListaHashtags;
 	@Id("linkMostrarMas")
 	private Element linkMostrarMas;
 
@@ -92,6 +92,14 @@ public class VistaPublicacinvistaadministrador extends LitTemplate {
 
 	public void setContenedorPrincipal(Div contenedorPrincipal) {
 		this.contenedorPrincipal = contenedorPrincipal;
+	}
+
+	public NativeButton getBotonVolver() {
+		return botonVolver;
+	}
+
+	public void setBotonVolver(NativeButton botonVolver) {
+		this.botonVolver = botonVolver;
 	}
 
 	public Element getLayoutPublicacionPrincipal() {
@@ -324,14 +332,6 @@ public class VistaPublicacinvistaadministrador extends LitTemplate {
 
 	public void setContenedorComentarios(Div contenedorComentarios) {
 		this.contenedorComentarios = contenedorComentarios;
-	}
-
-	public Element getItemListaHashtags() {
-		return itemListaHashtags;
-	}
-
-	public void setItemListaHashtags(Element itemListaHashtags) {
-		this.itemListaHashtags = itemListaHashtags;
 	}
 
 	public Element getLinkMostrarMas() {

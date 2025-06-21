@@ -1,12 +1,39 @@
 package interfaz;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
+import mds2.MainView.Pantalla;
 import vistas.VistaVerlistaseguidosnoregistrado;
 
-public class Verlistaseguidosnoregistrado extends VistaVerlistaseguidosnoregistrado{
+public class Verlistaseguidosnoregistrado extends VistaVerlistaseguidosnoregistrado {
 	public Verperfilnoregistrado _verperfilnoregistrado;
 	public Listadeusuarios _listadeusuarios;
 
-	public void Listadeusuarios() {
-		throw new UnsupportedOperationException();
+	public Verlistaseguidosnoregistrado(Verperfilnoregistrado verperfilnoregistrado) {
+		this._verperfilnoregistrado = verperfilnoregistrado;
+		Listadeusuarios();
+
+		this.getBackButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_verperfilnoregistrado);
+		});
 	}
+
+	private void Listadeusuarios() {
+		this.getNoFollowedMessageNoReg().setVisible(false);
+		_listadeusuarios = new Listadeusuarios(this);
+		for (int i = 0; i < 5; i++) {
+			Listadeusuarios_item item = new Listadeusuarios_item(_listadeusuarios);
+			// Agregar ClickListener personalizado para navegar a Verperfilnoregistrado
+			item.getMainContainer().addClickListener(event -> {
+				Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+				Pantalla.MainView.removeAll();
+				Pantalla.MainView.add(_verperfilnoregistrado);
+			});
+			_listadeusuarios.getMainContainer().as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class)
+					.add(item);
+		}
+		this.getFollowedListContainerNoReg().as(VerticalLayout.class).add(_listadeusuarios);
+	}
+
 }

@@ -1,9 +1,9 @@
 package interfaz;
+
 import mds2.MainView;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class ACT03Administrador extends ACT06SesinIniciada {
-	
 
 	public Listafijadetweetsadministrador _listafijadetweetsadministrador;
 
@@ -15,13 +15,26 @@ public class ACT03Administrador extends ACT06SesinIniciada {
 		this.getVerticalLayoutImagenRegistrado().setVisible(false);
 		this.getSpanRecomendadoParaTi().setVisible(false);
 		this.getBotonEscribirTweet().setVisible(false);
-		this.getVerticalLayoutDerechoSesionIniciada().setVisible(false);
+		this.getVerticalLayoutCentralSesionIniciada().setVisible(false);
+		this.getBotonNotificacionesRegistrado().setVisible(false);
+
+		this.getBotonMasHashtags().setText("Mostrar mas");
+
 		// Ensamblado de componentes fijos
 		Listafijadetweetsadministrador();
+
+		this.getBotonMasHashtags().addClickListener(event -> {
+			_listafijadetweetsadministrador.Verlistaampliadadetweetsadministrador();
+		});
+
+		this.getBotonCerrarSesionPrimerBoton().addClickListener(event -> {
+			this.Cerrarsesin();
+		});
 	}
-	
+
 	public void Listafijadetweetsadministrador() {
 		_listafijadetweetsadministrador = new Listafijadetweetsadministrador(this);
-		this.getVerticalLayoutCentralSesionIniciada().as(VerticalLayout.class).add(_listafijadetweetsadministrador);
+		this.getVerticalLayoutListaHashtagsSesionIniciada().as(VerticalLayout.class)
+				.add(_listafijadetweetsadministrador);
 	}
 }

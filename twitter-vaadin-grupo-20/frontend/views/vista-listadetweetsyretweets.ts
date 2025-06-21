@@ -23,13 +23,13 @@ export class VistaListadetweetsyretweets extends LitElement {
       }
       `;
   }
-  
+
   render() {
     return html`
 <vaadin-vertical-layout id="mainContainer"></vaadin-vertical-layout>
 `;
   }
-  
+
   // Mantén esta línea comentada para usar Shadow DOM, que es la práctica recomendada.
   // Si deseas Light DOM, descoméntala, pero asegúrate de que los estilos se propaguen correctamente.
   // createRenderRoot() {

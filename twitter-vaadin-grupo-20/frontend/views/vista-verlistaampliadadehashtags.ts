@@ -9,32 +9,49 @@ import '@vaadin/button/src/vaadin-button.js';
 export class VistaVerlistaampliadadehashtags extends LitElement {
     static get styles() {
         return css`
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
             :host {
                 display: block;
-                height: 100%;
-                width: 100%;
+                height: 100vh; /* Altura de toda la ventana del navegador */
+                width: 100vw; /* Ancho de toda la ventana del navegador */
+                min-height: 100vh; /* Altura mínima de toda la ventana */
+                margin: 0;
+                padding: 0;
                 background-color: black; /* Fondo oscuro como en la imagen */
                 color: white; /* Texto blanco */
                 font-family: 'Inter', sans-serif; /* Usar Inter como fuente principal */
                 --lumo-space-m: 1rem; /* Define la variable de espacio lumo para padding */
                 --lumo-space-l: 1.5rem;
                 --lumo-space-s: 0.5rem;
+                overflow-x: hidden; /* Evita scroll horizontal */
+                position: fixed; /* Posición fija para ocupar toda la pantalla */
+                top: 0;
+                left: 0;
             }
 
             #main-layout {
                 width: 100%;
-                max-width: 800px; /* Ancho máximo para centrar el contenido */
-                margin: 0 auto; /* Centrar el contenido */
-                padding: var(--lumo-space-m);
+                height: 100vh; /* Altura completa de la ventana */
+                max-width: none; /* Eliminar restricción de ancho máximo */
+                margin: 0; /* Sin margen para ocupar todo el espacio */
+                padding: 0; /* Eliminar todo el padding */
                 box-sizing: border-box;
+                padding: 0;
                 display: flex;
                 flex-direction: column;
                 align-items: center; /* Centrar horizontalmente los elementos */
+                overflow-y: auto; /* Permitir scroll vertical si es necesario */
             }
 
             h1 {
                 font-size: 2.5em;
-                margin-bottom: var(--lumo-space-l);
+                margin: var(--lumo-space-m) 0 var(--lumo-space-l) 0; /* Solo margen vertical */
+                padding: var(--lumo-space-s); /* Pequeño padding interno */
                 color: #00FFFF; /* Color turquesa como en la imagen */
                 font-family: 'Comic Sans MS', cursive; /* Estilo de fuente divertido como en la imagen */
                 text-align: center;
@@ -46,8 +63,10 @@ export class VistaVerlistaampliadadehashtags extends LitElement {
                 border: 2px solid #00FFFF; /* Borde turquesa como en la imagen */
                 border-radius: 8px;
                 padding: var(--lumo-space-s) 0; /* Padding vertical, horizontal 0 para los elementos */
-                margin-bottom: var(--lumo-space-m);
-                width: 100%;
+                margin: 0 var(--lumo-space-l) var(--lumo-space-m) var(--lumo-space-l); /* Margen lateral */
+                width: calc(100% - 3rem); /* Ajustar ancho considerando los márgenes */
+                flex: 1; /* Permitir que se expanda para ocupar el espacio disponible */
+                min-height: 0; /* Permitir que se reduzca si es necesario */
                 box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
@@ -84,22 +103,24 @@ export class VistaVerlistaampliadadehashtags extends LitElement {
                 font-size: 0.8em; /* Tamaño del icono */
             }
 
-            #show-more-hashtags-button {
-                background-color: #00FFFF; /* Botón "Mostrar más" turquesa */
-                color: black;
-                padding: var(--lumo-space-s) var(--lumo-space-l);
-                border-radius: 20px;
-                font-weight: bold;
-                margin-top: var(--lumo-space-l);
-                cursor: pointer;
+            /* Estilo para el botón de volver */
+            #backButton {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                background-color: #1976D2;
+                color: white;
                 border: none;
-                font-size: 1.1em;
-                text-transform: uppercase; /* Para que coincida con el estilo de la imagen */
-                transition: background-color 0.2s ease-in-out;
+                border-radius: 8px;
+                padding: 10px 20px;
+                font-size: 1em;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                z-index: 100;
             }
 
-            #show-more-hashtags-button:hover {
-                background-color: #00b3b3; /* Un tono más oscuro al pasar el ratón */
+            #backButton:hover {
+                background-color: #1565C0;
             }
 
             /* Responsive adjustments */
@@ -113,32 +134,27 @@ export class VistaVerlistaampliadadehashtags extends LitElement {
                 .hashtag-count {
                     font-size: 0.9em;
                 }
-                #show-more-hashtags-button {
-                    font-size: 1em;
-                    padding: var(--lumo-space-s) var(--lumo-space-m);
+                .hashtags-list-container {
+                    margin: 0 var(--lumo-space-s) var(--lumo-space-m) var(--lumo-space-s);
+                    width: calc(100% - 1rem);
+                }
+                #backButton {
+                    top: 10px;
+                    left: 10px;
+                    padding: 8px 16px;
+                    font-size: 0.9em;
                 }
             }
         `;
     }
 
-    createRenderRoot() {
-        return this;
-    }
-
     render() {
         return html`
-<vaadin-vertical-layout id="mainLayout" style="width: 100%; height: 100%;" theme="spacing">
+<vaadin-vertical-layout id="mainLayout" style="width: 100vw; height: 100vh; margin: 0; padding: 0; position: relative;">
+ <vaadin-button id="backButton">← Volver</vaadin-button>
  <h1 id="pageTitle">#Hashtag</h1>
  <div id="hashtagsListContainer" class="hashtags-list-container"></div>
- <vaadin-button id="showMoreHashtagsButton" style="align-self: center;" tabindex="0">
-  Mostrar más hashtags
- </vaadin-button>
 </vaadin-vertical-layout>
 `;
     }
-
-    // Este método se elimina para que el contenido de esta vista se renderice dentro del Shadow DOM
-    // createRenderRoot() {
-    //     return this;
-    // }
 }
