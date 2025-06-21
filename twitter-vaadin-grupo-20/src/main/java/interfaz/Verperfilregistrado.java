@@ -16,7 +16,6 @@ public class Verperfilregistrado extends Verperfil {
 		super();
 		this._listafijadeusuariosregistrado = _listafijadeusuariosregistrado;
 		this.getDeleteProfileButton().setVisible(false);
-		this.getShowMoreButton().setVisible(false);
 
 		this.getBanProfileButton().setText("Bloquear");
 		this.getEditAccountButton().setText("Seguir");
