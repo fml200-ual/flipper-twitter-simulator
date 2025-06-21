@@ -7,6 +7,7 @@ import mds2.MainView.Pantalla;
 public class Verlistaampliadadehashtagsregistrado extends Verlistaampliadadehashtags {
 	public Listafijadehashtagsregistrado _listafijadehashtagsregistrado;
 	public Verhashtagregistrado _verhashtagregistrado;
+	public ACT02UsuarioRegistrado _usuarioRegistrado;
 
 	public Verlistaampliadadehashtagsregistrado(Listafijadehashtagsregistrado _listafijadehashtagsregistrado) {
 		super();

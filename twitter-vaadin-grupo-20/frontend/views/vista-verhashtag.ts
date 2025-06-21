@@ -1,6 +1,7 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 import '@vaadin/text-field/src/vaadin-text-field.js';
 import '@vaadin/icons';
+import '@vaadin/icon';
 import '@vaadin/vaadin-ordered-layout/src/vaadin-vertical-layout.js';
 import '@vaadin/button/src/vaadin-button.js';
 import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
@@ -29,17 +30,28 @@ export class VistaVerhashtag extends LitElement {
                 color: white; /* Texto blanco */
                 font-family: 'Arial', sans-serif; /* O la fuente que desees */
                 --lumo-space-m: 1rem; /* Define la variable de espacio lumo para padding */
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            /* Asegurar que todos los elementos Vaadin tengan fondo negro */
+            vaadin-vertical-layout {
+                background-color: black !important;
             }
 
             #main-layout {
                 width: 100%;
                 max-width: 800px; /* Ancho máximo para centrar el contenido */
                 margin: 0 auto; /* Centrar el contenido */
-                padding: var(--lumo-space-m);
+                padding: 0;
                 box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
                 align-items: center; /* Centrar horizontalmente los elementos */
+                background-color: transparent !important;
+                flex: 1;
+                overflow-y: auto;
             }
 
             h1 {
@@ -116,15 +128,23 @@ export class VistaVerhashtag extends LitElement {
             }
 
             #show-more-button {
-                background-color: #00FFFF; /* Botón "Mostrar más" turquesa */
-                color: black;
-                padding: var(--lumo-space-s) var(--lumo-space-l);
-                border-radius: 20px;
-                font-weight: bold;
+                --lumo-primary-color: #00FFFF;
+                --lumo-primary-contrast-color: black;
                 margin-top: var(--lumo-space-l);
-                cursor: pointer;
-                border: none;
+                font-weight: bold;
                 font-size: 1.1em;
+            }
+
+            #volver-button {
+                --lumo-primary-color: #333;
+                --lumo-primary-contrast-color: white;
+                --lumo-contrast-10pct: #555;
+                margin: 10px;
+                font-size: 0.9em;
+            }
+
+            #volver-button:hover {
+                --lumo-primary-color: #555;
             }
         `;
     }
@@ -132,9 +152,10 @@ export class VistaVerhashtag extends LitElement {
     render() {
         return html`
 <vaadin-vertical-layout style="width: 100%; height: 100%;" id="vaadinVerticalLayout">
+ <vaadin-button id="volver-button" style="align-self: flex-start; margin: 10px;">← Volver</vaadin-button>
  <h1 style="align-self: center;" id="h1">#Hashtag</h1>
  <vaadin-vertical-layout id="main-layout" style="width: 100%; height: 100%; flex-shrink: 1;"></vaadin-vertical-layout>
- <button id="show-more-button" style="align-self: center;">Mostrar más</button>
+ <vaadin-button id="show-more-button" style="align-self: center;">Mostrar más</vaadin-button>
 </vaadin-vertical-layout>
 `;
     }

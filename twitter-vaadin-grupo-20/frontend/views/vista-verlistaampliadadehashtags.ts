@@ -41,6 +41,7 @@ export class VistaVerlistaampliadadehashtags extends LitElement {
                 margin: 0; /* Sin margen para ocupar todo el espacio */
                 padding: 0; /* Eliminar todo el padding */
                 box-sizing: border-box;
+                padding: 0;
                 display: flex;
                 flex-direction: column;
                 align-items: center; /* Centrar horizontalmente los elementos */
@@ -102,6 +103,26 @@ export class VistaVerlistaampliadadehashtags extends LitElement {
                 font-size: 0.8em; /* Tamaño del icono */
             }
 
+            /* Estilo para el botón de volver */
+            #backButton {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                background-color: #1976D2;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 10px 20px;
+                font-size: 1em;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                z-index: 100;
+            }
+
+            #backButton:hover {
+                background-color: #1565C0;
+            }
+
             /* Responsive adjustments */
             @media (max-width: 600px) {
                 h1 {
@@ -117,21 +138,23 @@ export class VistaVerlistaampliadadehashtags extends LitElement {
                     margin: 0 var(--lumo-space-s) var(--lumo-space-m) var(--lumo-space-s);
                     width: calc(100% - 1rem);
                 }
+                #backButton {
+                    top: 10px;
+                    left: 10px;
+                    padding: 8px 16px;
+                    font-size: 0.9em;
+                }
             }
         `;
     }
 
     render() {
         return html`
-<vaadin-vertical-layout id="mainLayout" style="width: 100vw; height: 100vh; margin: 0; padding: 0;">
+<vaadin-vertical-layout id="mainLayout" style="width: 100vw; height: 100vh; margin: 0; padding: 0; position: relative;">
+ <vaadin-button id="backButton">← Volver</vaadin-button>
  <h1 id="pageTitle">#Hashtag</h1>
  <div id="hashtagsListContainer" class="hashtags-list-container"></div>
 </vaadin-vertical-layout>
 `;
     }
-
-    // Este método se elimina para que el contenido de esta vista se renderice dentro del Shadow DOM
-    // createRenderRoot() {
-    //     return this;
-    // }
 }

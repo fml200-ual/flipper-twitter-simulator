@@ -4,6 +4,19 @@
    https://vaadin.com/themes/lumo for more information.
 */
 
+/* Estilos globales para evitar fondos blancos */
+html, body {
+  background-color: black !important;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Asegurar que todos los elementos Vaadin tengan fondo apropiado */
+vaadin-app-layout, vaadin-vertical-layout, vaadin-horizontal-layout {
+  background-color: transparent !important;
+}
+
 /* Example: CSS class name to center align the content . */
 .centered-content {
   margin: 0 auto;

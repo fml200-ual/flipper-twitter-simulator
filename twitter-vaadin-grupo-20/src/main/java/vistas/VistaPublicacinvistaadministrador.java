@@ -19,6 +19,8 @@ public class VistaPublicacinvistaadministrador extends LitTemplate {
 
 	@Id("contenedorPrincipal")
 	private Div contenedorPrincipal;
+	@Id("botonVolver")
+	private NativeButton botonVolver;
 	@Id("layoutPublicacionPrincipal")
 	private Element layoutPublicacionPrincipal;
 	@Id("cabeceraPublicacion")
@@ -90,6 +92,14 @@ public class VistaPublicacinvistaadministrador extends LitTemplate {
 
 	public void setContenedorPrincipal(Div contenedorPrincipal) {
 		this.contenedorPrincipal = contenedorPrincipal;
+	}
+
+	public NativeButton getBotonVolver() {
+		return botonVolver;
+	}
+
+	public void setBotonVolver(NativeButton botonVolver) {
+		this.botonVolver = botonVolver;
 	}
 
 	public Element getLayoutPublicacionPrincipal() {

@@ -51,8 +51,11 @@ public class Verpropioperfil extends Verperfil {
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_editarcuenta);
 	}
-
 	public void Verlistadeseguidoresregistrado() {
+		_verlistadeseguidoresregistrado = new Verlistadeseguidoresregistrado(this);
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_verlistadeseguidoresregistrado);
 		_verlistadeseguidoresregistrado = new Verlistadeseguidoresregistrado(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();

@@ -20,7 +20,7 @@ public class Listafijadehashtagsregistrado extends Listafijadehashtags {
 	}
 
 	public void Verhashtagregistrado() {
-		throw new UnsupportedOperationException();
+		
 	}
 
 	public void Listadehashtagsregistrado() {

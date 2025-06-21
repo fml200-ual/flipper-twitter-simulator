@@ -1,129 +1,196 @@
-import { LitElement, html, css } from 'lit';
-import { customElement } from 'lit/decorators.js';
-import '@vaadin/vertical-layout';
-import '@vaadin/horizontal-layout';
-import '@vaadin/button';
-import '@vaadin/icon';
-import '@vaadin/avatar';
-
-// Apply global styles to remove default margins
-const globalStyle = document.createElement('style');
-globalStyle.textContent = `
-    html, body {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        overflow: hidden !important;
-    }
-    
-    body > * {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-`;
-document.head.appendChild(globalStyle);
+import { LitElement, html, css, customElement } from 'lit-element';
+import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
+import '@vaadin/horizontal-layout/src/vaadin-horizontal-layout.js';
+import '@vaadin/button/src/vaadin-button.js';
 
 @customElement('vista-verlistaampliadadeusuarios')
 export class VistaVerListaAmpliadaDeUsuarios extends LitElement {
     static get styles() {
         return css`
-            /* Reset global styles */
-            * {
+            :host {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100vw;
+                height: 100vh;
+                min-height: 100vh;
+                min-width: 100vw;
+                background-color: #000000;
+                color: #ffffff;
+                font-family: sans-serif;
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
-            }
-
-            :host {
-                display: block;
                 position: fixed;
                 top: 0;
                 left: 0;
-                width: 100vw;
-                height: 100vh;
-                margin: 0;
-                padding: 0;
-                background-color: black;
-                color: white;
-                font-family: sans-serif;
-                box-sizing: border-box;
-                overflow: auto;
                 z-index: 1000;
+                overflow: hidden;
             }
 
             vaadin-vertical-layout {
-                width: 100%;
-                height: 100%;
+                width: 100vw;
+                height: 100vh;
+                background: transparent;
                 align-items: center;
                 justify-content: flex-start;
-                padding: 20px;
-                background-color: black;
                 box-sizing: border-box;
+                padding: 0;
+                overflow-y: auto;
+                overflow-x: hidden;
             }
 
-            .list-title-container {
+            vaadin-horizontal-layout {
                 width: 100%;
-                text-align: center;
-                margin-bottom: 15px;
+                justify-content: center;
             }
 
             .list-title {
-                font-size: 1.5em;
-                color: #ADD8E6; /* Light blue for title */
-                margin: 0; /* Remove default margin from div */
-            }
-
-            .no-items-message {
+                font-size: 2em;
+                color: #00ffff;
                 text-align: center;
-                color: #888; /* Grey color for the message */
-                font-style: italic;
-                margin-top: 20px;
-                padding: 10px;
-                border: 1px dashed #555; /* A subtle border for the empty state */
+                margin: 40px 0 20px 0;
+            }
+
+            #backButton {
+                position: absolute;
+                top: 30px;
+                left: 30px;
+                background-color: #222;
+                color: #00ffff;
+                border: 1px solid #00ffff;
                 border-radius: 5px;
-                width: fit-content; /* Adjust width to content */
+                font-size: 1.1em;
+                padding: 10px 24px;
+                z-index: 1100;
+                transition: background 0.2s;
             }
 
-            vaadin-button {
-                margin-top: 20px;
-                background-color: transparent; /* Make button background transparent by default */
-                color: #ADD8E6; /* Light blue for button text */
+            #backButton:hover {
+                background-color: #00ffff;
+                color: #000;
+            }
+
+            .users-container {
+                width: 100%;
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #111;
+                border-radius: 10px;
+                border: 1px solid #333;
+                max-height: calc(100vh - 200px);
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            .no-users-message {
+                text-align: center;
+                color: #666;
+                font-style: italic;
+                padding: 40px 20px;
+                font-size: 1.1em;
+            }
+
+            .user-item {
+                background-color: #1a1a1a;
+                border: 1px solid #00ffff;
+                border-radius: 8px;
+                padding: 15px;
+                margin: 10px 0;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                transition: all 0.3s ease;
+            }
+
+            .user-item:hover {
+                background-color: #2a2a2a;
+                border-color: #ffffff;
+                transform: translateY(-2px);
+            }
+
+            .user-avatar {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background-color: #00ffff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #000;
+                font-weight: bold;
                 font-size: 1.2em;
-                --vaadin-button-border-radius: 5px; /* Adjust button border radius */
-                padding: 10px 20px;
-                box-shadow: none; /* Remove default shadow */
-                border: 1px solid #ADD8E6; /* Add a border to mimic glow */
-                text-shadow: 0 0 5px #ADD8E6; /* A subtle glow for the text */
             }
 
-            vaadin-button:hover {
-                background-color: rgba(173, 216, 230, 0.1); /* Slight blue tint on hover */
-                text-decoration: none; /* Vaadin buttons don't typically underline */
+            .user-info {
+                flex: 1;
             }
 
-            vaadin-button[theme="tertiary"] {
-                /* Using tertiary theme to keep it minimalist as per previous discussion,
-                   but custom styles will override its background/border for glow effect */
-                border: 1px solid #ADD8E6; /* Re-apply border if tertiary removes it */
-                text-shadow: 0 0 5px #ADD8E6; /* Re-apply text shadow if tertiary removes it */
+            .user-name {
+                color: #ffffff;
+                font-size: 1.1em;
+                font-weight: bold;
+                margin: 0 0 5px 0;
+            }
+
+            .user-followers {
+                color: #00ffff;
+                font-size: 0.9em;
+            }
+
+            /* Estilos personalizados para scrollbar */
+            .users-container::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .users-container::-webkit-scrollbar-track {
+                background: #222;
+                border-radius: 4px;
+            }
+
+            .users-container::-webkit-scrollbar-thumb {
+                background: #00ffff;
+                border-radius: 4px;
+            }
+
+            .users-container::-webkit-scrollbar-thumb:hover {
+                background: #ffffff;
+            }
+
+            vaadin-vertical-layout::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            vaadin-vertical-layout::-webkit-scrollbar-track {
+                background: #111;
+                border-radius: 4px;
+            }
+
+            vaadin-vertical-layout::-webkit-scrollbar-thumb {
+                background: #333;
+                border-radius: 4px;
+            }
+
+            vaadin-vertical-layout::-webkit-scrollbar-thumb:hover {
+                background: #555;
             }
         `;
     }
 
     render() {
         return html`
-            <vaadin-vertical-layout theme="spacing" class="list-container" id="vaadinVerticalLayout" style="width: 100%; height: 100%;">
-                <vaadin-horizontal-layout class="list-title-container" id="vaadinHorizontalLayout">
-                    <div class="list-title" id="div">
-                        Lista de usuarios:
+            <vaadin-button id="backButton">← Volver</vaadin-button>
+            <vaadin-vertical-layout id="vaadinVerticalLayout">
+                <vaadin-horizontal-layout id="vaadinHorizontalLayout">
+                    <div id="div" class="list-title">
+                        Lista de Usuarios
                     </div>
                 </vaadin-horizontal-layout>
-                <div class="no-items-message">
-                    No hay usuarios para mostrar
+                <div class="users-container" id="usersContainer">
                 </div>
             </vaadin-vertical-layout>
         `;
     }
-
 }

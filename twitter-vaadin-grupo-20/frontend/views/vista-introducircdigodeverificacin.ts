@@ -124,10 +124,30 @@ export class VistaIntroducircdigodeverificacin extends LitElement {
         cursor: pointer;
         transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
       }
-      
-      #resendCodeButton:hover {
+        #resendCodeButton:hover {
         background-color: #BBB; /* Un poco más claro al pasar el ratón */
         color: #000;
+      }
+      
+      #backButton {
+        background-color: #666;
+        color: #fff;
+        border: 1px solid #999;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        width: auto;
+        border-radius: var(--lumo-border-radius-m);
+        padding: var(--lumo-space-s) var(--lumo-space-l);
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+      }
+
+      #backButton:hover {
+        background-color: #777;
       }
       
       /* Ajustes responsivos */
@@ -182,9 +202,9 @@ export class VistaIntroducircdigodeverificacin extends LitElement {
       }
     `;
   }
-
   render() {
     return html`
+      <vaadin-button id="backButton" tabindex="0">← Volver</vaadin-button>
       <div id="verificationContainer">
         <img src="./img/imagenIcon.png" alt="Bird Logo" class="bird-logo">
         <h2>Crea tu cuenta</h2>

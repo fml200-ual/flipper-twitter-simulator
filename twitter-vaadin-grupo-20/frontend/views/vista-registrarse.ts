@@ -181,11 +181,23 @@ export class VistaRegistrarse extends LitElement {
         width: 20px; /* Size for Google icon */
         height: 20px;
         margin-left: var(--lumo-space-s);
-      }
-
-      #registerButton {
+      }      #registerButton {
         background-color: #00FFFF; /* Cyan background for Register button */
         color: #000; /* Black text for Register button */
+      }
+
+      #backButton {
+        background-color: #666; /* Gray background for back button */
+        color: #fff; /* White text for back button */
+        border: 1px solid #999;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+      }
+
+      #backButton:hover {
+        background-color: #777;
       }
 
       /* Ajustes responsivos */
@@ -221,28 +233,25 @@ export class VistaRegistrarse extends LitElement {
       }
     `;
   }
-
   render() {
     return html`
+<vaadin-button id="backButton" tabindex="0">← Volver</vaadin-button>
 <vaadin-vertical-layout id="registerContainer">
  <img src="./img/imagenIcon.png" alt="Bird Logo" class="bird-logo">
  <span id="requiredFieldsMessage">Los campos marcados con * son obligatorios</span>
- <h2>Crea tu cuenta</h2>
- <vaadin-text-field label="Nombre" id="nameField" type="text"></vaadin-text-field>
- <vaadin-text-field label="Apellido" id="lastNameField" type="text"></vaadin-text-field>
- <vaadin-text-field label="Correo" id="emailField" required type="text"></vaadin-text-field>
- <vaadin-text-field label="Nick" id="nickField" required type="text"></vaadin-text-field>
- <vaadin-password-field label="Contraseña" id="passwordField" required type="password"></vaadin-password-field>
- <vaadin-text-field label="Arroba" id="atSignField" type="text"></vaadin-text-field>
- <vaadin-horizontal-layout class="preview-row">
-  <vaadin-text-field label="Foto de perfil (URL)" id="profilePhotoUrlField" type="text"></vaadin-text-field>
+ <h2>Crea tu cuenta</h2>                <vaadin-text-field label="Nombre" id="nameField"></vaadin-text-field>
+                <vaadin-text-field label="Apellido" id="lastNameField"></vaadin-text-field>
+                <vaadin-text-field label="Correo" id="emailField" required></vaadin-text-field>
+                <vaadin-text-field label="Nick" id="nickField" required></vaadin-text-field>
+                <vaadin-password-field label="Contraseña" id="passwordField" required></vaadin-password-field>
+                <vaadin-text-field label="Arroba" id="atSignField"></vaadin-text-field>
+ <vaadin-horizontal-layout class="preview-row">                <vaadin-text-field label="Foto de perfil (URL)" id="profilePhotoUrlField"></vaadin-text-field>
   <span class="preview-label">Previsualización:</span>
   <div class="preview-area" id="profileImagePreview">
    <vaadin-icon icon="lumo:photo" id="profileImagePreviewIcon" size="1000"></vaadin-icon>
   </div>
  </vaadin-horizontal-layout>
- <vaadin-horizontal-layout class="preview-row" id="vaadinHorizontalLayout">
-  <vaadin-text-field label="Fondo (URL)" id="backgroundUrlField" type="text"></vaadin-text-field>
+ <vaadin-horizontal-layout class="preview-row" id="vaadinHorizontalLayout">                <vaadin-text-field label="Fondo (URL)" id="backgroundUrlField"></vaadin-text-field>
   <span class="preview-label">Previsualización:</span>
   <div class="preview-area" id="backgroundImagePreview">
    <vaadin-icon icon="lumo:photo" size="1000" id="backgroundImagePreviewIcon"></vaadin-icon>

@@ -149,12 +149,40 @@ export class VistaPublicacinvistaadministrador extends LitElement {
         text-align: center;
       }
       .mostrar-mas:hover { text-decoration: underline; }
+      
+      /* --- ESTILOS PARA EL BOTÓN DE VOLVER --- */
+      .boton-volver {
+        background-color: transparent;
+        border: 1px solid #1DA1F2;
+        color: #1DA1F2;
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 0.9em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        align-self: flex-start;
+        margin-bottom: 10px;
+      }
+      .boton-volver:hover {
+        background-color: rgba(29, 161, 242, 0.1);
+      }
+      .boton-volver vaadin-icon {
+        width: 16px;
+        height: 16px;
+      }
     `;
   }
 
   render() {
     return html`
 <div class="contenedor-principal" id="contenedorPrincipal">
+ <button class="boton-volver" id="botonVolver">
+  <vaadin-icon icon="vaadin:arrow-left"></vaadin-icon>
+  Volver
+ </button>
  <vaadin-vertical-layout class="publicacion-principal-contenedor" id="layoutPublicacionPrincipal">
   <vaadin-horizontal-layout class="cabecera" id="cabeceraPublicacion">
    <div class="avatar" id="avatarDivPrincipal">

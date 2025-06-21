@@ -29,7 +29,9 @@ public class MainView extends VerticalLayout {
 	public static class Pantalla {
 		public static VerticalLayout MainView;
 		public static Component Anterior;
+		// Usuario no registrado: 1, Usuario registrado: 2, Administrador: 3
 		public static int usuario;
+		public static boolean esPropio;
 	}
 
 	/**
@@ -43,8 +45,8 @@ public class MainView extends VerticalLayout {
 	 */
 	public MainView(@Autowired GreetService service) {
 		Pantalla.MainView = this;
-		Pantalla.usuario = 2;
-		ACT03Administrador test = new ACT03Administrador(this);
+		Pantalla.usuario = 1;
+		ACT01UsuarioNoRegistrado test = new ACT01UsuarioNoRegistrado(this);
 		add(test);
 	}
 }

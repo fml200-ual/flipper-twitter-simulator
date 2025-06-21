@@ -3,15 +3,14 @@ import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
 import './vista-listadehashtags_item';
 
 @customElement('vista-listadehashtags')
-export class VistaListadehashtags extends LitElement {
-  static get styles() {
+export class VistaListadehashtags extends LitElement {  static get styles() {
     return css`
       :host {
         display: block;
         height: 100%;
         width: 100%;
         box-sizing: border-box;
-        background-color: transparent;
+        background-color: #000000; /* Fondo negro para modo oscuro */
       }
       
       #mainContainer {
@@ -23,6 +22,7 @@ export class VistaListadehashtags extends LitElement {
         align-items: stretch;
         gap: 8px; /* Espacio consistente entre items */
         box-sizing: border-box;
+        background-color: #000000 !important; /* Fondo negro para el contenedor */
       }
       
       /* Estilos para los items de la lista */
@@ -34,13 +34,13 @@ export class VistaListadehashtags extends LitElement {
         margin: 0;
         border-radius: 8px; /* Bordes redondeados para mejor apariencia */
         transition: all 0.2s ease; /* Transición suave para interacciones */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        box-shadow: 0 2px 4px rgba(0, 255, 255, 0.1); /* Sombra turquesa sutil */
       }
       
       /* Efecto hover para mejor interactividad */
       vista-listadehashtags_item:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 8px rgba(0, 255, 255, 0.3); /* Sombra turquesa más intensa */
       }
       
       /* Animación para items que se añaden */

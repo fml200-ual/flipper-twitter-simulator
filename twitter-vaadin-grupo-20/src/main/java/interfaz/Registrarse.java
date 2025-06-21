@@ -1,5 +1,6 @@
 package interfaz;
 
+import mds2.MainView.Pantalla;
 import vistas.VistaRegistrarse;
 
 public class Registrarse extends VistaRegistrarse {
@@ -13,26 +14,257 @@ public class Registrarse extends VistaRegistrarse {
 	public Registrarse(ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado) {
 		super();
 		this._aCT01UsuarioNoRegistrado = _aCT01UsuarioNoRegistrado;
+		// Ensamblado dinámico - Configurar listeners para todos los botones y campos
+		setupBackButton();
+		setupRegisterButtons();
+		setupFormValidation();
+		setupFieldListeners();
 	}
 
 	public Registrarse(Iniciarsesin _iniciarsesin) {
 		super();
 		this._iniciarsesin = _iniciarsesin;
+		// Ensamblado dinámico - Configurar listeners para todos los botones y campos
+		setupBackButton();
+		setupRegisterButtons();
+		setupFormValidation();
+		setupFieldListeners();
+	}
+
+	private void setupBackButton() {
+		this.getBackButton().addClickListener(event -> goBack());
+	}
+
+	private void setupRegisterButtons() {
+		// Configurar botón de registro principal
+		this.getRegisterButton().addClickListener(event -> {
+			if (validarTodosLosCampos()) {
+				procesarRegistro();
+			}
+		});
+
+		// Configurar botón de Google
+		this.getGoogleLoginButton().addClickListener(event -> {
+			IniciarsesinconGoogle();
+		});
+	}
+
+	private void setupFormValidation() {
+		// Marcar campos obligatorios
+		this.getNameField().setRequired(true);
+		this.getLastNameField().setRequired(true);
+		this.getEmailField().setRequired(true);
+		this.getNickField().setRequired(true);
+		this.getPasswordField().setRequired(true);
+		this.getAtSignField().setRequired(true);
+
+		// Configurar placeholders
+		this.getNameField().setPlaceholder("Ingresa tu nombre");
+		this.getLastNameField().setPlaceholder("Ingresa tu apellido");
+		this.getEmailField().setPlaceholder("ejemplo@correo.com");
+		this.getNickField().setPlaceholder("nombre_usuario");
+		this.getPasswordField().setPlaceholder("Mínimo 8 caracteres");
+		this.getAtSignField().setPlaceholder("@usuario");
+		this.getProfilePhotoUrlField().setPlaceholder("URL de foto opcional");
+		this.getBackgroundUrlField().setPlaceholder("URL de fondo opcional");
+		this.getDescriptionField().setPlaceholder("Cuéntanos algo sobre ti...");
+	}
+
+	private void setupFieldListeners() {
+		// Listener para validación de email en tiempo real
+		this.getEmailField().addValueChangeListener(event -> {
+			String email = event.getValue();
+			if (email != null && !email.isEmpty()) {
+				if (isValidEmail(email)) {
+					this.getEmailField().setInvalid(false);
+				} else {
+					this.getEmailField().setInvalid(true);
+					this.getEmailField().setErrorMessage("Formato de email inválido");
+				}
+			}
+		});
+
+		// Listener para validación de contraseña
+		this.getPasswordField().addValueChangeListener(event -> {
+			String password = event.getValue();
+			if (password != null && !password.isEmpty()) {
+				if (password.length() >= 8) {
+					this.getPasswordField().setInvalid(false);
+				} else {
+					this.getPasswordField().setInvalid(true);
+					this.getPasswordField().setErrorMessage("La contraseña debe tener al menos 8 caracteres");
+				}
+			}
+		});
+
+		// Listener para validación de nick
+		this.getNickField().addValueChangeListener(event -> {
+			String nick = event.getValue();
+			if (nick != null && !nick.isEmpty()) {
+				if (isValidNick(nick)) {
+					this.getNickField().setInvalid(false);
+				} else {
+					this.getNickField().setInvalid(true);
+					this.getNickField().setErrorMessage("El nick solo puede contener letras, números y guiones");
+				}
+			}
+		});
+
+		// Listener para sincronizar @ con nick
+		this.getNickField().addValueChangeListener(event -> {
+			String nick = event.getValue();
+			if (nick != null && !nick.isEmpty()) {
+				this.getAtSignField().setValue("@" + nick);
+			}
+		});
+
+		// Listeners para preview de imágenes (simulado)
+		this.getProfilePhotoUrlField().addValueChangeListener(event -> {
+			updateImagePreview(event.getValue(), "profile");
+		});
+
+		this.getBackgroundUrlField().addValueChangeListener(event -> {
+			updateImagePreview(event.getValue(), "background");
+		});
+	}
+
+	private boolean validarTodosLosCampos() {
+		boolean isValid = true;
+
+		// Validar nombre
+		if (this.getNameField().getValue() == null || this.getNameField().getValue().trim().isEmpty()) {
+			this.getNameField().setInvalid(true);
+			this.getNameField().setErrorMessage("El nombre es obligatorio");
+			isValid = false;
+		}
+
+		// Validar apellido
+		if (this.getLastNameField().getValue() == null || this.getLastNameField().getValue().trim().isEmpty()) {
+			this.getLastNameField().setInvalid(true);
+			this.getLastNameField().setErrorMessage("El apellido es obligatorio");
+			isValid = false;
+		}
+
+		// Validar email
+		String email = this.getEmailField().getValue();
+		if (email == null || email.trim().isEmpty()) {
+			this.getEmailField().setInvalid(true);
+			this.getEmailField().setErrorMessage("El email es obligatorio");
+			isValid = false;
+		} else if (!isValidEmail(email)) {
+			this.getEmailField().setInvalid(true);
+			this.getEmailField().setErrorMessage("Formato de email inválido");
+			isValid = false;
+		}
+
+		// Validar nick
+		String nick = this.getNickField().getValue();
+		if (nick == null || nick.trim().isEmpty()) {
+			this.getNickField().setInvalid(true);
+			this.getNickField().setErrorMessage("El nick es obligatorio");
+			isValid = false;
+		} else if (!isValidNick(nick)) {
+			this.getNickField().setInvalid(true);
+			this.getNickField().setErrorMessage("El nick solo puede contener letras, números y guiones");
+			isValid = false;
+		}
+
+		// Validar contraseña
+		String password = this.getPasswordField().getValue();
+		if (password == null || password.trim().isEmpty()) {
+			this.getPasswordField().setInvalid(true);
+			this.getPasswordField().setErrorMessage("La contraseña es obligatoria");
+			isValid = false;
+		} else if (password.length() < 8) {
+			this.getPasswordField().setInvalid(true);
+			this.getPasswordField().setErrorMessage("La contraseña debe tener al menos 8 caracteres");
+			isValid = false;
+		}
+
+		return isValid;
+	}
+
+	private boolean isValidEmail(String email) {
+		return email != null && email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
+	}
+
+	private boolean isValidNick(String nick) {
+		return nick != null && nick.matches("^[a-zA-Z0-9_-]+$");
+	}
+
+	private void updateImagePreview(String url, String type) {
+		// Simular actualización de preview de imagen
+		if (url != null && !url.trim().isEmpty()) {
+			System.out.println("Actualizando preview de " + type + " con URL: " + url);
+			// Aquí se podría implementar lógica para mostrar preview real
+		}
+	}
+
+	private void procesarRegistro() {
+		// Proceder directamente con el código de verificación después de validar campos
+		System.out.println("Procesando registro, enviando código de verificación...");
+		Introducircdigodeverificacin();
+	}
+
+	private void goBack() {
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_iniciarsesin);
 	}
 
 	public void Mensajedeerrorregistro() {
-		throw new UnsupportedOperationException();
+		// Mostrar mensajes de error en los campos relevantes
+		this.getEmailField().setInvalid(true);
+		this.getNickField().setInvalid(true);
+		this.getEmailField().setErrorMessage("Este email ya está registrado");
+		this.getNickField().setErrorMessage("Este nick ya está en uso");
+
+		// También se podría mostrar una notificación general
+		System.out.println("Error: Datos duplicados encontrados");
 	}
 
 	public void Introducircdigodeverificacin() {
-		throw new UnsupportedOperationException();
+		// Navegar directamente a la vista de código de verificación
+		System.out.println("Navegando a introducir código de verificación...");
+
+		_introducircdigodeverificacin = new Introducircdigodeverificacin(this);
+
+		// Navegar a la vista de código de verificación
+		if (_aCT01UsuarioNoRegistrado != null) {
+			_aCT01UsuarioNoRegistrado.getVerticalLayoutCentralNoRegistrado()
+					.as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class).removeAll();
+			_aCT01UsuarioNoRegistrado.getVerticalLayoutCentralNoRegistrado()
+					.as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class)
+					.add(_introducircdigodeverificacin);
+		} else if (_iniciarsesin != null) {
+			_iniciarsesin._aCT01UsuarioNoRegistrado.getVerticalLayoutCentralNoRegistrado()
+					.as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class).removeAll();
+			_iniciarsesin._aCT01UsuarioNoRegistrado.getVerticalLayoutCentralNoRegistrado()
+					.as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class)
+					.add(_introducircdigodeverificacin);
+		}
 	}
 
-	public void Comprobarnoduplicadodedatos() {
-		throw new UnsupportedOperationException();
+	public boolean Comprobarnoduplicadodedatos() {
+		// Simular comprobación de datos duplicados
+		String email = this.getEmailField().getValue();
+		String nick = this.getNickField().getValue();
+
+		System.out.println("Comprobando datos duplicados para email: " + email + " y nick: " + nick);
+
+		// Simulación: devolver false si el email es "test@test.com" o nick es "admin"
+		if ("test@test.com".equals(email) || "admin".equals(nick)) {
+			return false; // Datos duplicados encontrados
+		}
+
+		return true; // No hay duplicados
 	}
 
 	public void IniciarsesinconGoogle() {
-		throw new UnsupportedOperationException();
+		// Aquí iría la lógica de autenticación con Google para registro
+		System.out.println("Iniciando registro con Google...");
+		// Crear instancia del componente de Google si es necesario
+		if (_aCT05Google == null) {
+			// _aCT05Google = new ACT05Google(this);
+		}
 	}
 }

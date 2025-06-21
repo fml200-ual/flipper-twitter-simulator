@@ -10,7 +10,6 @@ public class Verlistadeseguidosregistrado extends VistaVerlistadeseguidosregistr
 	public Verperfilregistrado _verperfilregistrado;
 	public Verpropioperfil _verpropioperfil;
 	public Listadeusuarios _listadeusuarios;
-
 	public Verlistadeseguidosregistrado(Verperfilregistrado verperfilregistrado) {
 		this._verperfilregistrado = verperfilregistrado;
 

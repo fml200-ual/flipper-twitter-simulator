@@ -18,6 +18,8 @@ import com.vaadin.flow.component.button.Button;
 @JsModule("./views/vista-registrarse.ts")
 public class VistaRegistrarse extends LitTemplate {
 
+	@Id("backButton")
+	private Button backButton;
 	@Id("registerContainer")
 	private Element registerContainer;
 	@Id("requiredFieldsMessage")
@@ -54,9 +56,12 @@ public class VistaRegistrarse extends LitTemplate {
 	private Button googleLoginButton;
 	@Id("registerButton")
 	private Button registerButton;
-
 	public VistaRegistrarse() {
 		// You can initialise any data required for the connected UI components here.
+	}
+
+	public Button getBackButton() {
+		return backButton;
 	}
 
 	public Element getRegisterContainer() {

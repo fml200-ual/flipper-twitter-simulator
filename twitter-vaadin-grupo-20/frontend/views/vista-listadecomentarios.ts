@@ -8,21 +8,41 @@ export class VistaListadecomentarios extends LitElement {
     return css`
       :host {
           display: block;
-          height: 100%;
+          width: 100%;
+          background-color: transparent;
+          color: white;
+          font-family: 'Arial', sans-serif;
+      }
+      
+      #mainContainer {
+        width: 100%;
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 0;
+        margin: 0;
+      }
+      
+      #contentLayout {
+        width: 100%;
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
       }
       `;
   }
 
   render() {
     return html`
-<vaadin-vertical-layout id="mainContainer" theme="" style="width: 100%; height: 100%;">
- <vaadin-horizontal-layout id="contentLayout" style="width: 100%; height: 100%; flex-direction: column; align-items: stretch;"></vaadin-horizontal-layout>
-</vaadin-vertical-layout>
-`;
+      <vaadin-vertical-layout id="mainContainer" style="width: 100%; background-color: transparent; margin: 0; padding: 0;">
+        <vaadin-horizontal-layout id="contentLayout" style="width: 100%; background-color: transparent; flex-direction: column; align-items: stretch; gap: 10px;"></vaadin-horizontal-layout>
+      </vaadin-vertical-layout>
+    `;
   }
 
-  // Remove this method to render the contents of this view inside Shadow DOM
   createRenderRoot() {
-    return this;
+    return this; // Light DOM para mejor integración
   }
 }

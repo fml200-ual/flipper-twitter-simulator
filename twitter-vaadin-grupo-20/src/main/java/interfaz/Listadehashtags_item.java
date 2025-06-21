@@ -10,12 +10,6 @@ public class Listadehashtags_item extends VistaListadehashtags_item {
 	public Listadehashtags_item(Listadehashtags _listadehashtags) {
 		super();
 		this._listadehashtags = _listadehashtags;
-
-		this.getHashtagContainer().addClickListener(event -> {
-			// Trigger the event to show hashtags
-			System.out.println("Presinando");
-			mostrarHashtag();
-		});
 	}
 
 	private void mostrarHashtag() {
@@ -29,7 +23,7 @@ public class Listadehashtags_item extends VistaListadehashtags_item {
 	}
 
 	public void Mostrarmshashtags() {
-		throw new UnsupportedOperationException();
+		mostrarHashtag();
 	}
 
 }

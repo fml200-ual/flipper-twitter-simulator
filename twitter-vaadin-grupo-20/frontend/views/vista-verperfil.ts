@@ -1,4 +1,5 @@
 import { LitElement, html, css, customElement } from 'lit-element';
+import '@vaadin/button/src/vaadin-button.js';
 
 @customElement('vista-verperfil')
 export class VistaVerperfil extends LitElement {
@@ -26,11 +27,56 @@ export class VistaVerperfil extends LitElement {
         --danger-color-hover: #e64a4a;
         --background-color: #000;
         --surface-color: #fff;
-        --text-color-on-dark: #fff;
-        --text-color-on-light: #000;
+        --text-color-on-dark: #fff;        --text-color-on-light: #000;
         --secondary-text-color: #888;
         --placeholder-bg-color: #333;
         --border-color: #fff;
+        
+        /* Variables de spacing */
+        --space-xs: 4px;
+        --space-s: 8px;
+        --space-m: 16px;
+        --space-l: 24px;
+        --space-xl: 32px;
+      }
+        /* Botón de volver */
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1000;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        --lumo-primary-color: var(--primary-color);
+      }
+      
+      vaadin-button.back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        z-index: 1000;
+        --lumo-primary-color: var(--primary-color);
+        --lumo-primary-text-color: var(--primary-color);
+      }
+      
+      vaadin-button.back-button:hover {
+        background-color: var(--primary-color);
+        color: var(--background-color);
+        transform: scale(1.05);
       }
       .view-wrapper {
         position: relative;
@@ -215,9 +261,9 @@ export class VistaVerperfil extends LitElement {
         background-color: var(--danger-color-hover);
       }
     `;
-  }
-  render() {
+  }  render() {
     return html`
+<vaadin-button class="back-button" id="backButton">← Volver</vaadin-button>
 <div class="view-wrapper" id="viewWrapper">
  <div class="profile-container" id="profileContainer">
   <header class="header" id="header">
