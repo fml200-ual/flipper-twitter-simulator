@@ -13,7 +13,6 @@ public class Verperfiladministrador extends Verperfil {
 		super();
 		this._vertweetadministrador = _vertweetadministrador;
 		this.getEditAccountButton().setVisible(false);
-		this.getShowMoreButton().setVisible(false);
 
 		this.Agrupartweets();
 		this.getBackButton().addClickListener(event -> {
@@ -45,7 +44,6 @@ public class Verperfiladministrador extends Verperfil {
 		super();
 		this._verretweetadministrador = _verretweetadministrador;
 		this.getEditAccountButton().setVisible(false);
-		this.getShowMoreButton().setVisible(false);
 
 		this.Agrupartweets();
 		this.getBackButton().addClickListener(event -> {

@@ -14,7 +14,6 @@ public class Verpropioperfil extends Verperfil {
 
 		this.getBanProfileButton().setVisible(false);
 		this.getDeleteProfileButton().setVisible(false);
-		this.getShowMoreButton().setVisible(false);
 		this.getUserTweetsTab().setText("Mis tweets");
 		this.getLikedTweetsTab().setText("Tweets que me gustan");
 
