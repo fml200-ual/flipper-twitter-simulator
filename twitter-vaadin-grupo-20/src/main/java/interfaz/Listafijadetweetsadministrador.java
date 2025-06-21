@@ -31,8 +31,7 @@ public class Listafijadetweetsadministrador extends VistaListafijadetweetsadmini
 		for (int i = 0; i < 5; i++) {
 			// Alternar entre tweets (false) y retweets (true)
 			boolean esRetweet = (i % 2 == 0);
-			Listadetweetsyretweetsadministrador_item tweetItem = new Listadetweetsyretweetsadministrador_item(null,
-					esRetweet);
+			Listadetweetsyretweetsadministrador_item tweetItem = new Listadetweetsyretweetsadministrador_item(null);
 			_tweets.add(tweetItem);
 			container.add(tweetItem);
 		}
@@ -55,7 +54,7 @@ public class Listafijadetweetsadministrador extends VistaListafijadetweetsadmini
 	 */
 	public void añadirTweet() {
 		// Por defecto añadir como tweet (no retweet)
-		Listadetweetsyretweetsadministrador_item nuevoTweet = new Listadetweetsyretweetsadministrador_item(null, false);
+		Listadetweetsyretweetsadministrador_item nuevoTweet = new Listadetweetsyretweetsadministrador_item(null);
 		_tweets.add(nuevoTweet);
 		VerticalLayout container = this.getTweetsListContainer().as(VerticalLayout.class);
 		container.add(nuevoTweet);
@@ -65,8 +64,7 @@ public class Listafijadetweetsadministrador extends VistaListafijadetweetsadmini
 	 * Añade un nuevo retweet a la lista
 	 */
 	public void añadirRetweet() {
-		Listadetweetsyretweetsadministrador_item nuevoRetweet = new Listadetweetsyretweetsadministrador_item(null,
-				true);
+		Listadetweetsyretweetsadministrador_item nuevoRetweet = new Listadetweetsyretweetsadministrador_item(null);
 		_tweets.add(nuevoRetweet);
 		VerticalLayout container = this.getTweetsListContainer().as(VerticalLayout.class);
 		container.add(nuevoRetweet);

@@ -51,8 +51,6 @@ public class VistaVerperfil extends LitTemplate {
 	private Button backButton;
 	@Id("tweetsListLayout")
 	private Div tweetsListLayout;
-	@Id("showMoreButton")
-	private Div showMoreButton;
 	@Id("banProfileButton")
 	private NativeButton banProfileButton;
 	@Id("deleteProfileButton")
@@ -204,14 +202,6 @@ public class VistaVerperfil extends LitTemplate {
 
 	protected void setTweetsListLayout(Div tweetsListLayout) {
 		this.tweetsListLayout = tweetsListLayout;
-	}
-
-	protected Div getShowMoreButton() {
-		return showMoreButton;
-	}
-
-	protected void setShowMoreButton(Div showMoreButton) {
-		this.showMoreButton = showMoreButton;
 	}
 
 	protected NativeButton getBanProfileButton() {

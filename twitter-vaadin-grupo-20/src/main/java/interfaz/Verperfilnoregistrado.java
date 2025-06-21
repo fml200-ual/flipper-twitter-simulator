@@ -14,6 +14,7 @@ public class Verperfilnoregistrado extends Verperfil {
 
 		this.getBanProfileButton().setVisible(false);
 		this.getDeleteProfileButton().setVisible(false);
+		this.getEditAccountButton().setVisible(false);
 
 		this.Agrupartweets();
 
@@ -34,6 +35,9 @@ public class Verperfilnoregistrado extends Verperfil {
 
 		this.getBanProfileButton().setVisible(false);
 		this.getDeleteProfileButton().setVisible(false);
+		this.getEditAccountButton().setVisible(false);
+
+		this.Agrupartweets();
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
@@ -41,6 +45,9 @@ public class Verperfilnoregistrado extends Verperfil {
 		});
 		this.getFollowersCount().addClickListener(event -> Verlistaseguidoresnoregistrado());
 		this.getFollowingCount().addClickListener(event -> Verlistaseguidosnoregistrado());
+		this.getUserTweetsTab().addClickListener(event -> Agrupartweets());
+		this.getRetweetsTab().addClickListener(event -> Agruparretweets());
+		this.getLikedTweetsTab().addClickListener(event -> Agrupartweetsgustados());
 	}
 
 	public void Verlistaseguidoresnoregistrado() {

@@ -36,7 +36,7 @@ public class Verlistaampliadadeusuariosnoregistrado extends Verlistaampliadadeus
 	}
 
 	public void Verperfilnoregistrado() {
-		_verperfilnoregistrado = new Verperfilnoregistrado(_listafijadeusuariosnoregistrado);
+		_verperfilnoregistrado = new Verperfilnoregistrado(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verperfilnoregistrado);

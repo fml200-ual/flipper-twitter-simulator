@@ -16,8 +16,11 @@ import com.vaadin.flow.component.button.Button;
 @JsModule("./views/vista-vercomentario.ts")
 public class VistaVercomentario extends LitTemplate {
 
-    @Id("commentMainContainer")
+	@Id("backButton")
+	private Button backButton;
+	@Id("commentMainContainer")
 	private Div commentMainContainer;
+
 	public Div getCommentMainContainer() {
 		return commentMainContainer;
 	}
@@ -168,7 +171,15 @@ public class VistaVercomentario extends LitTemplate {
 	private Button deleteCommentButton;
 
 	public VistaVercomentario() {
-        // You can initialise any data required for the connected UI components here.
-    }
+		// You can initialise any data required for the connected UI components here.
+	}
+
+	public Button getBackButton() {
+		return backButton;
+	}
+
+	public void setBackButton(Button backButton) {
+		this.backButton = backButton;
+	}
 
 }

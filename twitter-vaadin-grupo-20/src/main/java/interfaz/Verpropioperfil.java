@@ -41,7 +41,10 @@ public class Verpropioperfil extends Verperfil {
 			Editarcuenta();
 		});
 
-		this.addBackButton();
+		this.getBackButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_aCT02UsuarioRegistrado);
+		});
 
 	}
 
@@ -51,6 +54,7 @@ public class Verpropioperfil extends Verperfil {
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_editarcuenta);
 	}
+
 	public void Verlistadeseguidoresregistrado() {
 		_verlistadeseguidoresregistrado = new Verlistadeseguidoresregistrado(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);

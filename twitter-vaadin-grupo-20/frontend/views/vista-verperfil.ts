@@ -261,7 +261,7 @@ export class VistaVerperfil extends LitElement {
         background-color: var(--danger-color-hover);
       }
     `;
-  }  render() {
+  } render() {
     return html`
 <vaadin-button class="back-button" id="backButton">← Volver</vaadin-button>
 <div class="view-wrapper" id="viewWrapper">
@@ -300,9 +300,6 @@ export class VistaVerperfil extends LitElement {
    </div>
   </div>
   <div class="tweets-list" id="tweetsListLayout"></div>
-  <div class="show-more" id="showMoreButton">
-    Mostrar más tweets 
-  </div>
  </div>
  <button class="edit-account-button" id="editAccountButton">Editar cuenta</button>
 </div>

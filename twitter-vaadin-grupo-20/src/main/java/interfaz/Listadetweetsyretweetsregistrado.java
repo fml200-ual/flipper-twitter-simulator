@@ -14,12 +14,4 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 		this._verhashtagregistrado = verhashtagregistrado;
 	}
 
-	public Verhashtagregistrado get_verhashtagregistrado() {
-		return _verhashtagregistrado;
-	}
-
-	public void set_verhashtagregistrado(Verhashtagregistrado _verhashtagregistrado) {
-		this._verhashtagregistrado = _verhashtagregistrado;
-	}
-
 }

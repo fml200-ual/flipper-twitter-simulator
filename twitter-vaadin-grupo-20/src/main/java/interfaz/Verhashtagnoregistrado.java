@@ -21,6 +21,7 @@ public class Verhashtagnoregistrado extends Verhashtag {
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(_listafijadehashtagsnoregistrado._aCT01UsuarioNoRegistrado);
 		});
+
 	}
 
 	public Verhashtagnoregistrado(Verlistaampliadadehashtagsnoregistrado _verlistaampliadadehashtagsnoregistrado) {
@@ -43,7 +44,7 @@ public class Verhashtagnoregistrado extends Verhashtag {
 		for (int i = 0; i < 5; i++) {
 			Listadetweetsyretweetsnoregistrado_item _listadetweetsyretweets_item = new Listadetweetsyretweetsnoregistrado_item(
 					_listadetweetsyretweetsnoregistrado);
-			// Agregar ClickListener personalizado para navegar a Vertweetnoregistrado
+			// Navegar a Vertweetnoregistrado o Verretweetnoregistrado
 			_listadetweetsyretweets_item.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
 				Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 				Pantalla.MainView.removeAll();
@@ -51,7 +52,7 @@ public class Verhashtagnoregistrado extends Verhashtag {
 			});
 			_listadetweetsyretweetsnoregistrado
 					.getMainContainer().as(VerticalLayout.class)
-					.add(new Listadetweetsyretweets_item(_listadetweetsyretweetsnoregistrado));
+					.add(_listadetweetsyretweets_item);
 		}
 
 		this.getMainLayout().as(VerticalLayout.class)

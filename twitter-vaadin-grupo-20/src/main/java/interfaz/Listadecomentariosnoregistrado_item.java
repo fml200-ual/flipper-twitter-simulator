@@ -1,22 +1,25 @@
 package interfaz;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
+import mds2.MainView.Pantalla;
+
 public class Listadecomentariosnoregistrado_item extends Listadecomentarios_item {
 
 	public Vercomentarionoregistrado _vercomentarionoregistrado;
 
 	public Listadecomentariosnoregistrado_item(Listadecomentarios _listadecomentarios) {
 		super(_listadecomentarios);
-		// Ensamblado dinámico - ClickListener para ver comentario
-		setupCommentClickListener();
+
+		this.getvL_listacomentarios_mainContainer().as(VerticalLayout.class).addClickListener(event -> {
+			Vercomentarionoregistrado();
+		});
 	}
 
-	private void setupCommentClickListener() {
-		// Setup clickListener para ver comentario específico
-		// Se conectará cuando tengamos acceso al botón de la vista
-	}
 	public void Vercomentarionoregistrado() {
 		_vercomentarionoregistrado = new Vercomentarionoregistrado(this);
-		// Navegación usando el layout padre - tú arreglas el layout específico
-		// Necesitaremos acceso al MainView a través de la jerarquía de TweetRetweet
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_vercomentarionoregistrado);
 	}
 }

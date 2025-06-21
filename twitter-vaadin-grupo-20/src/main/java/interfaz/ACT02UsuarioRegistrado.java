@@ -82,12 +82,12 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 
 		// Ejemplo de item que es un tweet de otro usuario
 		Listadetweetsyretweetsregistrado_item itemTweet = new Listadetweetsyretweetsregistrado_item(
-				_listadetweetsyretweetsregistrado, false, false);
+				_listadetweetsyretweetsregistrado);
 		_listadetweetsyretweetsregistrado.getMainContainer().as(VerticalLayout.class).add(itemTweet);
 
 		// Ejemplo de item que es un retweet de otro usuario
 		Listadetweetsyretweetsregistrado_item itemRetweet = new Listadetweetsyretweetsregistrado_item(
-				_listadetweetsyretweetsregistrado, true, false);
+				_listadetweetsyretweetsregistrado);
 		_listadetweetsyretweetsregistrado.getMainContainer().as(VerticalLayout.class).add(itemRetweet);
 
 		this.getVerticalLayoutListaTweets().as(VerticalLayout.class)

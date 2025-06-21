@@ -10,7 +10,6 @@ public class Escribirtweet extends Escribirtweetretweet {
 		this._aCT02UsuarioRegistrado = _aCT02UsuarioRegistrado;
 
 		this.getCloseButton().addClickListener(event -> {
-			System.out.println(Pantalla.Anterior);
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(_aCT02UsuarioRegistrado);
 		});

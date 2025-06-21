@@ -15,24 +15,28 @@ public class Registrarse extends VistaRegistrarse {
 		super();
 		this._aCT01UsuarioNoRegistrado = _aCT01UsuarioNoRegistrado;
 		// Ensamblado dinámico - Configurar listeners para todos los botones y campos
-		setupBackButton();
 		setupRegisterButtons();
 		setupFormValidation();
 		setupFieldListeners();
+
+		this.getBackButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_aCT01UsuarioNoRegistrado);
+		});
 	}
 
 	public Registrarse(Iniciarsesin _iniciarsesin) {
 		super();
 		this._iniciarsesin = _iniciarsesin;
 		// Ensamblado dinámico - Configurar listeners para todos los botones y campos
-		setupBackButton();
 		setupRegisterButtons();
 		setupFormValidation();
 		setupFieldListeners();
-	}
 
-	private void setupBackButton() {
-		this.getBackButton().addClickListener(event -> goBack());
+		this.getBackButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_iniciarsesin);
+		});
 	}
 
 	private void setupRegisterButtons() {
@@ -204,11 +208,6 @@ public class Registrarse extends VistaRegistrarse {
 		// Proceder directamente con el código de verificación después de validar campos
 		System.out.println("Procesando registro, enviando código de verificación...");
 		Introducircdigodeverificacin();
-	}
-
-	private void goBack() {
-		Pantalla.MainView.removeAll();
-		Pantalla.MainView.add(_iniciarsesin);
 	}
 
 	public void Mensajedeerrorregistro() {

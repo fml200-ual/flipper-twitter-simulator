@@ -27,7 +27,7 @@ import interfaz.*;
 public class MainView extends VerticalLayout {
 
 	public static class Pantalla {
-		public static VerticalLayout MainView;
+		public static MainView MainView;
 		public static Component Anterior;
 		// Usuario no registrado: 1, Usuario registrado: 2, Administrador: 3
 		public static int usuario;

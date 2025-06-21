@@ -1,5 +1,7 @@
 package interfaz;
 
+import mds2.MainView.Pantalla;
+
 public class Verperfiladministrador extends Verperfil {
 	// private event _eliminarperfil;
 	// private event _banearusuario;
@@ -14,7 +16,10 @@ public class Verperfiladministrador extends Verperfil {
 		this.getShowMoreButton().setVisible(false);
 
 		this.Agrupartweets();
-		this.addBackButton();
+		this.getBackButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_vertweetadministrador);
+		});
 
 		this.getDeleteProfileButton().addClickListener(event -> {
 			Eliminarperfil();
@@ -43,7 +48,10 @@ public class Verperfiladministrador extends Verperfil {
 		this.getShowMoreButton().setVisible(false);
 
 		this.Agrupartweets();
-		this.addBackButton();
+		this.getBackButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_vertweetadministrador);
+		});
 
 		this.getDeleteProfileButton().addClickListener(event -> {
 			Eliminarperfil();

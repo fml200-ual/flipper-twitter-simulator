@@ -1,55 +1,23 @@
 package interfaz;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
 import mds2.MainView.Pantalla;
 
 public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweets_item {
-
 	public Vertweetregistrado _vertweetregistrado;
 	public Verretweetregistrado _verretweetregistrado;
 	public Vertweetpropio _vertweetpropio;
 	public Verretweetpropio _verretweetpropio;
 
-	// Variable para identificar si el item es un retweet
-	private boolean esRetweet = false;
-	private boolean esPropio = false;
-
 	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets) {
 		super(_listadetweetsyretweets);
-	}
 
-	// Constructor que permite especificar si es retweet y si es propio
-	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets,
-			boolean esRetweet, boolean esPropio) {
-		super(_listadetweetsyretweets);
-		this.esRetweet = esRetweet;
-		this.esPropio = esPropio;
-	}
-
-	// Sobrescribir el método Vertweet de la clase padre
-	@Override
-	public void Vertweet() {
-		if (esPropio) {
-			if (esRetweet) {
-				Verretweetpropio();
-			} else {
-				Vertweetpropio();
-			}
-		} else {
-			if (esRetweet) {
-				Verretweetregistrado();
-			} else {
-				Vertweetregistrado();
-			}
-		}
-	}
-
-	// Métodos para configurar el tipo después de la creación
-	public void setEsRetweet(boolean esRetweet) {
-		this.esRetweet = esRetweet;
-	}
-
-	public void setEsPropio(boolean esPropio) {
-		this.esPropio = esPropio;
+		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
+			// Luego hay que diferenciar entre tweet y retweet. Tambien si es propio o no
+			// Llamar a la vista de ver tweet registrado por defecto
+			Vertweetregistrado();
+		});
 	}
 
 	public void Vertweetregistrado() {

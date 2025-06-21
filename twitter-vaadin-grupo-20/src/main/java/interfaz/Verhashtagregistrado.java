@@ -2,6 +2,8 @@ package interfaz;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
+import mds2.MainView.Pantalla;
+
 public class Verhashtagregistrado extends Verhashtag {
 	public Verlistaampliadadehashtagsregistrado _verlistaampliadadehashtagsregistrado;
 	public Listafijadehashtagsregistrado _listafijadehashtagsregistrado;
@@ -13,7 +15,11 @@ public class Verhashtagregistrado extends Verhashtag {
 		this._verlistaampliadadehashtagsregistrado = _verlistaampliadadehashtagsregistrado;
 
 		Listadetweetsyretweetsregistrado();
-		this.addBackButton();
+
+		this.getVolverButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_verlistaampliadadehashtagsregistrado);
+		});
 	}
 
 	public Verhashtagregistrado(Listafijadehashtagsregistrado _listafijadehashtagsregistrado) {
@@ -21,7 +27,10 @@ public class Verhashtagregistrado extends Verhashtag {
 		this._listafijadehashtagsregistrado = _listafijadehashtagsregistrado;
 
 		Listadetweetsyretweetsregistrado();
-		this.addBackButton();
+		this.getVolverButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_listafijadehashtagsregistrado._aCT02UsuarioRegistrado);
+		});
 	}
 
 	public void Listadetweetsyretweetsregistrado() {

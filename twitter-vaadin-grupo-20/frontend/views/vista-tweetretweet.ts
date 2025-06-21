@@ -161,12 +161,38 @@ export class VistaTweetretweet extends LitElement {
         text-align: center;
       }
       .mostrar-mas:hover { text-decoration: underline; }
+
+      .boton-volver {
+        background-color: #1DA1F2;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 0.9em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 15px;
+        width: fit-content;
+      }
+      .boton-volver:hover { background-color: #1991db; }
+      
+      .boton-volver vaadin-icon {
+        width: 16px;
+        height: 16px;
+      }
     `;
   }
 
   render() {
     return html`
 <div class="contenedor-principal" id="mainLayout">
+ <button class="boton-volver" id="botonVolver">
+  <vaadin-icon icon="vaadin:arrow-left"></vaadin-icon>
+  Volver
+ </button>
  <vaadin-vertical-layout class="publicacion-principal-contenedor" id="mainVerticalLayout" style="width: 100%; height: 100%;">
   <vaadin-horizontal-layout class="cabecera" id="cabeceraPrincipal">
    <div class="avatar" id="divAvatar">
@@ -208,7 +234,6 @@ export class VistaTweetretweet extends LitElement {
   </div>
  </vaadin-vertical-layout>
  <div class="comentarios-contenedor" id="div4"></div>
- <a href="#" class="mostrar-mas" id="mostrarMasComentarios">Mostrar más comentarios</a>
 </div>
 `;
   }

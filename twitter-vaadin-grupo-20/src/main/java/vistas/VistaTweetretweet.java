@@ -17,12 +17,87 @@ import com.vaadin.flow.component.icon.Icon;
 @JsModule("./views/vista-tweetretweet.ts")
 public class VistaTweetretweet extends LitTemplate {
 
-    public Div getMainLayout() {
+	@Id("mainLayout")
+	private Div mainLayout;
+	@Id("botonVolver")
+	private NativeButton botonVolver;
+	@Id("cabeceraPrincipal")
+	private HorizontalLayout cabeceraPrincipal;
+	@Id("contendorNombreArroba")
+	private Element contendorNombreArroba;
+	@Id("nombreUsuario")
+	private Span nombreUsuario;
+	@Id("arrobaUsuario")
+	private Span arrobaUsuario;
+	@Id("botonEliminarTweet")
+	private NativeButton botonEliminarTweet;
+	@Id("contenidoTweet")
+	private Div contenidoTweet;
+	@Id("textoPublicacion")
+	private Paragraph textoPublicacion;
+	@Id("contenedorPublicacionCitada")
+	private Element contenedorPublicacionCitada;
+	@Id("cabeceraPublicacionCitada")
+	private HorizontalLayout cabeceraPublicacionCitada;
+	@Id("div")
+	private Div div;
+	@Id("img1")
+	private Image img1;
+	@Id("nombreUsuarioCitado")
+	private Span nombreUsuarioCitado;
+	@Id("contenedorDatosUsuarioCitado")
+	private Element contenedorDatosUsuarioCitado;
+	@Id("arrobaUsuarioCitado")
+	private Span arrobaUsuarioCitado;
+	@Id("img")
+	private Image img;
+	@Id("div1")
+	private Div div1;
+	@Id("textoPublicacionCitada")
+	private Paragraph textoPublicacionCitada;
+	@Id("div2")
+	private Div div2;
+	@Id("fechaPublicacion")
+	private Span fechaPublicacion;
+	@Id("div3")
+	private Div div3;
+	@Id("iconoMeGusta")
+	private Icon iconoMeGusta;
+	@Id("numMegusta")
+	private Span numMegusta;
+	@Id("numeroRetweets")
+	private Span numeroRetweets;
+	@Id("iconoRetweet")
+	private Icon iconoRetweet;
+	@Id("numeroRetweets1")
+	private Span numeroRetweets1;
+	@Id("iconoComentarios")
+	private Icon iconoComentarios;
+	@Id("div4")
+	private Div div4;
+	@Id("divAvatar")
+	private Div divAvatar;
+	@Id("mainVerticalLayout")
+	private Element mainVerticalLayout;
+
+	public VistaTweetretweet() {
+		// You can initialise any data required for the connected UI components here.
+	}
+
+	public Div getMainLayout() {
 		return mainLayout;
 	}
 
 	public void setMainLayout(Div mainLayout) {
 		this.mainLayout = mainLayout;
+	}
+
+	public NativeButton getBotonVolver() {
+		return botonVolver;
+	}
+
+	public void setBotonVolver(NativeButton botonVolver) {
+		this.botonVolver = botonVolver;
 	}
 
 	public HorizontalLayout getCabeceraPrincipal() {
@@ -233,14 +308,6 @@ public class VistaTweetretweet extends LitTemplate {
 		this.iconoComentarios = iconoComentarios;
 	}
 
-	public Element getMostrarMasComentarios() {
-		return mostrarMasComentarios;
-	}
-
-	public void setMostrarMasComentarios(Element mostrarMasComentarios) {
-		this.mostrarMasComentarios = mostrarMasComentarios;
-	}
-
 	public Div getDiv4() {
 		return div4;
 	}
@@ -264,72 +331,4 @@ public class VistaTweetretweet extends LitTemplate {
 	public void setMainVerticalLayout(Element mainVerticalLayout) {
 		this.mainVerticalLayout = mainVerticalLayout;
 	}
-
-	@Id("mainLayout")
-	private Div mainLayout;
-	@Id("cabeceraPrincipal")
-	private HorizontalLayout cabeceraPrincipal;
-	@Id("contendorNombreArroba")
-	private Element contendorNombreArroba;
-	@Id("nombreUsuario")
-	private Span nombreUsuario;
-	@Id("arrobaUsuario")
-	private Span arrobaUsuario;
-	@Id("botonEliminarTweet")
-	private NativeButton botonEliminarTweet;
-	@Id("contenidoTweet")
-	private Div contenidoTweet;
-	@Id("textoPublicacion")
-	private Paragraph textoPublicacion;
-	@Id("contenedorPublicacionCitada")
-	private Element contenedorPublicacionCitada;
-	@Id("cabeceraPublicacionCitada")
-	private HorizontalLayout cabeceraPublicacionCitada;
-	@Id("div")
-	private Div div;
-	@Id("img1")
-	private Image img1;
-	@Id("nombreUsuarioCitado")
-	private Span nombreUsuarioCitado;
-	@Id("contenedorDatosUsuarioCitado")
-	private Element contenedorDatosUsuarioCitado;
-	@Id("arrobaUsuarioCitado")
-	private Span arrobaUsuarioCitado;
-	@Id("img")
-	private Image img;
-	@Id("div1")
-	private Div div1;
-	@Id("textoPublicacionCitada")
-	private Paragraph textoPublicacionCitada;
-	@Id("div2")
-	private Div div2;
-	@Id("fechaPublicacion")
-	private Span fechaPublicacion;
-	@Id("div3")
-	private Div div3;
-	@Id("iconoMeGusta")
-	private Icon iconoMeGusta;
-	@Id("numMegusta")
-	private Span numMegusta;
-	@Id("numeroRetweets")
-	private Span numeroRetweets;
-	@Id("iconoRetweet")
-	private Icon iconoRetweet;
-	@Id("numeroRetweets1")
-	private Span numeroRetweets1;
-	@Id("iconoComentarios")
-	private Icon iconoComentarios;
-	@Id("mostrarMasComentarios")
-	private Element mostrarMasComentarios;
-	@Id("div4")
-	private Div div4;
-	@Id("divAvatar")
-	private Div divAvatar;
-	@Id("mainVerticalLayout")
-	private Element mainVerticalLayout;
-
-	public VistaTweetretweet() {
-        // You can initialise any data required for the connected UI components here.
-    }
-
 }

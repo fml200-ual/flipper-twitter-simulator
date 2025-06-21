@@ -11,7 +11,6 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 		this.getContenedorPublicacionCitada().setVisible(false);
 
 		Listadecomentarios();
-		this.addBackButton();
 	}
 
 	public void Listadecomentarios() {
