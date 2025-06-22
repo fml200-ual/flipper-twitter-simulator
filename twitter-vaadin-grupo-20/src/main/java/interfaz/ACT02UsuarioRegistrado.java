@@ -14,7 +14,7 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 	public Listadetweetsyretweetsregistrado _listadetweetsyretweetsregistrado;
 	public basededatos.Usuario_Registrado _usuarioRegistrado;
 
-	public ACT02UsuarioRegistrado(MainView mainView, basededatos.Usuario_Registrado usuarioRegistrado) {
+	public ACT02UsuarioRegistrado(MainView mainView) {
 		super(mainView);
 
 		this.getSpanListaTweetsRecientes().setVisible(false);
