@@ -1,5 +1,7 @@
 package interfaz;
 
+import mds2.MainView.Pantalla;
+
 public class Vertweetregistrado extends TweetRetweetajeno {
 	public Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado;
 
@@ -10,13 +12,18 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 		this.getBotonEliminarTweet().setVisible(false);
 		this.getContenedorPublicacionCitada().setVisible(false);
 
-		Listadecomentarios();
-	}
+		this.Listadecomentariosregistrado();
 
-	public void Listadecomentarios() {
-		Listadecomentariosregistrado lista = new Listadecomentariosregistrado(null);
-		lista.getMainContainer().as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class)
-				.add(new Listadecomentariosregistrado_item(lista));
-		this.getDiv4().add(lista);
+		this.getBotonVolver().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(new ACT02UsuarioRegistrado(Pantalla.MainView));
+		});
+		this.getIconoRetweet().addClickListener(event -> {
+			this.Darretweet();
+		});
+		this.getIconoComentarios().addClickListener(event -> {
+			this.Escribircomentario();
+		});
+
 	}
 }

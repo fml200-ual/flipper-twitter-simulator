@@ -8,7 +8,6 @@ public class Verhashtagregistrado extends Verhashtag {
 	public Verlistaampliadadehashtagsregistrado _verlistaampliadadehashtagsregistrado;
 	public Listafijadehashtagsregistrado _listafijadehashtagsregistrado;
 	public Listadetweetsyretweetsregistrado _listadetweetsyretweetsregistrado;
-	public ACT02UsuarioRegistrado _usuarioRegistrado;
 
 	public Verhashtagregistrado(Verlistaampliadadehashtagsregistrado _verlistaampliadadehashtagsregistrado) {
 		super();
@@ -35,10 +34,14 @@ public class Verhashtagregistrado extends Verhashtag {
 
 	public void Listadetweetsyretweetsregistrado() {
 		_listadetweetsyretweetsregistrado = new Listadetweetsyretweetsregistrado(this);
-		_listadetweetsyretweetsregistrado.getMainContainer().as(VerticalLayout.class)
-				.add(new Listadetweetsyretweets_item(_listadetweetsyretweetsregistrado));
-		_listadetweetsyretweetsregistrado.getMainContainer().as(VerticalLayout.class)
-				.add(new Listadetweetsyretweets_item(_listadetweetsyretweetsregistrado));
+
+		for (int i = 0; i < 5; i++) {
+			Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
+					_listadetweetsyretweetsregistrado);
+			_listadetweetsyretweetsregistrado
+					.getMainContainer().as(VerticalLayout.class)
+					.add(item);
+		}
 
 		this.getMainLayout().as(VerticalLayout.class)
 				.add(_listadetweetsyretweetsregistrado);

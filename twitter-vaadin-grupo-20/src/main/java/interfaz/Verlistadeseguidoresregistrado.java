@@ -1,6 +1,5 @@
 package interfaz;
 
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import mds2.MainView.Pantalla;
@@ -16,8 +15,12 @@ public class Verlistadeseguidoresregistrado extends VistaVerlistadeseguidoresreg
 
 		this.getNoFollowersMessage().setVisible(false);
 
-		addBackButton();
 		Listadeusuarios();
+
+		this.getBackButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_verperfilregistrado);
+		});
 	}
 
 	public Verlistadeseguidoresregistrado(Verpropioperfil verpropioperfil) {
@@ -25,24 +28,34 @@ public class Verlistadeseguidoresregistrado extends VistaVerlistadeseguidoresreg
 
 		this.getNoFollowersMessage().setVisible(false);
 
-		addBackButton();
 		Listadeusuarios();
+
+		this.getBackButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_verpropioperfil);
+		});
 	}
 
 	public void Listadeusuarios() {
 		_listadeusuarios = new Listadeusuarios(this);
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 5; i++) {
+			Listadeusuarios_item item = new Listadeusuarios_item(_listadeusuarios);
+
+			item.getMainContainer().addClickListener(event -> {
+				Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+				Pantalla.MainView.removeAll();
+
+				if (_verperfilregistrado != null) {
+					Pantalla.MainView.add(_verperfilregistrado);
+				} else {
+					Pantalla.MainView.add(new Verperfilregistrado(
+							_verpropioperfil._aCT02UsuarioRegistrado._listafijadeusuariosregistrado));
+				}
+			});
+
 			_listadeusuarios.getMainContainer().as(VerticalLayout.class)
-					.add(new Listadeusuarios_item(_listadeusuarios));
+					.add(item);
 		}
 		this.getFollowersListContainer().as(VerticalLayout.class).add(_listadeusuarios);
-	}
-
-	protected void addBackButton() {
-		Button backButton = new Button("← Volver", event -> {
-			Pantalla.MainView.removeAll();
-			Pantalla.MainView.add(Pantalla.Anterior);
-		});
-		this.getHeaderContainer().add(backButton);
 	}
 }

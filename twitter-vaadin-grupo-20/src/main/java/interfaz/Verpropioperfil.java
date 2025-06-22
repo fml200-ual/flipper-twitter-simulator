@@ -29,7 +29,6 @@ public class Verpropioperfil extends Verperfil {
 		this.getUserTweetsTab().addClickListener(event -> {
 			Agrupartweets();
 		});
-
 		this.getFollowingCount().addClickListener(event -> {
 			Verlistadeseguidosregistrado();
 		});
@@ -39,12 +38,10 @@ public class Verpropioperfil extends Verperfil {
 		this.getEditAccountButton().addClickListener(event -> {
 			Editarcuenta();
 		});
-
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(_aCT02UsuarioRegistrado);
 		});
-
 	}
 
 	public void Editarcuenta() {
@@ -55,10 +52,6 @@ public class Verpropioperfil extends Verperfil {
 	}
 
 	public void Verlistadeseguidoresregistrado() {
-		_verlistadeseguidoresregistrado = new Verlistadeseguidoresregistrado(this);
-		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
-		Pantalla.MainView.removeAll();
-		Pantalla.MainView.add(_verlistadeseguidoresregistrado);
 		_verlistadeseguidoresregistrado = new Verlistadeseguidoresregistrado(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();

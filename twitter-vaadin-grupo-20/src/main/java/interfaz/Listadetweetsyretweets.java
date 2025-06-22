@@ -11,7 +11,6 @@ public class Listadetweetsyretweets extends VistaListadetweetsyretweets {
 	public Vector<Listadetweetsyretweets_item> _item = new Vector<Listadetweetsyretweets_item>();
 
 	public Listadetweetsyretweets() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Listadetweetsyretweets(Agrupartweets _agrupartweets) {
