@@ -86,26 +86,29 @@ export class VistaIniciarsesin extends LitElement {
         box-shadow: var(--lumo-box-shadow-s);
         border: 2px solid #00FFFF;
       }
-      #googleLoginButton {
-        background-color: #fff;
-        color: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #googleLoginButton .google-icon {
-        width: 20px;
-        height: 20px;
-        margin-left: var(--lumo-space-s);
-      }
       #loginButton {
         background-color: #00FFFF;
         color: #000;
-      }
-      #registerButton {
+      }      #registerButton {
         background-color: #333;
         color: #00FFFF;
       }
+
+      #backButton {
+        background-color: #666;
+        color: #fff;
+        border: 1px solid #999;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        width: auto;
+      }
+
+      #backButton:hover {
+        background-color: #777;
+      }
+
       @media (max-width: 600px) {
         #loginContainer {
           padding: var(--lumo-space-m);
@@ -120,18 +123,14 @@ export class VistaIniciarsesin extends LitElement {
         }
       }
     `;
-  }
-  render() {
+  } render() {
     return html`
+<vaadin-button id="backButton" tabindex="0">← Volver</vaadin-button>
 <div id="loginContainer">
  <img src="./img/imagenIcon.png" alt="Bird Logo" class="bird-logo">
  <vaadin-text-field label="Nick o correo electrónico" id="usernameField"></vaadin-text-field>
  <vaadin-password-field label="Contraseña" id="passwordField"></vaadin-password-field>
  <a href="#" class="forgot-password-link" id="forgotPasswordLink">¿Has olvidado tu contraseña?</a>
- <vaadin-button id="googleLoginButton">
-   Iniciar Sesión con 
-  <img src="./img/googleIcon.png" alt="Google Logo" class="google-icon" onerror="">
- </vaadin-button>
  <vaadin-button id="loginButton">
    Iniciar Sesión 
  </vaadin-button>

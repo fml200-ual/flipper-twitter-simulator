@@ -6,20 +6,19 @@ import '@vaadin/icons';
 import '@vaadin/vaadin-lumo-styles/icons.js';
 
 @customElement('vista-listadeusuarios_item')
-export class VistaListadeusuarios_item extends LitElement {
-  static get styles() {
+export class VistaListadeusuarios_item extends LitElement {  static get styles() {
     return css`
       :host {
         display: block;
         width: 100%;
         box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
         padding: 5px; /* Pequeño padding alrededor del item para el efecto de borde exterior */
-        background-color: #f0f0f0; /* Fondo claro si es parte de una lista con espacio */
+        background-color: #000000; /* Fondo negro para modo oscuro */
       }
 
       #mainContainer {
         width: 100%;
-        background-color: #333333; /* Fondo gris oscuro */
+        background-color: #1a1a1a; /* Fondo gris muy oscuro */
         border: 2px solid #00FFFF; /* Borde turquesa */
         border-radius: 8px; /* Bordes redondeados */
         padding: var(--lumo-space-s); /* Padding interno Lumo-space-s (~8px) */
@@ -27,6 +26,12 @@ export class VistaListadeusuarios_item extends LitElement {
         /* vaadin-horizontal-layout maneja display:flex y align-items */
         justify-content: space-between; /* Distribuye espacio entre la sección de usuario y la descripción */
         color: #FFFFFF; /* Color de texto predeterminado blanco para el contenedor */
+        transition: all 0.3s ease;
+      }
+
+      #mainContainer:hover {
+        background-color: #2a2a2a;
+        border-color: #ffffff;
       }
 
       #userInfoSection {
@@ -68,17 +73,17 @@ export class VistaListadeusuarios_item extends LitElement {
       #followersIcon { /* Estilos para el vaadin-icon de seguidores */
         width: 16px; /* Tamaño del icono vaadin:users (ajustado para que sea visible) */
         height: 16px;
-        color: #0000FF; /* Color azul para el icono de seguidores */
+        color: #00FFFF; /* Color turquesa para el icono de seguidores (consistente) */
         flex-shrink: 0;
       }
 
       #descriptionContainer {
         flex-grow: 1; /* Permite que ocupe el espacio restante */
-        background-color: #555555; /* Fondo gris claro para la descripción */
+        background-color: #333333; /* Fondo gris más oscuro para la descripción */
         border: 1px solid #00FFFF; /* Borde turquesa para el cuadro de descripción */
         border-radius: 4px;
         padding: var(--lumo-space-s) var(--lumo-space-m); /* Padding interno */
-        color: #DDDDDD; /* Color del texto de la descripción */
+        color: #FFFFFF; /* Color blanco para el texto de la descripción */
         font-size: var(--lumo-font-size-m);
         /* vaadin-horizontal-layout ya tiene display:flex y align-items:center */
         justify-content: center; /* Centra el texto horizontalmente */
@@ -91,6 +96,7 @@ export class VistaListadeusuarios_item extends LitElement {
         white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
         overflow: hidden; /* Oculta el texto que desborda */
         text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es muy largo */
+        color: #FFFFFF; /* Texto blanco para mejor contraste */
       }
     `;
   }

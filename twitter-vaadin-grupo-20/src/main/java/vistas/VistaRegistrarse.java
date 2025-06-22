@@ -18,6 +18,8 @@ import com.vaadin.flow.component.button.Button;
 @JsModule("./views/vista-registrarse.ts")
 public class VistaRegistrarse extends LitTemplate {
 
+	@Id("backButton")
+	private Button backButton;
 	@Id("registerContainer")
 	private Element registerContainer;
 	@Id("requiredFieldsMessage")
@@ -54,152 +56,155 @@ public class VistaRegistrarse extends LitTemplate {
 	private Button googleLoginButton;
 	@Id("registerButton")
 	private Button registerButton;
-
 	public VistaRegistrarse() {
 		// You can initialise any data required for the connected UI components here.
 	}
 
-	private Element getRegisterContainer() {
+	public Button getBackButton() {
+		return backButton;
+	}
+
+	public Element getRegisterContainer() {
 		return registerContainer;
 	}
 
-	private void setRegisterContainer(Element registerContainer) {
+	public void setRegisterContainer(Element registerContainer) {
 		this.registerContainer = registerContainer;
 	}
 
-	private Span getRequiredFieldsMessage() {
+	public Span getRequiredFieldsMessage() {
 		return requiredFieldsMessage;
 	}
 
-	private void setRequiredFieldsMessage(Span requiredFieldsMessage) {
+	public void setRequiredFieldsMessage(Span requiredFieldsMessage) {
 		this.requiredFieldsMessage = requiredFieldsMessage;
 	}
 
-	private TextField getNameField() {
+	public TextField getNameField() {
 		return nameField;
 	}
 
-	private void setNameField(TextField nameField) {
+	public void setNameField(TextField nameField) {
 		this.nameField = nameField;
 	}
 
-	private TextField getLastNameField() {
+	public TextField getLastNameField() {
 		return lastNameField;
 	}
 
-	private void setLastNameField(TextField lastNameField) {
+	public void setLastNameField(TextField lastNameField) {
 		this.lastNameField = lastNameField;
 	}
 
-	private TextField getEmailField() {
+	public TextField getEmailField() {
 		return emailField;
 	}
 
-	private void setEmailField(TextField emailField) {
+	public void setEmailField(TextField emailField) {
 		this.emailField = emailField;
 	}
 
-	private TextField getNickField() {
+	public TextField getNickField() {
 		return nickField;
 	}
 
-	private void setNickField(TextField nickField) {
+	public void setNickField(TextField nickField) {
 		this.nickField = nickField;
 	}
 
-	private PasswordField getPasswordField() {
+	public PasswordField getPasswordField() {
 		return passwordField;
 	}
 
-	private void setPasswordField(PasswordField passwordField) {
+	public void setPasswordField(PasswordField passwordField) {
 		this.passwordField = passwordField;
 	}
 
-	private TextField getAtSignField() {
+	public TextField getAtSignField() {
 		return atSignField;
 	}
 
-	private void setAtSignField(TextField atSignField) {
+	public void setAtSignField(TextField atSignField) {
 		this.atSignField = atSignField;
 	}
 
-	private TextField getProfilePhotoUrlField() {
+	public TextField getProfilePhotoUrlField() {
 		return profilePhotoUrlField;
 	}
 
-	private void setProfilePhotoUrlField(TextField profilePhotoUrlField) {
+	public void setProfilePhotoUrlField(TextField profilePhotoUrlField) {
 		this.profilePhotoUrlField = profilePhotoUrlField;
 	}
 
-	private Div getProfileImagePreview() {
+	public Div getProfileImagePreview() {
 		return profileImagePreview;
 	}
 
-	private void setProfileImagePreview(Div profileImagePreview) {
+	public void setProfileImagePreview(Div profileImagePreview) {
 		this.profileImagePreview = profileImagePreview;
 	}
 
-	private Icon getProfileImagePreviewIcon() {
+	public Icon getProfileImagePreviewIcon() {
 		return profileImagePreviewIcon;
 	}
 
-	private void setProfileImagePreviewIcon(Icon profileImagePreviewIcon) {
+	public void setProfileImagePreviewIcon(Icon profileImagePreviewIcon) {
 		this.profileImagePreviewIcon = profileImagePreviewIcon;
 	}
 
-	private HorizontalLayout getVaadinHorizontalLayout() {
+	public HorizontalLayout getVaadinHorizontalLayout() {
 		return vaadinHorizontalLayout;
 	}
 
-	private void setVaadinHorizontalLayout(HorizontalLayout vaadinHorizontalLayout) {
+	public void setVaadinHorizontalLayout(HorizontalLayout vaadinHorizontalLayout) {
 		this.vaadinHorizontalLayout = vaadinHorizontalLayout;
 	}
 
-	private TextField getBackgroundUrlField() {
+	public TextField getBackgroundUrlField() {
 		return backgroundUrlField;
 	}
 
-	private void setBackgroundUrlField(TextField backgroundUrlField) {
+	public void setBackgroundUrlField(TextField backgroundUrlField) {
 		this.backgroundUrlField = backgroundUrlField;
 	}
 
-	private Div getBackgroundImagePreview() {
+	public Div getBackgroundImagePreview() {
 		return backgroundImagePreview;
 	}
 
-	private void setBackgroundImagePreview(Div backgroundImagePreview) {
+	public void setBackgroundImagePreview(Div backgroundImagePreview) {
 		this.backgroundImagePreview = backgroundImagePreview;
 	}
 
-	private Icon getBackgroundImagePreviewIcon() {
+	public Icon getBackgroundImagePreviewIcon() {
 		return backgroundImagePreviewIcon;
 	}
 
-	private void setBackgroundImagePreviewIcon(Icon backgroundImagePreviewIcon) {
+	public void setBackgroundImagePreviewIcon(Icon backgroundImagePreviewIcon) {
 		this.backgroundImagePreviewIcon = backgroundImagePreviewIcon;
 	}
 
-	private TextArea getDescriptionField() {
+	public TextArea getDescriptionField() {
 		return descriptionField;
 	}
 
-	private void setDescriptionField(TextArea descriptionField) {
+	public void setDescriptionField(TextArea descriptionField) {
 		this.descriptionField = descriptionField;
 	}
 
-	private Button getGoogleLoginButton() {
+	public Button getGoogleLoginButton() {
 		return googleLoginButton;
 	}
 
-	private void setGoogleLoginButton(Button googleLoginButton) {
+	public void setGoogleLoginButton(Button googleLoginButton) {
 		this.googleLoginButton = googleLoginButton;
 	}
 
-	private Button getRegisterButton() {
+	public Button getRegisterButton() {
 		return registerButton;
 	}
 
-	private void setRegisterButton(Button registerButton) {
+	public void setRegisterButton(Button registerButton) {
 		this.registerButton = registerButton;
 	}
 

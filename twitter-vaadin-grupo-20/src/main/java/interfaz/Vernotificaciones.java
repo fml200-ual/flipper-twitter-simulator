@@ -1,5 +1,6 @@
 package interfaz;
 
+import mds2.MainView.Pantalla;
 import vistas.VistaVernotificaciones;
 
 public class Vernotificaciones extends VistaVernotificaciones {
@@ -11,17 +12,31 @@ public class Vernotificaciones extends VistaVernotificaciones {
 	public Vernotificaciones(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado) {
 		super();
 		this._aCT02UsuarioRegistrado = _aCT02UsuarioRegistrado;
+
+		this.getBoton_seguimiento().addClickListener(event -> Vernotificacionesseguimiento());
+		this.getBoton_menciones().addClickListener(event -> Vernotificacionesdemenciones());
+		this.getBoton_retweets().addClickListener(event -> Vernotificacionesderetweets());
+		this.getBoton_volver().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_aCT02UsuarioRegistrado);
+		});
 	}
 
 	public void Vernotificacionesseguimiento() {
-		throw new UnsupportedOperationException();
+		_vernotificacionesseguimiento = new Vernotificacionesseguimiento(this);
+		this.getNotificationList().removeAll();
+		this.getNotificationList().add(_vernotificacionesseguimiento);
 	}
 
 	public void Vernotificacionesdemenciones() {
-		throw new UnsupportedOperationException();
+		_vernotificacionesdemenciones = new Vernotificacionesdemenciones(this);
+		this.getNotificationList().removeAll();
+		this.getNotificationList().add(_vernotificacionesdemenciones);
 	}
 
 	public void Vernotificacionesderetweets() {
-		throw new UnsupportedOperationException();
+		_vernotificacionesderetweets = new Vernotificacionesderetweets(this);
+		this.getNotificationList().removeAll();
+		this.getNotificationList().add(_vernotificacionesderetweets);
 	}
 }

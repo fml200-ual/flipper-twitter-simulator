@@ -8,17 +8,26 @@ import '@vaadin/avatar/src/vaadin-avatar.js';
 @customElement('vista-tweetretweet')
 export class VistaTweetretweet extends LitElement {
 
-    // Define los estilos del componente
-    static get styles() {
+  // Define los estilos del componente
+  static get styles() {
     return css`
       :host {
         display: flex;
         flex-direction: column;
-        align-items: center; /* Centra el contenido en el host */
+        align-items: center;
+        width: 100vw; /* Ocupa todo el ancho del viewport */
+        height: 100vh; /* Ocupa toda la altura del viewport */
+        background-color: #000; /* Fondo negro */
+        font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+        box-sizing: border-box;
+        margin: 0; /* Elimina márgenes */
+        padding: 0; /* Elimina padding */
+        position: fixed; /* Fija la posición para ocupar toda la ventana */
+        top: 0;
+        left: 0;
+        overflow-y: auto; /* Permite scroll si es necesario */
         font-family: Arial, sans-serif;
         background-color: #000;
-        padding: 20px;
-        box-sizing: border-box;
       }
 
       .contenedor-principal {
@@ -152,18 +161,38 @@ export class VistaTweetretweet extends LitElement {
         text-align: center;
       }
       .mostrar-mas:hover { text-decoration: underline; }
+
+      .boton-volver {
+        background-color: #1DA1F2;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 0.9em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 15px;
+        width: fit-content;
+      }
+      .boton-volver:hover { background-color: #1991db; }
+      
+      .boton-volver vaadin-icon {
+        width: 16px;
+        height: 16px;
+      }
     `;
   }
-
-    // `createRenderRoot()` se utiliza para evitar el Shadow DOM
-    // de modo que los estilos globales (como los importados de los temas de Vaadin) se apliquen directamente.
-    createRenderRoot() {
-        return this;
-    }
 
   render() {
     return html`
 <div class="contenedor-principal" id="mainLayout">
+ <button class="boton-volver" id="botonVolver">
+  <vaadin-icon icon="vaadin:arrow-left"></vaadin-icon>
+  Volver
+ </button>
  <vaadin-vertical-layout class="publicacion-principal-contenedor" id="mainVerticalLayout" style="width: 100%; height: 100%;">
   <vaadin-horizontal-layout class="cabecera" id="cabeceraPrincipal">
    <div class="avatar" id="divAvatar">
@@ -205,7 +234,6 @@ export class VistaTweetretweet extends LitElement {
   </div>
  </vaadin-vertical-layout>
  <div class="comentarios-contenedor" id="div4"></div>
- <a href="#" class="mostrar-mas" id="mostrarMasComentarios">Mostrar más comentarios</a>
 </div>
 `;
   }

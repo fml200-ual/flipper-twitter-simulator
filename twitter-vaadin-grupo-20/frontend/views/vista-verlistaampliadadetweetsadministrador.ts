@@ -10,97 +10,191 @@ export class VistaVerlistaampliadadetweetsadministrador extends LitElement {
     static get styles() {
         return css`
             :host {
-                display: block;
-                height: 100%;
-                width: 100%;
-                background-color: black; /* Fondo oscuro */
-                color: white; /* Color de texto predeterminado */
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: black;
+                color: white;
                 font-family: 'Arial', sans-serif;
                 --lumo-space-m: 1rem;
                 --lumo-space-l: 1.5rem;
-                --lumo-space-xl: 2rem;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                z-index: 1;
             }
 
             #main-layout {
                 width: 100%;
-                max-width: 900px; /* Ancho máximo para el contenido */
-                margin: 0 auto; /* Centrar el contenido */
-                padding: var(--lumo-space-l);
+                height: 100vh;
+                margin: 0;
+                padding: 0;
                 box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
-                align-items: center; /* Centrar elementos horizontalmente */
+                align-items: center;
+                overflow: hidden;
             }
 
             #twitter-bird-icon {
-                width: 100px; /* Tamaño del icono */
-                height: 100px;
-                margin-bottom: var(--lumo-space-l);
-                /* Para un icono SVG, podrías insertarlo directamente aquí o usar un <img> con una URL */
-                /* Ejemplo de SVG simple (ajusta los colores y formas según tu pájaro) */
-                background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2387CEEB"><path d="M23.643 4.937c-.886.398-1.834.665-2.835.787 1.017-.609 1.795-1.574 2.162-2.723-.951.565-2.002.977-3.128 1.196-1.02-.924-2.47-1.503-4.072-1.503-3.076 0-5.578 2.502-5.578 5.578 0 .436.05.86.147 1.267-4.636-.233-8.74-2.45-11.492-5.807-.48.825-.754 1.776-.754 2.793 0 1.933.986 3.637 2.482 4.63-.91-.028-1.765-.28-2.516-.694v.07c0 2.71 1.928 4.965 4.484 5.49-.467.127-.96.195-1.472.195-.36 0-.71-.035-1.05-.1.71 2.222 2.775 3.839 5.21 3.882-1.916 1.5-4.33 2.404-6.967 2.404-.453 0-.898-.027-1.334-.078 2.47 1.588 5.406 2.518 8.567 2.518 10.282 0 15.93-8.527 15.93-15.923 0-.243-.005-.487-.014-.728.974-.703 1.81-1.576 2.474-2.573z"/></svg>');
+                width: 60px;
+                height: 60px;
+                margin: var(--lumo-space-m) 0;
+                flex-shrink: 0;
+                background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M85 25c-3 1-6 2-10 2 4-2 6-6 7-10-3 2-7 3-11 4-3-3-8-5-13-5-10 0-18 8-18 18 0 1 0 3 1 4-15-1-28-8-37-19-2 3-2 6-2 10 0 6 3 11 8 14-3 0-5-1-7-2v1c0 9 6 16 14 18-1 0-3 1-5 1-1 0-2 0-3 0 2 6 8 11 15 11-5 4-12 7-20 7-1 0-3 0-4 0 7 5 16 7 25 7 30 0 47-25 47-47v-2c3-2 6-5 8-8z" fill="%2300FFFF"/></svg>');
                 background-size: contain;
                 background-repeat: no-repeat;
                 background-position: center;
             }
 
-            #main-header {
-                font-size: 2em;
-                font-weight: bold;
-                color: #00FFFF; /* Color turquesa */
-                margin-bottom: var(--lumo-space-l);
-            }
-
-            #search-section {
-                width: 100%;
-                margin-bottom: var(--lumo-space-l);
-            }
-
-            #search-field {
-                width: 100%;
-            }
-
-            #controls-layout {
-                width: 100%;
-                justify-content: flex-end; /* Alinear los botones a la derecha */
-                gap: var(--lumo-space-s); /* Espacio entre botones */
-                margin-bottom: var(--lumo-space-l);
-            }
-
-            .vaadin-button {
-                background-color: #50b7f5; /* Azul de Twitter o similar */
-                color: white;
-                border-radius: 20px;
-                padding: 0.5em 1.5em;
-                font-weight: bold;
-                cursor: pointer;
-            }
-
-            .vaadin-button.secondary {
-                background-color: #666; /* Botón secundario */
-            }
-
             #tweet-list-container {
                 width: 100%;
-                /* Define aquí el estilo si necesitas un contenedor con scroll o un fondo específico */
-                /* min-height: 300px; /* Altura mínima para mostrar el espacio */ */
-                /* border: 1px dashed gray; /* Para visualizar el área donde irían los tweets */ */
-                margin-bottom: var(--lumo-space-l);
+                height: 100%;
+                flex: 1;
                 display: flex;
                 flex-direction: column;
-                gap: var(--lumo-space-m); /* Espacio entre los tweets si se renderizaran */
+                gap: 0;
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding: 0 var(--lumo-space-m);
+                box-sizing: border-box;
+                scrollbar-width: thin;
+                scrollbar-color: #00FFFF #333;
             }
 
-            #show-more-button {
-                background-color: #00FFFF; /* Botón "Mostrar más" turquesa */
+            /* Estilos para webkit browsers (Chrome, Safari) */
+            #tweet-list-container::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            #tweet-list-container::-webkit-scrollbar-track {
+                background: #333;
+            }
+
+            #tweet-list-container::-webkit-scrollbar-thumb {
+                background: #00FFFF;
+                border-radius: 4px;
+            }
+
+            #tweet-list-container::-webkit-scrollbar-thumb:hover {
+                background: #00CCCC;
+            }
+
+            /* Estilos para el componente de tweet que se añadirá */
+            .tweet-item {
+                background-color: #1a1a1a;
+                border: 2px solid #00FFFF;
+                border-radius: 15px;
+                padding: var(--lumo-space-m);
+                margin-bottom: var(--lumo-space-s);
+                width: 100%;
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+                display: flex;
+                flex-direction: column;
+                gap: var(--lumo-space-m);
+                box-sizing: border-box;
+            }
+
+            .tweet-header {
+                display: flex;
+                align-items: center;
+                gap: var(--lumo-space-m);
+                color: white;
+                font-weight: bold;
+            }
+
+            .tweet-icon {
+                width: 40px;
+                height: 40px;
+                background-color: #00FFFF;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 color: black;
-                padding: var(--lumo-space-s) var(--lumo-space-l);
+                font-weight: bold;
+                font-size: 1.2em;
+            }
+
+            .tweet-username {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .tweet-handle {
+                color: #00FFFF;
+                font-size: 0.9em;
+            }
+
+            .tweet-date {
+                color: #999;
+                font-size: 0.9em;
+                margin-left: auto;
+            }
+
+            .tweet-content {
+                background-color: #f0f0f0;
+                color: black;
+                padding: var(--lumo-space-m);
+                border-radius: 10px;
+                font-size: 1.1em;
+                text-align: center;
+            }
+
+            .tweet-actions {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                padding-top: var(--lumo-space-m);
+            }
+
+            .tweet-action-btn {
+                background: none;
+                border: none;
+                color: #999;
+                cursor: pointer;
+                padding: 8px 12px;
+                border-radius: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2em;
+                min-width: 40px;
+                height: 40px;
+            }
+
+            .tweet-action-btn:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            #back-button-container {
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 10;
+            }
+
+            .back-button {
+                background-color: #00FFFF;
+                color: black;
+                border: none;
+                padding: 10px 20px;
                 border-radius: 20px;
                 font-weight: bold;
-                margin-top: var(--lumo-space-m);
                 cursor: pointer;
-                border: none;
-                font-size: 1.1em;
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .back-button:hover {
+                background-color: #00CCCC;
             }
         `;
     }
@@ -108,33 +202,14 @@ export class VistaVerlistaampliadadetweetsadministrador extends LitElement {
     render() {
         return html`
 <vaadin-vertical-layout id="main-layout">
+ <div id="back-button-container">
+  <!-- El botón se añadirá dinámicamente aquí -->
+ </div>
  <div id="twitter-bird-icon"></div>
- <h2 id="main-header">Administrar Tweets</h2>
- <vaadin-horizontal-layout id="search-section">
-  <vaadin-text-field id="search-field" placeholder="Buscar tweets..." style="flex-grow: 1;" type="text"></vaadin-text-field>
-  <vaadin-button id="search-button" tabindex="0">
-    Buscar 
-  </vaadin-button>
- </vaadin-horizontal-layout>
- <vaadin-horizontal-layout id="controls-layout">
-  <vaadin-button id="create-new-button" class="vaadin-button" tabindex="0">
-    Crear Nuevo 
-  </vaadin-button>
-  <vaadin-button id="delete-selected-button" class="vaadin-button secondary" tabindex="0">
-    Eliminar Seleccionados 
-  </vaadin-button>
- </vaadin-horizontal-layout>
  <vaadin-vertical-layout id="tweet-list-container">
-  <span style="color: gray; margin: var(--lumo-space-xl);" id="span">No hay tweets para mostrar en esta vista de administrador.</span>
+  <!-- Aquí se añadirán dinámicamente los componentes de tweet -->
  </vaadin-vertical-layout>
- <button id="show-more-button">Mostrar más</button>
 </vaadin-vertical-layout>
 `;
-    }
-
-    // Mantener esta configuración para renderizar directamente en el DOM ligero.
-    // Esto es común en componentes LitElement usados directamente en Vaadin Flow.
-    createRenderRoot() {
-        return this;
     }
 }

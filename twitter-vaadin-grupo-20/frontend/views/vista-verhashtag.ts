@@ -1,6 +1,7 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 import '@vaadin/text-field/src/vaadin-text-field.js';
 import '@vaadin/icons';
+import '@vaadin/icon';
 import '@vaadin/vaadin-ordered-layout/src/vaadin-vertical-layout.js';
 import '@vaadin/button/src/vaadin-button.js';
 import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
@@ -10,24 +11,47 @@ export class VistaVerhashtag extends LitElement {
     static get styles() {
         return css`
             :host {
-                display: block;
-                height: 100%;
-                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100vw; /* Ocupa todo el ancho del viewport */
+                height: 100vh; /* Ocupa toda la altura del viewport */
+                background-color: #000; /* Fondo negro */
+                font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+                box-sizing: border-box;
+                margin: 0; /* Elimina márgenes */
+                padding: 0; /* Elimina padding */
+                position: fixed; /* Fija la posición para ocupar toda la ventana */
+                top: 0;
+                left: 0;
+                overflow-y: auto; /* Permite scroll si es necesario */
+
                 background-color: black; /* Fondo oscuro como en la imagen */
                 color: white; /* Texto blanco */
                 font-family: 'Arial', sans-serif; /* O la fuente que desees */
                 --lumo-space-m: 1rem; /* Define la variable de espacio lumo para padding */
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            /* Asegurar que todos los elementos Vaadin tengan fondo negro */
+            vaadin-vertical-layout {
+                background-color: black !important;
             }
 
             #main-layout {
                 width: 100%;
                 max-width: 800px; /* Ancho máximo para centrar el contenido */
                 margin: 0 auto; /* Centrar el contenido */
-                padding: var(--lumo-space-m);
+                padding: 0;
                 box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
                 align-items: center; /* Centrar horizontalmente los elementos */
+                background-color: transparent !important;
+                flex: 1;
+                overflow-y: auto;
             }
 
             h1 {
@@ -104,62 +128,37 @@ export class VistaVerhashtag extends LitElement {
             }
 
             #show-more-button {
-                background-color: #00FFFF; /* Botón "Mostrar más" turquesa */
-                color: black;
-                padding: var(--lumo-space-s) var(--lumo-space-l);
-                border-radius: 20px;
-                font-weight: bold;
+                --lumo-primary-color: #00FFFF;
+                --lumo-primary-contrast-color: black;
                 margin-top: var(--lumo-space-l);
-                cursor: pointer;
-                border: none;
+                font-weight: bold;
                 font-size: 1.1em;
+            }
+
+            #volver-button {
+                --lumo-primary-color: #333;
+                --lumo-primary-contrast-color: white;
+                --lumo-contrast-10pct: #555;
+                margin: 10px;
+                font-size: 0.9em;
+            }
+
+            #volver-button:hover {
+                --lumo-primary-color: #555;
             }
         `;
     }
 
     render() {
-        // Función auxiliar para renderizar una "tarjeta" de tweet
-        const renderTweetCard = (name: string, handle: string, date: string, content: string) => html`
-            <div class="tweet-card">
-                <div class="tweet-header">
-                    <div class="profile-pic"></div>
-                    <div class="user-info">
-                        <span class="name">${name}</span>
-                        <span class="handle">${handle}</span>
-                        <span class="date">${date}</span>
-                    </div>
-                </div>
-                <div class="tweet-content">
-                    ${content}
-                </div>
-                <div class="tweet-actions">
-                    <button class="action-button">
-                        <vaadin-icon icon="lumo:heart"></vaadin-icon>
-                        <span></span>
-                    </button>
-                    <button class="action-button">
-                        <vaadin-icon icon="lumo:redo"></vaadin-icon>
-                        <span></span>
-                    </button>
-                    <button class="action-button">
-                        <vaadin-icon icon="lumo:chat"></vaadin-icon>
-                        <span>2</span>
-                    </button>
-                </div>
-            </div>
-        `;
-
         return html`
 <vaadin-vertical-layout style="width: 100%; height: 100%;" id="vaadinVerticalLayout">
+ <vaadin-button id="volver-button" style="align-self: flex-start; margin: 10px;">← Volver</vaadin-button>
  <h1 style="align-self: center;" id="h1">#Hashtag</h1>
  <vaadin-vertical-layout id="main-layout" style="width: 100%; height: 100%; flex-shrink: 1;"></vaadin-vertical-layout>
- <button id="show-more-button" style="align-self: center;">Mostrar más</button>
+ <vaadin-button id="show-more-button" style="align-self: center;">Mostrar más</vaadin-button>
 </vaadin-vertical-layout>
 `;
     }
 
-    // Remove this method to render the contents of this view inside Shadow DOM
-    createRenderRoot() {
-        return this;
-    }
+
 }

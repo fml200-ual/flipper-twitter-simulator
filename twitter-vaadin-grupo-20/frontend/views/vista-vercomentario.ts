@@ -129,6 +129,32 @@ export class VistaVercomentario extends LitElement {
                 background-color: #c01a4e; /* Tono más oscuro al pasar el ratón */
             }
 
+            .back-button {
+                background-color: #1DA1F2; /* Azul de Twitter */
+                color: white;
+                border: none;
+                border-radius: 20px;
+                padding: 8px 16px;
+                font-weight: bold;
+                cursor: pointer;
+                font-size: 0.9em;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 20px;
+                width: fit-content;
+                transition: background-color 0.2s ease-in-out;
+            }
+            
+            .back-button:hover {
+                background-color: #1991db;
+            }
+            
+            .back-button vaadin-icon {
+                width: 16px;
+                height: 16px;
+            }
+
             /* Ajustes responsivos */
             @media (max-width: 480px) {
                 .header-section {
@@ -155,14 +181,12 @@ export class VistaVercomentario extends LitElement {
         `;
     }
 
-    // `createRenderRoot()` se utiliza para evitar el Shadow DOM
-    // de modo que los estilos globales (como los importados de los temas de Vaadin) se apliquen directamente.
-    createRenderRoot() {
-        return this;
-    }
-
     render() {
         return html`
+<vaadin-button id="backButton" class="back-button">
+ <vaadin-icon icon="vaadin:arrow-left"></vaadin-icon>
+ Volver
+</vaadin-button>
 <div id="commentMainContainer" class="comment-container">
  <vaadin-horizontal-layout id="commentHeader" class="header-section" theme="spacing">
   <vaadin-avatar id="commenterAvatar" img="https://placehold.co/40x40/cccccc/ffffff?text=Nic"></vaadin-avatar>

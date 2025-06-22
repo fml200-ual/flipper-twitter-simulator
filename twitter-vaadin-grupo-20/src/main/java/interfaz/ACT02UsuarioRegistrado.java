@@ -1,10 +1,9 @@
 package interfaz;
 
-import com.github.fge.jsonschema.main.cli.Main;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import mds2.MainView;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import mds2.MainView.Pantalla;
 
 public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 	public Listafijadeusuariosregistrado _listafijadeusuariosregistrado;
@@ -18,94 +17,73 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 	public ACT02UsuarioRegistrado(MainView mainView, basededatos.Usuario_Registrado usuarioRegistrado) {
 		super(mainView);
 
-		this._usuarioRegistrado = usuarioRegistrado;
-
 		this.getSpanListaTweetsRecientes().setVisible(false);
-		Listadeusuariosregistrado();
-		Listadehashtagsregistrado();
+
+		Listafijadeusuariosregistrado();
+		Listafijadehashtagsregistrado();
 		Listadetweetsyretweetsregistrado();
 
 		this.getBotonPerfilPropioRegistrado()
 				.addClickListener(event -> Verpropioperfil());
-
 		this.getBotonEscribirTweet()
 				.addClickListener(event -> Escribirtweet());
-
 		this.getBotonNotificacionesRegistrado()
 				.addClickListener(event -> Vernotificaciones());
-
 		this.getBotonMasUsuarios()
-				.addClickListener(event -> Listafijadeusuariosregistrado());
-
+				.addClickListener(event -> _listafijadeusuariosregistrado.Verlistaampliadadeusuariosregistrado());
 		this.getBotonMasHashtags()
-				.addClickListener(event -> Listafijadehashtagsregistrado());
+				.addClickListener(event -> _listafijadehashtagsregistrado.Verlistaampliadadehashtagsregistrado());
+		this.getBotonCerrarSesionPrimerBoton().addClickListener(event -> {
+			this.Cerrarsesin();
+		});
+		this.getBotonEscribirTweet().addClickListener(event -> {
+			Escribirtweet();
+		});
 
-		this.getBotonCerrarSesionPrimerBoton()
-				.addClickListener(event -> {
-					MainView.removeAll();
-					MainView.add(new ACT01UsuarioNoRegistrado(mainView));
-				});
-	}
-
-	public void Listadeusuariosregistrado() {
-		// _listafijadeusuariosregistrado = new Listafijadeusuariosregistrado(this);
-
-		Listadeusuarios listadeusuarios = new Listadeusuarios(
-				(Verlistaampliadadeusuarios) null);
-		listadeusuarios.getMainContainer().as(VerticalLayout.class)
-				.add(new Listadeusuarios_item(listadeusuarios));
-		listadeusuarios.getMainContainer().as(VerticalLayout.class)
-				.add(new Listadeusuarios_item(listadeusuarios));
-		this.getVerticalLayoutListaUsuarios().as(VerticalLayout.class)
-				.add(listadeusuarios);
-	}
-
-	public void Listadehashtagsregistrado() {
-		Listadehashtags listadehashtags = new Listadehashtags(
-				(Verlistaampliadadehashtagsregistrado) null);
-
-		this.getVerticalLayoutListaHashtagsSesionIniciada().as(VerticalLayout.class)
-				.add(listadehashtags);
-	}
-
-	public void Verpropioperfil() {
-		_verpropioperfil = new Verpropioperfil(this);
-		MainView.removeAll();
-		MainView.add(_verpropioperfil);
-	}
-
-	public void Escribirtweet() {
-		_escribirtweet = new Escribirtweet(this);
-		MainView.removeAll();
-		MainView.add(_escribirtweet);
-	}
-
-	public void Vernotificaciones() {
-		_vernotificaciones = new Vernotificaciones(this);
-		MainView.removeAll();
-		MainView.add(_vernotificaciones);
-	}
-
-	public void Listadetweetsyretweetsregistrado() {
-		_listadetweetsyretweetsregistrado = new Listadetweetsyretweetsregistrado(this);
-		_listadetweetsyretweetsregistrado.getMainContainer().as(VerticalLayout.class)
-				.add(new Listadetweetsyretweets_item(_listadetweetsyretweetsregistrado));
-		_listadetweetsyretweetsregistrado.getMainContainer().as(VerticalLayout.class)
-				.add(new Listadetweetsyretweets_item(_listadetweetsyretweetsregistrado));
-
-		this.getVerticalLayoutListaTweets().as(VerticalLayout.class)
-				.add(_listadetweetsyretweetsregistrado);
 	}
 
 	public void Listafijadeusuariosregistrado() {
 		_listafijadeusuariosregistrado = new Listafijadeusuariosregistrado(this);
-		MainView.removeAll();
-		MainView.add(_listafijadeusuariosregistrado);
+		this.getVerticalLayoutListaUsuarios().as(VerticalLayout.class)
+				.add(_listafijadeusuariosregistrado);
 	}
 
 	public void Listafijadehashtagsregistrado() {
 		_listafijadehashtagsregistrado = new Listafijadehashtagsregistrado(this);
-		MainView.removeAll();
-		MainView.add(_listafijadehashtagsregistrado);
+		this.getVerticalLayoutListaHashtagsSesionIniciada().as(VerticalLayout.class)
+				.add(_listafijadehashtagsregistrado);
+	}
+
+	public void Verpropioperfil() {
+		_verpropioperfil = new Verpropioperfil(this);
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_verpropioperfil);
+	}
+
+	public void Escribirtweet() {
+		_escribirtweet = new Escribirtweet(this);
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_escribirtweet);
+	}
+
+	public void Vernotificaciones() {
+		_vernotificaciones = new Vernotificaciones(this);
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_vernotificaciones);
+	}
+
+	public void Listadetweetsyretweetsregistrado() {
+		_listadetweetsyretweetsregistrado = new Listadetweetsyretweetsregistrado(this);
+
+		for (int i = 0; i < 5; i++) {
+			Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
+					_listadetweetsyretweetsregistrado);
+			_listadetweetsyretweetsregistrado.getMainContainer().as(VerticalLayout.class).add(item);
+		}
+
+		this.getVerticalLayoutListaTweets().as(VerticalLayout.class).add(_listadetweetsyretweetsregistrado);
 	}
 }

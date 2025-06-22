@@ -37,83 +37,83 @@ public class VistaPerspectivabloqueado extends LitTemplate {
 	public VistaPerspectivabloqueado() {
 	}
 
-	private Div getProfileHeader() {
+	public Div getProfileHeader() {
 		return profileHeader;
 	}
 
-	private void setProfileHeader(Div profileHeader) {
+	public void setProfileHeader(Div profileHeader) {
 		this.profileHeader = profileHeader;
 	}
 
-	private Image getBannerImage() {
+	public Image getBannerImage() {
 		return bannerImage;
 	}
 
-	private void setBannerImage(Image bannerImage) {
+	public void setBannerImage(Image bannerImage) {
 		this.bannerImage = bannerImage;
 	}
 
-	private Image getProfileImage() {
+	public Image getProfileImage() {
 		return profileImage;
 	}
 
-	private void setProfileImage(Image profileImage) {
+	public void setProfileImage(Image profileImage) {
 		this.profileImage = profileImage;
 	}
 
-	private Element getUserInfo() {
+	public Element getUserInfo() {
 		return userInfo;
 	}
 
-	private void setUserInfo(Element userInfo) {
+	public void setUserInfo(Element userInfo) {
 		this.userInfo = userInfo;
 	}
 
-	private Span getUsernameText() {
+	public Span getUsernameText() {
 		return usernameText;
 	}
 
-	private void setUsernameText(Span usernameText) {
+	public void setUsernameText(Span usernameText) {
 		this.usernameText = usernameText;
 	}
 
-	private Span getHandleText() {
+	public Span getHandleText() {
 		return handleText;
 	}
 
-	private void setHandleText(Span handleText) {
+	public void setHandleText(Span handleText) {
 		this.handleText = handleText;
 	}
 
-	private Element getBlockedMessageContainer() {
+	public Element getBlockedMessageContainer() {
 		return blockedMessageContainer;
 	}
 
-	private void setBlockedMessageContainer(Element blockedMessageContainer) {
+	public void setBlockedMessageContainer(Element blockedMessageContainer) {
 		this.blockedMessageContainer = blockedMessageContainer;
 	}
 
-	private Image getBirdLogoImage() {
+	public Image getBirdLogoImage() {
 		return birdLogoImage;
 	}
 
-	private void setBirdLogoImage(Image birdLogoImage) {
+	public void setBirdLogoImage(Image birdLogoImage) {
 		this.birdLogoImage = birdLogoImage;
 	}
 
-	private Span getEmbarrassingText() {
+	public Span getEmbarrassingText() {
 		return embarrassingText;
 	}
 
-	private void setEmbarrassingText(Span embarrassingText) {
+	public void setEmbarrassingText(Span embarrassingText) {
 		this.embarrassingText = embarrassingText;
 	}
 
-	private Span getBlockedText() {
+	public Span getBlockedText() {
 		return blockedText;
 	}
 
-	private void setBlockedText(Span blockedText) {
+	public void setBlockedText(Span blockedText) {
 		this.blockedText = blockedText;
 	}
 

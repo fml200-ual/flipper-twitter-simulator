@@ -13,7 +13,20 @@ import com.vaadin.flow.component.button.Button;
 @JsModule("./views/vista-verlistaampliadadehashtags.ts")
 public class VistaVerlistaampliadadehashtags extends LitTemplate {
 
-    public Element getMainLayout() {
+	@Id("mainLayout")
+	private Element mainLayout;
+	@Id("pageTitle")
+	private H1 pageTitle;
+	@Id("hashtagsListContainer")
+	private Div hashtagsListContainer;
+	@Id("backButton")
+	private Button backButton;
+
+	public VistaVerlistaampliadadehashtags() {
+		// You can initialise any data required for the connected UI components here.
+	}
+
+	public Element getMainLayout() {
 		return mainLayout;
 	}
 
@@ -37,25 +50,11 @@ public class VistaVerlistaampliadadehashtags extends LitTemplate {
 		this.hashtagsListContainer = hashtagsListContainer;
 	}
 
-	public Button getShowMoreHashtagsButton() {
-		return showMoreHashtagsButton;
+	public Button getBackButton() {
+		return backButton;
 	}
 
-	public void setShowMoreHashtagsButton(Button showMoreHashtagsButton) {
-		this.showMoreHashtagsButton = showMoreHashtagsButton;
+	public void setBackButton(Button backButton) {
+		this.backButton = backButton;
 	}
-
-	@Id("mainLayout")
-	private Element mainLayout;
-	@Id("pageTitle")
-	private H1 pageTitle;
-	@Id("hashtagsListContainer")
-	private Div hashtagsListContainer;
-	@Id("showMoreHashtagsButton")
-	private Button showMoreHashtagsButton;
-
-	public VistaVerlistaampliadadehashtags() {
-        // You can initialise any data required for the connected UI components here.
-    }
-
 }

@@ -14,7 +14,9 @@ import com.vaadin.flow.component.button.Button;
 @JsModule("./views/vista-iniciarsesin.ts")
 public class VistaIniciarsesin extends LitTemplate {
 
-    @Id("loginContainer")
+	@Id("backButton")
+	private Button backButton;
+	@Id("loginContainer")
 	private Div loginContainer;
 	@Id("usernameField")
 	private TextField usernameField;
@@ -22,15 +24,65 @@ public class VistaIniciarsesin extends LitTemplate {
 	private PasswordField passwordField;
 	@Id("forgotPasswordLink")
 	private Element forgotPasswordLink;
-	@Id("googleLoginButton")
-	private Button googleLoginButton;
 	@Id("loginButton")
 	private Button loginButton;
 	@Id("registerButton")
 	private Button registerButton;
 
 	public VistaIniciarsesin() {
-        // You can initialise any data required for the connected UI components here.
-    }
+		// You can initialise any data required for the connected UI components here.
+	}
+
+	public Button getBackButton() {
+		return backButton;
+	}
+
+	public Div getLoginContainer() {
+		return loginContainer;
+	}
+
+	public void setLoginContainer(Div loginContainer) {
+		this.loginContainer = loginContainer;
+	}
+
+	public TextField getUsernameField() {
+		return usernameField;
+	}
+
+	public void setUsernameField(TextField usernameField) {
+		this.usernameField = usernameField;
+	}
+
+	public PasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	public void setPasswordField(PasswordField passwordField) {
+		this.passwordField = passwordField;
+	}
+
+	public Element getForgotPasswordLink() {
+		return forgotPasswordLink;
+	}
+
+	public void setForgotPasswordLink(Element forgotPasswordLink) {
+		this.forgotPasswordLink = forgotPasswordLink;
+	}
+
+	public Button getLoginButton() {
+		return loginButton;
+	}
+
+	public void setLoginButton(Button loginButton) {
+		this.loginButton = loginButton;
+	}
+
+	public Button getRegisterButton() {
+		return registerButton;
+	}
+
+	public void setRegisterButton(Button registerButton) {
+		this.registerButton = registerButton;
+	}
 
 }

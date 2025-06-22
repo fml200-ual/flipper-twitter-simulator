@@ -6,18 +6,46 @@ import '@vaadin/icons';
 
 @customElement('vista-verlistadeseguidoresregistrado')
 export class VistaVerlistadeseguidoresregistrado extends LitElement {
+  
+  connectedCallback() {
+    super.connectedCallback();
+    // Forzar estilos globales para asegurar pantalla completa
+    document.body.style.margin = '0';
+    document.body.style.padding = '0';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.margin = '0';
+    document.documentElement.style.padding = '0';
+    document.documentElement.style.height = '100%';
+    document.body.style.height = '100%';
+  }
+  
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    // Restaurar estilos cuando el componente se desconecte
+    document.body.style.overflow = '';
+  }
     static get styles() {
         return css`
             :host {
-                display: block;
-                height: 100%;
-                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100vw; /* Ocupa todo el ancho del viewport */
+                height: 100vh; /* Ocupa toda la altura del viewport */
+                background-color: #000; /* Fondo negro */
+                font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+                box-sizing: border-box;
+                margin: 0; /* Elimina márgenes */
+                padding: 0; /* Elimina padding */
+                position: fixed; /* Fija la posición para ocupar toda la ventana */
+                top: 0;
+                left: 0;
+                overflow-y: auto; /* Permite scroll si es necesario */
+
+
                 background-color: black; /* Fondo negro como en la imagen */
                 color: white; /* Color de texto predeterminado */
                 font-family: 'Arial', sans-serif; /* Fuente consistente */
-                --lumo-space-m: 1rem;
-                --lumo-space-l: 1.5rem;
-                --lumo-space-xl: 2rem;
             }
 
             #main-layout {
@@ -102,30 +130,113 @@ export class VistaVerlistadeseguidoresregistrado extends LitElement {
                 font-size: 1.1em;
             }
         `;
-    }
-
-    render() {
+    }    render() {
         return html`
-<vaadin-vertical-layout id="main-layout">
- <div id="header-container">
-  <div id="message-icon"></div>
-  <div id="title-layout">
-   <span id="list-title">Lista de seguidores de</span>
-   <span id="username">@usuario</span>
-  </div>
- </div>
- <vaadin-vertical-layout id="followers-list-container">
-  <span id="no-followers-message">No hay seguidores para mostrar.</span>
- </vaadin-vertical-layout>
- <vaadin-button id="show-more-followers-button">
-  Mostrar más seguidores
- </vaadin-button>
-</vaadin-vertical-layout>
-`;
+            <div style="
+                display: flex;
+                flex-direction: column;
+                width: 100vw;
+                height: 100vh;
+                background-color: black;
+                color: white;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                position: fixed;
+                top: 0;
+                left: 0;
+                overflow-y: auto;
+                box-sizing: border-box;
+                z-index: 9999;
+            ">
+                <vaadin-vertical-layout id="main-layout" style="
+                    width: 100%;
+                    height: 100%;
+                    padding: 1.5rem;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                    margin: 0;
+                    max-width: none;
+                ">
+                    <vaadin-button id="back-button" style="align-self: flex-start; margin-bottom: 20px; background-color: #1da1f2; color: white;">
+                        ← Volver
+                    </vaadin-button>
+                    <div id="header-container" style="
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        margin-bottom: 1.5rem;
+                        width: 100%;
+                        padding-left: 10px;
+                    ">
+                        <div id="message-icon" style="
+                            width: 80px;
+                            height: 80px;
+                            background-color: #87CEEB;
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin-bottom: 1rem;
+                            font-size: 2rem;
+                        ">👥</div>
+                        <div id="title-layout" style="
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            text-align: left;
+                            width: 100%;
+                        ">
+                            <span id="list-title" style="
+                                font-size: 1.8em;
+                                font-weight: bold;
+                                color: #00FFFF;
+                                font-family: 'Comic Sans MS', cursive;
+                                margin-bottom: 0.2em;
+                            ">Lista de seguidores de</span>
+                            <span id="username" style="
+                                font-size: 1.4em;
+                                color: #00FFFF;
+                                font-family: 'Comic Sans MS', cursive;
+                            ">@usuario</span>
+                        </div>
+                    </div>
+
+                    <vaadin-vertical-layout id="followers-list-container" style="
+                        width: 100%;
+                        flex: 1;
+                        background-color: #333;
+                        border: 2px solid #00FFFF;
+                        border-radius: 8px;
+                        padding: 1rem;
+                        box-sizing: border-box;
+                        margin-bottom: 1.5rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: stretch;
+                        text-align: left;
+                        min-height: 300px;
+                    ">
+                        <span id="no-followers-message" style="color: gray; font-size: 1.1em; padding: 2rem;">No hay seguidores para mostrar.</span>
+                    </vaadin-vertical-layout>
+
+                    <vaadin-button id="show-more-followers-button" style="
+                        background-color: #00FFFF;
+                        color: black;
+                        padding: 0.5rem 1.5rem;
+                        border-radius: 20px;
+                        font-weight: bold;
+                        margin-top: 1rem;
+                        cursor: pointer;
+                        border: none;
+                        font-size: 1.1em;
+                    ">Mostrar más seguidores</vaadin-button>
+                </vaadin-vertical-layout>
+            </div>
+        `;
     }
 
-    // Mantener esta configuración para renderizar directamente en el DOM ligero.
-    createRenderRoot() {
-        return this;
-    }
 }

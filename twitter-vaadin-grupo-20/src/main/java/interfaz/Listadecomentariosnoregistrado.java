@@ -7,5 +7,5 @@ public class Listadecomentariosnoregistrado extends Listadecomentarios {
 		super();
 		this._tweetRetweetnoregistrado = _tweetRetweetnoregistrado;
 	}
-	
+
 }

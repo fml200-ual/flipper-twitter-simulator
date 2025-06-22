@@ -9,7 +9,7 @@ public class Listadetweetsyretweets extends VistaListadetweetsyretweets {
 	public Agrupartweetsgustados _agrupartweetsgustados;
 	public Agruparretweets _agruparretweets;
 	public Vector<Listadetweetsyretweets_item> _item = new Vector<Listadetweetsyretweets_item>();
-	
+
 	public Listadetweetsyretweets() {
 	}
 
@@ -27,4 +27,5 @@ public class Listadetweetsyretweets extends VistaListadetweetsyretweets {
 		super();
 		this._agruparretweets = _agruparretweets;
 	}
+
 }

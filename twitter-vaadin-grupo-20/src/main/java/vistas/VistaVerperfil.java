@@ -3,12 +3,13 @@ package vistas;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.littemplate.LitTemplate;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.template.Id;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.NativeButton;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.html.Section;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.html.NativeButton;
 
 @Tag("vista-verperfil")
 @JsModule("./views/vista-verperfil.ts")
@@ -44,6 +45,10 @@ public class VistaVerperfil extends LitTemplate {
 	private Div actionsContainer;
 	@Id("tabsLayout")
 	private Div tabsLayout;
+	@Id("backButton")
+	private Button backButton;
+	@Id("tweetsListLayout")
+	private Div tweetsListLayout;
 	@Id("banProfileButton")
 	private NativeButton banProfileButton;
 	@Id("deleteProfileButton")
@@ -54,10 +59,6 @@ public class VistaVerperfil extends LitTemplate {
 	private NativeButton likedTweetsTab;
 	@Id("retweetsTab")
 	private NativeButton retweetsTab;
-	@Id("tweetsListLayout")
-	private Div tweetsListLayout;
-	@Id("showMoreButton")
-	private Div showMoreButton;
 	@Id("editAccountButton")
 	private NativeButton editAccountButton;
 
@@ -185,6 +186,22 @@ public class VistaVerperfil extends LitTemplate {
 		this.tabsLayout = tabsLayout;
 	}
 
+	protected Button getBackButton() {
+		return backButton;
+	}
+
+	protected void setBackButton(Button backButton) {
+		this.backButton = backButton;
+	}
+
+	protected Div getTweetsListLayout() {
+		return tweetsListLayout;
+	}
+
+	protected void setTweetsListLayout(Div tweetsListLayout) {
+		this.tweetsListLayout = tweetsListLayout;
+	}
+
 	protected NativeButton getBanProfileButton() {
 		return banProfileButton;
 	}
@@ -223,22 +240,6 @@ public class VistaVerperfil extends LitTemplate {
 
 	protected void setRetweetsTab(NativeButton retweetsTab) {
 		this.retweetsTab = retweetsTab;
-	}
-
-	protected Div getTweetsListLayout() {
-		return tweetsListLayout;
-	}
-
-	protected void setTweetsListLayout(Div tweetsListLayout) {
-		this.tweetsListLayout = tweetsListLayout;
-	}
-
-	protected Div getShowMoreButton() {
-		return showMoreButton;
-	}
-
-	protected void setShowMoreButton(Div showMoreButton) {
-		this.showMoreButton = showMoreButton;
 	}
 
 	protected NativeButton getEditAccountButton() {
