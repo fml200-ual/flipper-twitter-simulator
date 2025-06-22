@@ -31,12 +31,12 @@ public class Comentario implements Serializable {
 	}
 	
 	private void this_setOwner(Object owner, int key) {
-		if (key == ORMConstants.KEY_COMENTARIO_PERTENECE) {
-			this.pertenece = (basededatos.Tweet) owner;
+		if (key == ORMConstants.KEY_COMENTARIO_DOCUMENTO) {
+			this.documento = (basededatos.Documento) owner;
 		}
 		
-		else if (key == ORMConstants.KEY_COMENTARIO_DOCUMENTO) {
-			this.documento = (basededatos.Documento) owner;
+		else if (key == ORMConstants.KEY_COMENTARIO_PERTENECE) {
+			this.pertenece = (basededatos.Tweet) owner;
 		}
 		
 		else if (key == ORMConstants.KEY_COMENTARIO_PUBLICADO_POR) {
@@ -120,30 +120,6 @@ public class Comentario implements Serializable {
 		return fechaPublicacion;
 	}
 	
-	public void setPertenece(basededatos.Tweet value) {
-		if (pertenece != null) {
-			pertenece.tiene.remove(this);
-		}
-		if (value != null) {
-			value.tiene.add(this);
-		}
-	}
-	
-	public basededatos.Tweet getPertenece() {
-		return pertenece;
-	}
-	
-	/**
-	 * This method is for internal use only.
-	 */
-	public void setORM_Pertenece(basededatos.Tweet value) {
-		this.pertenece = value;
-	}
-	
-	private basededatos.Tweet getORM_Pertenece() {
-		return pertenece;
-	}
-	
 	public void setDocumento(basededatos.Documento value) {
 		if (documento != null) {
 			documento.comentarios.remove(this);
@@ -166,6 +142,30 @@ public class Comentario implements Serializable {
 	
 	private basededatos.Documento getORM_Documento() {
 		return documento;
+	}
+	
+	public void setPertenece(basededatos.Tweet value) {
+		if (pertenece != null) {
+			pertenece.tiene.remove(this);
+		}
+		if (value != null) {
+			value.tiene.add(this);
+		}
+	}
+	
+	public basededatos.Tweet getPertenece() {
+		return pertenece;
+	}
+	
+	/**
+	 * This method is for internal use only.
+	 */
+	public void setORM_Pertenece(basededatos.Tweet value) {
+		this.pertenece = value;
+	}
+	
+	private basededatos.Tweet getORM_Pertenece() {
+		return pertenece;
 	}
 	
 	public void setPublicado_por(basededatos.Usuario_Registrado value) {

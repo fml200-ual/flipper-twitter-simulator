@@ -95,7 +95,7 @@ public class TweetSetCollection extends org.orm.util.ORMSet {
 	}
 	
 	protected PersistentManager getPersistentManager() throws PersistentException {
-		return MDS22425PFMurilloSuanesPersistentManager.instance();
+		return ProyectoMDS120242025PersistentManager.instance();
 	}
 	
 }

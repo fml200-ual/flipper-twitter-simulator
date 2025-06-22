@@ -41,7 +41,7 @@ public class PropiedadesSeguidosCriteria extends AbstractORMCriteria {
 	}
 	
 	public PropiedadesSeguidosCriteria() throws PersistentException {
-		this(MDS22425PFMurilloSuanesPersistentManager.instance().getSession());
+		this(ProyectoMDS120242025PersistentManager.instance().getSession());
 	}
 	
 	public Usuario_RegistradoCriteria createSeguidosUsuario_registradoCriteria() {

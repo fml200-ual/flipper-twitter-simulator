@@ -26,17 +26,16 @@ public class Usuario_RegistradoCriteria extends AbstractORMCriteria {
 	public final StringExpression imagenFondoURL;
 	public final StringExpression fotoPerfilURL;
 	public final StringExpression correoElectronico;
-	public final DateExpression fechaDeRegistro;
-	public final CollectionExpression me_gusta_Comentarios;
 	public final CollectionExpression tweets;
-	public final CollectionExpression comentarios_publicados;
 	public final CollectionExpression propiedadesMencions;
-	public final CollectionExpression retweets;
-	public final CollectionExpression me_gusta_tweets;
 	public final CollectionExpression seguidoresPropiedadesseguidoss;
+	public final CollectionExpression retweets;
 	public final IntegerExpression propiedadesBaneoId;
 	public final AssociationExpression propiedadesBaneo;
+	public final CollectionExpression comentarios_publicados;
+	public final CollectionExpression me_gusta_tweets;
 	public final CollectionExpression meTienenBloqueado;
+	public final CollectionExpression me_gusta_Comentarios;
 	public final CollectionExpression seguidosPropiedadesseguidoss;
 	public final CollectionExpression bloqueados;
 	
@@ -49,17 +48,16 @@ public class Usuario_RegistradoCriteria extends AbstractORMCriteria {
 		imagenFondoURL = new StringExpression("imagenFondoURL", this);
 		fotoPerfilURL = new StringExpression("fotoPerfilURL", this);
 		correoElectronico = new StringExpression("correoElectronico", this);
-		fechaDeRegistro = new DateExpression("fechaDeRegistro", this);
-		me_gusta_Comentarios = new CollectionExpression("ORM_me_gusta_Comentarios", this);
 		tweets = new CollectionExpression("ORM_tweets", this);
-		comentarios_publicados = new CollectionExpression("ORM_comentarios_publicados", this);
 		propiedadesMencions = new CollectionExpression("ORM_propiedadesMencions", this);
-		retweets = new CollectionExpression("ORM_retweets", this);
-		me_gusta_tweets = new CollectionExpression("ORM_me_gusta_tweets", this);
 		seguidoresPropiedadesseguidoss = new CollectionExpression("ORM_seguidoresPropiedadesseguidoss", this);
+		retweets = new CollectionExpression("ORM_retweets", this);
 		propiedadesBaneoId = new IntegerExpression("propiedadesBaneo.null", this);
 		propiedadesBaneo = new AssociationExpression("propiedadesBaneo", this);
+		comentarios_publicados = new CollectionExpression("ORM_comentarios_publicados", this);
+		me_gusta_tweets = new CollectionExpression("ORM_me_gusta_tweets", this);
 		meTienenBloqueado = new CollectionExpression("ORM_meTienenBloqueado", this);
+		me_gusta_Comentarios = new CollectionExpression("ORM_me_gusta_Comentarios", this);
 		seguidosPropiedadesseguidoss = new CollectionExpression("ORM_seguidosPropiedadesseguidoss", this);
 		bloqueados = new CollectionExpression("ORM_bloqueados", this);
 	}
@@ -69,43 +67,43 @@ public class Usuario_RegistradoCriteria extends AbstractORMCriteria {
 	}
 	
 	public Usuario_RegistradoCriteria() throws PersistentException {
-		this(MDS22425PFMurilloSuanesPersistentManager.instance().getSession());
-	}
-	
-	public ComentarioCriteria createMe_gusta_ComentariosCriteria() {
-		return new ComentarioCriteria(createCriteria("ORM_me_gusta_Comentarios"));
+		this(ProyectoMDS120242025PersistentManager.instance().getSession());
 	}
 	
 	public TweetCriteria createTweetsCriteria() {
 		return new TweetCriteria(createCriteria("ORM_tweets"));
 	}
 	
-	public ComentarioCriteria createComentarios_publicadosCriteria() {
-		return new ComentarioCriteria(createCriteria("ORM_comentarios_publicados"));
-	}
-	
 	public PropiedadesMencionCriteria createPropiedadesMencionsCriteria() {
 		return new PropiedadesMencionCriteria(createCriteria("ORM_propiedadesMencions"));
-	}
-	
-	public RetweetCriteria createRetweetsCriteria() {
-		return new RetweetCriteria(createCriteria("ORM_retweets"));
-	}
-	
-	public TweetCriteria createMe_gusta_tweetsCriteria() {
-		return new TweetCriteria(createCriteria("ORM_me_gusta_tweets"));
 	}
 	
 	public PropiedadesSeguidosCriteria createSeguidoresPropiedadesseguidossCriteria() {
 		return new PropiedadesSeguidosCriteria(createCriteria("ORM_seguidoresPropiedadesseguidoss"));
 	}
 	
+	public RetweetCriteria createRetweetsCriteria() {
+		return new RetweetCriteria(createCriteria("ORM_retweets"));
+	}
+	
 	public PropiedadesBaneoCriteria createPropiedadesBaneoCriteria() {
 		return new PropiedadesBaneoCriteria(createCriteria("propiedadesBaneo"));
 	}
 	
+	public ComentarioCriteria createComentarios_publicadosCriteria() {
+		return new ComentarioCriteria(createCriteria("ORM_comentarios_publicados"));
+	}
+	
+	public TweetCriteria createMe_gusta_tweetsCriteria() {
+		return new TweetCriteria(createCriteria("ORM_me_gusta_tweets"));
+	}
+	
 	public Usuario_RegistradoCriteria createMeTienenBloqueadoCriteria() {
 		return new Usuario_RegistradoCriteria(createCriteria("ORM_meTienenBloqueado"));
+	}
+	
+	public ComentarioCriteria createMe_gusta_ComentariosCriteria() {
+		return new ComentarioCriteria(createCriteria("ORM_me_gusta_Comentarios"));
 	}
 	
 	public PropiedadesSeguidosCriteria createSeguidosPropiedadesseguidossCriteria() {

@@ -35,7 +35,7 @@ public class HashtagCriteria extends AbstractORMCriteria {
 	}
 	
 	public HashtagCriteria() throws PersistentException {
-		this(MDS22425PFMurilloSuanesPersistentManager.instance().getSession());
+		this(ProyectoMDS120242025PersistentManager.instance().getSession());
 	}
 	
 	public TweetCriteria createPerteneceCriteria() {

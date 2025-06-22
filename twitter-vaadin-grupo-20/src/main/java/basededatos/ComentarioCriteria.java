@@ -49,7 +49,7 @@ public class ComentarioCriteria extends AbstractORMCriteria {
 	}
 	
 	public ComentarioCriteria() throws PersistentException {
-		this(MDS22425PFMurilloSuanesPersistentManager.instance().getSession());
+		this(ProyectoMDS120242025PersistentManager.instance().getSession());
 	}
 	
 	public DocumentoCriteria createDocumentoCriteria() {

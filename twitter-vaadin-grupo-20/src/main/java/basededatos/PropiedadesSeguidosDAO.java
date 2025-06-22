@@ -21,7 +21,7 @@ import java.util.List;
 public class PropiedadesSeguidosDAO {
 	public static PropiedadesSeguidos loadPropiedadesSeguidosByORMID(int ID) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadPropiedadesSeguidosByORMID(session, ID);
 		}
 		catch (Exception e) {
@@ -32,7 +32,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static PropiedadesSeguidos getPropiedadesSeguidosByORMID(int ID) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getPropiedadesSeguidosByORMID(session, ID);
 		}
 		catch (Exception e) {
@@ -43,7 +43,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static PropiedadesSeguidos loadPropiedadesSeguidosByORMID(int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadPropiedadesSeguidosByORMID(session, ID, lockMode);
 		}
 		catch (Exception e) {
@@ -54,7 +54,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static PropiedadesSeguidos getPropiedadesSeguidosByORMID(int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getPropiedadesSeguidosByORMID(session, ID, lockMode);
 		}
 		catch (Exception e) {
@@ -105,7 +105,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static List queryPropiedadesSeguidos(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryPropiedadesSeguidos(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -116,7 +116,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static List queryPropiedadesSeguidos(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryPropiedadesSeguidos(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -127,7 +127,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static PropiedadesSeguidos[] listPropiedadesSeguidosByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listPropiedadesSeguidosByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -138,7 +138,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static PropiedadesSeguidos[] listPropiedadesSeguidosByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listPropiedadesSeguidosByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -204,7 +204,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static PropiedadesSeguidos loadPropiedadesSeguidosByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadPropiedadesSeguidosByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -215,7 +215,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static PropiedadesSeguidos loadPropiedadesSeguidosByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadPropiedadesSeguidosByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -242,7 +242,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static java.util.Iterator iteratePropiedadesSeguidosByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iteratePropiedadesSeguidosByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -253,7 +253,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static java.util.Iterator iteratePropiedadesSeguidosByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iteratePropiedadesSeguidosByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -301,7 +301,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static boolean save(basededatos.PropiedadesSeguidos propiedadesSeguidos) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().saveObject(propiedadesSeguidos);
+			ProyectoMDS120242025PersistentManager.instance().saveObject(propiedadesSeguidos);
 			return true;
 		}
 		catch (Exception e) {
@@ -312,7 +312,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static boolean delete(basededatos.PropiedadesSeguidos propiedadesSeguidos) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().deleteObject(propiedadesSeguidos);
+			ProyectoMDS120242025PersistentManager.instance().deleteObject(propiedadesSeguidos);
 			return true;
 		}
 		catch (Exception e) {
@@ -364,7 +364,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static boolean refresh(basededatos.PropiedadesSeguidos propiedadesSeguidos) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().refresh(propiedadesSeguidos);
+			ProyectoMDS120242025PersistentManager.instance().getSession().refresh(propiedadesSeguidos);
 			return true;
 		}
 		catch (Exception e) {
@@ -375,7 +375,7 @@ public class PropiedadesSeguidosDAO {
 	
 	public static boolean evict(basededatos.PropiedadesSeguidos propiedadesSeguidos) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().evict(propiedadesSeguidos);
+			ProyectoMDS120242025PersistentManager.instance().getSession().evict(propiedadesSeguidos);
 			return true;
 		}
 		catch (Exception e) {

@@ -39,7 +39,7 @@ public class DocumentoCriteria extends AbstractORMCriteria {
 	}
 	
 	public DocumentoCriteria() throws PersistentException {
-		this(MDS22425PFMurilloSuanesPersistentManager.instance().getSession());
+		this(ProyectoMDS120242025PersistentManager.instance().getSession());
 	}
 	
 	public TweetCriteria createTweetsCriteria() {

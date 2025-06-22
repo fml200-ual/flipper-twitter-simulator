@@ -21,7 +21,7 @@ import java.util.List;
 public class PropiedadesBaneoDAO {
 	public static PropiedadesBaneo loadPropiedadesBaneoByORMID(int ID) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadPropiedadesBaneoByORMID(session, ID);
 		}
 		catch (Exception e) {
@@ -32,7 +32,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static PropiedadesBaneo getPropiedadesBaneoByORMID(int ID) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getPropiedadesBaneoByORMID(session, ID);
 		}
 		catch (Exception e) {
@@ -43,7 +43,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static PropiedadesBaneo loadPropiedadesBaneoByORMID(int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadPropiedadesBaneoByORMID(session, ID, lockMode);
 		}
 		catch (Exception e) {
@@ -54,7 +54,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static PropiedadesBaneo getPropiedadesBaneoByORMID(int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getPropiedadesBaneoByORMID(session, ID, lockMode);
 		}
 		catch (Exception e) {
@@ -105,7 +105,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static List queryPropiedadesBaneo(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryPropiedadesBaneo(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -116,7 +116,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static List queryPropiedadesBaneo(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryPropiedadesBaneo(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -127,7 +127,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static PropiedadesBaneo[] listPropiedadesBaneoByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listPropiedadesBaneoByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -138,7 +138,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static PropiedadesBaneo[] listPropiedadesBaneoByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listPropiedadesBaneoByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -204,7 +204,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static PropiedadesBaneo loadPropiedadesBaneoByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadPropiedadesBaneoByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -215,7 +215,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static PropiedadesBaneo loadPropiedadesBaneoByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadPropiedadesBaneoByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -242,7 +242,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static java.util.Iterator iteratePropiedadesBaneoByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iteratePropiedadesBaneoByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -253,7 +253,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static java.util.Iterator iteratePropiedadesBaneoByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iteratePropiedadesBaneoByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -301,7 +301,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static boolean save(basededatos.PropiedadesBaneo propiedadesBaneo) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().saveObject(propiedadesBaneo);
+			ProyectoMDS120242025PersistentManager.instance().saveObject(propiedadesBaneo);
 			return true;
 		}
 		catch (Exception e) {
@@ -312,7 +312,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static boolean delete(basededatos.PropiedadesBaneo propiedadesBaneo) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().deleteObject(propiedadesBaneo);
+			ProyectoMDS120242025PersistentManager.instance().deleteObject(propiedadesBaneo);
 			return true;
 		}
 		catch (Exception e) {
@@ -364,7 +364,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static boolean refresh(basededatos.PropiedadesBaneo propiedadesBaneo) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().refresh(propiedadesBaneo);
+			ProyectoMDS120242025PersistentManager.instance().getSession().refresh(propiedadesBaneo);
 			return true;
 		}
 		catch (Exception e) {
@@ -375,7 +375,7 @@ public class PropiedadesBaneoDAO {
 	
 	public static boolean evict(basededatos.PropiedadesBaneo propiedadesBaneo) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().evict(propiedadesBaneo);
+			ProyectoMDS120242025PersistentManager.instance().getSession().evict(propiedadesBaneo);
 			return true;
 		}
 		catch (Exception e) {

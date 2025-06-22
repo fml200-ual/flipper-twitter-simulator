@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model quotesql="1" tablecharset="" mysql_version="504" mssql_version="2005" derby_version="106" ingres_version="9">
+  <Entity name="Usuario_Autentificado" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="Id_usuario">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Nickname">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Contrasena">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Usuario_Registrado" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="Descripcion">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="ImagenFondoURL">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="FotoPerfilURL">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="CorreoElectronico">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Usuario_AutentificadoId_usuario">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Autentificado.Id_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Hashtag" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="Id_hashtag">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Hashtag">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Administrador" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="Usuario_AutentificadoId_usuario">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Autentificado.Id_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Documento" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="Id_documento">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="ImagenVideoURL">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Tipo">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Tweet" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="Id_tweet">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Usuario_RegistradoUsuario_AutentificadoId_usuario">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Registrado.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="DocumentoId_documento">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Documento.Id_documento</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="TweetId_tweet">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Tweet.Id_tweet</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="ContenidoTweet">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="FechaPublicacion">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>17</Type>
+      <Length>0</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="PropiedadesMencion" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="ID">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Fecha">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>17</Type>
+      <Length>0</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Usuario_RegistradoUsuario_AutentificadoId_usuario">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Registrado.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="TweetId_tweet">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Tweet.Id_tweet</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="PropiedadesSeguidos" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="ID">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Fecha">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>17</Type>
+      <Length>0</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Usuario_RegistradoUsuario_AutentificadoId_usuario">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Registrado.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Usuario_RegistradoUsuario_AutentificadoId_usuario2">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Registrado.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Retweet" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="ID">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Tipo">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="FechaPublicacion">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>17</Type>
+      <Length>0</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Usuario_RegistradoUsuario_AutentificadoId_usuario">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Registrado.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="TweetId_tweet">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Tweet.Id_tweet</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="PropiedadesBaneo" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="ID">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Duracion">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="FechaInicioBaneo">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>17</Type>
+      <Length>0</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Usuario_RegistradoUsuario_AutentificadoId_usuario">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Registrado.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="AdministradorUsuario_AutentificadoId_usuario">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Administrador.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Comentario" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="Id_comentario">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="DocumentoId_documento">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Documento.Id_documento</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Usuario_RegistradoUsuario_AutentificadoId_usuario">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Registrado.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="TweetId_tweet">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Tweet.Id_tweet</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="ContenidoComentario">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="FechaPublicacion">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>17</Type>
+      <Length>0</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Hashtag_Tweet2" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="HashtagId_hashtag">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Hashtag.Id_hashtag</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="TweetId_tweet">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Tweet.Id_tweet</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Usuario_Registrado_Usuario_Registrado2" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="Usuario_RegistradoUsuario_AutentificadoId_usuario">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Registrado.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Usuario_RegistradoUsuario_AutentificadoId_usuario2">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Registrado.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Comentario_Usuario_Registrado2" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="ComentarioId_comentario">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Comentario.Id_comentario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Usuario_RegistradoUsuario_AutentificadoId_usuario">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Registrado.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Tweet_Usuario_Registrado2" Unlogged="false" PKClustered="0" Temporal="false" TemporalStartTimeColumn="null" TemporalEndTimeColumn="null" TemporalHistoryTable="null">
+    <Column name="TweetId_tweet">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Tweet.Id_tweet</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Usuario_RegistradoUsuario_AutentificadoId_usuario">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>diagrama_BD.Usuario_Registrado.Usuario_AutentificadoId_usuario</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <ForeignKey name="FKAdministra610005">
+    <ReferenceTable>Administrador</ReferenceTable>
+    <ReferencedTable>Usuario_Autentificado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKUsuario_Re190166">
+    <ReferenceTable>Usuario_Registrado</ReferenceTable>
+    <ReferencedTable>Usuario_Autentificado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKTweet27070">
+    <ReferenceTable>Tweet</ReferenceTable>
+    <ReferencedTable>Tweet</ReferencedTable>
+    <Columns>
+      <Column>TweetId_tweet</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_tweet</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKHashtag_Tw310624">
+    <ReferenceTable>Hashtag_Tweet2</ReferenceTable>
+    <ReferencedTable>Hashtag</ReferencedTable>
+    <Columns>
+      <Column>HashtagId_hashtag</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_hashtag</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKHashtag_Tw690181">
+    <ReferenceTable>Hashtag_Tweet2</ReferenceTable>
+    <ReferencedTable>Tweet</ReferencedTable>
+    <Columns>
+      <Column>TweetId_tweet</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_tweet</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKTweet916691">
+    <ReferenceTable>Tweet</ReferenceTable>
+    <ReferencedTable>Documento</ReferencedTable>
+    <Columns>
+      <Column>DocumentoId_documento</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_documento</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKPropiedade402994">
+    <ReferenceTable>PropiedadesSeguidos</ReferenceTable>
+    <ReferencedTable>Usuario_Registrado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_RegistradoUsuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKPropiedade415703">
+    <ReferenceTable>PropiedadesSeguidos</ReferenceTable>
+    <ReferencedTable>Usuario_Registrado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_RegistradoUsuario_AutentificadoId_usuario2</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKPropiedade597932">
+    <ReferenceTable>PropiedadesMencion</ReferenceTable>
+    <ReferencedTable>Usuario_Registrado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_RegistradoUsuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKPropiedade533908">
+    <ReferenceTable>PropiedadesMencion</ReferenceTable>
+    <ReferencedTable>Tweet</ReferencedTable>
+    <Columns>
+      <Column>TweetId_tweet</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_tweet</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKTweet158911">
+    <ReferenceTable>Tweet</ReferenceTable>
+    <ReferencedTable>Usuario_Registrado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_RegistradoUsuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKUsuario_Re35941">
+    <ReferenceTable>Usuario_Registrado_Usuario_Registrado2</ReferenceTable>
+    <ReferencedTable>Usuario_Registrado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_RegistradoUsuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKUsuario_Re116952">
+    <ReferenceTable>Usuario_Registrado_Usuario_Registrado2</ReferenceTable>
+    <ReferencedTable>Usuario_Registrado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_RegistradoUsuario_AutentificadoId_usuario2</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKTweet_Usua838143">
+    <ReferenceTable>Tweet_Usuario_Registrado2</ReferenceTable>
+    <ReferencedTable>Tweet</ReferencedTable>
+    <Columns>
+      <Column>TweetId_tweet</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_tweet</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKTweet_Usua1606">
+    <ReferenceTable>Tweet_Usuario_Registrado2</ReferenceTable>
+    <ReferencedTable>Usuario_Registrado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_RegistradoUsuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKRetweet855264">
+    <ReferenceTable>Retweet</ReferenceTable>
+    <ReferencedTable>Usuario_Registrado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_RegistradoUsuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKRetweet987105">
+    <ReferenceTable>Retweet</ReferenceTable>
+    <ReferencedTable>Tweet</ReferencedTable>
+    <Columns>
+      <Column>TweetId_tweet</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_tweet</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKComentario15163">
+    <ReferenceTable>Comentario</ReferenceTable>
+    <ReferencedTable>Tweet</ReferencedTable>
+    <Columns>
+      <Column>TweetId_tweet</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_tweet</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKComentario686033">
+    <ReferenceTable>Comentario_Usuario_Registrado2</ReferenceTable>
+    <ReferencedTable>Comentario</ReferencedTable>
+    <Columns>
+      <Column>ComentarioId_comentario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_comentario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKComentario475501">
+    <ReferenceTable>Comentario_Usuario_Registrado2</ReferenceTable>
+    <ReferencedTable>Usuario_Registrado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_RegistradoUsuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKComentario147004">
+    <ReferenceTable>Comentario</ReferenceTable>
+    <ReferencedTable>Usuario_Registrado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_RegistradoUsuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKComentario904784">
+    <ReferenceTable>Comentario</ReferenceTable>
+    <ReferencedTable>Documento</ReferencedTable>
+    <Columns>
+      <Column>DocumentoId_documento</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Id_documento</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKPropiedade55434">
+    <ReferenceTable>PropiedadesBaneo</ReferenceTable>
+    <ReferencedTable>Usuario_Registrado</ReferencedTable>
+    <Columns>
+      <Column>Usuario_RegistradoUsuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKPropiedade569979">
+    <ReferenceTable>PropiedadesBaneo</ReferenceTable>
+    <ReferencedTable>Administrador</ReferencedTable>
+    <Columns>
+      <Column>AdministradorUsuario_AutentificadoId_usuario</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Usuario_AutentificadoId_usuario</Column>
+    </RefColumns>
+  </ForeignKey>
+</Model>

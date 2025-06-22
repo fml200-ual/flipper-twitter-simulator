@@ -21,7 +21,7 @@ import java.util.List;
 public class RetweetDAO {
 	public static Retweet loadRetweetByORMID(int ID) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadRetweetByORMID(session, ID);
 		}
 		catch (Exception e) {
@@ -32,7 +32,7 @@ public class RetweetDAO {
 	
 	public static Retweet getRetweetByORMID(int ID) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getRetweetByORMID(session, ID);
 		}
 		catch (Exception e) {
@@ -43,7 +43,7 @@ public class RetweetDAO {
 	
 	public static Retweet loadRetweetByORMID(int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadRetweetByORMID(session, ID, lockMode);
 		}
 		catch (Exception e) {
@@ -54,7 +54,7 @@ public class RetweetDAO {
 	
 	public static Retweet getRetweetByORMID(int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getRetweetByORMID(session, ID, lockMode);
 		}
 		catch (Exception e) {
@@ -105,7 +105,7 @@ public class RetweetDAO {
 	
 	public static List queryRetweet(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryRetweet(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -116,7 +116,7 @@ public class RetweetDAO {
 	
 	public static List queryRetweet(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryRetweet(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -127,7 +127,7 @@ public class RetweetDAO {
 	
 	public static Retweet[] listRetweetByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listRetweetByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -138,7 +138,7 @@ public class RetweetDAO {
 	
 	public static Retweet[] listRetweetByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listRetweetByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -204,7 +204,7 @@ public class RetweetDAO {
 	
 	public static Retweet loadRetweetByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadRetweetByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -215,7 +215,7 @@ public class RetweetDAO {
 	
 	public static Retweet loadRetweetByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadRetweetByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -242,7 +242,7 @@ public class RetweetDAO {
 	
 	public static java.util.Iterator iterateRetweetByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iterateRetweetByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -253,7 +253,7 @@ public class RetweetDAO {
 	
 	public static java.util.Iterator iterateRetweetByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iterateRetweetByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -301,7 +301,7 @@ public class RetweetDAO {
 	
 	public static boolean save(basededatos.Retweet retweet) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().saveObject(retweet);
+			ProyectoMDS120242025PersistentManager.instance().saveObject(retweet);
 			return true;
 		}
 		catch (Exception e) {
@@ -312,7 +312,7 @@ public class RetweetDAO {
 	
 	public static boolean delete(basededatos.Retweet retweet) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().deleteObject(retweet);
+			ProyectoMDS120242025PersistentManager.instance().deleteObject(retweet);
 			return true;
 		}
 		catch (Exception e) {
@@ -364,7 +364,7 @@ public class RetweetDAO {
 	
 	public static boolean refresh(basededatos.Retweet retweet) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().refresh(retweet);
+			ProyectoMDS120242025PersistentManager.instance().getSession().refresh(retweet);
 			return true;
 		}
 		catch (Exception e) {
@@ -375,7 +375,7 @@ public class RetweetDAO {
 	
 	public static boolean evict(basededatos.Retweet retweet) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().evict(retweet);
+			ProyectoMDS120242025PersistentManager.instance().getSession().evict(retweet);
 			return true;
 		}
 		catch (Exception e) {

@@ -21,7 +21,7 @@ import java.util.List;
 public class Usuario_AutentificadoDAO {
 	public static Usuario_Autentificado loadUsuario_AutentificadoByORMID(int id_usuario) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadUsuario_AutentificadoByORMID(session, id_usuario);
 		}
 		catch (Exception e) {
@@ -32,7 +32,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static Usuario_Autentificado getUsuario_AutentificadoByORMID(int id_usuario) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getUsuario_AutentificadoByORMID(session, id_usuario);
 		}
 		catch (Exception e) {
@@ -43,7 +43,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static Usuario_Autentificado loadUsuario_AutentificadoByORMID(int id_usuario, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadUsuario_AutentificadoByORMID(session, id_usuario, lockMode);
 		}
 		catch (Exception e) {
@@ -54,7 +54,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static Usuario_Autentificado getUsuario_AutentificadoByORMID(int id_usuario, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getUsuario_AutentificadoByORMID(session, id_usuario, lockMode);
 		}
 		catch (Exception e) {
@@ -105,7 +105,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static List queryUsuario_Autentificado(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryUsuario_Autentificado(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -116,7 +116,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static List queryUsuario_Autentificado(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryUsuario_Autentificado(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -127,7 +127,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static Usuario_Autentificado[] listUsuario_AutentificadoByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listUsuario_AutentificadoByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -138,7 +138,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static Usuario_Autentificado[] listUsuario_AutentificadoByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listUsuario_AutentificadoByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -204,7 +204,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static Usuario_Autentificado loadUsuario_AutentificadoByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadUsuario_AutentificadoByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -215,7 +215,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static Usuario_Autentificado loadUsuario_AutentificadoByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadUsuario_AutentificadoByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -242,7 +242,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static java.util.Iterator iterateUsuario_AutentificadoByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iterateUsuario_AutentificadoByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -253,7 +253,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static java.util.Iterator iterateUsuario_AutentificadoByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iterateUsuario_AutentificadoByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -301,7 +301,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static boolean save(basededatos.Usuario_Autentificado usuario_Autentificado) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().saveObject(usuario_Autentificado);
+			ProyectoMDS120242025PersistentManager.instance().saveObject(usuario_Autentificado);
 			return true;
 		}
 		catch (Exception e) {
@@ -312,7 +312,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static boolean delete(basededatos.Usuario_Autentificado usuario_Autentificado) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().deleteObject(usuario_Autentificado);
+			ProyectoMDS120242025PersistentManager.instance().deleteObject(usuario_Autentificado);
 			return true;
 		}
 		catch (Exception e) {
@@ -323,7 +323,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static boolean refresh(basededatos.Usuario_Autentificado usuario_Autentificado) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().refresh(usuario_Autentificado);
+			ProyectoMDS120242025PersistentManager.instance().getSession().refresh(usuario_Autentificado);
 			return true;
 		}
 		catch (Exception e) {
@@ -334,7 +334,7 @@ public class Usuario_AutentificadoDAO {
 	
 	public static boolean evict(basededatos.Usuario_Autentificado usuario_Autentificado) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().evict(usuario_Autentificado);
+			ProyectoMDS120242025PersistentManager.instance().getSession().evict(usuario_Autentificado);
 			return true;
 		}
 		catch (Exception e) {

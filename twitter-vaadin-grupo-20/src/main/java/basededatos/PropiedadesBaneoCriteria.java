@@ -43,7 +43,7 @@ public class PropiedadesBaneoCriteria extends AbstractORMCriteria {
 	}
 	
 	public PropiedadesBaneoCriteria() throws PersistentException {
-		this(MDS22425PFMurilloSuanesPersistentManager.instance().getSession());
+		this(ProyectoMDS120242025PersistentManager.instance().getSession());
 	}
 	
 	public Usuario_RegistradoCriteria createUsuario_RegistradoCriteria() {

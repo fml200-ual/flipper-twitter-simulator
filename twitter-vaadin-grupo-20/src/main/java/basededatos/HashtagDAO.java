@@ -21,7 +21,7 @@ import java.util.List;
 public class HashtagDAO {
 	public static Hashtag loadHashtagByORMID(int id_hashtag) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadHashtagByORMID(session, id_hashtag);
 		}
 		catch (Exception e) {
@@ -32,7 +32,7 @@ public class HashtagDAO {
 	
 	public static Hashtag getHashtagByORMID(int id_hashtag) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getHashtagByORMID(session, id_hashtag);
 		}
 		catch (Exception e) {
@@ -43,7 +43,7 @@ public class HashtagDAO {
 	
 	public static Hashtag loadHashtagByORMID(int id_hashtag, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadHashtagByORMID(session, id_hashtag, lockMode);
 		}
 		catch (Exception e) {
@@ -54,7 +54,7 @@ public class HashtagDAO {
 	
 	public static Hashtag getHashtagByORMID(int id_hashtag, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getHashtagByORMID(session, id_hashtag, lockMode);
 		}
 		catch (Exception e) {
@@ -105,7 +105,7 @@ public class HashtagDAO {
 	
 	public static List queryHashtag(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryHashtag(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -116,7 +116,7 @@ public class HashtagDAO {
 	
 	public static List queryHashtag(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryHashtag(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -127,7 +127,7 @@ public class HashtagDAO {
 	
 	public static Hashtag[] listHashtagByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listHashtagByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -138,7 +138,7 @@ public class HashtagDAO {
 	
 	public static Hashtag[] listHashtagByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listHashtagByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -204,7 +204,7 @@ public class HashtagDAO {
 	
 	public static Hashtag loadHashtagByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadHashtagByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -215,7 +215,7 @@ public class HashtagDAO {
 	
 	public static Hashtag loadHashtagByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadHashtagByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -242,7 +242,7 @@ public class HashtagDAO {
 	
 	public static java.util.Iterator iterateHashtagByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iterateHashtagByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -253,7 +253,7 @@ public class HashtagDAO {
 	
 	public static java.util.Iterator iterateHashtagByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iterateHashtagByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -301,7 +301,7 @@ public class HashtagDAO {
 	
 	public static boolean save(basededatos.Hashtag hashtag) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().saveObject(hashtag);
+			ProyectoMDS120242025PersistentManager.instance().saveObject(hashtag);
 			return true;
 		}
 		catch (Exception e) {
@@ -312,7 +312,7 @@ public class HashtagDAO {
 	
 	public static boolean delete(basededatos.Hashtag hashtag) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().deleteObject(hashtag);
+			ProyectoMDS120242025PersistentManager.instance().deleteObject(hashtag);
 			return true;
 		}
 		catch (Exception e) {
@@ -356,7 +356,7 @@ public class HashtagDAO {
 	
 	public static boolean refresh(basededatos.Hashtag hashtag) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().refresh(hashtag);
+			ProyectoMDS120242025PersistentManager.instance().getSession().refresh(hashtag);
 			return true;
 		}
 		catch (Exception e) {
@@ -367,7 +367,7 @@ public class HashtagDAO {
 	
 	public static boolean evict(basededatos.Hashtag hashtag) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().evict(hashtag);
+			ProyectoMDS120242025PersistentManager.instance().getSession().evict(hashtag);
 			return true;
 		}
 		catch (Exception e) {

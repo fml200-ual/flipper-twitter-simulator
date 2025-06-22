@@ -21,7 +21,7 @@ import java.util.List;
 public class AdministradorDAO {
 	public static Administrador loadAdministradorByORMID(int id_usuario) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadAdministradorByORMID(session, id_usuario);
 		}
 		catch (Exception e) {
@@ -32,7 +32,7 @@ public class AdministradorDAO {
 	
 	public static Administrador getAdministradorByORMID(int id_usuario) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getAdministradorByORMID(session, id_usuario);
 		}
 		catch (Exception e) {
@@ -43,7 +43,7 @@ public class AdministradorDAO {
 	
 	public static Administrador loadAdministradorByORMID(int id_usuario, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadAdministradorByORMID(session, id_usuario, lockMode);
 		}
 		catch (Exception e) {
@@ -54,7 +54,7 @@ public class AdministradorDAO {
 	
 	public static Administrador getAdministradorByORMID(int id_usuario, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getAdministradorByORMID(session, id_usuario, lockMode);
 		}
 		catch (Exception e) {
@@ -105,7 +105,7 @@ public class AdministradorDAO {
 	
 	public static List queryAdministrador(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryAdministrador(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -116,7 +116,7 @@ public class AdministradorDAO {
 	
 	public static List queryAdministrador(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryAdministrador(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -127,7 +127,7 @@ public class AdministradorDAO {
 	
 	public static Administrador[] listAdministradorByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listAdministradorByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -138,7 +138,7 @@ public class AdministradorDAO {
 	
 	public static Administrador[] listAdministradorByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listAdministradorByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -204,7 +204,7 @@ public class AdministradorDAO {
 	
 	public static Administrador loadAdministradorByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadAdministradorByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -215,7 +215,7 @@ public class AdministradorDAO {
 	
 	public static Administrador loadAdministradorByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadAdministradorByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -242,7 +242,7 @@ public class AdministradorDAO {
 	
 	public static java.util.Iterator iterateAdministradorByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iterateAdministradorByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -253,7 +253,7 @@ public class AdministradorDAO {
 	
 	public static java.util.Iterator iterateAdministradorByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iterateAdministradorByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -301,7 +301,7 @@ public class AdministradorDAO {
 	
 	public static boolean save(basededatos.Administrador administrador) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().saveObject(administrador);
+			ProyectoMDS120242025PersistentManager.instance().saveObject(administrador);
 			return true;
 		}
 		catch (Exception e) {
@@ -312,7 +312,7 @@ public class AdministradorDAO {
 	
 	public static boolean delete(basededatos.Administrador administrador) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().deleteObject(administrador);
+			ProyectoMDS120242025PersistentManager.instance().deleteObject(administrador);
 			return true;
 		}
 		catch (Exception e) {
@@ -356,7 +356,7 @@ public class AdministradorDAO {
 	
 	public static boolean refresh(basededatos.Administrador administrador) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().refresh(administrador);
+			ProyectoMDS120242025PersistentManager.instance().getSession().refresh(administrador);
 			return true;
 		}
 		catch (Exception e) {
@@ -367,7 +367,7 @@ public class AdministradorDAO {
 	
 	public static boolean evict(basededatos.Administrador administrador) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().evict(administrador);
+			ProyectoMDS120242025PersistentManager.instance().getSession().evict(administrador);
 			return true;
 		}
 		catch (Exception e) {

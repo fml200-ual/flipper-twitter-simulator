@@ -21,7 +21,7 @@ import java.util.List;
 public class TweetDAO {
 	public static Tweet loadTweetByORMID(int id_tweet) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadTweetByORMID(session, id_tweet);
 		}
 		catch (Exception e) {
@@ -32,7 +32,7 @@ public class TweetDAO {
 	
 	public static Tweet getTweetByORMID(int id_tweet) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getTweetByORMID(session, id_tweet);
 		}
 		catch (Exception e) {
@@ -43,7 +43,7 @@ public class TweetDAO {
 	
 	public static Tweet loadTweetByORMID(int id_tweet, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadTweetByORMID(session, id_tweet, lockMode);
 		}
 		catch (Exception e) {
@@ -54,7 +54,7 @@ public class TweetDAO {
 	
 	public static Tweet getTweetByORMID(int id_tweet, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return getTweetByORMID(session, id_tweet, lockMode);
 		}
 		catch (Exception e) {
@@ -105,7 +105,7 @@ public class TweetDAO {
 	
 	public static List queryTweet(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryTweet(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -116,7 +116,7 @@ public class TweetDAO {
 	
 	public static List queryTweet(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return queryTweet(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -127,7 +127,7 @@ public class TweetDAO {
 	
 	public static Tweet[] listTweetByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listTweetByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -138,7 +138,7 @@ public class TweetDAO {
 	
 	public static Tweet[] listTweetByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return listTweetByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -204,7 +204,7 @@ public class TweetDAO {
 	
 	public static Tweet loadTweetByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadTweetByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -215,7 +215,7 @@ public class TweetDAO {
 	
 	public static Tweet loadTweetByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return loadTweetByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -242,7 +242,7 @@ public class TweetDAO {
 	
 	public static java.util.Iterator iterateTweetByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iterateTweetByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -253,7 +253,7 @@ public class TweetDAO {
 	
 	public static java.util.Iterator iterateTweetByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = MDS22425PFMurilloSuanesPersistentManager.instance().getSession();
+			PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 			return iterateTweetByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -301,7 +301,7 @@ public class TweetDAO {
 	
 	public static boolean save(basededatos.Tweet tweet) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().saveObject(tweet);
+			ProyectoMDS120242025PersistentManager.instance().saveObject(tweet);
 			return true;
 		}
 		catch (Exception e) {
@@ -312,7 +312,7 @@ public class TweetDAO {
 	
 	public static boolean delete(basededatos.Tweet tweet) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().deleteObject(tweet);
+			ProyectoMDS120242025PersistentManager.instance().deleteObject(tweet);
 			return true;
 		}
 		catch (Exception e) {
@@ -335,17 +335,13 @@ public class TweetDAO {
 				tweet.getTweet_retweeteado().retweets_Cita.remove(tweet);
 			}
 			
-			basededatos.Hashtag[] lTiene_hashtags = tweet.tiene_hashtag.toArray();
-			for(int i = 0; i < lTiene_hashtags.length; i++) {
-				lTiene_hashtags[i].pertenece.remove(tweet);
-			}
 			basededatos.Tweet[] lRetweets_Citas = tweet.retweets_Cita.toArray();
 			for(int i = 0; i < lRetweets_Citas.length; i++) {
 				lRetweets_Citas[i].setTweet_retweeteado(null);
 			}
-			basededatos.Comentario[] lTienes = tweet.tiene.toArray();
-			for(int i = 0; i < lTienes.length; i++) {
-				lTienes[i].setPertenece(null);
+			basededatos.Hashtag[] lTiene_hashtags = tweet.tiene_hashtag.toArray();
+			for(int i = 0; i < lTiene_hashtags.length; i++) {
+				lTiene_hashtags[i].pertenece.remove(tweet);
 			}
 			basededatos.PropiedadesMencion[] lPropiedadesMencionss = tweet.propiedadesMencions.toArray();
 			for(int i = 0; i < lPropiedadesMencionss.length; i++) {
@@ -354,6 +350,10 @@ public class TweetDAO {
 			basededatos.Retweet[] lRetweetss = tweet.retweets.toArray();
 			for(int i = 0; i < lRetweetss.length; i++) {
 				lRetweetss[i].setTweet(null);
+			}
+			basededatos.Comentario[] lTienes = tweet.tiene.toArray();
+			for(int i = 0; i < lTienes.length; i++) {
+				lTienes[i].setPertenece(null);
 			}
 			basededatos.Usuario_Registrado[] lRecibe_me_gustas = tweet.recibe_me_gusta.toArray();
 			for(int i = 0; i < lRecibe_me_gustas.length; i++) {
@@ -381,17 +381,13 @@ public class TweetDAO {
 				tweet.getTweet_retweeteado().retweets_Cita.remove(tweet);
 			}
 			
-			basededatos.Hashtag[] lTiene_hashtags = tweet.tiene_hashtag.toArray();
-			for(int i = 0; i < lTiene_hashtags.length; i++) {
-				lTiene_hashtags[i].pertenece.remove(tweet);
-			}
 			basededatos.Tweet[] lRetweets_Citas = tweet.retweets_Cita.toArray();
 			for(int i = 0; i < lRetweets_Citas.length; i++) {
 				lRetweets_Citas[i].setTweet_retweeteado(null);
 			}
-			basededatos.Comentario[] lTienes = tweet.tiene.toArray();
-			for(int i = 0; i < lTienes.length; i++) {
-				lTienes[i].setPertenece(null);
+			basededatos.Hashtag[] lTiene_hashtags = tweet.tiene_hashtag.toArray();
+			for(int i = 0; i < lTiene_hashtags.length; i++) {
+				lTiene_hashtags[i].pertenece.remove(tweet);
 			}
 			basededatos.PropiedadesMencion[] lPropiedadesMencionss = tweet.propiedadesMencions.toArray();
 			for(int i = 0; i < lPropiedadesMencionss.length; i++) {
@@ -400,6 +396,10 @@ public class TweetDAO {
 			basededatos.Retweet[] lRetweetss = tweet.retweets.toArray();
 			for(int i = 0; i < lRetweetss.length; i++) {
 				lRetweetss[i].setTweet(null);
+			}
+			basededatos.Comentario[] lTienes = tweet.tiene.toArray();
+			for(int i = 0; i < lTienes.length; i++) {
+				lTienes[i].setPertenece(null);
 			}
 			basededatos.Usuario_Registrado[] lRecibe_me_gustas = tweet.recibe_me_gusta.toArray();
 			for(int i = 0; i < lRecibe_me_gustas.length; i++) {
@@ -420,7 +420,7 @@ public class TweetDAO {
 	
 	public static boolean refresh(basededatos.Tweet tweet) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().refresh(tweet);
+			ProyectoMDS120242025PersistentManager.instance().getSession().refresh(tweet);
 			return true;
 		}
 		catch (Exception e) {
@@ -431,7 +431,7 @@ public class TweetDAO {
 	
 	public static boolean evict(basededatos.Tweet tweet) throws PersistentException {
 		try {
-			MDS22425PFMurilloSuanesPersistentManager.instance().getSession().evict(tweet);
+			ProyectoMDS120242025PersistentManager.instance().getSession().evict(tweet);
 			return true;
 		}
 		catch (Exception e) {

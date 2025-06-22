@@ -28,11 +28,11 @@ public class TweetCriteria extends AbstractORMCriteria {
 	public final AssociationExpression tweet_retweeteado;
 	public final StringExpression contenidoTweet;
 	public final DateExpression fechaPublicacion;
-	public final CollectionExpression tiene_hashtag;
 	public final CollectionExpression retweets_Cita;
-	public final CollectionExpression tiene;
+	public final CollectionExpression tiene_hashtag;
 	public final CollectionExpression propiedadesMencions;
 	public final CollectionExpression retweets;
+	public final CollectionExpression tiene;
 	public final CollectionExpression recibe_me_gusta;
 	
 	public TweetCriteria(Criteria criteria) {
@@ -46,11 +46,11 @@ public class TweetCriteria extends AbstractORMCriteria {
 		tweet_retweeteado = new AssociationExpression("tweet_retweeteado", this);
 		contenidoTweet = new StringExpression("contenidoTweet", this);
 		fechaPublicacion = new DateExpression("fechaPublicacion", this);
-		tiene_hashtag = new CollectionExpression("ORM_tiene_hashtag", this);
 		retweets_Cita = new CollectionExpression("ORM_retweets_Cita", this);
-		tiene = new CollectionExpression("ORM_tiene", this);
+		tiene_hashtag = new CollectionExpression("ORM_tiene_hashtag", this);
 		propiedadesMencions = new CollectionExpression("ORM_propiedadesMencions", this);
 		retweets = new CollectionExpression("ORM_retweets", this);
+		tiene = new CollectionExpression("ORM_tiene", this);
 		recibe_me_gusta = new CollectionExpression("ORM_recibe_me_gusta", this);
 	}
 	
@@ -59,7 +59,7 @@ public class TweetCriteria extends AbstractORMCriteria {
 	}
 	
 	public TweetCriteria() throws PersistentException {
-		this(MDS22425PFMurilloSuanesPersistentManager.instance().getSession());
+		this(ProyectoMDS120242025PersistentManager.instance().getSession());
 	}
 	
 	public Usuario_RegistradoCriteria createPublicado_porCriteria() {
@@ -74,16 +74,12 @@ public class TweetCriteria extends AbstractORMCriteria {
 		return new TweetCriteria(createCriteria("tweet_retweeteado"));
 	}
 	
-	public HashtagCriteria createTiene_hashtagCriteria() {
-		return new HashtagCriteria(createCriteria("ORM_tiene_hashtag"));
-	}
-	
 	public TweetCriteria createRetweets_CitaCriteria() {
 		return new TweetCriteria(createCriteria("ORM_retweets_Cita"));
 	}
 	
-	public ComentarioCriteria createTieneCriteria() {
-		return new ComentarioCriteria(createCriteria("ORM_tiene"));
+	public HashtagCriteria createTiene_hashtagCriteria() {
+		return new HashtagCriteria(createCriteria("ORM_tiene_hashtag"));
 	}
 	
 	public PropiedadesMencionCriteria createPropiedadesMencionsCriteria() {
@@ -92,6 +88,10 @@ public class TweetCriteria extends AbstractORMCriteria {
 	
 	public RetweetCriteria createRetweetsCriteria() {
 		return new RetweetCriteria(createCriteria("ORM_retweets"));
+	}
+	
+	public ComentarioCriteria createTieneCriteria() {
+		return new ComentarioCriteria(createCriteria("ORM_tiene"));
 	}
 	
 	public Usuario_RegistradoCriteria createRecibe_me_gustaCriteria() {

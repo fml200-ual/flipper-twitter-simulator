@@ -35,7 +35,7 @@ public class Usuario_AutentificadoCriteria extends AbstractORMCriteria {
 	}
 	
 	public Usuario_AutentificadoCriteria() throws PersistentException {
-		this(MDS22425PFMurilloSuanesPersistentManager.instance().getSession());
+		this(ProyectoMDS120242025PersistentManager.instance().getSession());
 	}
 	
 	public Usuario_Autentificado uniqueUsuario_Autentificado() {

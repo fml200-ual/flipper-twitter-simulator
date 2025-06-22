@@ -28,11 +28,11 @@ public class TweetDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final AssociationExpression tweet_retweeteado;
 	public final StringExpression contenidoTweet;
 	public final DateExpression fechaPublicacion;
-	public final CollectionExpression tiene_hashtag;
 	public final CollectionExpression retweets_Cita;
-	public final CollectionExpression tiene;
+	public final CollectionExpression tiene_hashtag;
 	public final CollectionExpression propiedadesMencions;
 	public final CollectionExpression retweets;
+	public final CollectionExpression tiene;
 	public final CollectionExpression recibe_me_gusta;
 	
 	public TweetDetachedCriteria() {
@@ -46,11 +46,11 @@ public class TweetDetachedCriteria extends AbstractORMDetachedCriteria {
 		tweet_retweeteado = new AssociationExpression("tweet_retweeteado", this.getDetachedCriteria());
 		contenidoTweet = new StringExpression("contenidoTweet", this.getDetachedCriteria());
 		fechaPublicacion = new DateExpression("fechaPublicacion", this.getDetachedCriteria());
-		tiene_hashtag = new CollectionExpression("ORM_tiene_hashtag", this.getDetachedCriteria());
 		retweets_Cita = new CollectionExpression("ORM_retweets_Cita", this.getDetachedCriteria());
-		tiene = new CollectionExpression("ORM_tiene", this.getDetachedCriteria());
+		tiene_hashtag = new CollectionExpression("ORM_tiene_hashtag", this.getDetachedCriteria());
 		propiedadesMencions = new CollectionExpression("ORM_propiedadesMencions", this.getDetachedCriteria());
 		retweets = new CollectionExpression("ORM_retweets", this.getDetachedCriteria());
+		tiene = new CollectionExpression("ORM_tiene", this.getDetachedCriteria());
 		recibe_me_gusta = new CollectionExpression("ORM_recibe_me_gusta", this.getDetachedCriteria());
 	}
 	
@@ -65,11 +65,11 @@ public class TweetDetachedCriteria extends AbstractORMDetachedCriteria {
 		tweet_retweeteado = new AssociationExpression("tweet_retweeteado", this.getDetachedCriteria());
 		contenidoTweet = new StringExpression("contenidoTweet", this.getDetachedCriteria());
 		fechaPublicacion = new DateExpression("fechaPublicacion", this.getDetachedCriteria());
-		tiene_hashtag = new CollectionExpression("ORM_tiene_hashtag", this.getDetachedCriteria());
 		retweets_Cita = new CollectionExpression("ORM_retweets_Cita", this.getDetachedCriteria());
-		tiene = new CollectionExpression("ORM_tiene", this.getDetachedCriteria());
+		tiene_hashtag = new CollectionExpression("ORM_tiene_hashtag", this.getDetachedCriteria());
 		propiedadesMencions = new CollectionExpression("ORM_propiedadesMencions", this.getDetachedCriteria());
 		retweets = new CollectionExpression("ORM_retweets", this.getDetachedCriteria());
+		tiene = new CollectionExpression("ORM_tiene", this.getDetachedCriteria());
 		recibe_me_gusta = new CollectionExpression("ORM_recibe_me_gusta", this.getDetachedCriteria());
 	}
 	
@@ -85,16 +85,12 @@ public class TweetDetachedCriteria extends AbstractORMDetachedCriteria {
 		return new TweetDetachedCriteria(createCriteria("tweet_retweeteado"));
 	}
 	
-	public HashtagDetachedCriteria createTiene_hashtagCriteria() {
-		return new HashtagDetachedCriteria(createCriteria("ORM_tiene_hashtag"));
-	}
-	
 	public TweetDetachedCriteria createRetweets_CitaCriteria() {
 		return new TweetDetachedCriteria(createCriteria("ORM_retweets_Cita"));
 	}
 	
-	public ComentarioDetachedCriteria createTieneCriteria() {
-		return new ComentarioDetachedCriteria(createCriteria("ORM_tiene"));
+	public HashtagDetachedCriteria createTiene_hashtagCriteria() {
+		return new HashtagDetachedCriteria(createCriteria("ORM_tiene_hashtag"));
 	}
 	
 	public PropiedadesMencionDetachedCriteria createPropiedadesMencionsCriteria() {
@@ -103,6 +99,10 @@ public class TweetDetachedCriteria extends AbstractORMDetachedCriteria {
 	
 	public RetweetDetachedCriteria createRetweetsCriteria() {
 		return new RetweetDetachedCriteria(createCriteria("ORM_retweets"));
+	}
+	
+	public ComentarioDetachedCriteria createTieneCriteria() {
+		return new ComentarioDetachedCriteria(createCriteria("ORM_tiene"));
 	}
 	
 	public Usuario_RegistradoDetachedCriteria createRecibe_me_gustaCriteria() {
