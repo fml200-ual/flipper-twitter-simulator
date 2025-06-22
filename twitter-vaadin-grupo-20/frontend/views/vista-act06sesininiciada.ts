@@ -106,7 +106,6 @@ export class VistaAct06sesininiciada extends LitElement {
   <span style="align-self: center;" id="spanRecomendadoParaTi">Recomendado para ti</span>
   <span style="align-self: center;" id="spanListaTweetsRecientes">Lista de Tweets más recientes</span>
   <vaadin-vertical-layout theme="spacing" style="width: 100%; flex-grow: 1; overflow-y: auto;" id="verticalLayoutListaTweets"></vaadin-vertical-layout>
-  <span style="align-self: center;" id="spanMostrarMas">Mostrar Más</span>
   <vaadin-button style="align-self: center;" tabindex="0" id="botonEscribirTweet">
     Escribir Tweet 
   </vaadin-button>

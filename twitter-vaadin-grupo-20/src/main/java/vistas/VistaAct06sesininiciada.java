@@ -14,7 +14,7 @@ import com.vaadin.flow.component.html.Span;
 @JsModule("./views/vista-act06sesininiciada.ts")
 public class VistaAct06sesininiciada extends LitTemplate {
 
-    @Id("horizontalLayoutPrincipalSesionIniciada")
+	@Id("horizontalLayoutPrincipalSesionIniciada")
 	private HorizontalLayout horizontalLayoutPrincipalSesionIniciada;
 	@Id("verticalLayoutIzquierdoSesionIniciada")
 	private Element verticalLayoutIzquierdoSesionIniciada;
@@ -44,8 +44,6 @@ public class VistaAct06sesininiciada extends LitTemplate {
 	private Span spanListaTweetsRecientes;
 	@Id("verticalLayoutListaTweets")
 	private Element verticalLayoutListaTweets;
-	@Id("spanMostrarMas")
-	private Span spanMostrarMas;
 	@Id("botonEscribirTweet")
 	private Button botonEscribirTweet;
 	@Id("verticalLayoutDerechoSesionIniciada")
@@ -58,8 +56,8 @@ public class VistaAct06sesininiciada extends LitTemplate {
 	private Button botonMasHashtags;
 
 	public VistaAct06sesininiciada() {
-        // You can initialise any data required for the connected UI components here.
-    }
+		// You can initialise any data required for the connected UI components here.
+	}
 
 	public HorizontalLayout getHorizontalLayoutPrincipalSesionIniciada() {
 		return horizontalLayoutPrincipalSesionIniciada;
@@ -179,14 +177,6 @@ public class VistaAct06sesininiciada extends LitTemplate {
 
 	public void setVerticalLayoutListaTweets(Element verticalLayoutListaTweets) {
 		this.verticalLayoutListaTweets = verticalLayoutListaTweets;
-	}
-
-	public Span getSpanMostrarMas() {
-		return spanMostrarMas;
-	}
-
-	public void setSpanMostrarMas(Span spanMostrarMas) {
-		this.spanMostrarMas = spanMostrarMas;
 	}
 
 	public Button getBotonEscribirTweet() {

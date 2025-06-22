@@ -1,5 +1,7 @@
 package interfaz;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
 import vistas.VistaVernotificacionesderetweets;
 
 public class Vernotificacionesderetweets extends VistaVernotificacionesderetweets {
@@ -9,9 +11,16 @@ public class Vernotificacionesderetweets extends VistaVernotificacionesderetweet
 	public Vernotificacionesderetweets(Vernotificaciones _vernotificaciones) {
 		super();
 		this._vernotificaciones = _vernotificaciones;
+
+		Listadenotificaciones();
 	}
 
 	public void Listadenotificaciones() {
-		throw new UnsupportedOperationException();
+		_listadenotificaciones = new Listadenotificaciones(this);
+		for (int i = 0; i < 5; i++) {
+			_listadenotificaciones.getMainContainer().as(VerticalLayout.class)
+					.add(new Listadenotificaciones_item(_listadenotificaciones));
+		}
+		this.getNotificationListRetweets().add(_listadenotificaciones);
 	}
 }

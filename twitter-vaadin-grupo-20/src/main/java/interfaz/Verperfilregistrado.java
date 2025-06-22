@@ -20,42 +20,72 @@ public class Verperfilregistrado extends Verperfil {
 		this.getBanProfileButton().setText("Bloquear");
 		this.getEditAccountButton().setText("Seguir");
 
+		this.Agrupartweets();
+
 		this.getBanProfileButton().addClickListener(event -> {
 			BloquearDesbloquearUsuario();
 		});
-
 		this.getEditAccountButton().addClickListener(event -> {
 			Seguirusuario();
 		});
-
 		this.getFollowingCount().addClickListener(event -> {
 			Verlistadeseguidosregistrado();
 		});
 		this.getFollowersCount().addClickListener(event -> {
 			Verlistadeseguidoresregistrado();
 		});
-
-		this.Agrupartweets();
-
 		this.getLikedTweetsTab().addClickListener(event -> {
 			this.Agrupartweetsgustados();
 		});
-
 		this.getRetweetsTab().addClickListener(event -> {
 			this.Agruparretweets();
 		});
 		this.getUserTweetsTab().addClickListener(event -> {
 			this.Agrupartweets();
 		});
+		this.getBackButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(_listafijadeusuariosregistrado._aCT02UsuarioRegistrado);
+		});
 	}
 
 	public Verperfilregistrado(Verlistaampliadadeusuariosregistrado _verlistaampliadadeusuariosregistrado) {
 		super();
 		this._verlistaampliadadeusuariosregistrado = _verlistaampliadadeusuariosregistrado;
-		this.getBanProfileButton().setVisible(false);
-		this.getDeleteProfileButton().setText("Bloquear");
-		;
-		this.getEditAccountButton().setVisible(false);
+		this.getDeleteProfileButton().setVisible(false);
+
+		this.getBanProfileButton().setText("Bloquear");
+		this.getEditAccountButton().setText("Seguir");
+
+		this.Agrupartweets();
+
+		this.getBanProfileButton().addClickListener(event -> {
+			BloquearDesbloquearUsuario();
+		});
+		this.getEditAccountButton().addClickListener(event -> {
+			Seguirusuario();
+		});
+		this.getFollowingCount().addClickListener(event -> {
+			Verlistadeseguidosregistrado();
+		});
+		this.getFollowersCount().addClickListener(event -> {
+			Verlistadeseguidoresregistrado();
+		});
+		this.getLikedTweetsTab().addClickListener(event -> {
+			this.Agrupartweetsgustados();
+		});
+		this.getRetweetsTab().addClickListener(event -> {
+			this.Agruparretweets();
+		});
+		this.getUserTweetsTab().addClickListener(event -> {
+			this.Agrupartweets();
+		});
+		this.getBackButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView
+					.add(_verlistaampliadadeusuariosregistrado);
+		});
+
 	}
 
 	public void Verlistadeseguidosregistrado() {

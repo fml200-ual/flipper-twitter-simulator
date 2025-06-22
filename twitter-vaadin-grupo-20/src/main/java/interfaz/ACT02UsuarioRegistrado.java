@@ -15,94 +15,74 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 
 	public ACT02UsuarioRegistrado(MainView mainView) {
 		super(mainView);
+
 		this.getSpanListaTweetsRecientes().setVisible(false);
-		Listadeusuariosregistrado();
-		Listadehashtagsregistrado();
+
+		Listafijadeusuariosregistrado();
+		Listafijadehashtagsregistrado();
 		Listadetweetsyretweetsregistrado();
 
 		this.getBotonPerfilPropioRegistrado()
 				.addClickListener(event -> Verpropioperfil());
-
 		this.getBotonEscribirTweet()
 				.addClickListener(event -> Escribirtweet());
-
 		this.getBotonNotificacionesRegistrado()
 				.addClickListener(event -> Vernotificaciones());
-
 		this.getBotonMasUsuarios()
-				.addClickListener(event -> VerlistaAmpliadaDeUsuarios());
-
+				.addClickListener(event -> _listafijadeusuariosregistrado.Verlistaampliadadeusuariosregistrado());
 		this.getBotonMasHashtags()
-				.addClickListener(event -> VerlistaAmpliadaDeUsuariosHashtags());
-
-		this.getBotonCerrarSesionPrimerBoton()
-				.addClickListener(event -> {
-					this.Cerrarsesin();
-				});
+				.addClickListener(event -> _listafijadehashtagsregistrado.Verlistaampliadadehashtagsregistrado());
+		this.getBotonCerrarSesionPrimerBoton().addClickListener(event -> {
+			this.Cerrarsesin();
+		});
 		this.getBotonEscribirTweet().addClickListener(event -> {
 			Escribirtweet();
 		});
 
 	}
 
-	public void Listadeusuariosregistrado() {
+	public void Listafijadeusuariosregistrado() {
 		_listafijadeusuariosregistrado = new Listafijadeusuariosregistrado(this);
-
 		this.getVerticalLayoutListaUsuarios().as(VerticalLayout.class)
 				.add(_listafijadeusuariosregistrado);
 	}
 
-	public void Listadehashtagsregistrado() {
+	public void Listafijadehashtagsregistrado() {
 		_listafijadehashtagsregistrado = new Listafijadehashtagsregistrado(this);
-
 		this.getVerticalLayoutListaHashtagsSesionIniciada().as(VerticalLayout.class)
 				.add(_listafijadehashtagsregistrado);
 	}
 
 	public void Verpropioperfil() {
+		_verpropioperfil = new Verpropioperfil(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
-		Pantalla.MainView.add(_verpropioperfil = new Verpropioperfil(this));
+		Pantalla.MainView.add(_verpropioperfil);
 	}
 
 	public void Escribirtweet() {
+		_escribirtweet = new Escribirtweet(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
-		Pantalla.MainView.add(_escribirtweet = new Escribirtweet(this));
+		Pantalla.MainView.add(_escribirtweet);
 	}
 
 	public void Vernotificaciones() {
+		_vernotificaciones = new Vernotificaciones(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
-		Pantalla.MainView.add(_vernotificaciones = new Vernotificaciones(this));
+		Pantalla.MainView.add(_vernotificaciones);
 	}
 
 	public void Listadetweetsyretweetsregistrado() {
 		_listadetweetsyretweetsregistrado = new Listadetweetsyretweetsregistrado(this);
 
-		// Ejemplo de item que es un tweet de otro usuario
-		Listadetweetsyretweetsregistrado_item itemTweet = new Listadetweetsyretweetsregistrado_item(
-				_listadetweetsyretweetsregistrado);
-		_listadetweetsyretweetsregistrado.getMainContainer().as(VerticalLayout.class).add(itemTweet);
+		for (int i = 0; i < 5; i++) {
+			Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
+					_listadetweetsyretweetsregistrado);
+			_listadetweetsyretweetsregistrado.getMainContainer().as(VerticalLayout.class).add(item);
+		}
 
-		// Ejemplo de item que es un retweet de otro usuario
-		Listadetweetsyretweetsregistrado_item itemRetweet = new Listadetweetsyretweetsregistrado_item(
-				_listadetweetsyretweetsregistrado);
-		_listadetweetsyretweetsregistrado.getMainContainer().as(VerticalLayout.class).add(itemRetweet);
-
-		this.getVerticalLayoutListaTweets().as(VerticalLayout.class)
-				.add(_listadetweetsyretweetsregistrado);
-	}
-
-	public void VerlistaAmpliadaDeUsuarios() {
-		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
-		Pantalla.MainView.removeAll();
-		Pantalla.MainView.add(new Verlistaampliadadeusuariosregistrado(_listafijadeusuariosregistrado));
-	}
-
-	public void VerlistaAmpliadaDeUsuariosHashtags() {
-		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
-		Pantalla.MainView.removeAll();
-		Pantalla.MainView.add(new Verlistaampliadadehashtagsregistrado(_listafijadehashtagsregistrado));
+		this.getVerticalLayoutListaTweets().as(VerticalLayout.class).add(_listadetweetsyretweetsregistrado);
 	}
 }

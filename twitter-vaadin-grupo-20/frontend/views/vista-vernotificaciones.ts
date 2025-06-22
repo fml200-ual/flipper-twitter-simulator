@@ -63,6 +63,23 @@ export class VistaVernotificaciones extends LitElement {
         background-color: #444;
         outline-color: #20c2c2;
       }
+      .back-button {
+        background-color: #555;
+        color: #fff;
+        border: 2px solid #fff;
+        padding: 0.5rem 1rem;
+        font-family: inherit;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.2s;
+        margin-bottom: 1rem;
+        align-self: flex-start;
+      }
+      .back-button:hover, .back-button:focus {
+        background-color: #666;
+        outline-color: #20c2c2;
+      }
       /* --- CAMBIOS PRINCIPALES AQUÍ --- */
       #notification-list {
         width: 100%;
@@ -86,25 +103,13 @@ export class VistaVernotificaciones extends LitElement {
       #notification-list > vista-listadehashtags {
           height: 100%;
       }
-      .show-more-link {
-        color: #20c2c2;
-        font-size: 1.3rem;
-        text-decoration: none;
-        cursor: pointer;
-        border-bottom: 2px solid #20c2c2;
-        padding-bottom: 2px;
-         /* Hacemos que el enlace no se encoja */
-        flex-shrink: 0;
-      }
-      .show-more-link:hover {
-        color: #4dfdfd;
-      }
     `;
   }
 
   render() {
     return html`
       <div class="wrapper" id="wrapper">
+        <button class="back-button" id="boton_volver">← Volver</button>
         <h1 id="titulo_notificaciones">NOTIFICACIONES</h1>
         <div class="button-container" id="contenedor_botones">
           <button class="filter-button" id="boton_seguimiento">Notificaciones de seguimiento</button>
@@ -112,7 +117,6 @@ export class VistaVernotificaciones extends LitElement {
           <button class="filter-button" id="boton_retweets">Notificaciones de retweets</button>
         </div>
         <div id="notification-list"></div>
-        <a class="show-more-link" id="enlace_mostrar_mas">Mostrar más notificaciones</a>
       </div>
     `;
   }

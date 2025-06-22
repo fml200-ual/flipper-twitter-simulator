@@ -10,7 +10,7 @@ public class Verlistaampliadadehashtagsnoregistrado extends Verlistaampliadadeha
 		super();
 		this._listafijadehashtagsnoregistrado = _listafijadehashtagsnoregistrado;
 		// Ensamblado de componentes fijos
-		ListadehashtagsAmpliada();
+		Listadehashtags();
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
@@ -18,7 +18,8 @@ public class Verlistaampliadadehashtagsnoregistrado extends Verlistaampliadadeha
 		});
 	}
 
-	public void ListadehashtagsAmpliada() {
+	@Override
+	public void Listadehashtags() {
 		// Crear lista ampliada de hashtags para usuario no registrado
 		Listadehashtags listaHashtags = new Listadehashtags(this);
 

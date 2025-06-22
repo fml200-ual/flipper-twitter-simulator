@@ -2,6 +2,8 @@ package interfaz;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
+import mds2.MainView.Pantalla;
+
 public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 	public ACT02UsuarioRegistrado _aCT02UsuarioRegistrado;
 	public Verperfilregistrado _verperfilregistrado;
@@ -11,7 +13,23 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 	public Listafijadeusuariosregistrado(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado) {
 		super();
 		this._aCT02UsuarioRegistrado = _aCT02UsuarioRegistrado;
-		Verlistadeusuarios();
+
+		Listadeusuarios();
+	}
+
+	public void Listadeusuarios() {
+		Listadeusuarios listaUsuarios = new Listadeusuarios(_verlistaampliadadeusuariosregistrado);
+
+		for (int i = 0; i < 5; i++) {
+			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios);
+			// Agregar ClickListener personalizado para navegar a Verperfilnoregistrado
+			item.getMainContainer().addClickListener(event -> {
+				Verperfilregistrado();
+			});
+			listaUsuarios.getMainContainer().as(VerticalLayout.class).add(item);
+		}
+
+		this.getMainContainer().as(VerticalLayout.class).add(listaUsuarios);
 	}
 
 	public void Verperfilregistrado() {
@@ -21,23 +39,16 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 	}
 
 	public void Perspectivabloqueado() {
-		throw new UnsupportedOperationException();
+		_perspectivabloqueado = new Perspectivabloqueado(this);
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_perspectivabloqueado);
 	}
 
 	public void Verlistaampliadadeusuariosregistrado() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void Verlistadeusuarios() {
-		Listadeusuarios listadeusuarios = new Listadeusuarios(
-				_verlistaampliadadeusuariosregistrado);
-
-		listadeusuarios.getMainContainer().as(VerticalLayout.class)
-				.add(new Listadeusuarios_item(listadeusuarios));
-		listadeusuarios.getMainContainer().as(VerticalLayout.class)
-				.add(new Listadeusuarios_item(listadeusuarios));
-
-		this.getMainContainer().as(VerticalLayout.class)
-				.add(listadeusuarios);
+		_verlistaampliadadeusuariosregistrado = new Verlistaampliadadeusuariosregistrado(this);
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_verlistaampliadadeusuariosregistrado);
 	}
 }

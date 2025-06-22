@@ -7,7 +7,6 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.template.Id;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.NativeButton;
-import com.vaadin.flow.dom.Element;
 
 @Tag("vista-vernotificaciones")
 @JsModule("./views/vista-vernotificaciones.ts")
@@ -15,6 +14,8 @@ public class VistaVernotificaciones extends LitTemplate {
 
 	@Id("wrapper")
 	private Div wrapper;
+	@Id("boton_volver")
+	private NativeButton boton_volver;
 	@Id("titulo_notificaciones")
 	private H1 titulo_notificaciones;
 	@Id("contenedor_botones")
@@ -25,8 +26,6 @@ public class VistaVernotificaciones extends LitTemplate {
 	private NativeButton boton_menciones;
 	@Id("boton_retweets")
 	private NativeButton boton_retweets;
-	@Id("enlace_mostrar_mas")
-	private Element enlace_mostrar_mas;
 	@Id("notification-list")
 	private Div notificationList;
 
@@ -40,6 +39,14 @@ public class VistaVernotificaciones extends LitTemplate {
 
 	protected void setWrapper(Div wrapper) {
 		this.wrapper = wrapper;
+	}
+
+	protected NativeButton getBoton_volver() {
+		return boton_volver;
+	}
+
+	protected void setBoton_volver(NativeButton boton_volver) {
+		this.boton_volver = boton_volver;
 	}
 
 	protected H1 getTitulo_notificaciones() {
@@ -80,14 +87,6 @@ public class VistaVernotificaciones extends LitTemplate {
 
 	protected void setBoton_retweets(NativeButton boton_retweets) {
 		this.boton_retweets = boton_retweets;
-	}
-
-	protected Element getEnlace_mostrar_mas() {
-		return enlace_mostrar_mas;
-	}
-
-	protected void setEnlace_mostrar_mas(Element enlace_mostrar_mas) {
-		this.enlace_mostrar_mas = enlace_mostrar_mas;
 	}
 
 	protected Div getNotificationList() {

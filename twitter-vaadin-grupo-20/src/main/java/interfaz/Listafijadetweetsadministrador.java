@@ -30,7 +30,6 @@ public class Listafijadetweetsadministrador extends VistaListafijadetweetsadmini
 		// Añadir tweets y retweets de ejemplo alternando tipos
 		for (int i = 0; i < 5; i++) {
 			// Alternar entre tweets (false) y retweets (true)
-			boolean esRetweet = (i % 2 == 0);
 			Listadetweetsyretweetsadministrador_item tweetItem = new Listadetweetsyretweetsadministrador_item(null);
 			_tweets.add(tweetItem);
 			container.add(tweetItem);
