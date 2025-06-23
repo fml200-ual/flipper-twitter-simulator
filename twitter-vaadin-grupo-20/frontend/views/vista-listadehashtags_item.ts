@@ -55,13 +55,11 @@ export class VistaListadehashtags_item extends LitElement {  static get styles()
         flex-shrink: 0;
       }
     `;
-  }
-
-  render() {
+  }  render() {
     return html`
       <vaadin-horizontal-layout id="hashtagContainer" style="justify-content: center;">
-        <label id="hashtagText">#hashtag1</label>
-        <label id="postCount">180k</label>
+        <label id="hashtagText"></label>
+        <label id="postCount"></label>
         <vaadin-icon icon="vaadin:comment" id="iconComment" size="16"></vaadin-icon>
       </vaadin-horizontal-layout>
     `;

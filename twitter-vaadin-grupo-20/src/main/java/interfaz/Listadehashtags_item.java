@@ -8,14 +8,14 @@ public class Listadehashtags_item extends VistaListadehashtags_item {
 	public Listadehashtags _listadehashtags;
 	
 	// Objeto ORMPersistable para el hashtag
-	public basededatos.Hashtag h;
-
-	public Listadehashtags_item(Listadehashtags _listadehashtags) {
+	public basededatos.Hashtag h;	public Listadehashtags_item(Listadehashtags _listadehashtags) {
 		super();
 		this._listadehashtags = _listadehashtags;
+		// Configurar datos vacíos por defecto
+		this.getHashtagText().setText("");
+		this.getPostCount().setText("");
 	}
-	
-	// Constructor que acepta Hashtag
+		// Constructor que acepta Hashtag
 	public Listadehashtags_item(Listadehashtags _listadehashtags, basededatos.Hashtag h) {
 		super();
 		this._listadehashtags = _listadehashtags;
@@ -24,6 +24,10 @@ public class Listadehashtags_item extends VistaListadehashtags_item {
 		// Rellenar datos del hashtag en los componentes gráficos
 		if (h != null) {
 			rellenarDatosHashtag();
+		} else {
+			// Si no hay hashtag, establecer valores vacíos
+			this.getHashtagText().setText("");
+			this.getPostCount().setText("");
 		}
 	}
 	private void rellenarDatosHashtag() {
