@@ -1,5 +1,10 @@
 package mds2;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Paths;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.flow.component.Component;
@@ -8,6 +13,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 import interfaz.*;
+import basededatos.*;
+
+
 
 /**
  * A sample Vaadin view class.
@@ -34,6 +42,73 @@ public class MainView extends VerticalLayout {
 		public static boolean esPropio;
 	}
 
+	public enum TipoUser {
+		NO_REGISTRADO, REGISTRADO, ADMINISTRADOR
+	}
+
+	public static class Usuario {
+		public static basededatos.Usuario_Registrado usuarioRegistrado;
+		public static basededatos.Administrador administrador;
+
+		public static TipoUser tipoUsuario = TipoUser.NO_REGISTRADO;
+		public static iAdministrador administradorInterfaz = new BDPrincipal();
+		public static iUsuarioRegistrado usuarioRegistradoInterfaz = new BDPrincipal();
+		public static iUsuarioNoRegistrado usuarioNoRegistradoInterfaz = new BDPrincipal();
+	}
+
+	public static class Credenciales {
+		public static String user;
+		public static String pass;
+	}
+
+	private static boolean leerCredenciales() {
+	
+		String rutaProyecto = System.getProperty("user.dir");
+		String rutaArchivo = Paths.get(rutaProyecto, "/src/main/resources/sesion.txt").toString();
+		try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
+			String primeraLinea = br.readLine(); // Leer 0 o 1
+			if (primeraLinea == null || !primeraLinea.equals("1")) {
+				System.out.println("No hay datos que cargar.");
+				return false;
+			}
+
+			String usuario = br.readLine(); // Leer usuario
+			String password = br.readLine(); // Leer contraseña
+			
+			if (usuario != null && password != null) {
+				Credenciales.user = usuario;
+				Credenciales.pass = password;
+				return true;
+			} else {
+				System.out.println("Formato de archivo incorrecto.");
+				return false;
+			}
+		} catch (IOException e) {
+			System.out.println("Error al leer el archivo: " + e.getMessage());
+			return false;
+		}
+	}
+
+	private boolean inicioSesion() {
+		if (!leerCredenciales()) {
+			return false;
+		}
+		Usuario.usuarioRegistrado = Usuario.usuarioNoRegistradoInterfaz.login(Credenciales.user, Credenciales.pass);
+		Usuario.administrador = Usuario.usuarioNoRegistradoInterfaz.loginAdmin(Credenciales.user, Credenciales.pass);
+		if (Usuario.usuarioRegistrado != null) {
+			Usuario.tipoUsuario = TipoUser.REGISTRADO;
+			ACT02UsuarioRegistrado inicioRegistrado = new ACT02UsuarioRegistrado(this);	
+			add(inicioRegistrado);
+		} else if (Usuario.administrador != null){
+			Usuario.tipoUsuario = TipoUser.ADMINISTRADOR;
+			ACT03Administrador inicioAdministrador = new ACT03Administrador(this);
+			add(inicioAdministrador);
+		} else {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Construct a new Vaadin view.
 	 * <p>
@@ -45,8 +120,11 @@ public class MainView extends VerticalLayout {
 	 */
 	public MainView(@Autowired GreetService service) {
 		Pantalla.MainView = this;
-		Pantalla.usuario = 2;
-		ACT02UsuarioRegistrado test = new ACT02UsuarioRegistrado(this);
-		add(test);
+    
+		if (!inicioSesion()) {
+			// Si no hay sesión válida, mostrar interfaz de usuario no registrado
+			ACT01UsuarioNoRegistrado inicioNoRegistrado = new ACT01UsuarioNoRegistrado(this);
+			add(inicioNoRegistrado);
+		}
 	}
 }
