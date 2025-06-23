@@ -15,6 +15,17 @@ public class Listadecomentariosregistrado_item extends Listadecomentarios_item {
 			Vercomentarioregistrado();
 		});
 	}
+	
+	// Constructor que acepta Comentario
+	public Listadecomentariosregistrado_item(Listadecomentarios _listadecomentarios, basededatos.Comentario c) {
+		super(_listadecomentarios, c);
+		// Los datos se rellenan en la clase padre
+		
+		// TODO: Configurar click listener cuando el componente correcto esté disponible
+		// this.getvL_listacomentarios_mainContainer().as(VerticalLayout.class).addClickListener(event -> {
+		//     Vercomentarioregistrado();
+		// });
+	}
 
 	public void Vercomentarioregistrado() {
 		_vercomentarioregistrado = new Vercomentarioregistrado(this);

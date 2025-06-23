@@ -2,6 +2,8 @@ package interfaz;
 
 import mds2.MainView.Pantalla;
 import vistas.VistaRegistrarse;
+import basededatos.BDPrincipal;
+import java.util.Date;
 
 public class Registrarse extends VistaRegistrarse {
 	// private event _mensajedeerrorregistro;
@@ -202,12 +204,59 @@ public class Registrarse extends VistaRegistrarse {
 			System.out.println("Actualizando preview de " + type + " con URL: " + url);
 			// Aquí se podría implementar lógica para mostrar preview real
 		}
-	}
-
-	private void procesarRegistro() {
-		// Proceder directamente con el código de verificación después de validar campos
-		System.out.println("Procesando registro, enviando código de verificación...");
-		Introducircdigodeverificacin();
+	}	private void procesarRegistro() {
+		try {
+			// Obtener los valores de los campos
+			String email = this.getEmailField().getValue().trim();
+			String nick = this.getNickField().getValue().trim();
+			String password = this.getPasswordField().getValue();
+			String descripcion = this.getDescriptionField().getValue();
+			String fotoPerfilURL = this.getProfilePhotoUrlField().getValue();
+			String imagenFondoURL = this.getBackgroundUrlField().getValue();
+			
+			// Usar valores por defecto si están vacíos
+			if (descripcion == null || descripcion.trim().isEmpty()) {
+				descripcion = "Nuevo usuario de Twitter";
+			}
+			if (fotoPerfilURL == null || fotoPerfilURL.trim().isEmpty()) {
+				fotoPerfilURL = "default-profile.jpg";
+			}
+			if (imagenFondoURL == null || imagenFondoURL.trim().isEmpty()) {
+				imagenFondoURL = "default-background.jpg";
+			}
+			
+			System.out.println("Procesando registro para usuario: " + nick);
+			
+			// Crear instancia de la base de datos
+			BDPrincipal bd = new BDPrincipal();
+			
+			// Intentar registrar el usuario
+			basededatos.Usuario_Registrado nuevoUsuario = bd.registrar(
+				nick, 
+				descripcion, 
+				imagenFondoURL, 
+				fotoPerfilURL, 
+				email, 
+				password, 
+				new Date()
+			);
+			
+			if (nuevoUsuario != null) {
+				System.out.println("Registro exitoso para usuario: " + nick);
+				// El registro fue exitoso, navegar a la vista de código de verificación
+				Introducircdigodeverificacin();
+			} else {
+				System.err.println("Error durante el registro - posiblemente el usuario ya existe");
+				// Mostrar mensaje de error apropiado
+				Mensajedeerrorregistro();
+			}
+			
+		} catch (Exception e) {
+			System.err.println("Error durante el registro: " + e.getMessage());
+			e.printStackTrace();
+			// Mostrar mensaje de error genérico
+			Mensajedeerrorregistro();
+		}
 	}
 
 	public void Mensajedeerrorregistro() {

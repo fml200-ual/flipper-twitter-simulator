@@ -4,6 +4,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import mds2.MainView.Pantalla;
 import basededatos.Usuario_Registrado;
+import basededatos.BDPrincipal;
 
 public class Listafijadeusuariosnoregistrado extends Listafijadeusuarios {
 	public ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado;
@@ -17,18 +18,57 @@ public class Listafijadeusuariosnoregistrado extends Listafijadeusuarios {
 		ListadeusuariosNR();
 		// Ensamblado dinámico - ClickListeners para botones
 	}	public void ListadeusuariosNR() {
-		// Crear la lista - la inicialización automática carga los usuarios de la BD
-		Listadeusuarios listaUsuarios = new Listadeusuarios(_verlistaampliadadeusuariosnoregistrado);
-		
-		// Agregar ClickListener a todos los items para navegar a Verperfilnoregistrado
-		for (Listadeusuarios_item item : listaUsuarios._item) {
-			item.getMainContainer().addClickListener(event -> {
-				// Pasar el usuario específico del item al perfil
-				VerperfilnoregistradoConUsuario(item.u);
-			});
-		}
+		try {
+			System.out.println("Cargando usuarios desde la base de datos...");
+			
+			// Crear instancia de la base de datos
+			BDPrincipal bd = new BDPrincipal();
+			
+			// Cargar usuarios desde la base de datos
+			Usuario_Registrado[] usuariosArray = bd.cargarUsuarios();
+			
+			if (usuariosArray != null && usuariosArray.length > 0) {
+				System.out.println("Cargados " + usuariosArray.length + " usuarios desde la BD");
+				
+				// Crear items de lista para cada usuario cargado
+				for (Usuario_Registrado usuario : usuariosArray) {
+					if (usuario != null) {
+						// Crear item con el usuario real de la base de datos
+						Listadeusuarios_item item = new Listadeusuarios_item(null, usuario);
+						
+						// Agregar ClickListener para navegar al perfil específico
+						item.getMainContainer().addClickListener(event -> {
+							VerperfilnoregistradoConUsuario(usuario);
+						});
+						
+						// Agregar el item al contenedor
+						this.getMainContainer().as(VerticalLayout.class).add(item);
+					}
+				}
+			} else {
+				System.out.println("No se encontraron usuarios en la base de datos");
+				// Crear lista vacía o mostrar mensaje
+				Listadeusuarios listaVacia = new Listadeusuarios(_verlistaampliadadeusuariosnoregistrado);
+				this.getMainContainer().as(VerticalLayout.class).add(listaVacia);
+			}
+			
+		} catch (Exception e) {
+			System.err.println("Error al cargar usuarios desde la BD: " + e.getMessage());
+			e.printStackTrace();
+			
+			// En caso de error, usar la funcionalidad original
+			Listadeusuarios listaUsuarios = new Listadeusuarios(_verlistaampliadadeusuariosnoregistrado);
+			
+			// Agregar ClickListener a todos los items para navegar a Verperfilnoregistrado
+			for (Listadeusuarios_item item : listaUsuarios._item) {
+				item.getMainContainer().addClickListener(event -> {
+					// Pasar el usuario específico del item al perfil
+					VerperfilnoregistradoConUsuario(item.u);
+				});
+			}
 
-		this.getMainContainer().as(VerticalLayout.class).add(listaUsuarios);
+			this.getMainContainer().as(VerticalLayout.class).add(listaUsuarios);
+		}
 	}
 	
 	private void VerperfilnoregistradoConUsuario(Usuario_Registrado usuario) {

@@ -1,6 +1,8 @@
 package interfaz;
 
 import mds2.MainView.Pantalla;
+import basededatos.BDPrincipal;
+import java.util.Date;
 
 public class Verperfilregistrado extends Verperfil {
 	// private event _bloquearusuario;
@@ -9,8 +11,7 @@ public class Verperfilregistrado extends Verperfil {
 	// private event _dejardeseguirusuario;
 	public Listafijadeusuariosregistrado _listafijadeusuariosregistrado;
 	public Verlistaampliadadeusuariosregistrado _verlistaampliadadeusuariosregistrado;
-	public Verlistadeseguidosregistrado _verlistadeseguidosregistrado;
-	public Verlistadeseguidoresregistrado _verlistadeseguidoresregistrado;
+	public Verlistadeseguidosregistrado _verlistadeseguidosregistrado;	public Verlistadeseguidoresregistrado _verlistadeseguidoresregistrado;
 	
 	// Objeto ORMPersistable para el usuario cuyo perfil se muestra
 	public basededatos.Usuario_Registrado u;
@@ -135,13 +136,48 @@ public class Verperfilregistrado extends Verperfil {
 			default:
 				break;
 		}
-	}
-
-	public void Seguirusuario() {
-		if (this.getEditAccountButton().getText().equals("Seguir")) {
-			this.getEditAccountButton().setText("Dejar de seguir");
-		} else {
-			this.getEditAccountButton().setText("Seguir");
+	}	public void Seguirusuario() {
+		// Por ahora, sin un sistema de sesión completo, implementamos una versión simplificada
+		if (u == null) {
+			System.err.println("No se puede realizar la operación de seguimiento: falta información del usuario a seguir");
+			return;
+		}
+		
+		try {
+			// TODO: Obtener el usuario actual desde la sesión/contexto
+			// Por ahora simulamos que tenemos un usuario autenticado con ID=1
+			int usuarioActualId = 1; // Esto debería venir de la sesión actual
+			
+			// Crear instancia de la base de datos
+			BDPrincipal bd = new BDPrincipal();
+			
+			if (this.getEditAccountButton().getText().equals("Seguir")) {
+				// Realizar operación de seguimiento
+				System.out.println("Usuario ID " + usuarioActualId + " va a seguir a " + u.getNickname());
+				
+				basededatos.Usuario_Registrado usuarioActualizado = bd.seguir(
+					usuarioActualId, 
+					u.getORMID(), 
+					new Date()
+				);
+				
+				if (usuarioActualizado != null) {
+					// Actualizar la interfaz
+					this.getEditAccountButton().setText("Dejar de seguir");
+					System.out.println("Seguimiento realizado exitosamente");
+				} else {
+					System.err.println("Error al realizar el seguimiento");
+				}
+				
+			} else {
+				// TODO: Implementar dejar de seguir cuando esté disponible en la BD
+				System.out.println("Funcionalidad de dejar de seguir no implementada aún en la BD");
+				this.getEditAccountButton().setText("Seguir");
+			}
+			
+		} catch (Exception e) {
+			System.err.println("Error durante la operación de seguimiento: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

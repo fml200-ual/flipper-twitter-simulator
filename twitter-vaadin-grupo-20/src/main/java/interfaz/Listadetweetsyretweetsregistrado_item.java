@@ -1,8 +1,6 @@
 package interfaz;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.html.Image;
 
 import mds2.MainView.Pantalla;
 import basededatos.Tweet;
@@ -13,50 +11,42 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 	public Vertweetpropio _vertweetpropio;
 	public Verretweetpropio _verretweetpropio;
 	
-	public Tweet t; // Tweet asociado a este item
-
-	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets) {
-		super(_listadetweetsyretweets);
-
-		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
-			// Luego hay que diferenciar entre tweet y retweet. Tambien si es propio o no
-			// Llamar a la vista de ver tweet registrado por defecto
-			Vertweetregistrado();
-		});
-	}
+	// Tweet asociado a este item (heredado de la clase padre)
 
 	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets, Tweet t) {
 		super(_listadetweetsyretweets, t);
-		this.t = t;
 		
-		// Configurar visibilidad de botones según el contexto
-		// TODO: Implementar lógica de botones cuando estén disponibles en la vista
-		
-		// Si es un retweet, mostrar el tweet original
-		if (this.t.getTweet_retweeteado() != null) {
-			Tweet tweetOriginal = this.t.getTweet_retweeteado();
-			Listadetweetsyretweetsregistrado_item itemOriginal = 
-				new Listadetweetsyretweetsregistrado_item(this._listadetweetsyretweets, tweetOriginal);
-			
-			// Ocultar botones en el tweet original anidado
-			// TODO: Implementar cuando los getters de botones estén disponibles
-			
-			// Agregar al contenedor de retweet
-			// TODO: Agregar al contenedor cuando esté disponible
+		// Poblar la interfaz con datos del tweet si están disponibles
+		if (t != null) {
+			actualizarDatosTweet();
+		} else {
+			mostrarDatosPorDefecto();
 		}
-		
-		// Configurar click listener para navegar según el tipo y propietario
+
+		// Configurar click listener para navegar según el tipo
+		configurarEventos();
+	}
+	
+	// Constructor de compatibilidad temporal
+	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets) {
+		this(_listadetweetsyretweets, null);
+	}
+	
+	private void configurarEventos() {
 		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
+			// TODO: Determinar si el tweet es propio del usuario actual
+			boolean esTweetPropio = false; // Por ahora asumimos que no es propio
+			
 			if (t != null && t.getTweet_retweeteado() != null) {
 				// Es un retweet
-				if (esPropio()) {
+				if (esTweetPropio) {
 					Verretweetpropio();
 				} else {
 					Verretweetregistrado();
 				}
 			} else {
 				// Es un tweet normal
-				if (esPropio()) {
+				if (esTweetPropio) {
 					Vertweetpropio();
 				} else {
 					Vertweetregistrado();
@@ -65,20 +55,57 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 		});
 	}
 	
-	private boolean esPropio() {
-		// TODO: Implementar lógica para determinar si el tweet es del usuario actual
-		// return this.t.getPublicado_por().equals(Usuario.user);
-		return false; // Por ahora siempre false hasta que tengamos acceso al usuario actual
+	private void actualizarDatosTweet() {
+		// Actualizar contenido del tweet
+		if (t.getContenidoTweet() != null && !t.getContenidoTweet().trim().isEmpty()) {
+			// this.getContentText().setText(t.getContenidoTweet());
+		}
+		
+		// Actualizar información del usuario que publicó
+		if (t.getPublicado_por() != null) {
+			basededatos.Usuario_Registrado usuario = t.getPublicado_por();
+			
+			// Actualizar nickname del usuario
+			if (usuario.getNickname() != null && !usuario.getNickname().trim().isEmpty()) {
+				// this.getNickName().setText(usuario.getNickname());
+				// this.getUsername().setText("@" + usuario.getNickname());
+			}
+		}
+				// Actualizar fecha de publicación
+		if (t.getFechaPublicacion() != null) {
+			// this.getDateLabel().setText(formatearFecha(t.getFechaPublicacion()));
+		}
+		
+		// Si es un retweet, mostrar información adicional
+		if (t.getTweet_retweeteado() != null) {
+			// Agregar indicador de que es un retweet
+			// this.getContentText().setText("🔄 Retweeteado: " + (t.getContenidoTweet() != null ? t.getContenidoTweet() : ""));
+		}
+	}
+		// Método de utilidad para formatear fechas (comentado temporalmente)
+	/*
+	private String formatearFecha(java.util.Date fecha) {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		return formatter.format(fecha);
+	}
+	*/
+	
+	private void mostrarDatosPorDefecto() {
+		// Mostrar datos por defecto cuando no hay tweet
+		// this.getContentText().setText("Contenido del tweet");
+		// this.getNickName().setText("Usuario");
+		// this.getUsername().setText("@usuario");
+		// this.getDateLabel().setText("Ahora");
 	}
 
 	public void Vertweetregistrado() {
-		_vertweetregistrado = new Vertweetregistrado(this);
+		_vertweetregistrado = new Vertweetregistrado(this, t);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_vertweetregistrado);
 	}
-
 	public void Verretweetregistrado() {
+		// TODO: Pasar el tweet cuando se actualice el constructor
 		_verretweetregistrado = new Verretweetregistrado(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
@@ -86,6 +113,7 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 	}
 
 	public void Vertweetpropio() {
+		// TODO: Pasar el tweet cuando se actualice el constructor
 		_vertweetpropio = new Vertweetpropio(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
@@ -93,6 +121,7 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 	}
 
 	public void Verretweetpropio() {
+		// TODO: Pasar el tweet cuando se actualice el constructor
 		_verretweetpropio = new Verretweetpropio(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();

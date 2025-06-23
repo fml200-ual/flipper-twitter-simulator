@@ -15,6 +15,14 @@ public class Listadecomentariosnoregistrado_item extends Listadecomentarios_item
 			Vercomentarionoregistrado();
 		});
 	}
+	
+	// Constructor que acepta Comentario
+	public Listadecomentariosnoregistrado_item(Listadecomentarios _listadecomentarios, basededatos.Comentario c) {
+		super(_listadecomentarios, c);
+		// Los datos se rellenan en la clase padre
+		
+		// TODO: Configurar click listener cuando el componente correcto esté disponible
+	}
 
 	public void Vercomentarionoregistrado() {
 		_vercomentarionoregistrado = new Vercomentarionoregistrado(this);
