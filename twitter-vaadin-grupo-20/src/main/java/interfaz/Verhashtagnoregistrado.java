@@ -33,17 +33,12 @@ public class Verhashtagnoregistrado extends Verhashtag {
 			Pantalla.MainView.add(_verlistaampliadadehashtagsnoregistrado);
 		});
 	}
-
 	public void Listadetweetsyretweetsnoregistrado() {
+		// Crear la lista - la inicialización automática carga los tweets de la BD
 		_listadetweetsyretweetsnoregistrado = new Listadetweetsyretweetsnoregistrado(this);
 
-		for (int i = 0; i < 5; i++) {
-			Listadetweetsyretweetsnoregistrado_item item = new Listadetweetsyretweetsnoregistrado_item(
-					_listadetweetsyretweetsnoregistrado);
-			_listadetweetsyretweetsnoregistrado
-					.getMainContainer().as(VerticalLayout.class)
-					.add(item);
-		}
+		// Los tweets ya están cargados automáticamente en la lista
+		// No necesitamos crear items manualmente
 
 		this.getMainLayout().as(VerticalLayout.class)
 				.add(_listadetweetsyretweetsnoregistrado);

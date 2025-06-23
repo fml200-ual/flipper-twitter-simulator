@@ -3,6 +3,7 @@ package interfaz;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import mds2.MainView.Pantalla;
+import basededatos.Usuario_Registrado;
 
 public class Listafijadeusuariosnoregistrado extends Listafijadeusuarios {
 	public ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado;
@@ -15,21 +16,29 @@ public class Listafijadeusuariosnoregistrado extends Listafijadeusuarios {
 		// Ensamblado de componentes fijos
 		ListadeusuariosNR();
 		// Ensamblado dinámico - ClickListeners para botones
-	}
-
-	public void ListadeusuariosNR() {
+	}	public void ListadeusuariosNR() {
+		// Crear la lista - la inicialización automática carga los usuarios de la BD
 		Listadeusuarios listaUsuarios = new Listadeusuarios(_verlistaampliadadeusuariosnoregistrado);
-
-		for (int i = 0; i < 5; i++) {
-			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios);
-			// Agregar ClickListener personalizado para navegar a Verperfilnoregistrado
+		
+		// Agregar ClickListener a todos los items para navegar a Verperfilnoregistrado
+		for (Listadeusuarios_item item : listaUsuarios._item) {
 			item.getMainContainer().addClickListener(event -> {
-				Verperfilnoregistrado();
+				// Pasar el usuario específico del item al perfil
+				VerperfilnoregistradoConUsuario(item.u);
 			});
-			listaUsuarios.getMainContainer().as(VerticalLayout.class).add(item);
 		}
 
 		this.getMainContainer().as(VerticalLayout.class).add(listaUsuarios);
+	}
+	
+	private void VerperfilnoregistradoConUsuario(Usuario_Registrado usuario) {
+		// Método mejorado que puede recibir el usuario específico
+		if (usuario != null) {
+			System.out.println("Navegando al perfil de: " + usuario.getNickname());
+		}
+		
+		// Navegar a la vista de perfil (por ahora mantener la funcionalidad original)
+		Verperfilnoregistrado();
 	}
 
 	public void Verperfilnoregistrado() {

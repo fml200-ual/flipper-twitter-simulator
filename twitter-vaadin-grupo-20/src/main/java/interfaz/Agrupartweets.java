@@ -22,10 +22,9 @@ public class Agrupartweets extends VistaAgrupartweets {
 		// Luego hay de diferenciar entre tweets de usuario o administrador
 		switch (Pantalla.usuario) {
 			case 1:
-				_listadetweetsyretweets = new Listadetweetsyretweetsnoregistrado(null);
-				for (int i = 0; i < 5; i++) {
+				_listadetweetsyretweets = new Listadetweetsyretweetsnoregistrado(null);				for (int i = 0; i < 5; i++) {
 					Listadetweetsyretweetsnoregistrado_item item = new Listadetweetsyretweetsnoregistrado_item(
-							_listadetweetsyretweets);
+							_listadetweetsyretweets, null);
 					_listadetweetsyretweets.getMainContainer().as(VerticalLayout.class).add(item);
 				}
 

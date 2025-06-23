@@ -17,6 +17,23 @@ public class Listadetweetsyretweetsadministrador_item extends Listadetweetsyretw
 			Vertweetadministrador();
 		});
 	}
+	
+	// Constructor que acepta Tweet
+	public Listadetweetsyretweetsadministrador_item(Listadetweetsyretweets _listadetweetsyretweets, basededatos.Tweet t) {
+		super(_listadetweetsyretweets, t);
+		// Los datos se rellenan en la clase padre
+		
+		// Configurar click listener específico para administrador
+		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
+			if (t != null && t.getTweet_retweeteado() != null) {
+				// Es un retweet
+				Verretweetadministrador();
+			} else {
+				// Es un tweet normal
+				Vertweetadministrador();
+			}
+		});
+	}
 
 	public void Vertweetadministrador() {
 		_vertweetadministrador = new Vertweetadministrador(this);

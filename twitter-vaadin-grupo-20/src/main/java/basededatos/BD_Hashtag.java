@@ -11,7 +11,7 @@ public class BD_Hashtag {
 	public Vector<Hashtag> _contiene_hashtag = new Vector<Hashtag>();
 
 	public void nuevoTweetHashtag(int id_tweet, String[] hashtags) throws PersistentException {
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Tweet tweet = TweetDAO.getTweetByORMID(id_tweet);
@@ -28,12 +28,12 @@ public class BD_Hashtag {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 	}
 
 	public Hashtag[] cargarHashtags() throws PersistentException {
 		Hashtag[] hashtags = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			hashtags = HashtagDAO.listHashtagByQuery(null, null);

@@ -14,7 +14,7 @@ public class BD_Comentario {
 
 	public int nuevoComentario(int id_usuario, int id_tweet, String contenidoComentario, Date fechaPublicacion) throws PersistentException {
 		int id_comentario = -1;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Usuario_Registrado user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -30,12 +30,12 @@ public class BD_Comentario {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return id_comentario;
 	}
 	
 	public void eliminarComentario(int id_comentario) throws PersistentException {
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Comentario comentario = ComentarioDAO.getComentarioByORMID(id_comentario);
@@ -48,13 +48,13 @@ public class BD_Comentario {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 	}
 	
 	
 	public Comentario obtenerComentarioByID(int id_comentario) throws PersistentException {
 		Comentario comentario = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			comentario = ComentarioDAO.getComentarioByORMID(id_comentario);

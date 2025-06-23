@@ -14,6 +14,8 @@ public class ACT01UsuarioNoRegistrado extends VistaAct01usuarionoregistrado {
 	public Listafijadehashtagsnoregistrado _listafijadehashtagsnoregistrado;
 	public Iniciarsesin _iniciarsesin;
 	public MainView _mainView;
+	
+	// Usuario no registrado no necesita objeto ORMPersistable porque no se almacena en BD
 
 	public ACT01UsuarioNoRegistrado(MainView mainView) {
 		super(); // Llamar al constructor padre
@@ -32,10 +34,16 @@ public class ACT01UsuarioNoRegistrado extends VistaAct01usuarionoregistrado {
 	public void IniciarsesinconGoogle() {
 		// Método no usado (sin botón Google)
 	}
-
 	public void Registrarse() {
 		_registrarse = new Registrarse(this);
-		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		
+		// Verificar que hay componentes antes de acceder
+		if (Pantalla.MainView.getComponentCount() > 0) {
+			Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		} else {
+			Pantalla.Anterior = this;
+		}
+		
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_registrarse);
 	}

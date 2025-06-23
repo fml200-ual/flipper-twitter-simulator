@@ -10,10 +10,9 @@ import org.orm.PersistentTransaction;
 public class BD_Usuario_Registrado {
 	public BDPrincipal _bd_prin_userR;
 	public Vector<Usuario_Registrado> _contiene_userR = new Vector<Usuario_Registrado>();
-
 	public Usuario_Registrado login(String nombreUsuario, String contrasena) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Usuario_Autentificado userAux = Usuario_AutentificadoDAO.loadUsuario_AutentificadoByQuery(
@@ -30,10 +29,9 @@ public class BD_Usuario_Registrado {
 		}
 		return user;
 	}
-
 	public Usuario_Registrado validacionCorreo(String correoElectronico) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.loadUsuario_RegistradoByQuery("CorreoElectronico = '" + correoElectronico + "'", null);
@@ -43,9 +41,8 @@ public class BD_Usuario_Registrado {
 		}
 		return user;
 	}
-
 	public void cambiarContrasena(int id_usuario, String contrasena) throws PersistentException {
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Usuario_Registrado user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -55,12 +52,36 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 	}
 
 	public Usuario_Registrado registrar(String nickname, String descripcion, String imagenFondoURL, String fotoPerfilURL, String correoElectronico, String contrasena, Date fechaRegistro) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();		try {
+			user = Usuario_RegistradoDAO.createUsuario_Registrado();
+			user.setNickname(nickname);
+			user.setDescripcion(descripcion);
+			user.setImagenFondoURL(imagenFondoURL);
+			user.setFotoPerfilURL(fotoPerfilURL);
+			user.setCorreoElectronico(correoElectronico);
+			user.setContrasena(contrasena);
+			// Comentado porque el campo fechaDeRegistro no existe en la base de datos
+			// user.setFechaDeRegistro(fechaRegistro);
+			Usuario_RegistradoDAO.save(user);
+			t.commit();
+		} catch (Exception e) {
+			user = null;
+			t.rollback();
+		}
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+		return user;
+	}
+
+	// Sobrecarga del método registrar sin fecha de registro
+	public Usuario_Registrado registrar(String nickname, String descripcion, String imagenFondoURL, String fotoPerfilURL, String correoElectronico, String contrasena) throws PersistentException {
+		Usuario_Registrado user = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.createUsuario_Registrado();
@@ -70,20 +91,20 @@ public class BD_Usuario_Registrado {
 			user.setFotoPerfilURL(fotoPerfilURL);
 			user.setCorreoElectronico(correoElectronico);
 			user.setContrasena(contrasena);
-			user.setFechaDeRegistro(fechaRegistro);
+			// No se establece fecha de registro porque no existe en la base de datos
 			Usuario_RegistradoDAO.save(user);
 			t.commit();
 		} catch (Exception e) {
 			user = null;
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado modificarPerfilSimple(int id_usuario, String nickname, String descripcion, String imagenFondoURL, String fotoPerfilURL, String contrasena) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -98,13 +119,13 @@ public class BD_Usuario_Registrado {
 			user = null;
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado modificarPerfilCompleto(int id_usuario, String nickname, String descripcion, String imagenFondoURL, String fotoPerfilURL, String correoElectronico, String contrasena) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -119,13 +140,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado seguir(int id_usuario, int id_usuarioSeguido, Date fechaSeguimiento) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -139,13 +160,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public void eliminarUsuario(int id_usuario) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -230,12 +251,12 @@ public class BD_Usuario_Registrado {
 			t.rollback();
 			e.printStackTrace();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 	}
 
 	public Usuario_Registrado darMeGustaTweet(int id_usuario, int id_tweet) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -245,13 +266,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado bloquear(int id_usuario, int id_usuarioBloqueado) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -265,13 +286,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado darRetweet(int id_usuario, int id_tweet, Date fechaPublicacion) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -286,13 +307,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado[] cargarUsuarios() throws PersistentException {
 		Usuario_Registrado[] usuarios = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			usuarios = Usuario_RegistradoDAO.listUsuario_RegistradoByQuery(null, null);
@@ -305,7 +326,7 @@ public class BD_Usuario_Registrado {
 
 	public Usuario_Registrado obtenerUsuarioByID(int id_usuario) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -318,7 +339,7 @@ public class BD_Usuario_Registrado {
 
 	public Usuario_Registrado darMeGustaComentario(int id_usuario, int id_comentario) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -328,13 +349,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado eliminarMgTweet(int id_usuario, int id_tweet) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -344,13 +365,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 	
 	public Usuario_Registrado eliminarMgComentario(int id_usuario, int id_comentario) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -360,13 +381,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 	
 	public Usuario_Registrado desbloquear(int id_usuario, int id_usuario_desbloqueado) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -376,13 +397,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 	
 	public Usuario_Registrado quitarSeguimiento(int id_usuario, int id_usuario_quitadoSeguimiento) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -392,7 +413,7 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 	

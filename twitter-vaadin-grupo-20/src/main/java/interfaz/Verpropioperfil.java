@@ -11,6 +11,9 @@ public class Verpropioperfil extends Verperfil {
 	public Verpropioperfil(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado) {
 		super();
 		this._aCT02UsuarioRegistrado = _aCT02UsuarioRegistrado;
+		
+		// Rellenar datos del perfil con información del usuario actual
+		rellenarDatosPropiosPerfil();
 
 		this.getBanProfileButton().setVisible(false);
 		this.getDeleteProfileButton().setVisible(false);
@@ -63,5 +66,13 @@ public class Verpropioperfil extends Verperfil {
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verlistadeseguidosregistrado);
+	}
+	
+	private void rellenarDatosPropiosPerfil() {
+		// TODO: Rellenar datos del propio perfil accediendo a _aCT02UsuarioRegistrado.u
+		// if (_aCT02UsuarioRegistrado.u != null) {
+		//     // Rellenar nickname, bio, foto, etc. del usuario logueado
+		//     // this.getUsernameSpan().setText("@" + _aCT02UsuarioRegistrado.u.getNickname());
+		// }
 	}
 }

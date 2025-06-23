@@ -39,7 +39,7 @@ public class Verlistadeseguidosregistrado extends VistaVerlistadeseguidosregistr
 	public void Listadeusuarios() {
 		_listadeusuarios = new Listadeusuarios(this);
 		for (int i = 0; i < 5; i++) {
-			Listadeusuarios_item item = new Listadeusuarios_item(_listadeusuarios);
+			Listadeusuarios_item item = new Listadeusuarios_item(_listadeusuarios, null);
 
 			item.getMainContainer().addClickListener(event -> {
 				Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);

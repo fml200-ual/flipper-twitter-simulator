@@ -13,9 +13,13 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 	public Vernotificaciones _vernotificaciones;
 	public Listadetweetsyretweetsregistrado _listadetweetsyretweetsregistrado;
 	public basededatos.Usuario_Registrado _usuarioRegistrado;
+	
+	// Objeto ORMPersistable para el usuario registrado
+	public basededatos.Usuario_Registrado u;
 
-	public ACT02UsuarioRegistrado(MainView mainView) {
+	public ACT02UsuarioRegistrado(MainView mainView, basededatos.Usuario_Registrado u) {
 		super(mainView);
+		this.u = u;
 
 		this.getSpanListaTweetsRecientes().setVisible(false);
 
@@ -53,24 +57,42 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 		this.getVerticalLayoutListaHashtagsSesionIniciada().as(VerticalLayout.class)
 				.add(_listafijadehashtagsregistrado);
 	}
-
 	public void Verpropioperfil() {
 		_verpropioperfil = new Verpropioperfil(this);
-		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		
+		// Verificar que hay componentes antes de acceder
+		if (Pantalla.MainView.getComponentCount() > 0) {
+			Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		} else {
+			Pantalla.Anterior = this;
+		}
+		
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verpropioperfil);
 	}
-
 	public void Escribirtweet() {
 		_escribirtweet = new Escribirtweet(this);
-		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		
+		// Verificar que hay componentes antes de acceder
+		if (Pantalla.MainView.getComponentCount() > 0) {
+			Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		} else {
+			Pantalla.Anterior = this;
+		}
+		
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_escribirtweet);
 	}
-
 	public void Vernotificaciones() {
 		_vernotificaciones = new Vernotificaciones(this);
-		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		
+		// Verificar que hay componentes antes de acceder
+		if (Pantalla.MainView.getComponentCount() > 0) {
+			Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		} else {
+			Pantalla.Anterior = this;
+		}
+		
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_vernotificaciones);
 	}
@@ -85,5 +107,10 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 		}
 
 		this.getVerticalLayoutListaTweets().as(VerticalLayout.class).add(_listadetweetsyretweetsregistrado);
+	}
+	
+	// Constructor sin datos (para compatibilidad temporal)
+	public ACT02UsuarioRegistrado(MainView mainView) {
+		this(mainView, null);
 	}
 }

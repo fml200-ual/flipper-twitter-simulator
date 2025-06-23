@@ -25,7 +25,7 @@ public class Verlistaampliadadeusuariosregistrado extends Verlistaampliadadeusua
 		Listadeusuarios listaUsuarios = new Listadeusuarios(this);
 
 		for (int i = 0; i < 50; i++) {
-			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios);
+			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios, null);
 			// Agregar ClickListener personalizado para navegar a Verperfilnoregistrado
 			item.getMainContainer().addClickListener(event -> {
 				// Verperfilregistrado o Perspectivabloqueado

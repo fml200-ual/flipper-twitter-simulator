@@ -11,10 +11,20 @@ public class Verperfilregistrado extends Verperfil {
 	public Verlistaampliadadeusuariosregistrado _verlistaampliadadeusuariosregistrado;
 	public Verlistadeseguidosregistrado _verlistadeseguidosregistrado;
 	public Verlistadeseguidoresregistrado _verlistadeseguidoresregistrado;
+	
+	// Objeto ORMPersistable para el usuario cuyo perfil se muestra
+	public basededatos.Usuario_Registrado u;
 
-	public Verperfilregistrado(Listafijadeusuariosregistrado _listafijadeusuariosregistrado) {
+	public Verperfilregistrado(Listafijadeusuariosregistrado _listafijadeusuariosregistrado, basededatos.Usuario_Registrado u) {
 		super();
 		this._listafijadeusuariosregistrado = _listafijadeusuariosregistrado;
+		this.u = u;
+		
+		// Rellenar datos del perfil con información del usuario
+		if (u != null) {
+			rellenarDatosPerfil();
+		}
+		
 		this.getDeleteProfileButton().setVisible(false);
 
 		this.getBanProfileButton().setText("Bloquear");
@@ -86,6 +96,16 @@ public class Verperfilregistrado extends Verperfil {
 					.add(_verlistaampliadadeusuariosregistrado);
 		});
 
+	}
+	
+	// Constructor de compatibilidad temporal
+	public Verperfilregistrado(Listafijadeusuariosregistrado _listafijadeusuariosregistrado) {
+		this(_listafijadeusuariosregistrado, null);
+	}
+	
+	private void rellenarDatosPerfil() {
+		// TODO: Rellenar datos del usuario en la vista de perfil cuando los getters estén disponibles
+		// Similar a Verperfilnoregistrado pero para usuario registrado
 	}
 
 	public void Verlistadeseguidosregistrado() {

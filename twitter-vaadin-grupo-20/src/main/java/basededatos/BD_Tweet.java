@@ -13,7 +13,7 @@ public class BD_Tweet {
 
 	public int nuevoTweet(int id_usuario, String contenidoTweet, Date fechaPublicacion, String[] menciones) throws PersistentException {
 		int id_tweet = -1;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Usuario_Registrado user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -39,13 +39,13 @@ public class BD_Tweet {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return id_tweet;
 	}
 
 	public int nuevoRetweet(int id_usuario, int id_tweetRetweeteado, String contenidoRetweet, Date fechaPublicacion, String[] menciones) throws PersistentException {
 		int id_tweet = -1;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		boolean committed = false;
 		try {
@@ -70,13 +70,13 @@ public class BD_Tweet {
 			}
 			e.printStackTrace();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return id_tweet;
 	}
 
 	public Tweet[] cargarTweets() throws PersistentException {
 		Tweet[] tweets = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			tweets = TweetDAO.listTweetByQuery(null, null);
@@ -88,7 +88,7 @@ public class BD_Tweet {
 	}
 	
 	public void eliminarTweet(int id_tweet) throws PersistentException {
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Tweet tweet = TweetDAO.getTweetByORMID(id_tweet);
@@ -126,12 +126,12 @@ public class BD_Tweet {
 			e.printStackTrace();
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 	}
 	
 	public Usuario_Registrado eliminarRetweet(int id_usuario, int id_tweet) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -181,13 +181,13 @@ public class BD_Tweet {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 	
 	public Tweet obtenerTweetByID(int id_tweet) throws PersistentException {
 		Tweet tweet = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			tweet = TweetDAO.getTweetByORMID(id_tweet);

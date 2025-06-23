@@ -21,7 +21,7 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 		Listadeusuarios listaUsuarios = new Listadeusuarios(_verlistaampliadadeusuariosregistrado);
 
 		for (int i = 0; i < 5; i++) {
-			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios);
+			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios, null);
 			// Agregar ClickListener personalizado para navegar a Verperfilnoregistrado
 			item.getMainContainer().addClickListener(event -> {
 				Verperfilregistrado();

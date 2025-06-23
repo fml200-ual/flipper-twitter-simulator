@@ -28,7 +28,7 @@ public class Verlistaseguidoresnoregistrado extends VistaVerlistaseguidoresnoreg
 		_listadeusuarios = new Listadeusuarios(this);
 
 		for (int i = 0; i < 5; i++) {
-			Listadeusuarios_item item = new Listadeusuarios_item(_listadeusuarios);
+			Listadeusuarios_item item = new Listadeusuarios_item(_listadeusuarios, null);
 			// Agregar ClickListener personalizado para navegar a Verperfilnoregistrado
 			item.getMainContainer().addClickListener(event -> {
 				Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
