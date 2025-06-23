@@ -43,8 +43,38 @@ public class Listadetweetsyretweetsnoregistrado extends Listadetweetsyretweets {
 				Listadetweetsyretweetsnoregistrado_item item = 
 					new Listadetweetsyretweetsnoregistrado_item(this, null);
 				this.getMainContainer().as(VerticalLayout.class).add(item);
-				_item.add(item);
+				_item.add(item);			}
+		}
+	}
+	
+	// Método para cargar tweets de un hashtag específico
+	public void cargarTweetsDeHashtag(basededatos.Hashtag hashtag) {
+		if (hashtag == null) return;
+		
+		try {
+			// Limpiar la lista actual
+			this.getMainContainer().as(VerticalLayout.class).removeAll();
+			this._item.clear();
+			
+			// Cargar tweets que contienen este hashtag
+			// Los tweets están relacionados con el hashtag a través de la relación "pertenece"
+			if (hashtag.pertenece != null && hashtag.pertenece.size() > 0) {
+				Tweet[] tweets = hashtag.pertenece.toArray();
+				for (Tweet tweet : tweets) {
+					if (tweet != null) {
+						Listadetweetsyretweetsnoregistrado_item item = 
+							new Listadetweetsyretweetsnoregistrado_item(this, tweet);
+						this.getMainContainer().as(VerticalLayout.class).add(item);
+						this._item.add(item);
+					}
+				}
+			} else {
+				// Si no hay tweets con este hashtag, mostrar mensaje
+				System.out.println("No hay tweets para el hashtag: " + hashtag.getHashtag());
 			}
+		} catch (Exception e) {
+			System.err.println("Error cargando tweets del hashtag: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 }

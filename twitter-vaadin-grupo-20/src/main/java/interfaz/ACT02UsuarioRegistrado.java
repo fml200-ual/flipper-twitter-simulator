@@ -96,15 +96,12 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_vernotificaciones);
 	}
-
 	public void Listadetweetsyretweetsregistrado() {
+		// Crear la lista - la inicialización automática carga los tweets de la BD
 		_listadetweetsyretweetsregistrado = new Listadetweetsyretweetsregistrado(this);
 
-		for (int i = 0; i < 5; i++) {
-			Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
-					_listadetweetsyretweetsregistrado);
-			_listadetweetsyretweetsregistrado.getMainContainer().as(VerticalLayout.class).add(item);
-		}
+		// Los tweets ya están cargados automáticamente en la lista
+		// No necesitamos crear items manualmente
 
 		this.getVerticalLayoutListaTweets().as(VerticalLayout.class).add(_listadetweetsyretweetsregistrado);
 	}

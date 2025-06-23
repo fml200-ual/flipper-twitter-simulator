@@ -70,15 +70,19 @@ public class Listafijadeusuariosnoregistrado extends Listafijadeusuarios {
 			this.getMainContainer().as(VerticalLayout.class).add(listaUsuarios);
 		}
 	}
-	
-	private void VerperfilnoregistradoConUsuario(Usuario_Registrado usuario) {
+		private void VerperfilnoregistradoConUsuario(Usuario_Registrado usuario) {
 		// Método mejorado que puede recibir el usuario específico
 		if (usuario != null) {
 			System.out.println("Navegando al perfil de: " + usuario.getNickname());
+			_verperfilnoregistrado = new Verperfilnoregistrado(this, usuario);
+		} else {
+			System.out.println("Navegando al perfil sin usuario específico");
+			_verperfilnoregistrado = new Verperfilnoregistrado(this);
 		}
 		
-		// Navegar a la vista de perfil (por ahora mantener la funcionalidad original)
-		Verperfilnoregistrado();
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_verperfilnoregistrado);
 	}
 
 	public void Verperfilnoregistrado() {

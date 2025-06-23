@@ -26,27 +26,44 @@ public class Listadehashtags_item extends VistaListadehashtags_item {
 			rellenarDatosHashtag();
 		}
 	}
-	
 	private void rellenarDatosHashtag() {
 		// Rellenar datos del hashtag en los componentes gráficos
 		if (h.getHashtag() != null) {
-			this.getHashtagText().setText("#" + h.getHashtag());
+			String hashtag = h.getHashtag();
+			// El hashtag en la base de datos ya incluye el #, solo mostrarlo una vez
+			if (hashtag.startsWith("#")) {
+				this.getHashtagText().setText(hashtag);
+			} else {
+				this.getHashtagText().setText("#" + hashtag);
+			}
 		}
 		
 		// Número de tweets que usan este hashtag
-		this.getPostCount().setText("" + h.pertenece.size() + " posts");
+		try {
+			int numTweets = h.pertenece != null ? h.pertenece.size() : 0;
+			this.getPostCount().setText(numTweets + " posts");
+		} catch (Exception e) {
+			this.getPostCount().setText("0 posts");
+		}
 		
 		// Configurar click listener en el contenedor
 		this.getHashtagContainer().addClickListener(event -> Mostrarmshashtags());
 	}
-
 	private void mostrarHashtag() {
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		if (Pantalla.usuario == 2) {
-			Pantalla.MainView.add(new Verhashtagregistrado((Listafijadehashtagsregistrado) null));
+			// Pasar el hashtag seleccionado a la vista
+			Listafijadehashtagsregistrado lista = new Listafijadehashtagsregistrado(null);
+			Verhashtagregistrado vista = new Verhashtagregistrado(lista);
+			vista.cargarTweetsDeHashtag(h);
+			Pantalla.MainView.add(vista);
 		} else {
-			Pantalla.MainView.add(new Verhashtagnoregistrado((Listafijadehashtagsnoregistrado) null));
+			// Para usuario no registrado
+			Listafijadehashtagsnoregistrado lista = new Listafijadehashtagsnoregistrado(null);
+			Verhashtagnoregistrado vista = new Verhashtagnoregistrado(lista);
+			vista.cargarTweetsDeHashtag(h);
+			Pantalla.MainView.add(vista);
 		}
 	}
 

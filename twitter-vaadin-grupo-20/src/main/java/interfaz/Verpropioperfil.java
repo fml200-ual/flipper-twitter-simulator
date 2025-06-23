@@ -46,9 +46,10 @@ public class Verpropioperfil extends Verperfil {
 			Pantalla.MainView.add(_aCT02UsuarioRegistrado);
 		});
 	}
-
 	public void Editarcuenta() {
-		_editarcuenta = new Editarcuenta(this);
+		// Pasar el usuario actual al formulario de edición
+		basededatos.Usuario_Registrado usuarioActual = (_aCT02UsuarioRegistrado != null) ? _aCT02UsuarioRegistrado.u : null;
+		_editarcuenta = new Editarcuenta(this, usuarioActual);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_editarcuenta);
@@ -68,11 +69,65 @@ public class Verpropioperfil extends Verperfil {
 		Pantalla.MainView.add(_verlistadeseguidosregistrado);
 	}
 	
+	@Override
+	public basededatos.Usuario_Registrado getUsuarioPerfil() {
+		return (_aCT02UsuarioRegistrado != null) ? _aCT02UsuarioRegistrado.u : null;
+	}
+	
 	private void rellenarDatosPropiosPerfil() {
-		// TODO: Rellenar datos del propio perfil accediendo a _aCT02UsuarioRegistrado.u
-		// if (_aCT02UsuarioRegistrado.u != null) {
-		//     // Rellenar nickname, bio, foto, etc. del usuario logueado
-		//     // this.getUsernameSpan().setText("@" + _aCT02UsuarioRegistrado.u.getNickname());
-		// }
+		try {
+			if (_aCT02UsuarioRegistrado != null && _aCT02UsuarioRegistrado.u != null) {
+				basededatos.Usuario_Registrado usuario = _aCT02UsuarioRegistrado.u;
+				
+				// Rellenar nombre y nickname (directamente desde Usuario_Registrado que hereda de Usuario_Autentificado)
+				if (usuario.getNickname() != null) {
+					this.getProfileName().setText(usuario.getNickname());
+					this.getProfileUsername().setText("@" + usuario.getNickname());
+				}
+				
+				// Rellenar descripción
+				if (usuario.getDescripcion() != null && !usuario.getDescripcion().trim().isEmpty()) {
+					this.getDescription().setText(usuario.getDescripcion());
+				} else {
+					this.getDescription().setText("Nuevo usuario de Twitter");
+				}
+				
+				// Rellenar fecha de registro
+				if (usuario.getFechaDeRegistro() != null) {
+					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMMM yyyy");
+					this.getJoinDate().setText("Se unió en " + sdf.format(usuario.getFechaDeRegistro()));
+				}
+						// Calcular y mostrar contadores reales de seguidores y seguidos desde la base de datos
+				try {
+					// Número de usuarios que sigue este usuario
+					int siguiendo = usuario.seguidosPropiedadesseguidoss.size();
+					this.getFollowingCount().setText(siguiendo + " siguiendo");
+					
+					// Número de usuarios que siguen a este usuario
+					int seguidores = usuario.seguidoresPropiedadesseguidoss.size();
+					String seguidoresTexto;
+					if (seguidores >= 1000) {
+						double seguidoresK = seguidores / 1000.0;
+						seguidoresTexto = String.format("%.1fK seguidores", seguidoresK);
+					} else {
+						seguidoresTexto = seguidores + " seguidores";
+					}
+					this.getFollowersCount().setText(seguidoresTexto);
+					
+				} catch (Exception e) {
+					// En caso de error, mostrar valores por defecto
+					this.getFollowingCount().setText("0 siguiendo");
+					this.getFollowersCount().setText("0 seguidores");
+					System.err.println("Error calculando seguidores/siguiendo: " + e.getMessage());
+				}
+				
+				System.out.println("Datos del propio perfil cargados para usuario: " + usuario.getNickname());
+			} else {
+				System.err.println("Error: No se pudo acceder a los datos del usuario registrado");
+			}
+		} catch (Exception e) {
+			System.err.println("Error al cargar datos del propio perfil: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 }

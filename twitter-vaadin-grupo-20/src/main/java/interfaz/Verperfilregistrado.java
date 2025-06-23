@@ -104,9 +104,64 @@ public class Verperfilregistrado extends Verperfil {
 		this(_listafijadeusuariosregistrado, null);
 	}
 	
+	@Override
+	public basededatos.Usuario_Registrado getUsuarioPerfil() {
+		return u;
+	}
+	
 	private void rellenarDatosPerfil() {
-		// TODO: Rellenar datos del usuario en la vista de perfil cuando los getters estén disponibles
-		// Similar a Verperfilnoregistrado pero para usuario registrado
+		try {
+			if (u != null) {
+				// Rellenar nombre y nickname
+				if (u.getNickname() != null) {
+					this.getProfileName().setText(u.getNickname());
+					this.getProfileUsername().setText("@" + u.getNickname());
+				}
+				
+				// Rellenar descripción
+				if (u.getDescripcion() != null && !u.getDescripcion().trim().isEmpty()) {
+					this.getDescription().setText(u.getDescripcion());
+				} else {
+					this.getDescription().setText("Usuario de Twitter");
+				}
+				
+				// Rellenar fecha de registro
+				if (u.getFechaDeRegistro() != null) {
+					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMMM yyyy");
+					this.getJoinDate().setText("Se unió en " + sdf.format(u.getFechaDeRegistro()));
+				}
+						// Calcular y mostrar contadores reales de seguidores y seguidos desde la base de datos
+				try {
+					// Número de usuarios que sigue este usuario
+					int siguiendo = u.seguidosPropiedadesseguidoss.size();
+					this.getFollowingCount().setText(siguiendo + " siguiendo");
+					
+					// Número de usuarios que siguen a este usuario
+					int seguidores = u.seguidoresPropiedadesseguidoss.size();
+					String seguidoresTexto;
+					if (seguidores >= 1000) {
+						double seguidoresK = seguidores / 1000.0;
+						seguidoresTexto = String.format("%.1fK seguidores", seguidoresK);
+					} else {
+						seguidoresTexto = seguidores + " seguidores";
+					}
+					this.getFollowersCount().setText(seguidoresTexto);
+					
+				} catch (Exception e) {
+					// En caso de error, mostrar valores por defecto
+					this.getFollowingCount().setText("0 siguiendo");
+					this.getFollowersCount().setText("0 seguidores");
+					System.err.println("Error calculando seguidores/siguiendo: " + e.getMessage());
+				}
+				
+				System.out.println("Datos de perfil ajeno cargados para usuario: " + u.getNickname());
+			} else {
+				System.err.println("Error: No se pudo acceder a los datos del usuario");
+			}
+		} catch (Exception e) {
+			System.err.println("Error al cargar datos del perfil: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	public void Verlistadeseguidosregistrado() {

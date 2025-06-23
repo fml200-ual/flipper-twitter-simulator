@@ -19,20 +19,42 @@ public class Listafijadetweetsadministrador extends VistaListafijadetweetsadmini
 		// Inicializar la lista de tweets
 		cargarTweetsAdministrador();
 	}
-
 	public void cargarTweetsAdministrador() {
-		// Crear una lista simulada de tweets para el administrador
+		// Cargar tweets reales de la base de datos
 		VerticalLayout container = this.getTweetsListContainer().as(VerticalLayout.class);
 
 		// Limpiar contenedor por si acaso
 		container.removeAll();
+		_tweets.clear();
 
-		// Añadir tweets y retweets de ejemplo alternando tipos
-		for (int i = 0; i < 5; i++) {
-			// Alternar entre tweets (false) y retweets (true)
-			Listadetweetsyretweetsadministrador_item tweetItem = new Listadetweetsyretweetsadministrador_item(null);
-			_tweets.add(tweetItem);
-			container.add(tweetItem);
+		try {
+			// Cargar tweets reales de la base de datos
+			basededatos.Tweet[] tweets = ((basededatos.BDPrincipal) mds2.MainView.Usuario.administradorInterfaz).cargarTweets();
+					if (tweets != null && tweets.length > 0) {
+				// Crear items con datos reales (máximo 10 tweets para la lista fija)
+				for (int i = 0; i < Math.min(tweets.length, 10); i++) {
+					Listadetweetsyretweetsadministrador_item tweetItem = 
+						new Listadetweetsyretweetsadministrador_item((Listadetweetsyretweets)null, tweets[i]);
+					_tweets.add(tweetItem);
+					container.add(tweetItem);
+				}
+			} else {				// Fallback: crear algunos items vacíos si no hay datos
+				for (int i = 0; i < 5; i++) {
+					Listadetweetsyretweetsadministrador_item tweetItem = 
+						new Listadetweetsyretweetsadministrador_item((Listadetweetsyretweets)null, null);
+					_tweets.add(tweetItem);
+					container.add(tweetItem);
+				}
+			}
+		} catch (Exception e) {
+			// En caso de error, crear items vacíos
+			System.err.println("Error cargando tweets para administrador: " + e.getMessage());
+			for (int i = 0; i < 5; i++) {
+				Listadetweetsyretweetsadministrador_item tweetItem = 
+					new Listadetweetsyretweetsadministrador_item((Listadetweetsyretweets)null, null);
+				_tweets.add(tweetItem);
+				container.add(tweetItem);
+			}
 		}
 	}
 
@@ -47,13 +69,12 @@ public class Listafijadetweetsadministrador extends VistaListafijadetweetsadmini
 	public Vector<Listadetweetsyretweetsadministrador_item> getTweets() {
 		return _tweets;
 	}
-
 	/**
 	 * Añade un nuevo tweet a la lista
 	 */
 	public void añadirTweet() {
 		// Por defecto añadir como tweet (no retweet)
-		Listadetweetsyretweetsadministrador_item nuevoTweet = new Listadetweetsyretweetsadministrador_item(null);
+		Listadetweetsyretweetsadministrador_item nuevoTweet = new Listadetweetsyretweetsadministrador_item((Listadetweetsyretweets)null, null);
 		_tweets.add(nuevoTweet);
 		VerticalLayout container = this.getTweetsListContainer().as(VerticalLayout.class);
 		container.add(nuevoTweet);
@@ -63,7 +84,7 @@ public class Listafijadetweetsadministrador extends VistaListafijadetweetsadmini
 	 * Añade un nuevo retweet a la lista
 	 */
 	public void añadirRetweet() {
-		Listadetweetsyretweetsadministrador_item nuevoRetweet = new Listadetweetsyretweetsadministrador_item(null);
+		Listadetweetsyretweetsadministrador_item nuevoRetweet = new Listadetweetsyretweetsadministrador_item((Listadetweetsyretweets)null, null);
 		_tweets.add(nuevoRetweet);
 		VerticalLayout container = this.getTweetsListContainer().as(VerticalLayout.class);
 		container.add(nuevoRetweet);

@@ -6,6 +6,12 @@ public class Verperfil extends VistaVerperfil {
 	public Agrupartweets _agrupartweets;
 	public Agrupartweetsgustados _agrupartweetsgustados;
 	public Agruparretweets _agruparretweets;
+	
+	// Método para obtener el usuario del perfil desde las clases derivadas
+	public basededatos.Usuario_Registrado getUsuarioPerfil() {
+		// Este método será sobrescrito en las clases derivadas
+		return null;
+	}
 
 	public void Agrupartweets() {
 		_agrupartweets = new Agrupartweets(this);

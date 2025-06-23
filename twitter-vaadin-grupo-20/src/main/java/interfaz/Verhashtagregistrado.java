@@ -31,6 +31,15 @@ public class Verhashtagregistrado extends Verhashtag {
 			Pantalla.MainView.add(_listafijadehashtagsregistrado._aCT02UsuarioRegistrado);
 		});
 	}
+	
+	// Método para cargar tweets del hashtag específico
+	public void cargarTweetsDeHashtag(basededatos.Hashtag hashtag) {
+		this.h = hashtag;
+		// Recargar la lista de tweets con los del hashtag específico
+		if (_listadetweetsyretweetsregistrado != null) {
+			_listadetweetsyretweetsregistrado.cargarTweetsDeHashtag(hashtag);
+		}
+	}
 
 	public void Listadetweetsyretweetsregistrado() {
 		_listadetweetsyretweetsregistrado = new Listadetweetsyretweetsregistrado(this);

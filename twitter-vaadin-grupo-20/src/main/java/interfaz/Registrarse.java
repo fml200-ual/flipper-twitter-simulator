@@ -240,11 +240,12 @@ public class Registrarse extends VistaRegistrarse {
 				password, 
 				new Date()
 			);
-			
-			if (nuevoUsuario != null) {
+					if (nuevoUsuario != null) {
 				System.out.println("Registro exitoso para usuario: " + nick);
+				System.out.println("Llamando a Introducircdigodeverificacin()...");
 				// El registro fue exitoso, navegar a la vista de código de verificación
 				Introducircdigodeverificacin();
+				System.out.println("Llamada a Introducircdigodeverificacin() completada");
 			} else {
 				System.err.println("Error durante el registro - posiblemente el usuario ya existe");
 				// Mostrar mensaje de error apropiado
@@ -269,10 +270,11 @@ public class Registrarse extends VistaRegistrarse {
 		// También se podría mostrar una notificación general
 		System.out.println("Error: Datos duplicados encontrados");
 	}
-
 	public void Introducircdigodeverificacin() {
 		// Navegar directamente a la vista de código de verificación
 		System.out.println("Navegando a introducir código de verificación...");
+		System.out.println("_aCT01UsuarioNoRegistrado es null: " + (_aCT01UsuarioNoRegistrado == null));
+		System.out.println("_iniciarsesin es null: " + (_iniciarsesin == null));
 
 		_introducircdigodeverificacin = new Introducircdigodeverificacin(this);
 

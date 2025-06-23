@@ -239,9 +239,36 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new Tweet[0];
 	}
-
+	
+	public Tweet[] cargarTweetsPorUsuario(int id_usuario) {
+		try {
+			return this.bd_tweet.cargarTweetsPorUsuario(id_usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Tweet[0];
+	}
+	
+	public Tweet[] cargarTweetsQueGustan(int id_usuario) {
+		try {
+			return this.bd_tweet.cargarTweetsQueGustan(id_usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Tweet[0];
+	}
+	
+	public Tweet[] cargarRetweets(int id_usuario) {
+		try {
+			return this.bd_tweet.cargarRetweets(id_usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Tweet[0];
+	}
+	
 	public void eliminarTweet(int id_tweet) {
 		try {
 			this.bd_tweet.eliminarTweet(id_tweet);

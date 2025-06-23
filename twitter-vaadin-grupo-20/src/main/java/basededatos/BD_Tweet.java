@@ -87,6 +87,60 @@ public class BD_Tweet {
 		return tweets;
 	}
 	
+	public Tweet[] cargarTweetsPorUsuario(int id_usuario) throws PersistentException {
+		Tweet[] tweets = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario = " + id_usuario;
+			tweets = TweetDAO.listTweetByQuery(query, "FechaPublicacion DESC");
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+		}
+		return tweets;
+	}
+		public Tweet[] cargarTweetsQueGustan(int id_usuario) throws PersistentException {
+		Tweet[] tweets = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Buscar tweets que le gustan al usuario a través de la relación Me_Gusta_Tweet
+			Usuario_Registrado usuario = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
+			if (usuario != null) {
+				tweets = usuario.me_gusta_tweets.toArray("FechaPublicacion", false);
+			}
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+		}
+		return tweets != null ? tweets : new Tweet[0];
+	}
+	
+	public Tweet[] cargarRetweets(int id_usuario) throws PersistentException {
+		Tweet[] tweets = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Buscar retweets del usuario a través de la relación Retweet
+			Usuario_Registrado usuario = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
+			if (usuario != null) {
+				Retweet[] retweets = usuario.retweets.toArray("FechaPublicacion", false);
+				java.util.List<Tweet> tweetsList = new java.util.ArrayList<>();
+				for (Retweet retweet : retweets) {
+					if (retweet.getTweet() != null) {
+						tweetsList.add(retweet.getTweet());
+					}
+				}
+				tweets = tweetsList.toArray(new Tweet[tweetsList.size()]);
+			}
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+		}
+		return tweets != null ? tweets : new Tweet[0];
+	}
+	
 	public void eliminarTweet(int id_tweet) throws PersistentException {
 		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
@@ -198,4 +252,91 @@ public class BD_Tweet {
 		return tweet;
 	} 
 	
+	public boolean darMeGustaTweet(int id_usuario, int id_tweet) throws PersistentException {
+		boolean exito = false;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			Usuario_Registrado usuario = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
+			Tweet tweet = TweetDAO.getTweetByORMID(id_tweet);
+			
+			if (usuario != null && tweet != null) {
+				// Verificar si ya le ha dado me gusta
+				if (!usuario.me_gusta_tweets.contains(tweet)) {
+					// Agregar el tweet a la lista de me gusta del usuario
+					usuario.me_gusta_tweets.add(tweet);
+					Usuario_RegistradoDAO.save(usuario);
+					exito = true;
+				}
+			}
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			e.printStackTrace();
+		}
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+		return exito;
+	}
+	
+	public boolean quitarMeGustaTweet(int id_usuario, int id_tweet) throws PersistentException {
+		boolean exito = false;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			Usuario_Registrado usuario = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
+			Tweet tweet = TweetDAO.getTweetByORMID(id_tweet);
+			
+			if (usuario != null && tweet != null) {
+				// Remover el tweet de la lista de me gusta del usuario
+				if (usuario.me_gusta_tweets.contains(tweet)) {
+					usuario.me_gusta_tweets.remove(tweet);
+					Usuario_RegistradoDAO.save(usuario);
+					exito = true;
+				}
+			}
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			e.printStackTrace();
+		}
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+		return exito;
+	}
+	
+	public boolean verificarMeGustaTweet(int id_usuario, int id_tweet) throws PersistentException {
+		boolean leGusta = false;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			Usuario_Registrado usuario = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
+			Tweet tweet = TweetDAO.getTweetByORMID(id_tweet);
+			
+			if (usuario != null && tweet != null) {
+				leGusta = usuario.me_gusta_tweets.contains(tweet);
+			}
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			e.printStackTrace();
+		}
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+		return leGusta;
+	}
+		public int contarMeGustaTweet(int id_tweet) throws PersistentException {
+		int contador = 0;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			Tweet tweet = TweetDAO.getTweetByORMID(id_tweet);
+			if (tweet != null) {
+				contador = tweet.recibe_me_gusta.size();
+			}
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			e.printStackTrace();
+		}
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+		return contador;
+	}
 }

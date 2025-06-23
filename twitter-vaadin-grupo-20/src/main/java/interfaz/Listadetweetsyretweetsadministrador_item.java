@@ -38,6 +38,11 @@ public class Listadetweetsyretweetsadministrador_item extends Listadetweetsyretw
 		});
 	}
 	
+	// Constructor que solo acepta Tweet (para llamadas desde listas fijas)
+	public Listadetweetsyretweetsadministrador_item(basededatos.Tweet t) {
+		this(null, t);
+	}
+	
 	private void rellenarDatosTweet() {
 		if (t != null) {
 			// Rellenar contenido del tweet
