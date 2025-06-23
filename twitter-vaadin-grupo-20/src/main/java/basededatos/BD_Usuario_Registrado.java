@@ -142,23 +142,63 @@ public class BD_Usuario_Registrado {
 		}
 		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
-	}
-
-	public Usuario_Registrado seguir(int id_usuario, int id_usuarioSeguido, Date fechaSeguimiento) throws PersistentException {
+	}	public Usuario_Registrado seguir(int id_usuario, int id_usuarioSeguido, Date fechaSeguimiento) throws PersistentException {
 		Usuario_Registrado user = null;
 		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
-			Usuario_Registrado usuario_seguido = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuarioSeguido);
-			PropiedadesSeguidos cp = PropiedadesSeguidosDAO.createPropiedadesSeguidos();
-			cp.setSeguidoresUsuario_registrado(user);
-			cp.setSeguidosUsuario_registrado(usuario_seguido);
-			cp.setFecha(fechaSeguimiento);
-			PropiedadesSeguidosDAO.save(cp);
+			Usuario_Registrado usuario_seguido = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuarioSeguido);			if (user != null && usuario_seguido != null && id_usuario != id_usuarioSeguido) {
+				// Verificar si ya existe una relación de seguimiento
+				// Simplificar la consulta usando un método alternativo
+				try {
+					// Buscar si ya existe la relación directamente
+					boolean yaExiste = false;
+					PropiedadesSeguidos[] todasLasRelaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(null, null);
+					
+					if (todasLasRelaciones != null) {
+						for (PropiedadesSeguidos relacion : todasLasRelaciones) {
+							if (relacion.getSeguidoresUsuario_registrado() != null && 
+								relacion.getSeguidosUsuario_registrado() != null &&
+								relacion.getSeguidoresUsuario_registrado().getId_usuario() == id_usuario &&
+								relacion.getSeguidosUsuario_registrado().getId_usuario() == id_usuarioSeguido) {
+								yaExiste = true;
+								break;
+							}
+						}
+					}
+					
+					if (!yaExiste) {
+						// No existe la relación, crearla
+						PropiedadesSeguidos cp = PropiedadesSeguidosDAO.createPropiedadesSeguidos();
+						// El usuario que sigue (user) es el seguidor
+						cp.setSeguidoresUsuario_registrado(user);
+						// El usuario que es seguido (usuario_seguido) es el seguido
+						cp.setSeguidosUsuario_registrado(usuario_seguido);
+						cp.setFecha(fechaSeguimiento);
+						PropiedadesSeguidosDAO.save(cp);
+						System.out.println("Relación de seguimiento creada exitosamente");
+					} else {
+						System.out.println("La relación de seguimiento ya existe");
+					}
+				} catch (Exception e) {
+					System.err.println("Error al verificar relación existente: " + e.getMessage());
+					// Si falla la verificación, intentar crear la relación directamente
+					PropiedadesSeguidos cp = PropiedadesSeguidosDAO.createPropiedadesSeguidos();
+					cp.setSeguidoresUsuario_registrado(user);
+					cp.setSeguidosUsuario_registrado(usuario_seguido);
+					cp.setFecha(fechaSeguimiento);
+					PropiedadesSeguidosDAO.save(cp);
+					System.out.println("Relación de seguimiento creada (sin verificación previa)");
+				}
+			} else {
+				System.out.println("Error: usuarios no válidos o intentando seguirse a sí mismo");
+			}
 			t.commit();
 		} catch (Exception e) {
 			t.rollback();
+			e.printStackTrace();
+			System.out.println("Error en seguir: " + e.getMessage());
 		}
 		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;

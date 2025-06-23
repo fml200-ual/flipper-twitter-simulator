@@ -16,22 +16,24 @@ public class Agrupartweets extends VistaAgrupartweets {
 		this.getMoreTweetsButtonContainer().setVisible(false);
 
 		Listadetweetsyretweets();
-	}
-	public void Listadetweetsyretweets() {
+	}	public void Listadetweetsyretweets() {
 		try {
 			// Obtener el usuario del perfil
 			basededatos.Usuario_Registrado usuario = _verperfil.getUsuarioPerfil();
+			System.out.println("Usuario obtenido del perfil: " + (usuario != null ? usuario.getNickname() : "null"));
+			
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 			basededatos.Tweet[] tweets;
 			
 			if (usuario != null) {
 				// Cargar tweets específicos del usuario
 				tweets = bd.cargarTweetsPorUsuario(usuario.getId_usuario());
-				System.out.println("Cargando " + tweets.length + " tweets del usuario: " + usuario.getNickname());
+				System.out.println("Cargando " + (tweets != null ? tweets.length : 0) + " tweets del usuario: " + usuario.getNickname());
 			} else {
 				// Fallback: cargar todos los tweets
 				tweets = bd.cargarTweets();
-				System.out.println("Cargando todos los tweets (usuario no especificado)");
+				System.out.println("Cargando tweets desde la base de datos...");
+				System.out.println("Cargados " + (tweets != null ? tweets.length : 0) + " tweets desde la BD");
 			}
 			
 			// Crear la lista según el tipo de usuario
@@ -45,16 +47,24 @@ public class Agrupartweets extends VistaAgrupartweets {
 								_listadetweetsyretweets, tweets[i]);
 						_listadetweetsyretweets.getMainContainer().as(VerticalLayout.class).add(item);
 					}
-					break;
-				case 2:
-					_listadetweetsyretweets = new Listadetweetsyretweetsregistrado((ACT02UsuarioRegistrado) null);
-					// Agregar tweets reales hasta un máximo de 10
-					int maxTweets2 = Math.min(10, tweets.length);
-					for (int i = 0; i < maxTweets2; i++) {
-						Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
-								_listadetweetsyretweets, tweets[i]);
-						_listadetweetsyretweets.getMainContainer().as(VerticalLayout.class).add(item);
+					break;				case 2:
+					// Para usuarios registrados, intentar obtener la referencia del ACT02UsuarioRegistrado
+					ACT02UsuarioRegistrado actorRegistrado = null;
+					if (_verperfil instanceof Verpropioperfil) {
+						actorRegistrado = ((Verpropioperfil) _verperfil)._aCT02UsuarioRegistrado;
 					}
+					
+					// IMPORTANTE: Usar el constructor específico para tweets del usuario
+					if (usuario != null) {
+						System.out.println("Usando constructor específico para tweets del usuario: " + usuario.getNickname());
+						_listadetweetsyretweets = new Listadetweetsyretweetsregistrado(actorRegistrado, usuario);
+					} else {
+						System.out.println("Usuario null, usando constructor genérico");
+						_listadetweetsyretweets = new Listadetweetsyretweetsregistrado(actorRegistrado);
+					}
+					
+					// NO agregamos tweets manualmente aquí porque el constructor ya los carga
+					System.out.println("Lista de tweets creada para usuario registrado");
 					break;
 				case 3:
 					_listadetweetsyretweets = new Listadetweetsyretweetsadministrador(null);

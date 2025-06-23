@@ -5,46 +5,25 @@ import basededatos.Tweet;
 
 public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 	public ACT02UsuarioRegistrado _aCT02UsuarioRegistrado;
-	public Verhashtagregistrado _verhashtagregistrado;
-	public Listadetweetsyretweetsregistrado(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado) {
-		super(); // Llama al constructor padre que carga automáticamente los tweets
+	public Verhashtagregistrado _verhashtagregistrado;	public Listadetweetsyretweetsregistrado(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado) {
+		super(); // Constructor base sin inicialización
 		this._aCT02UsuarioRegistrado = _aCT02UsuarioRegistrado;
-		// Reemplazar items genéricos con items específicos para usuarios registrados
-		reemplazarConItemsRegistrados();
+		// Inicializar manualmente para usuarios registrados
+		inicializarTweetsRegistrado();
 	}
-
+	
+	// Constructor específico para cargar tweets de un usuario específico (Mis tweets)
+	public Listadetweetsyretweetsregistrado(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado, basededatos.Usuario_Registrado usuario) {
+		super(); // Constructor base sin inicialización
+		this._aCT02UsuarioRegistrado = _aCT02UsuarioRegistrado;
+		// NO llamar a inicializarTweetsRegistrado(), usar método específico
+		cargarTweetsDeUsuario(usuario);
+	}
+	
 	public Listadetweetsyretweetsregistrado(Verhashtagregistrado verhashtagregistrado) {
 		super();
 		this._verhashtagregistrado = verhashtagregistrado;
-		// No llamamos a reemplazarConItemsRegistrados aquí porque se usará cargarTweetsDeHashtag
-	}
-	
-	private void reemplazarConItemsRegistrados() {
-		try {
-			// Obtener los tweets que ya están cargados en _item
-			if (_item != null && _item.size() > 0) {
-				// Limpiar el contenedor visual pero mantener los datos
-				this.getMainContainer().as(VerticalLayout.class).removeAll();
-				
-				// Crear nuevos items específicos para usuarios registrados
-				for (int i = 0; i < _item.size(); i++) {
-					Tweet tweet = _item.get(i).t; // Obtener el tweet del item genérico
-					
-					// Crear item específico para usuario registrado
-					Listadetweetsyretweetsregistrado_item itemRegistrado = 
-						new Listadetweetsyretweetsregistrado_item(this, tweet);
-					
-					// Reemplazar en la lista
-					_item.set(i, itemRegistrado);
-					
-					// Agregar al contenedor visual
-					this.getMainContainer().as(VerticalLayout.class).add(itemRegistrado);
-				}
-			}
-		} catch (Exception e) {
-			System.err.println("Error reemplazando items con versiones para usuarios registrados: " + e.getMessage());
-			e.printStackTrace();
-		}
+		// No llamamos a inicializarTweetsRegistrado aquí porque se usará cargarTweetsDeHashtag
 	}
 		// Método para cargar tweets de un hashtag específico
 	public void cargarTweetsDeHashtag(basededatos.Hashtag hashtag) {
@@ -77,5 +56,104 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 			e.printStackTrace();
 		}
 	}
-
+		private void inicializarTweetsRegistrado() {
+		// Cargar tweets reales desde la base de datos específicamente para usuarios registrados
+		try {
+			System.out.println("=== Cargando tweets para usuario registrado ===");
+			
+			// Verificar el estado del usuario antes de cargar tweets
+			mds2.MainView.verificarEstadoUsuario("inicializarTweetsRegistrado - inicio");
+			
+			// Crear instancia de la base de datos
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+			
+			// Cargar tweets reales de la base de datos
+			Tweet[] tweets = bd.cargarTweets();
+			
+			if (tweets != null && tweets.length > 0) {
+				System.out.println("Cargados " + tweets.length + " tweets desde la BD para usuario registrado");
+				
+				// Crear items específicos para usuarios registrados con datos reales
+				for (Tweet tweet : tweets) {
+					if (tweet != null) {
+						System.out.println("Creando item para tweet: " + tweet.getId_tweet());
+						Listadetweetsyretweetsregistrado_item item = 
+							new Listadetweetsyretweetsregistrado_item(this, tweet);
+						this.getMainContainer().as(VerticalLayout.class).add(item);
+						_item.add(item);
+					}
+				}
+				System.out.println("Items de tweets creados: " + _item.size());
+			} else {
+				System.out.println("No se encontraron tweets en la base de datos");
+				// Fallback: crear algunos items vacíos si no hay datos
+				for (int i = 0; i < 3; i++) {
+					Listadetweetsyretweetsregistrado_item item = 
+						new Listadetweetsyretweetsregistrado_item(this, null);
+					this.getMainContainer().as(VerticalLayout.class).add(item);
+					_item.add(item);
+				}
+			}
+		} catch (Exception e) {
+			// En caso de error, crear items vacíos
+			System.err.println("Error cargando tweets para usuario registrado: " + e.getMessage());
+			e.printStackTrace();
+			
+			for (int i = 0; i < 3; i++) {
+				Listadetweetsyretweetsregistrado_item item = 
+					new Listadetweetsyretweetsregistrado_item(this, null);
+				this.getMainContainer().as(VerticalLayout.class).add(item);
+				_item.add(item);
+			}
+		}
+		System.out.println("=== Fin carga tweets para usuario registrado ===");
+	}
+	
+	// Método para cargar tweets específicos de un usuario (para "Mis tweets") 
+	// usando los métodos ORM definidos en BDPrincipal
+	public void cargarTweetsDeUsuario(basededatos.Usuario_Registrado usuario) {
+		if (usuario == null) {
+			System.err.println("No se puede cargar tweets: usuario es null");
+			return;
+		}
+		
+		try {
+			System.out.println("=== Cargando tweets específicos del usuario: " + usuario.getNickname() + " ===");
+			
+			// Limpiar la lista actual
+			this.getMainContainer().as(VerticalLayout.class).removeAll();
+			this._item.clear();
+			
+			// Crear instancia de la base de datos
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+			
+			// Usar el método ORM definido para cargar solo los tweets de este usuario específico
+			Tweet[] tweetsUsuario = bd.cargarTweetsPorUsuario(usuario.getId_usuario());
+			
+			if (tweetsUsuario != null && tweetsUsuario.length > 0) {
+				System.out.println("Cargados " + tweetsUsuario.length + " tweets del usuario: " + usuario.getNickname());
+				
+				// Crear items específicos para los tweets del usuario
+				for (Tweet tweet : tweetsUsuario) {
+					if (tweet != null) {
+						System.out.println("Creando item para tweet del usuario: " + tweet.getId_tweet() + " - " + tweet.getContenidoTweet());
+						Listadetweetsyretweetsregistrado_item item = 
+							new Listadetweetsyretweetsregistrado_item(this, tweet);
+						this.getMainContainer().as(VerticalLayout.class).add(item);
+						this._item.add(item);
+					}
+				}
+				System.out.println("Items de tweets del usuario creados: " + this._item.size());
+			} else {
+				System.out.println("El usuario " + usuario.getNickname() + " no tiene tweets publicados");
+				// Opcional: agregar un mensaje indicativo
+			}
+		} catch (Exception e) {
+			System.err.println("Error cargando tweets del usuario: " + e.getMessage());
+			e.printStackTrace();
+		}
+		System.out.println("=== Fin carga tweets del usuario ===");
+	}
+	
+	
 }

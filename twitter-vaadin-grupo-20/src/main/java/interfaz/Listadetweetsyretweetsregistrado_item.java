@@ -14,22 +14,23 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 	
 	// Variables para controlar el estado de "me gusta"
 	private boolean leGusta = false;
-	private int contadorMeGusta = 0;
-	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets, Tweet t) {
+	private int contadorMeGusta = 0;	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets, Tweet t) {
 		super(_listadetweetsyretweets, t);
 		
 		// Poblar la interfaz con datos del tweet si están disponibles
 		if (t != null) {
+			System.out.println("Creando item para tweet ID: " + t.getId_tweet() + " - " + t.getContenidoTweet());
 			actualizarDatosTweet();
 			cargarEstadoMeGusta();
 		} else {
+			System.out.println("Creando item para tweet null");
 			mostrarDatosPorDefecto();
 		}
 
 		// Configurar click listener para navegar según el tipo
 		configurarEventos();
 		
-		// Configurar evento para el botón de "me gusta"
+		// Configurar evento para el botón de "me gusta" (doble click)
 		configurarEventoMeGusta();
 	}
 	
@@ -59,54 +60,73 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 				}
 			}
 		});
-	}
-		private void actualizarDatosTweet() {
+	}	private void actualizarDatosTweet() {
 		try {
-			// Actualizar contenido del tweet
-			if (t.getContenidoTweet() != null && !t.getContenidoTweet().trim().isEmpty()) {
-				this.getElement().executeJs(
-					"this.shadowRoot.querySelector('#contentText').textContent = '" + 
-					t.getContenidoTweet().replace("'", "\\'") + "';"
-				);
-			}
+			System.out.println("Actualizando datos del tweet ID: " + (t != null ? t.getId_tweet() : "null"));
 			
-			// Actualizar información del usuario que publicó
-			if (t.getPublicado_por() != null) {
-				basededatos.Usuario_Registrado usuario = t.getPublicado_por();
-				
-				// Actualizar nickname del usuario
-				if (usuario.getNickname() != null && !usuario.getNickname().trim().isEmpty()) {
-					this.getElement().executeJs(
-						"this.shadowRoot.querySelector('#nickName').textContent = '" + 
-						usuario.getNickname().replace("'", "\\'") + "';"
-					);
-					this.getElement().executeJs(
-						"this.shadowRoot.querySelector('#username').textContent = '@" + 
-						usuario.getNickname().replace("'", "\\'") + "';"
-					);
+			if (t != null) {
+				// Contenido del tweet
+				String contenido;
+				if (t.getContenidoTweet() != null && !t.getContenidoTweet().trim().isEmpty()) {
+					if (t.getTweet_retweeteado() != null) {
+						contenido = "🔄 Retweeteado: " + t.getContenidoTweet();
+					} else {
+						contenido = t.getContenidoTweet();
+					}
+					System.out.println("Contenido del tweet: " + contenido);
+				} else {
+					contenido = "Tweet sin contenido";
 				}
+				
+				// Información del usuario que publicó
+				String usuario;
+				String username;
+				if (t.getPublicado_por() != null) {
+					basededatos.Usuario_Registrado usuarioPublicador = t.getPublicado_por();
+					System.out.println("Usuario que publicó: " + usuarioPublicador.getNickname());
+					
+					if (usuarioPublicador.getNickname() != null && !usuarioPublicador.getNickname().trim().isEmpty()) {
+						usuario = usuarioPublicador.getNickname();
+						username = "@" + usuarioPublicador.getNickname();
+					} else {
+						usuario = "Usuario";
+						username = "@usuario";
+					}
+				} else {
+					usuario = "Usuario";
+					username = "@usuario";
+				}
+				
+				// Fecha de publicación
+				String fecha;
+				if (t.getFechaPublicacion() != null) {
+					fecha = formatearFecha(t.getFechaPublicacion());
+					System.out.println("Fecha formateada: " + fecha);
+				} else {
+					fecha = "Fecha";
+				}
+				
+				// Actualizar directamente usando los elementos
+				try {
+					this.getContentText().setText(contenido);
+					this.getNickName().setText(usuario);
+					this.getUsername().setText(username);
+					this.getDateLabel().setText(fecha);
+					System.out.println("Datos del tweet actualizados exitosamente");
+				} catch (Exception e) {
+					System.err.println("Error actualizando elementos UI: " + e.getMessage());
+				}
+			} else {
+				System.out.println("Tweet es null, usando datos por defecto");
+				this.getContentText().setText("Tweet sin contenido");
+				this.getNickName().setText("Usuario");
+				this.getUsername().setText("@usuario");
+				this.getDateLabel().setText("Fecha");
 			}
 			
-			// Actualizar fecha de publicación
-			if (t.getFechaPublicacion() != null) {
-				String fechaFormateada = formatearFecha(t.getFechaPublicacion());
-				this.getElement().executeJs(
-					"this.shadowRoot.querySelector('#dateLabel').textContent = '" + 
-					fechaFormateada + "';"
-				);
-			}
-			
-			// Si es un retweet, mostrar información adicional
-			if (t.getTweet_retweeteado() != null) {
-				String contenidoRetweet = "🔄 Retweeteado: " + 
-					(t.getContenidoTweet() != null ? t.getContenidoTweet() : "");
-				this.getElement().executeJs(
-					"this.shadowRoot.querySelector('#contentText').textContent = '" + 
-					contenidoRetweet.replace("'", "\\'") + "';"
-				);
-			}
 		} catch (Exception e) {
 			System.err.println("Error actualizando datos del tweet: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -157,10 +177,22 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verretweetpropio);
 	}
-	
-	private void cargarEstadoMeGusta() {		if (t != null) {
+	private void cargarEstadoMeGusta() {
+		if (t != null) {
 			try {
-				// Obtener el ID del usuario actual
+				// Verificar estado del usuario antes de la operación
+				MainView.verificarEstadoUsuario("cargarEstadoMeGusta - antes");
+				
+				// Obtener el usuario actual de forma segura
+				MainView.Usuario.usuarioRegistrado = MainView.obtenerUsuarioActual();
+				
+				if (MainView.Usuario.usuarioRegistrado == null) {
+					System.err.println("Error: No se pudo obtener el usuario actual para me gusta");
+					leGusta = false;
+					contadorMeGusta = 0;
+					return;
+				}
+				
 				int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
 				
 				// Verificar si al usuario actual le gusta este tweet
@@ -172,78 +204,91 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 				
 				// Actualizar la UI
 				actualizarUImeGusta();
+				
+				// Verificar estado del usuario después de la operación
+				MainView.verificarEstadoUsuario("cargarEstadoMeGusta - después");
 			} catch (Exception e) {
 				System.err.println("Error cargando estado de me gusta: " + e.getMessage());
+				e.printStackTrace();
 				leGusta = false;
 				contadorMeGusta = 0;
 			}
 		}
-	}
-		private void configurarEventoMeGusta() {
-		// Configurar click listener en el corazón (heartIcon)
+	}	private void configurarEventoMeGusta() {
+		// Simplificar el evento de me gusta usando el click en todo el elemento
+		// En lugar de buscar específicamente el heartIcon que puede no existir
 		try {
-			// Usar setTimeout para asegurar que el elemento esté renderizado
-			this.getElement().executeJs(
-				"setTimeout(() => {" +
-				"  const heartIcon = this.shadowRoot.querySelector('#heartIcon');" +
-				"  if (heartIcon) {" +
-				"    heartIcon.addEventListener('click', function(e) {" +
-				"      e.stopPropagation();" +
-				"      this.dispatchEvent(new CustomEvent('heart-clicked', {bubbles: true}));" +
-				"    });" +
-				"  } else {" +
-				"    console.log('heartIcon not found');" +
-				"  }" +
-				"}, 200);"
-			);
-			
-			// Escuchar el evento personalizado
-			this.getElement().addEventListener("heart-clicked", e -> {
+			// Agregar un listener de doble click para "me gusta" 
+			// (diferente del click simple que es para navegar)
+			this.getElement().addEventListener("dblclick", e -> {
+				// Doble click para dar/quitar me gusta
 				toggleMeGusta();
 			});
+			
+			System.out.println("Evento de me gusta configurado para tweet ID: " + (t != null ? t.getId_tweet() : "null"));
 		} catch (Exception e) {
 			System.err.println("Error configurando evento de me gusta: " + e.getMessage());
 		}
-	}
-		private void toggleMeGusta() {
+	}	private void toggleMeGusta() {
 		if (t != null) {
 			try {
+				System.out.println("Toggle me gusta activado para tweet ID: " + t.getId_tweet());
+				
+				// Obtener el usuario actual de forma segura
+				MainView.Usuario.usuarioRegistrado = MainView.obtenerUsuarioActual();
+				
+				if (MainView.Usuario.usuarioRegistrado == null) {
+					System.err.println("Error: No se pudo obtener el usuario actual para me gusta");
+					return;
+				}
+				
 				int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
 				basededatos.BD_Tweet bdTweet = new basededatos.BD_Tweet();
 				
 				if (leGusta) {
 					// Quitar "me gusta"
+					System.out.println("Quitando me gusta del tweet " + t.getId_tweet());
 					if (bdTweet.quitarMeGustaTweet(idUsuarioActual, t.getId_tweet())) {
 						leGusta = false;
 						contadorMeGusta--;
 						actualizarUImeGusta();
+						System.out.println("Me gusta quitado exitosamente");
 					}
 				} else {
 					// Dar "me gusta"
+					System.out.println("Dando me gusta al tweet " + t.getId_tweet());
 					if (bdTweet.darMeGustaTweet(idUsuarioActual, t.getId_tweet())) {
 						leGusta = true;
 						contadorMeGusta++;
 						actualizarUImeGusta();
+						System.out.println("Me gusta dado exitosamente");
 					}
 				}
 			} catch (Exception e) {
 				System.err.println("Error al cambiar estado de me gusta: " + e.getMessage());
 			}
+		} else {
+			System.err.println("No se puede dar me gusta: tweet es null");
 		}
-	}
-	
-	private void actualizarUImeGusta() {
+	}private void actualizarUImeGusta() {
 		try {
-			// Actualizar el texto del contador
-			this.getElement().executeJs(
-				"this.shadowRoot.querySelector('#likesCountLabel').textContent = '" + contadorMeGusta + "';"
-			);
+			// Actualizar el contador de "me gusta" usando el elemento directamente
+			this.getLikesCountLabel().setText(String.valueOf(contadorMeGusta));
 			
-			// Cambiar el color del corazón
-			String color = leGusta ? "red" : "#00FFFF"; // Rojo si le gusta, turquesa si no
-			this.getElement().executeJs(
-				"this.shadowRoot.querySelector('#heartIcon').style.color = '" + color + "';"
-			);
+			// Para el color del corazón, usar CSS classes en lugar de JavaScript
+			try {
+				// Aplicar CSS classes para cambiar el estilo del corazón
+				if (leGusta) {
+					this.addClassName("tweet-liked");
+					this.removeClassName("tweet-not-liked");
+				} else {
+					this.addClassName("tweet-not-liked"); 
+					this.removeClassName("tweet-liked");
+				}
+			} catch (Exception e) {
+				System.err.println("Error aplicando clase CSS para me gusta: " + e.getMessage());
+			}
+			
 		} catch (Exception e) {
 			System.err.println("Error actualizando UI de me gusta: " + e.getMessage());
 		}

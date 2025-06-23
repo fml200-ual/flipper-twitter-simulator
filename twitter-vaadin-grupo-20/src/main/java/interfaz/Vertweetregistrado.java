@@ -37,7 +37,7 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 	public Vertweetregistrado(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado) {
 		this(_listadetweetsyretweetsregistrado, null);
 	}
-		private void rellenarDatosTweet() {
+	private void rellenarDatosTweet() {
 		if (t != null) {
 			// Rellenar contenido del tweet
 			if (t.getContenidoTweet() != null) {
@@ -55,10 +55,23 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 				this.getFechaPublicacion().setText(t.getFechaPublicacion().toString());
 			}
 			
-			// Rellenar contadores
-			this.getNumMegusta().setText("" + t.recibe_me_gusta.size());
-			this.getNumeroRetweets().setText("" + t.retweets.size());
-			this.getNumeroRetweets1().setText("" + t.tiene.size()); // comentarios
+			// Rellenar contadores de forma segura usando BD_Tweet
+			try {
+				basededatos.BD_Tweet bdTweet = new basededatos.BD_Tweet();
+				int contadorMeGusta = bdTweet.contarMeGustaTweet(t.getId_tweet());
+				int contadorRetweets = bdTweet.contarRetweetsTweet(t.getId_tweet());
+				int contadorComentarios = bdTweet.contarComentariosTweet(t.getId_tweet());
+				
+				this.getNumMegusta().setText("" + contadorMeGusta);
+				this.getNumeroRetweets().setText("" + contadorRetweets);
+				this.getNumeroRetweets1().setText("" + contadorComentarios);
+			} catch (Exception e) {
+				System.err.println("Error cargando contadores del tweet: " + e.getMessage());
+				// Valores por defecto en caso de error
+				this.getNumMegusta().setText("0");
+				this.getNumeroRetweets().setText("0");
+				this.getNumeroRetweets1().setText("0");
+			}
 		}
 	}
 }

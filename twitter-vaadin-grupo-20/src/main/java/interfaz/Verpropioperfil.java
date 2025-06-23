@@ -68,9 +68,16 @@ public class Verpropioperfil extends Verperfil {
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verlistadeseguidosregistrado);
 	}
-	
-	@Override
+		@Override
 	public basededatos.Usuario_Registrado getUsuarioPerfil() {
+		System.out.println("getUsuarioPerfil() llamado en Verpropioperfil");
+		System.out.println("_aCT02UsuarioRegistrado: " + (_aCT02UsuarioRegistrado != null ? "no null" : "null"));
+		if (_aCT02UsuarioRegistrado != null) {
+			System.out.println("_aCT02UsuarioRegistrado.u: " + (_aCT02UsuarioRegistrado.u != null ? "no null" : "null"));
+			if (_aCT02UsuarioRegistrado.u != null) {
+				System.out.println("Usuario perfil: " + _aCT02UsuarioRegistrado.u.getNickname() + " (ID: " + _aCT02UsuarioRegistrado.u.getId_usuario() + ")");
+			}
+		}
 		return (_aCT02UsuarioRegistrado != null) ? _aCT02UsuarioRegistrado.u : null;
 	}
 	

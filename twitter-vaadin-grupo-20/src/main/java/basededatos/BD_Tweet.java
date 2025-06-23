@@ -86,19 +86,28 @@ public class BD_Tweet {
 		}
 		return tweets;
 	}
-	
-	public Tweet[] cargarTweetsPorUsuario(int id_usuario) throws PersistentException {
+		public Tweet[] cargarTweetsPorUsuario(int id_usuario) throws PersistentException {
 		Tweet[] tweets = null;
 		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario = " + id_usuario;
+			System.out.println("Buscando tweets para usuario ID: " + id_usuario + " con query: " + query);
 			tweets = TweetDAO.listTweetByQuery(query, "FechaPublicacion DESC");
+			System.out.println("Tweets encontrados: " + (tweets != null ? tweets.length : 0));
+			if (tweets != null) {
+				for (int i = 0; i < tweets.length; i++) {
+					System.out.println("Tweet " + i + ": ID=" + tweets[i].getId_tweet() + 
+						", Contenido=" + tweets[i].getContenidoTweet() + 
+						", Usuario=" + (tweets[i].getPublicado_por() != null ? tweets[i].getPublicado_por().getNickname() : "null"));
+				}
+			}
 			t.commit();
 		} catch (Exception e) {
+			System.err.println("Error cargando tweets por usuario: " + e.getMessage());
 			t.rollback();
 		}
-		return tweets;
+		return tweets != null ? tweets : new Tweet[0];
 	}
 		public Tweet[] cargarTweetsQueGustan(int id_usuario) throws PersistentException {
 		Tweet[] tweets = null;
@@ -322,21 +331,78 @@ public class BD_Tweet {
 		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return leGusta;
 	}
-		public int contarMeGustaTweet(int id_tweet) throws PersistentException {
+	/**
+	 * Método para obtener el contador de "me gusta" de un tweet de forma segura
+	 */
+	public int contarMeGustaTweet(int id_tweet) {
 		int contador = 0;
-		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
-				.getSession().beginTransaction();
 		try {
-			Tweet tweet = TweetDAO.getTweetByORMID(id_tweet);
-			if (tweet != null) {
-				contador = tweet.recibe_me_gusta.size();
+			PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+					.getSession().beginTransaction();
+			try {
+				Tweet tweet = TweetDAO.getTweetByORMID(id_tweet);
+				if (tweet != null && tweet.recibe_me_gusta != null) {
+					contador = tweet.recibe_me_gusta.size();
+				}
+				t.commit();
+			} catch (Exception e) {
+				t.rollback();
+				System.err.println("Error contando me gusta: " + e.getMessage());
 			}
-			t.commit();
+			ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		} catch (Exception e) {
-			t.rollback();
-			e.printStackTrace();
+			System.err.println("Error en contarMeGustaTweet: " + e.getMessage());
 		}
-		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+		return contador;
+	}
+	
+	/**
+	 * Método para obtener el contador de retweets de un tweet de forma segura
+	 */
+	public int contarRetweetsTweet(int id_tweet) {
+		int contador = 0;
+		try {
+			PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+					.getSession().beginTransaction();
+			try {
+				Tweet tweet = TweetDAO.getTweetByORMID(id_tweet);
+				if (tweet != null && tweet.retweets != null) {
+					contador = tweet.retweets.size();
+				}
+				t.commit();
+			} catch (Exception e) {
+				t.rollback();
+				System.err.println("Error contando retweets: " + e.getMessage());
+			}
+			ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+		} catch (Exception e) {
+			System.err.println("Error en contarRetweetsTweet: " + e.getMessage());
+		}
+		return contador;
+	}
+	
+	/**
+	 * Método para obtener el contador de comentarios de un tweet de forma segura
+	 */
+	public int contarComentariosTweet(int id_tweet) {
+		int contador = 0;
+		try {
+			PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+					.getSession().beginTransaction();
+			try {
+				Tweet tweet = TweetDAO.getTweetByORMID(id_tweet);
+				if (tweet != null && tweet.tiene != null) {
+					contador = tweet.tiene.size();
+				}
+				t.commit();
+			} catch (Exception e) {
+				t.rollback();
+				System.err.println("Error contando comentarios: " + e.getMessage());
+			}
+			ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+		} catch (Exception e) {
+			System.err.println("Error en contarComentariosTweet: " + e.getMessage());
+		}
 		return contador;
 	}
 }

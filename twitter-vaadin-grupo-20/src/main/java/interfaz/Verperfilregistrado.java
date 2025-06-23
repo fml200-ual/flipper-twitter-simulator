@@ -1,6 +1,7 @@
 package interfaz;
 
 import mds2.MainView.Pantalla;
+import mds2.MainView;
 import basededatos.BDPrincipal;
 import java.util.Date;
 
@@ -196,12 +197,17 @@ public class Verperfilregistrado extends Verperfil {
 		if (u == null) {
 			System.err.println("No se puede realizar la operación de seguimiento: falta información del usuario a seguir");
 			return;
-		}
-		
-		try {
-			// TODO: Obtener el usuario actual desde la sesión/contexto
-			// Por ahora simulamos que tenemos un usuario autenticado con ID=1
-			int usuarioActualId = 1; // Esto debería venir de la sesión actual
+		}		try {
+			// Obtener el usuario actual de forma segura
+			MainView.Usuario.usuarioRegistrado = MainView.obtenerUsuarioActual();
+			
+			if (MainView.Usuario.usuarioRegistrado == null) {
+				System.err.println("Error: No se pudo obtener el usuario actual");
+				return;
+			}
+			
+			// Obtener el usuario actual desde la sesión/contexto
+			int usuarioActualId = MainView.Usuario.usuarioRegistrado.getId_usuario();
 			
 			// Crear instancia de la base de datos
 			BDPrincipal bd = new BDPrincipal();

@@ -15,11 +15,20 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 	public basededatos.Usuario_Registrado _usuarioRegistrado;
 	
 	// Objeto ORMPersistable para el usuario registrado
-	public basededatos.Usuario_Registrado u;
-
-	public ACT02UsuarioRegistrado(MainView mainView, basededatos.Usuario_Registrado u) {
+	public basededatos.Usuario_Registrado u;	public ACT02UsuarioRegistrado(MainView mainView, basededatos.Usuario_Registrado u) {
 		super(mainView);
 		this.u = u;
+		
+		// Asegurarse de que el usuario esté disponible en MainView.Usuario
+		if (u != null) {
+			mds2.MainView.Usuario.usuarioRegistrado = u;
+			System.out.println("Usuario asignado en ACT02UsuarioRegistrado: " + u.getNickname() + " (ID: " + u.getId_usuario() + ")");
+		} else {
+			System.err.println("Error: Usuario null pasado a ACT02UsuarioRegistrado");
+			// Intentar obtener el usuario actual
+			mds2.MainView.Usuario.usuarioRegistrado = mds2.MainView.obtenerUsuarioActual();
+			this.u = mds2.MainView.Usuario.usuarioRegistrado;
+		}
 
 		this.getSpanListaTweetsRecientes().setVisible(false);
 
