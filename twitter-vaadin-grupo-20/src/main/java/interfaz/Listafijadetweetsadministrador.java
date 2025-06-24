@@ -37,24 +37,11 @@ public class Listafijadetweetsadministrador extends VistaListafijadetweetsadmini
 						new Listadetweetsyretweetsadministrador_item((Listadetweetsyretweets)null, tweets[i]);
 					_tweets.add(tweetItem);
 					container.add(tweetItem);
-				}
-			} else {				// Fallback: crear algunos items vacíos si no hay datos
-				for (int i = 0; i < 5; i++) {
-					Listadetweetsyretweetsadministrador_item tweetItem = 
-						new Listadetweetsyretweetsadministrador_item((Listadetweetsyretweets)null, null);
-					_tweets.add(tweetItem);
-					container.add(tweetItem);
-				}
-			}
-		} catch (Exception e) {
-			// En caso de error, crear items vacíos
+				}			} else {
+				System.out.println("No se encontraron tweets en la base de datos para administrador");
+			}		} catch (Exception e) {
 			System.err.println("Error cargando tweets para administrador: " + e.getMessage());
-			for (int i = 0; i < 5; i++) {
-				Listadetweetsyretweetsadministrador_item tweetItem = 
-					new Listadetweetsyretweetsadministrador_item((Listadetweetsyretweets)null, null);
-				_tweets.add(tweetItem);
-				container.add(tweetItem);
-			}
+			e.printStackTrace();
 		}
 	}
 

@@ -69,19 +69,26 @@ public class Listadeusuarios_item extends VistaListadeusuarios_item {	public Lis
 		this.getNickName().setText("Usuario");
 		this.getDescriptionText().setText("Sin datos disponibles");
 		this.getFollowersCount().setText("0");
-	}
-		public void VerperfildeUsuario() {
+	}	public void VerperfildeUsuario() {
 		if (u != null) {
-			// Crear una nueva instancia de Verperfilnoregistrado
-			// Necesitamos acceder al ACT01UsuarioNoRegistrado desde alguna referencia
-			// Por simplicidad, por ahora vamos a mostrar un mensaje en consola
 			System.out.println("Navegando al perfil del usuario: " + u.getNickname());
 			
-			// TODO: Implementar navegación correcta cuando se tenga acceso al ACT01UsuarioNoRegistrado
-			// _verperfilnoregistrado = new Verperfilnoregistrado(usuarioNoRegistrado);
-			// Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
-			// Pantalla.MainView.removeAll();
-			// Pantalla.MainView.add(_verperfilnoregistrado);
+			// Determinar el tipo de vista según el usuario actual
+			basededatos.Usuario_Registrado usuarioActual = mds2.MainView.Usuario.usuarioRegistrado;
+					if (usuarioActual != null) {
+				// Usuario registrado - usar Verperfilregistrado
+				Verperfilregistrado perfilRegistrado = new Verperfilregistrado(u);
+				mds2.MainView.Pantalla.Anterior = mds2.MainView.Pantalla.MainView.getComponentAt(0);
+				mds2.MainView.Pantalla.MainView.removeAll();
+				mds2.MainView.Pantalla.MainView.add(perfilRegistrado);			} else {
+				// Usuario no registrado - usar Verperfilnoregistrado
+				Verperfilnoregistrado perfilNoRegistrado = new Verperfilnoregistrado(u);
+				mds2.MainView.Pantalla.Anterior = mds2.MainView.Pantalla.MainView.getComponentAt(0);
+				mds2.MainView.Pantalla.MainView.removeAll();
+				mds2.MainView.Pantalla.MainView.add(perfilNoRegistrado);
+			}
+		} else {
+			System.err.println("No se puede navegar al perfil: usuario es null");
 		}
 	}
 

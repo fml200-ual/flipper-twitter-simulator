@@ -97,6 +97,9 @@ public class Iniciarsesin extends VistaIniciarsesin {
 		});
 
 	}	public void Validardatos() {
+		// Declaración del atributo IActor como en el patrón
+		BDPrincipal iactor = new BDPrincipal();
+		
 		// Obtener los valores de los campos
 		String username = this.getUsernameField().getValue();
 		String password = this.getPasswordField().getValue();
@@ -104,55 +107,33 @@ public class Iniciarsesin extends VistaIniciarsesin {
 		System.out.println("Intentando iniciar sesión con usuario: " + username);
 		
 		try {
-			// Usar la base de datos para validar credenciales
-			BDPrincipal bd = new BDPrincipal();
-			
-			// Intentar login de usuario registrado
-			basededatos.Usuario_Registrado usuarioRegistrado = bd.login(username, password);
-			
-			if (usuarioRegistrado != null) {
-				System.out.println("Login exitoso como usuario registrado");
-				// Navegar a la vista de usuario registrado
-				navegarAUsuarioRegistrado(usuarioRegistrado);
-				return;
-			}
-			
-			// Si no es usuario registrado, intentar login de administrador
-			basededatos.Administrador administrador = bd.loginAdmin(username, password);
-			if (administrador != null) {
-				System.out.println("Login exitoso como administrador");
-				// Navegar a la vista de administrador
-				navegarAAdministrador();
-				return;
-			}
+			// Seguir el patrón del diagrama: usuario = iactor.Login(login, password)
+			basededatos.Usuario_Registrado usuarioRegistrado = iactor.login(username, password);
+					if (usuarioRegistrado != null) {
+				System.out.println("Login exitoso como usuario registrado: " + usuarioRegistrado.getNickname());
+				
+				// Seguir el patrón: padre.MainView.removeAll() + crear vista + add
+				Pantalla.MainView.removeAll();				// Crear la vista del usuario logueado con el usuario de la BD
+				ACT02UsuarioRegistrado usuarioLogueado = new ACT02UsuarioRegistrado(
+					mds2.MainView.Pantalla.MainView, usuarioRegistrado);
+				Pantalla.MainView.add(usuarioLogueado);
+				
+				// Actualizar el usuario en la sesión global
+				mds2.MainView.Usuario.usuarioRegistrado = usuarioRegistrado;
+				
+				return;			}
 			
 			// Si llegamos aquí, las credenciales son incorrectas
-			System.out.println("Credenciales incorrectas");
+			System.out.println("Credenciales incorrectas para usuario: " + username);
 			Mensajedeerroriniciosesin();
-			
-		} catch (Exception e) {
+					} catch (Exception e) {
 			System.err.println("Error durante el login: " + e.getMessage());
 			e.printStackTrace();
 			Mensajedeerroriniciosesin();
 		}
 	}
-		private void navegarAUsuarioRegistrado(basededatos.Usuario_Registrado usuario) {
-		try {
-			// Crear la vista de usuario registrado con el objeto de la base de datos
-			ACT02UsuarioRegistrado usuarioRegistradoView = new ACT02UsuarioRegistrado(null, usuario);
-			
-			// Navegar a la nueva vista
-			Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
-			Pantalla.MainView.removeAll();
-			Pantalla.MainView.add(usuarioRegistradoView);
-			
-			System.out.println("Navegación exitosa a vista de usuario registrado");
-		} catch (Exception e) {
-			System.err.println("Error al navegar a usuario registrado: " + e.getMessage());
-			e.printStackTrace();
-		}
-	}
-		private void navegarAAdministrador() {
+
+	private void navegarAAdministrador() {
 		try {
 			// Crear la vista de administrador
 			ACT03Administrador administradorView = new ACT03Administrador(null);

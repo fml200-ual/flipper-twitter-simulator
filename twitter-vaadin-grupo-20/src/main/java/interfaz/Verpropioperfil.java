@@ -1,6 +1,7 @@
 package interfaz;
 
 import mds2.MainView.Pantalla;
+import basededatos.BDPrincipal;
 
 public class Verpropioperfil extends Verperfil {
 	public ACT02UsuarioRegistrado _aCT02UsuarioRegistrado;
@@ -103,15 +104,16 @@ public class Verpropioperfil extends Verperfil {
 				if (usuario.getFechaDeRegistro() != null) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMMM yyyy");
 					this.getJoinDate().setText("Se unió en " + sdf.format(usuario.getFechaDeRegistro()));
-				}
-						// Calcular y mostrar contadores reales de seguidores y seguidos desde la base de datos
+				}				// Calcular y mostrar contadores reales de seguidores y seguidos desde la base de datos
 				try {
+					BDPrincipal bd = new BDPrincipal();
+					
 					// Número de usuarios que sigue este usuario
-					int siguiendo = usuario.seguidosPropiedadesseguidoss.size();
+					int siguiendo = bd.contarSeguidos(usuario.getId_usuario());
 					this.getFollowingCount().setText(siguiendo + " siguiendo");
 					
 					// Número de usuarios que siguen a este usuario
-					int seguidores = usuario.seguidoresPropiedadesseguidoss.size();
+					int seguidores = bd.contarSeguidores(usuario.getId_usuario());
 					String seguidoresTexto;
 					if (seguidores >= 1000) {
 						double seguidoresK = seguidores / 1000.0;
@@ -135,6 +137,38 @@ public class Verpropioperfil extends Verperfil {
 		} catch (Exception e) {
 			System.err.println("Error al cargar datos del propio perfil: " + e.getMessage());
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Método público para actualizar los contadores de seguidores y seguidos
+	 * Se puede llamar después de seguir/dejar de seguir para refrescar la UI
+	 */
+	public void actualizarContadores() {
+		if (_aCT02UsuarioRegistrado != null && _aCT02UsuarioRegistrado.u != null) {
+			try {
+				BDPrincipal bd = new BDPrincipal();
+				basededatos.Usuario_Registrado usuario = _aCT02UsuarioRegistrado.u;
+				
+				// Número de usuarios que sigue este usuario
+				int siguiendo = bd.contarSeguidos(usuario.getId_usuario());
+				this.getFollowingCount().setText(siguiendo + " siguiendo");
+				
+				// Número de usuarios que siguen a este usuario
+				int seguidores = bd.contarSeguidores(usuario.getId_usuario());
+				String seguidoresTexto;
+				if (seguidores >= 1000) {
+					double seguidoresK = seguidores / 1000.0;
+					seguidoresTexto = String.format("%.1fK seguidores", seguidoresK);
+				} else {
+					seguidoresTexto = seguidores + " seguidores";
+				}
+				this.getFollowersCount().setText(seguidoresTexto);
+				
+				System.out.println("Contadores actualizados para propio perfil: " + usuario.getNickname());
+			} catch (Exception e) {
+				System.err.println("Error actualizando contadores: " + e.getMessage());
+			}
 		}
 	}
 }

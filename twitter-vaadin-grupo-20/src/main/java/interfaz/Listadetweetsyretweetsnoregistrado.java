@@ -26,24 +26,11 @@ public class Listadetweetsyretweetsnoregistrado extends Listadetweetsyretweets {
 						new Listadetweetsyretweetsnoregistrado_item(this, tweets[i]);
 					this.getMainContainer().as(VerticalLayout.class).add(item);
 					_item.add(item);
-				}
-			} else {
-				// Fallback: crear algunos items vacíos si no hay datos
-				for (int i = 0; i < 5; i++) {
-					Listadetweetsyretweetsnoregistrado_item item = 
-						new Listadetweetsyretweetsnoregistrado_item(this, null);
-					this.getMainContainer().as(VerticalLayout.class).add(item);
-					_item.add(item);
-				}
-			}
-		} catch (Exception e) {
-			// En caso de error, crear items vacíos
+				}			} else {
+				System.out.println("No se encontraron tweets en la base de datos");
+			}		} catch (Exception e) {
 			System.err.println("Error cargando tweets para usuario no registrado: " + e.getMessage());
-			for (int i = 0; i < 5; i++) {
-				Listadetweetsyretweetsnoregistrado_item item = 
-					new Listadetweetsyretweetsnoregistrado_item(this, null);
-				this.getMainContainer().as(VerticalLayout.class).add(item);
-				_item.add(item);			}
+			e.printStackTrace();
 		}
 	}
 	

@@ -1,9 +1,7 @@
 package interfaz;
 
 import mds2.MainView.Pantalla;
-import mds2.MainView;
 import basededatos.BDPrincipal;
-import java.util.Date;
 
 public class Verperfilregistrado extends Verperfil {
 	// private event _bloquearusuario;
@@ -105,6 +103,54 @@ public class Verperfilregistrado extends Verperfil {
 		this(_listafijadeusuariosregistrado, null);
 	}
 	
+	// Constructor temporal para navegación directa desde listas de usuarios
+	public Verperfilregistrado(basededatos.Usuario_Registrado u) {
+		super();
+		this._listafijadeusuariosregistrado = null; // Temporal: no tenemos referencia padre
+		this.u = u;
+		
+		// Rellenar datos del perfil con información del usuario
+		if (u != null) {
+			rellenarDatosPerfil();
+		}
+		
+		this.getDeleteProfileButton().setVisible(false);
+
+		this.getBanProfileButton().setText("Bloquear");
+		this.getEditAccountButton().setText("Seguir");
+
+		this.Agrupartweets();
+
+		this.getBanProfileButton().addClickListener(event -> {
+			BloquearDesbloquearUsuario();
+		});
+		this.getEditAccountButton().addClickListener(event -> {
+			Seguirusuario();
+		});
+		this.getFollowingCount().addClickListener(event -> {
+			Verlistadeseguidosregistrado();
+		});
+		this.getFollowersCount().addClickListener(event -> {
+			Verlistadeseguidoresregistrado();
+		});
+		this.getLikedTweetsTab().addClickListener(event -> {
+			this.Agrupartweetsgustados();
+		});
+		this.getRetweetsTab().addClickListener(event -> {
+			this.Agruparretweets();
+		});
+		this.getUserTweetsTab().addClickListener(event -> {
+			this.Agrupartweets();
+		});
+		this.getBackButton().addClickListener(event -> {
+			// Volver a la pantalla anterior guardada
+			if (Pantalla.Anterior != null) {
+				Pantalla.MainView.removeAll();
+				Pantalla.MainView.add(Pantalla.Anterior);
+			}
+		});
+	}
+
 	@Override
 	public basededatos.Usuario_Registrado getUsuarioPerfil() {
 		return u;
@@ -130,15 +176,16 @@ public class Verperfilregistrado extends Verperfil {
 				if (u.getFechaDeRegistro() != null) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMMM yyyy");
 					this.getJoinDate().setText("Se unió en " + sdf.format(u.getFechaDeRegistro()));
-				}
-						// Calcular y mostrar contadores reales de seguidores y seguidos desde la base de datos
+				}				// Calcular y mostrar contadores reales de seguidores y seguidos desde la base de datos
 				try {
+					BDPrincipal bd = new BDPrincipal();
+					
 					// Número de usuarios que sigue este usuario
-					int siguiendo = u.seguidosPropiedadesseguidoss.size();
+					int siguiendo = bd.contarSeguidos(u.getId_usuario());
 					this.getFollowingCount().setText(siguiendo + " siguiendo");
 					
 					// Número de usuarios que siguen a este usuario
-					int seguidores = u.seguidoresPropiedadesseguidoss.size();
+					int seguidores = bd.contarSeguidores(u.getId_usuario());
 					String seguidoresTexto;
 					if (seguidores >= 1000) {
 						double seguidoresK = seguidores / 1000.0;
@@ -193,52 +240,109 @@ public class Verperfilregistrado extends Verperfil {
 				break;
 		}
 	}	public void Seguirusuario() {
-		// Por ahora, sin un sistema de sesión completo, implementamos una versión simplificada
+		// Declaración del atributo IActor como en el patrón del diagrama de secuencia
+		basededatos.BDPrincipal iactor = new basededatos.BDPrincipal();
+		
 		if (u == null) {
 			System.err.println("No se puede realizar la operación de seguimiento: falta información del usuario a seguir");
 			return;
-		}		try {
+		}
+		
+		try {
 			// Obtener el usuario actual de forma segura
-			MainView.Usuario.usuarioRegistrado = MainView.obtenerUsuarioActual();
+			mds2.MainView.Usuario.usuarioRegistrado = mds2.MainView.obtenerUsuarioActual();
 			
-			if (MainView.Usuario.usuarioRegistrado == null) {
+			if (mds2.MainView.Usuario.usuarioRegistrado == null) {
 				System.err.println("Error: No se pudo obtener el usuario actual");
 				return;
 			}
 			
-			// Obtener el usuario actual desde la sesión/contexto
-			int usuarioActualId = MainView.Usuario.usuarioRegistrado.getId_usuario();
-			
-			// Crear instancia de la base de datos
-			BDPrincipal bd = new BDPrincipal();
-			
 			if (this.getEditAccountButton().getText().equals("Seguir")) {
-				// Realizar operación de seguimiento
-				System.out.println("Usuario ID " + usuarioActualId + " va a seguir a " + u.getNickname());
+				// Seguir el patrón del diagrama: iactor.Subscribe(padre.logueado.getID(), usuario_visitado.getID())
+				System.out.println("Realizando operación de seguimiento siguiendo patrón ORM...");
 				
-				basededatos.Usuario_Registrado usuarioActualizado = bd.seguir(
-					usuarioActualId, 
+				iactor.seguir(
+					mds2.MainView.Usuario.usuarioRegistrado.getId_usuario(), 
 					u.getORMID(), 
-					new Date()
+					new java.util.Date()
+				);
+				
+				// Seguir el patrón: actor = iactor.LoadUserById(padre.logueado.getID())
+				basededatos.Usuario_Registrado usuarioActualizado = iactor.cargarUsuarioPorId(
+					mds2.MainView.Usuario.usuarioRegistrado.getId_usuario()
 				);
 				
 				if (usuarioActualizado != null) {
+					// Actualizar el usuario en la sesión global
+					mds2.MainView.Usuario.usuarioRegistrado = usuarioActualizado;
+					
 					// Actualizar la interfaz
 					this.getEditAccountButton().setText("Dejar de seguir");
 					System.out.println("Seguimiento realizado exitosamente");
 				} else {
-					System.err.println("Error al realizar el seguimiento");
+					System.err.println("Error al recargar el usuario después del seguimiento");
 				}
 				
 			} else {
-				// TODO: Implementar dejar de seguir cuando esté disponible en la BD
-				System.out.println("Funcionalidad de dejar de seguir no implementada aún en la BD");
-				this.getEditAccountButton().setText("Seguir");
+				// Implementar dejar de seguir siguiendo el mismo patrón
+				System.out.println("Realizando operación de dejar de seguir siguiendo patrón ORM...");
+				
+				iactor.dejarDeSeguir(
+					mds2.MainView.Usuario.usuarioRegistrado.getId_usuario(), 
+					u.getORMID()
+				);
+				
+				// Recargar el usuario actualizado
+				basededatos.Usuario_Registrado usuarioActualizado = iactor.cargarUsuarioPorId(
+					mds2.MainView.Usuario.usuarioRegistrado.getId_usuario()
+				);
+				
+				if (usuarioActualizado != null) {
+					// Actualizar el usuario en la sesión global
+					mds2.MainView.Usuario.usuarioRegistrado = usuarioActualizado;
+					
+					// Actualizar la interfaz
+					this.getEditAccountButton().setText("Seguir");
+					System.out.println("Dejar de seguir realizado exitosamente");
+				} else {
+					System.err.println("Error al recargar el usuario después de dejar de seguir");
+				}
 			}
 			
 		} catch (Exception e) {
 			System.err.println("Error durante la operación de seguimiento: " + e.getMessage());
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Método público para actualizar los contadores de seguidores y seguidos
+	 * Se puede llamar después de seguir/dejar de seguir para refrescar la UI
+	 */
+	public void actualizarContadores() {
+		if (u != null) {
+			try {
+				BDPrincipal bd = new BDPrincipal();
+				
+				// Número de usuarios que sigue este usuario
+				int siguiendo = bd.contarSeguidos(u.getId_usuario());
+				this.getFollowingCount().setText(siguiendo + " siguiendo");
+				
+				// Número de usuarios que siguen a este usuario
+				int seguidores = bd.contarSeguidores(u.getId_usuario());
+				String seguidoresTexto;
+				if (seguidores >= 1000) {
+					double seguidoresK = seguidores / 1000.0;
+					seguidoresTexto = String.format("%.1fK seguidores", seguidoresK);
+				} else {
+					seguidoresTexto = seguidores + " seguidores";
+				}
+				this.getFollowersCount().setText(seguidoresTexto);
+				
+				System.out.println("Contadores actualizados para usuario: " + u.getNickname());
+			} catch (Exception e) {
+				System.err.println("Error actualizando contadores: " + e.getMessage());
+			}
 		}
 	}
 

@@ -1,6 +1,7 @@
 package interfaz;
 
 import mds2.MainView.Pantalla;
+import basededatos.BDPrincipal;
 
 public class Verperfilnoregistrado extends Verperfil {
 	public Listafijadeusuariosnoregistrado _listafijadeusuariosnoregistrado;
@@ -80,15 +81,16 @@ public class Verperfilnoregistrado extends Verperfil {
 				if (u.getFechaDeRegistro() != null) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMMM yyyy");
 					this.getJoinDate().setText("Se unió en " + sdf.format(u.getFechaDeRegistro()));
-				}
-						// Calcular y mostrar contadores reales de seguidores y seguidos desde la base de datos
+				}				// Calcular y mostrar contadores reales de seguidores y seguidos desde la base de datos
 				try {
+					basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+					
 					// Número de usuarios que sigue este usuario
-					int siguiendo = u.seguidosPropiedadesseguidoss.size();
+					int siguiendo = bd.contarSeguidos(u.getId_usuario());
 					this.getFollowingCount().setText(siguiendo + " siguiendo");
 					
 					// Número de usuarios que siguen a este usuario
-					int seguidores = u.seguidoresPropiedadesseguidoss.size();
+					int seguidores = bd.contarSeguidores(u.getId_usuario());
 					String seguidoresTexto;
 					if (seguidores >= 1000) {
 						double seguidoresK = seguidores / 1000.0;
@@ -134,5 +136,60 @@ public class Verperfilnoregistrado extends Verperfil {
 		this.getUserTweetsTab().addClickListener(event -> Agrupartweets());
 		this.getRetweetsTab().addClickListener(event -> Agruparretweets());
 		this.getLikedTweetsTab().addClickListener(event -> Agrupartweetsgustados());
+	}
+	
+	// Constructor temporal para navegación directa desde listas de usuarios
+	public Verperfilnoregistrado(basededatos.Usuario_Registrado u) {
+		super();
+		this._listafijadeusuariosnoregistrado = null;
+		this.u = u;
+		
+		if (u != null) {
+			rellenarDatosPerfil();
+		}
+		
+		this.getDeleteProfileButton().setVisible(false);
+		this.getBanProfileButton().setVisible(false);
+		this.getEditAccountButton().setVisible(false);
+
+		this.Agrupartweets();
+
+		this.getBackButton().addClickListener(event -> {
+			if (Pantalla.Anterior != null) {
+				Pantalla.MainView.removeAll();
+				Pantalla.MainView.add(Pantalla.Anterior);
+			}
+		});
+	}
+	
+	/**
+	 * Método público para actualizar los contadores de seguidores y seguidos
+	 * Se puede llamar para refrescar la UI
+	 */
+	public void actualizarContadores() {
+		if (u != null) {
+			try {
+				BDPrincipal bd = new BDPrincipal();
+				
+				// Número de usuarios que sigue este usuario
+				int siguiendo = bd.contarSeguidos(u.getId_usuario());
+				this.getFollowingCount().setText(siguiendo + " siguiendo");
+				
+				// Número de usuarios que siguen a este usuario
+				int seguidores = bd.contarSeguidores(u.getId_usuario());
+				String seguidoresTexto;
+				if (seguidores >= 1000) {
+					double seguidoresK = seguidores / 1000.0;
+					seguidoresTexto = String.format("%.1fK seguidores", seguidoresK);
+				} else {
+					seguidoresTexto = seguidores + " seguidores";
+				}
+				this.getFollowersCount().setText(seguidoresTexto);
+				
+				System.out.println("Contadores actualizados para perfil no registrado: " + u.getNickname());
+			} catch (Exception e) {
+				System.err.println("Error actualizando contadores: " + e.getMessage());
+			}
+		}
 	}
 }

@@ -457,4 +457,147 @@ public class BD_Usuario_Registrado {
 		return user;
 	}
 	
+	public Usuario_Registrado cargarUsuarioPorId(int idUsuario) throws PersistentException {
+		Usuario_Registrado user = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(idUsuario);
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+		}
+		return user;
+	}
+		public void dejarDeSeguir(int idSeguidor, int idSeguido) throws PersistentException {
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Obtener los usuarios
+			Usuario_Registrado seguidor = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(idSeguidor);
+			Usuario_Registrado seguido = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(idSeguido);
+					if (seguidor != null && seguido != null) {
+				// Buscar la relación de seguimiento existente
+				// Seguidor = Usuario_RegistradoUsuario_AutentificadoId_usuario2
+				// Seguido = Usuario_RegistradoUsuario_AutentificadoId_usuario
+				String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario2 = " + idSeguidor + 
+							   " AND Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idSeguido;
+				PropiedadesSeguidos[] relaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(query, null);
+				
+				// Eliminar la relación si existe
+				for (PropiedadesSeguidos relacion : relaciones) {
+					PropiedadesSeguidosDAO.delete(relacion);
+				}
+				
+				System.out.println("Usuario " + seguidor.getNickname() + " dejó de seguir a " + seguido.getNickname());
+			}
+			
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			throw e;
+		}
+	}	/**
+	 * Cargar lista de seguidores de un usuario
+	 */
+	public Usuario_Registrado[] cargarSeguidores(int idUsuario) throws PersistentException {
+		Usuario_Registrado[] seguidores = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Buscar todas las relaciones donde el usuario es seguido
+			// En la BD: Usuario_RegistradoUsuario_AutentificadoId_usuario = usuario seguido
+			String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario;
+			PropiedadesSeguidos[] relaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(query, null);
+			
+			if (relaciones != null && relaciones.length > 0) {
+				System.out.println("Encontradas " + relaciones.length + " relaciones de seguimiento para usuario " + idUsuario);
+				seguidores = new Usuario_Registrado[relaciones.length];
+				for (int i = 0; i < relaciones.length; i++) {
+					// El seguidor es quien tiene la relación (Usuario_RegistradoUsuario_AutentificadoId_usuario2)
+					seguidores[i] = relaciones[i].getSeguidoresUsuario_registrado();
+				}
+			} else {
+				System.out.println("No se encontraron seguidores para usuario " + idUsuario);
+			}
+			
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			System.err.println("Error al cargar seguidores: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return seguidores;
+	}
+	
+	/**
+	 * Cargar lista de usuarios seguidos por un usuario
+	 */
+	public Usuario_Registrado[] cargarSeguidos(int idUsuario) throws PersistentException {
+		Usuario_Registrado[] seguidos = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Buscar todas las relaciones donde el usuario es el seguidor
+			// En la BD: Usuario_RegistradoUsuario_AutentificadoId_usuario2 = usuario seguidor
+			String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario2 = " + idUsuario;
+			PropiedadesSeguidos[] relaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(query, null);
+			
+			if (relaciones != null && relaciones.length > 0) {
+				System.out.println("Encontradas " + relaciones.length + " relaciones donde usuario " + idUsuario + " sigue a otros");
+				seguidos = new Usuario_Registrado[relaciones.length];
+				for (int i = 0; i < relaciones.length; i++) {
+					// El seguido es el objetivo de la relación (Usuario_RegistradoUsuario_AutentificadoId_usuario)
+					seguidos[i] = relaciones[i].getSeguidosUsuario_registrado();
+				}
+			} else {
+				System.out.println("Usuario " + idUsuario + " no sigue a nadie");
+			}
+			
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			System.err.println("Error al cargar seguidos: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return seguidos;
+	}
+	
+	/**
+	 * Contar número de seguidores de un usuario
+	 */
+	public int contarSeguidores(int idUsuario) throws PersistentException {
+		int numSeguidores = 0;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario;
+			PropiedadesSeguidos[] relaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(query, null);
+			numSeguidores = relaciones != null ? relaciones.length : 0;
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			System.err.println("Error al contar seguidores: " + e.getMessage());
+		}
+		return numSeguidores;
+	}
+	
+	/**
+	 * Contar número de seguidos de un usuario
+	 */
+	public int contarSeguidos(int idUsuario) throws PersistentException {
+		int numSeguidos = 0;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario2 = " + idUsuario;
+			PropiedadesSeguidos[] relaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(query, null);
+			numSeguidos = relaciones != null ? relaciones.length : 0;
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			System.err.println("Error al contar seguidos: " + e.getMessage());
+		}
+		return numSeguidos;
+	}
 }

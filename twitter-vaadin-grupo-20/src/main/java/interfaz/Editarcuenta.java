@@ -55,20 +55,22 @@ public class Editarcuenta extends VistaEditarcuenta {
 			
 			System.out.println("Datos del usuario cargados en el formulario de edición");
 		}
-	}
-	public void guardarCambios() {
+	}	public void guardarCambios() {
 		if (u == null) {
 			System.err.println("No hay usuario para modificar");
 			return;
 		}
 		
 		try {
+			// Declaración del atributo IActor como en el patrón
+			BDPrincipal iactor = new BDPrincipal();
+			
 			// Obtener los nuevos valores de los campos
 			String nuevoNickname = this.getNickField().getValue() != null ? this.getNickField().getValue().trim() : u.getNickname();
 			String nuevaDescripcion = this.getDescripcionField().getValue() != null ? this.getDescripcionField().getValue().trim() : u.getDescripcion();
 			String nuevaImagenFondo = this.getFondoField().getValue() != null ? this.getFondoField().getValue().trim() : u.getImagenFondoURL();
 			String nuevaFotoPerfil = this.getFotoPerfilField().getValue() != null ? this.getFotoPerfilField().getValue().trim() : u.getFotoPerfilURL();
-			String nuevaContrasena = u.getContrasena(); // Mantener contraseña actual por ahora
+			String nuevaContrasena = u.getContrasena(); // Mantener contraseña actual
 			
 			// Validaciones básicas
 			if (nuevoNickname == null || nuevoNickname.isEmpty()) {
@@ -88,15 +90,12 @@ public class Editarcuenta extends VistaEditarcuenta {
 				nuevaFotoPerfil = "default-profile.jpg";
 			}
 			
-			System.out.println("Guardando cambios para usuario: " + u.getNickname());
-			System.out.println("Nuevo nickname: " + nuevoNickname);
-			System.out.println("Nueva descripción: " + nuevaDescripcion);
+			System.out.println("Actualizando perfil siguiendo el patrón ORM...");
+			System.out.println("Usuario ID: " + u.getORMID() + ", Nuevo nickname: " + nuevoNickname);
 			
-			// Crear instancia de la base de datos
-			BDPrincipal bd = new BDPrincipal();
-			
-			// Actualizar el perfil del usuario
-			basededatos.Usuario_Registrado usuarioActualizado = bd.modificarPerfilSimple(
+			// Seguir el patrón del diagrama: 
+			// usuario u = this._usuario._iUsuario.actualizar(_usuario.u.getID(), ...)
+			basededatos.Usuario_Registrado usuarioActualizado = iactor.modificarPerfilSimple(
 				u.getORMID(), 
 				nuevoNickname, 
 				nuevaDescripcion, 
@@ -106,17 +105,19 @@ public class Editarcuenta extends VistaEditarcuenta {
 			);
 			
 			if (usuarioActualizado != null) {
-				System.out.println("Perfil actualizado exitosamente en la base de datos");
+				System.out.println("Perfil actualizado exitosamente");
 				
-				// Actualizar el usuario en el contexto de la aplicación
-				if (_verpropioperfil != null && _verpropioperfil._aCT02UsuarioRegistrado != null) {
+				// Seguir el patrón: this._usuario = new Usuario(this._usuario.MainView, u);
+				// Actualizar el usuario en la sesión global y en el contexto
+				mds2.MainView.Usuario.usuarioRegistrado = usuarioActualizado;				if (_verpropioperfil != null && _verpropioperfil._aCT02UsuarioRegistrado != null) {
 					_verpropioperfil._aCT02UsuarioRegistrado.u = usuarioActualizado;
 				}
 				
-				// Volver a la vista del perfil
+				// Seguir el patrón: this._usuario.MainView.removeAll() + add
+				// Volver a la vista del perfil actualizada
 				Cancelar();
 			} else {
-				System.err.println("Error al actualizar el perfil en la base de datos");
+				System.err.println("Error al actualizar el perfil");
 				Errordeedicin();
 			}
 			

@@ -83,28 +83,11 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 						_item.add(item);
 					}
 				}
-				System.out.println("Items de tweets creados: " + _item.size());
-			} else {
+				System.out.println("Items de tweets creados: " + _item.size());			} else {
 				System.out.println("No se encontraron tweets en la base de datos");
-				// Fallback: crear algunos items vacíos si no hay datos
-				for (int i = 0; i < 3; i++) {
-					Listadetweetsyretweetsregistrado_item item = 
-						new Listadetweetsyretweetsregistrado_item(this, null);
-					this.getMainContainer().as(VerticalLayout.class).add(item);
-					_item.add(item);
-				}
-			}
-		} catch (Exception e) {
-			// En caso de error, crear items vacíos
+			}		} catch (Exception e) {
 			System.err.println("Error cargando tweets para usuario registrado: " + e.getMessage());
 			e.printStackTrace();
-			
-			for (int i = 0; i < 3; i++) {
-				Listadetweetsyretweetsregistrado_item item = 
-					new Listadetweetsyretweetsregistrado_item(this, null);
-				this.getMainContainer().as(VerticalLayout.class).add(item);
-				_item.add(item);
-			}
 		}
 		System.out.println("=== Fin carga tweets para usuario registrado ===");
 	}

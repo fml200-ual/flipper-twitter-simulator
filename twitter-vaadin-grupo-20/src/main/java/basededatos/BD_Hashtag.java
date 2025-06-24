@@ -43,4 +43,26 @@ public class BD_Hashtag {
 		}
 		return hashtags;
 	}
+	
+	public Hashtag[] buscarHashtag(String hashtag) throws PersistentException {
+		Hashtag[] hashtags = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Buscar hashtags que coincidan exactamente o contengan el texto buscado
+			String query = "Hashtag = '" + hashtag + "'";
+			hashtags = HashtagDAO.listHashtagByQuery(query, null);
+			
+			// Si no se encuentra exactamente, buscar hashtags que contengan el texto
+			if (hashtags == null || hashtags.length == 0) {
+				query = "Hashtag LIKE '%" + hashtag + "%'";
+				hashtags = HashtagDAO.listHashtagByQuery(query, null);
+			}
+			
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+		}
+		return hashtags;
+	}
 }

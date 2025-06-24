@@ -57,23 +57,11 @@ public class Listadeusuarios extends VistaListadeusuarios {
 					Listadeusuarios_item item = new Listadeusuarios_item(this, usuarios[i]);
 					this.getMainContainer().as(VerticalLayout.class).add(item);
 					_item.add(item);
-				}
-			} else {
-				// Fallback: crear algunos items vacíos si no hay datos
-				for (int i = 0; i < 3; i++) {
-					Listadeusuarios_item item = new Listadeusuarios_item(this, null);
-					this.getMainContainer().as(VerticalLayout.class).add(item);
-					_item.add(item);
-				}
-			}
-		} catch (Exception e) {
-			// En caso de error, crear items vacíos
+				}			} else {
+				System.out.println("No se encontraron usuarios en la base de datos");
+			}		} catch (Exception e) {
 			System.err.println("Error cargando usuarios: " + e.getMessage());
-			for (int i = 0; i < 3; i++) {
-				Listadeusuarios_item item = new Listadeusuarios_item(this, null);
-				this.getMainContainer().as(VerticalLayout.class).add(item);
-				_item.add(item);
-			}
+			e.printStackTrace();
 		}
 	}
 

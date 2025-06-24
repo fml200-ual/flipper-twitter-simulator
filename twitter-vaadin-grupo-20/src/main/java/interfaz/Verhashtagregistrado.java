@@ -40,16 +40,12 @@ public class Verhashtagregistrado extends Verhashtag {
 			_listadetweetsyretweetsregistrado.cargarTweetsDeHashtag(hashtag);
 		}
 	}
-
 	public void Listadetweetsyretweetsregistrado() {
 		_listadetweetsyretweetsregistrado = new Listadetweetsyretweetsregistrado(this);
 
-		for (int i = 0; i < 5; i++) {
-			Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
-					_listadetweetsyretweetsregistrado);
-			_listadetweetsyretweetsregistrado
-					.getMainContainer().as(VerticalLayout.class)
-					.add(item);
+		// Cargar tweets del hashtag si ya está establecido
+		if (h != null) {
+			_listadetweetsyretweetsregistrado.cargarTweetsDeHashtag(h);
 		}
 
 		this.getMainLayout().as(VerticalLayout.class)

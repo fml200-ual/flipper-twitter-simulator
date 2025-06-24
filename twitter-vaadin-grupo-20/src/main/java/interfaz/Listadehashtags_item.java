@@ -52,26 +52,75 @@ public class Listadehashtags_item extends VistaListadehashtags_item {
 		
 		// Configurar click listener en el contenedor
 		this.getHashtagContainer().addClickListener(event -> Mostrarmshashtags());
+	}	public void Mostrarmshashtags() {
+		// Declaración del atributo IActor como en el patrón del diagrama de secuencia
+		basededatos.BDPrincipal iactor = new basededatos.BDPrincipal();
+		
+		if (h != null) {
+			System.out.println("Buscando tweets por hashtag siguiendo patrón ORM: " + h.getHashtag());
+			
+			try {
+				// Seguir el patrón del diagrama: hashtags = iactor.Buscar(this.getHashtag().getText())
+				basededatos.Hashtag[] hashtagsEncontrados = iactor.buscarHashtag(h.getHashtag());
+				
+				// Navegación siguiendo el patrón
+				Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+				Pantalla.MainView.removeAll();
+				
+				if (Pantalla.usuario == 2) {
+					// Usuario registrado - usar vista correspondiente
+					Listafijadehashtagsregistrado lista = new Listafijadehashtagsregistrado(null);
+					Verhashtagregistrado vista = new Verhashtagregistrado(lista);
+					
+					// Seguir el patrón: for cada hashtag encontrado, crear vista
+					if (hashtagsEncontrados != null && hashtagsEncontrados.length > 0) {
+						vista.cargarTweetsDeHashtag(hashtagsEncontrados[0]); // Usar el hashtag encontrado
+					} else {
+						vista.cargarTweetsDeHashtag(h); // Usar el hashtag original como fallback
+					}
+					
+					Pantalla.MainView.add(vista);
+				} else {
+					// Usuario no registrado
+					Listafijadehashtagsnoregistrado lista = new Listafijadehashtagsnoregistrado(null);
+					Verhashtagnoregistrado vista = new Verhashtagnoregistrado(lista);
+					
+					if (hashtagsEncontrados != null && hashtagsEncontrados.length > 0) {
+						vista.cargarTweetsDeHashtag(hashtagsEncontrados[0]);
+					} else {
+						vista.cargarTweetsDeHashtag(h);
+					}
+					
+					Pantalla.MainView.add(vista);
+				}
+				
+				System.out.println("Navegación exitosa a vista de hashtag");
+				
+			} catch (Exception e) {
+				System.err.println("Error al buscar hashtag: " + e.getMessage());
+				e.printStackTrace();
+				// En caso de error, usar navegación simple
+				mostrarHashtagSimple();
+			}
+		} else {
+			System.err.println("No hay hashtag para mostrar");
+		}
 	}
-	private void mostrarHashtag() {
+	
+	// Método auxiliar para navegación simple sin búsqueda ORM
+	private void mostrarHashtagSimple() {
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		if (Pantalla.usuario == 2) {
-			// Pasar el hashtag seleccionado a la vista
 			Listafijadehashtagsregistrado lista = new Listafijadehashtagsregistrado(null);
 			Verhashtagregistrado vista = new Verhashtagregistrado(lista);
 			vista.cargarTweetsDeHashtag(h);
 			Pantalla.MainView.add(vista);
 		} else {
-			// Para usuario no registrado
 			Listafijadehashtagsnoregistrado lista = new Listafijadehashtagsnoregistrado(null);
 			Verhashtagnoregistrado vista = new Verhashtagnoregistrado(lista);
 			vista.cargarTweetsDeHashtag(h);
 			Pantalla.MainView.add(vista);
 		}
-	}
-
-	public void Mostrarmshashtags() {
-		mostrarHashtag();
 	}
 }

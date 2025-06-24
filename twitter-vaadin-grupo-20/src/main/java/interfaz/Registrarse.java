@@ -206,7 +206,10 @@ public class Registrarse extends VistaRegistrarse {
 		}
 	}	private void procesarRegistro() {
 		try {
-			// Obtener los valores de los campos
+			// Declaración del atributo IActor como en el patrón del diagrama de secuencia
+			BDPrincipal iactor = new BDPrincipal();
+			
+			// Obtener los valores de los campos siguiendo el patrón
 			String email = this.getEmailField().getValue().trim();
 			String nick = this.getNickField().getValue().trim();
 			String password = this.getPasswordField().getValue();
@@ -227,11 +230,8 @@ public class Registrarse extends VistaRegistrarse {
 			
 			System.out.println("Procesando registro para usuario: " + nick);
 			
-			// Crear instancia de la base de datos
-			BDPrincipal bd = new BDPrincipal();
-			
-			// Intentar registrar el usuario
-			basededatos.Usuario_Registrado nuevoUsuario = bd.registrar(
+			// Seguir el patrón del diagrama: actor = iactor.Join(FirstName, LastName,...)
+			basededatos.Usuario_Registrado nuevoUsuario = iactor.registrar(
 				nick, 
 				descripcion, 
 				imagenFondoURL, 
@@ -240,12 +240,17 @@ public class Registrarse extends VistaRegistrarse {
 				password, 
 				new Date()
 			);
-					if (nuevoUsuario != null) {
+			
+			if (nuevoUsuario != null) {
 				System.out.println("Registro exitoso para usuario: " + nick);
-				System.out.println("Llamando a Introducircdigodeverificacin()...");
-				// El registro fue exitoso, navegar a la vista de código de verificación
+				
+				// Almacenar el usuario registrado para el flujo de verificación
+				// Esto simula el envío del código de verificación por email
+				storeUserForVerification(nuevoUsuario);
+				
+				// Navegar a la vista de código de verificación siguiendo el flujo
+				System.out.println("Navegando a código de verificación...");
 				Introducircdigodeverificacin();
-				System.out.println("Llamada a Introducircdigodeverificacin() completada");
 			} else {
 				System.err.println("Error durante el registro - posiblemente el usuario ya existe");
 				// Mostrar mensaje de error apropiado
@@ -258,6 +263,26 @@ public class Registrarse extends VistaRegistrarse {
 			// Mostrar mensaje de error genérico
 			Mensajedeerrorregistro();
 		}
+	}
+	
+	// Método para almacenar temporalmente el usuario para verificación
+	private void storeUserForVerification(basededatos.Usuario_Registrado usuario) {
+		// En una implementación real, aquí se enviaría el email de verificación
+		// y se almacenaría temporalmente el estado del registro
+		System.out.println("Almacenando usuario para verificación: " + usuario.getNickname());
+		System.out.println("Simulando envío de código de verificación a: " + usuario.getCorreoElectronico());
+		
+		// Simular generación y envío de código
+		String codigoVerificacion = generateVerificationCode();
+		System.out.println("Código de verificación generado: " + codigoVerificacion);
+		
+		// En una implementación real, se guardaría en una tabla temporal o cache		// y se enviaría por email usando el ACT04SistemadeCorreo
+	}
+	
+	// Método para generar código de verificación
+	private String generateVerificationCode() {
+		// Generar código de 4 dígitos aleatorio
+		return String.format("%04d", (int)(Math.random() * 10000));
 	}
 
 	public void Mensajedeerrorregistro() {

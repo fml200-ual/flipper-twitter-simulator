@@ -54,26 +54,11 @@ public class Listadetweetsyretweets extends VistaListadetweetsyretweets {
 						this.getMainContainer().as(VerticalLayout.class).add(item);
 						_item.add(item);
 					}
-				}
-			} else {
+				}			} else {
 				System.out.println("No se encontraron tweets en la base de datos");
-				// Fallback: crear algunos items vacíos si no hay datos
-				for (int i = 0; i < 3; i++) {
-					Listadetweetsyretweets_item item = new Listadetweetsyretweets_item(this, null);
-					this.getMainContainer().as(VerticalLayout.class).add(item);
-					_item.add(item);
-				}
-			}
-		} catch (Exception e) {
-			// En caso de error, crear items vacíos
+			}		} catch (Exception e) {
 			System.err.println("Error cargando tweets desde la BD: " + e.getMessage());
 			e.printStackTrace();
-			
-			for (int i = 0; i < 3; i++) {
-				Listadetweetsyretweets_item item = new Listadetweetsyretweets_item(this, null);
-				this.getMainContainer().as(VerticalLayout.class).add(item);
-				_item.add(item);
-			}
 		}
 	}
 	

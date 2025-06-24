@@ -23,32 +23,32 @@ public class Escribirtweet extends Escribirtweetretweet {
 		System.out.println("Vista Escribir Tweet iniciada para usuario: " + 
 			(_aCT02UsuarioRegistrado.u != null ? _aCT02UsuarioRegistrado.u.getNickname() : "null"));
 	}
-		public void publicarTweet() {
+	public void publicarTweet() {
 		try {
+			// Declaración del atributo IActor como en el patrón del diagrama de secuencia
+			BDPrincipal iactor = new BDPrincipal();
+			
 			// Obtener el contenido del tweet del campo de texto
 			String contenido = this.getTweetTextArea().getValue();
 			
 			if (contenido == null || contenido.trim().isEmpty()) {
 				System.err.println("No se puede publicar un tweet vacío");
-				// Opcional: mostrar notificación al usuario
 				com.vaadin.flow.component.notification.Notification.show("El tweet no puede estar vacío");
 				return;
 			}
 			
-			// Obtener el usuario actual desde el actor
+			// Obtener el usuario actual desde el contexto
 			if (_aCT02UsuarioRegistrado != null && _aCT02UsuarioRegistrado.u != null) {
-				System.out.println("Publicando tweet del usuario: " + _aCT02UsuarioRegistrado.u.getNickname());
-				System.out.println("Contenido del tweet: " + contenido);
+				System.out.println("Publicando tweet siguiendo patrón ORM...");
+				System.out.println("Usuario: " + _aCT02UsuarioRegistrado.u.getNickname());
+				System.out.println("Contenido: " + contenido);
 				
-				// Crear instancia de la base de datos
-				BDPrincipal bd = new BDPrincipal();
-				
-				// Extraer hashtags del contenido (opcional: implementar extracción automática)
+				// Extraer hashtags y menciones del contenido
 				String[] hashtags = extraerHashtags(contenido);
 				String[] menciones = extraerMenciones(contenido);
 				
-				// Publicar el tweet usando los métodos ORM
-				basededatos.Usuario_Registrado usuarioActualizado = bd.publicarTweet(
+				// Seguir el patrón del diagrama: iactor.Send(padre.usuario.getID(), this.getMessage().getText())
+				iactor.publicarTweet(
 					_aCT02UsuarioRegistrado.u.getORMID(),
 					contenido,
 					new Date(),
@@ -58,13 +58,16 @@ public class Escribirtweet extends Escribirtweetretweet {
 					menciones
 				);
 				
+				// Seguir el patrón: actor a = iactor.LoadUserById(padre.logueado.getId())
+				basededatos.Usuario_Registrado usuarioActualizado = iactor.cargarUsuarioPorId(
+					_aCT02UsuarioRegistrado.u.getORMID()
+				);
+				
 				if (usuarioActualizado != null) {
 					System.out.println("Tweet publicado exitosamente");
 					
-					// Actualizar el usuario en el actor principal
+					// Actualizar el usuario en el contexto global siguiendo el patrón
 					_aCT02UsuarioRegistrado.u = usuarioActualizado;
-					
-					// Actualizar también en MainView.Usuario para mantener consistencia
 					mds2.MainView.Usuario.usuarioRegistrado = usuarioActualizado;
 					
 					// Mostrar notificación de éxito
@@ -76,8 +79,8 @@ public class Escribirtweet extends Escribirtweetretweet {
 					// Cerrar la vista de escribir tweet y volver a la vista principal
 					cerrarVista();
 				} else {
-					System.err.println("Error al publicar el tweet");
-					com.vaadin.flow.component.notification.Notification.show("Error al publicar el tweet");
+					System.err.println("Error al recargar el usuario después de publicar");
+					com.vaadin.flow.component.notification.Notification.show("Error al actualizar los datos");
 				}
 			} else {
 				System.err.println("No hay usuario autenticado para publicar tweet");

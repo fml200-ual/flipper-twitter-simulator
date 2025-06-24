@@ -330,4 +330,94 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		return null;
 	}
 	
+	public Usuario_Registrado activarCuenta(String correoElectronico, String nickname) {
+		try {
+			// En una implementación real, aquí se marcaría la cuenta como verificada
+			// Por ahora, simplemente devolvemos el usuario si existe
+			Usuario_Registrado usuario = this.bd_userR.validacionCorreo(correoElectronico);
+			if (usuario != null && usuario.getNickname().equals(nickname)) {
+				System.out.println("Cuenta activada para usuario: " + nickname);
+				return usuario;
+			}
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public Usuario_Registrado cargarUsuarioPorId(int idUsuario) {
+		try {
+			return this.bd_userR.cargarUsuarioPorId(idUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public void dejarDeSeguir(int idSeguidor, int idSeguido) {
+		try {
+			this.bd_userR.dejarDeSeguir(idSeguidor, idSeguido);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Hashtag[] buscarHashtag(String hashtag) {
+		try {
+			return this.bd_hashtag.buscarHashtag(hashtag);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Cargar lista de seguidores de un usuario
+	 */
+	public Usuario_Registrado[] cargarSeguidores(int idUsuario) {
+		try {
+			return this.bd_userR.cargarSeguidores(idUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * Cargar lista de usuarios seguidos por un usuario
+	 */
+	public Usuario_Registrado[] cargarSeguidos(int idUsuario) {
+		try {
+			return this.bd_userR.cargarSeguidos(idUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * Contar número de seguidores de un usuario
+	 */
+	public int contarSeguidores(int idUsuario) {
+		try {
+			return this.bd_userR.contarSeguidores(idUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Contar número de seguidos de un usuario
+	 */
+	public int contarSeguidos(int idUsuario) {
+		try {
+			return this.bd_userR.contarSeguidos(idUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 }

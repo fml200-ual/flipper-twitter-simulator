@@ -49,20 +49,12 @@ public class Listadehashtags extends VistaListadehashtags {
 						this._item.add(item);
 					}
 				}
-				System.out.println("Items de hashtags creados: " + this._item.size());
-			} else {
+				System.out.println("Items de hashtags creados: " + this._item.size());			} else {
 				System.out.println("No se encontraron hashtags en la base de datos");
-				// Si no hay hashtags reales, mostrar mensaje o crear algunos por defecto
 			}
 		} catch (Exception e) {
 			System.err.println("Error cargando hashtags reales: " + e.getMessage());
 			e.printStackTrace();
-			// En caso de error, crear algunos items vacíos como fallback
-			for (int i = 0; i < 3; i++) {
-				Listadehashtags_item item = new Listadehashtags_item(this, null);
-				this.getMainContainer().as(VerticalLayout.class).add(item);
-				this._item.add(item);
-			}
 		}
 		System.out.println("=== Fin carga hashtags reales ===");
 	}
