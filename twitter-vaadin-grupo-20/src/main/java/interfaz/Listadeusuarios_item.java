@@ -66,21 +66,33 @@ public class Listadeusuarios_item extends VistaListadeusuarios_item {	public Lis
 	}
 	
 	private void mostrarDatosPorDefecto() {
-		this.getNickName().setText("Usuario");
-		this.getDescriptionText().setText("Sin datos disponibles");
+		this.getNickName().setText("Usuario");		this.getDescriptionText().setText("Sin datos disponibles");
 		this.getFollowersCount().setText("0");
-	}	public void VerperfildeUsuario() {
+	}
+	
+	public void VerperfildeUsuario() {
 		if (u != null) {
 			System.out.println("Navegando al perfil del usuario: " + u.getNickname());
 			
 			// Determinar el tipo de vista según el usuario actual
-			basededatos.Usuario_Registrado usuarioActual = mds2.MainView.Usuario.usuarioRegistrado;
-					if (usuarioActual != null) {
-				// Usuario registrado - usar Verperfilregistrado
-				Verperfilregistrado perfilRegistrado = new Verperfilregistrado(u);
-				mds2.MainView.Pantalla.Anterior = mds2.MainView.Pantalla.MainView.getComponentAt(0);
-				mds2.MainView.Pantalla.MainView.removeAll();
-				mds2.MainView.Pantalla.MainView.add(perfilRegistrado);			} else {
+			basededatos.Usuario_Registrado usuarioActual = mds2.MainView.Usuario.usuarioRegistrado;			if (usuarioActual != null) {
+				// Usuario registrado - verificar si está bloqueado por el usuario que queremos ver
+				if (verificarSiUsuarioActualEstaBloqueadoPor(usuarioActual, u)) {
+					// El usuario actual está bloqueado por este usuario - mostrar perspectiva bloqueado
+					System.out.println("Usuario actual bloqueado por " + u.getNickname() + " - mostrando perspectiva bloqueado");
+					Perspectivabloqueado perspectivaBloqueado = new Perspectivabloqueado(u);
+					
+					mds2.MainView.Pantalla.Anterior = mds2.MainView.Pantalla.MainView.getComponentAt(0);
+					mds2.MainView.Pantalla.MainView.removeAll();
+					mds2.MainView.Pantalla.MainView.add(perspectivaBloqueado);
+				} else {
+					// Usuario registrado normal - usar Verperfilregistrado
+					Verperfilregistrado perfilRegistrado = new Verperfilregistrado(u);
+					mds2.MainView.Pantalla.Anterior = mds2.MainView.Pantalla.MainView.getComponentAt(0);
+					mds2.MainView.Pantalla.MainView.removeAll();
+					mds2.MainView.Pantalla.MainView.add(perfilRegistrado);
+				}
+			} else {
 				// Usuario no registrado - usar Verperfilnoregistrado
 				Verperfilnoregistrado perfilNoRegistrado = new Verperfilnoregistrado(u);
 				mds2.MainView.Pantalla.Anterior = mds2.MainView.Pantalla.MainView.getComponentAt(0);
@@ -89,6 +101,38 @@ public class Listadeusuarios_item extends VistaListadeusuarios_item {	public Lis
 			}
 		} else {
 			System.err.println("No se puede navegar al perfil: usuario es null");
+		}
+	}
+	
+	/**
+	 * Verifica si el usuario actual está bloqueado por el usuario destino
+	 * Siguiendo el patrón ORM accediendo a la colección 'bloqueados' del usuario destino
+	 */	@SuppressWarnings("unchecked")
+	private boolean verificarSiUsuarioActualEstaBloqueadoPor(basededatos.Usuario_Registrado usuarioActual, basededatos.Usuario_Registrado usuarioDestino) {
+		try {
+			// Usar BDPrincipal para consultar directamente el estado de bloqueo desde la BD
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+			
+			// Cargar el usuario destino actualizado desde la BD
+			basededatos.Usuario_Registrado usuarioDestinoActualizado = bd.cargarUsuarioPorId(usuarioDestino.getId_usuario());
+			
+			if (usuarioDestinoActualizado != null && usuarioDestinoActualizado.bloqueados != null) {
+				// Verificar si el usuario actual está en la lista de bloqueados del usuario destino
+				for(java.util.Iterator<basededatos.Usuario_Registrado> iter = usuarioDestinoActualizado.bloqueados.getIterator(); iter.hasNext();) {
+					basededatos.Usuario_Registrado bloqueado = iter.next();
+					if (bloqueado.getId_usuario() == usuarioActual.getId_usuario()) {
+						System.out.println("Usuario actual " + usuarioActual.getNickname() + " está bloqueado por " + usuarioDestino.getNickname());
+						return true; // El usuario actual está en la lista de bloqueados del usuario destino
+					}
+				}
+			}
+			
+			System.out.println("Usuario actual " + usuarioActual.getNickname() + " NO está bloqueado por " + usuarioDestino.getNickname());
+			return false;
+		} catch (Exception e) {
+			System.err.println("Error verificando si el usuario actual está bloqueado: " + e.getMessage());
+			e.printStackTrace();
+			return false;
 		}
 	}
 

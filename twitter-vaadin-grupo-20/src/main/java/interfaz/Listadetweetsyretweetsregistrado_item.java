@@ -413,54 +413,65 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 		} else {
 			System.err.println("No se puede publicar comentario: tweet es null o contenido vacío");
 		}
-	}
-	/**
+	}	/**
 	 * Actualizar todos los contadores del tweet (me gusta, retweets, comentarios)
-	 * OPTIMIZACIÓN: Usar OptimizadorBD para reducir conexiones múltiples
+	 * OPTIMIZACIÓN: Usar métodos seguros de BD_Tweet para evitar LazyInitializationException
 	 */
 	public void actualizarContadoresDelTweet() {
 		if (t != null) {
 			try {
-				// Obtener usuario actual
-				MainView.Usuario.usuarioRegistrado = MainView.obtenerUsuarioActual();
-				if (MainView.Usuario.usuarioRegistrado == null) {
-					System.err.println("No se puede actualizar contadores: usuario no disponible");
-					return;
-				}
-				
-				int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
-				
-				// OPTIMIZACIÓN: Una sola llamada para todos los contadores
-				basededatos.OptimizadorBD.ContadoresTweet contadores = 
-					basededatos.OptimizadorBD.cargarContadoresTweet(t.getId_tweet(), idUsuarioActual);
+				// Usar métodos seguros de BD_Tweet para obtener contadores actualizados
+				basededatos.BD_Tweet bdTweet = new basededatos.BD_Tweet();
+				int numMeGusta = bdTweet.contarMeGustaTweet(t.getId_tweet());
+				int numRetweets = bdTweet.contarRetweetsTweet(t.getId_tweet());
+				int numComentarios = bdTweet.contarComentariosTweet(t.getId_tweet());
 				
 				// Actualizar variables locales
-				contadorMeGusta = contadores.meGusta;
-				leGusta = contadores.leGustaUsuario;
+				contadorMeGusta = numMeGusta;
 				
-				// Actualizar la UI con los nuevos contadores (usando solo los que sabemos que existen)
-				this.getLikesCountLabel().setText(String.valueOf(contadorMeGusta));
+				// Actualizar la UI con los nuevos contadores
+				this.getLikesCountLabel().setText(String.valueOf(numMeGusta));
+				this.getXLabel().setText(String.valueOf(numRetweets));
+				this.getZLabel().setText(String.valueOf(numComentarios));
 				
-				// Para retweets y comentarios, usar métodos genéricos o registrar en consola
+				// Actualizar también el estado de "me gusta" si es necesario
+				actualizarUImeGusta();
+				
 				System.out.println("Contadores actualizados para tweet " + t.getId_tweet() + 
-					" - Likes: " + contadores.meGusta + ", Retweets: " + contadores.retweets + ", Comentarios: " + contadores.comentarios);
+					" - Likes: " + numMeGusta + ", Retweets: " + numRetweets + ", Comentarios: " + numComentarios);
 				
 			} catch (Exception e) {
 				System.err.println("Error actualizando contadores del tweet: " + e.getMessage());
 			}
 		}
 	}
-	
-	/**
+		/**
 	 * Cargar contadores iniciales de me gusta, retweets y comentarios
 	 */
-	private void cargarContadoresIniciales() {		if (t != null) {
-			// OPTIMIZACIÓN: Deshabilitar consultas adicionales para mejorar rendimiento inicial
-			// Los contadores se cargarán bajo demanda cuando sea necesario
+	private void cargarContadoresIniciales() {
+		if (t != null) {
 			try {
-				System.out.println("Contadores iniciales programados para carga diferida - Tweet ID: " + t.getId_tweet());
+				// Cargar contadores usando métodos seguros de BD_Tweet
+				basededatos.BD_Tweet bdTweet = new basededatos.BD_Tweet();
+				int numMeGusta = bdTweet.contarMeGustaTweet(t.getId_tweet());
+				int numRetweets = bdTweet.contarRetweetsTweet(t.getId_tweet());
+				int numComentarios = bdTweet.contarComentariosTweet(t.getId_tweet());
+				
+				// Actualizar los contadores en la UI
+				this.getLikesCountLabel().setText(String.valueOf(numMeGusta));
+				this.getXLabel().setText(String.valueOf(numRetweets));
+				this.getZLabel().setText(String.valueOf(numComentarios));
+				
+				System.out.println("Contadores iniciales cargados - Tweet ID: " + t.getId_tweet() + 
+					" - Likes: " + numMeGusta + ", Retweets: " + numRetweets + ", Comentarios: " + numComentarios);
+				
 			} catch (Exception e) {
-				System.err.println("Error en carga diferida de contadores: " + e.getMessage());
+				System.err.println("Error cargando contadores iniciales: " + e.getMessage());
+				// Valores por defecto en caso de error
+				this.getLikesCountLabel().setText("0");
+				this.getXLabel().setText("0");
+				this.getZLabel().setText("0");
 			}
-		}}
+		}
+	}
 }

@@ -37,9 +37,15 @@ public class Vercomentario extends VistaVercomentario {
 				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd MMM yyyy");
 				this.getCommentDate().setText(sdf.format(c.getFechaPublicacion()));
 			}
-			
-			// Rellenar contadores de me gusta
-			this.getCommentLikeCount().setText("" + c.recibe_me_gusta.size());
+					// Rellenar contadores de me gusta usando BD para evitar LazyInitializationException
+		try {
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+			int likesCount = bd.contarLikesComentario(c.getORMID());
+			this.getCommentLikeCount().setText("" + likesCount);
+		} catch (Exception e) {
+			System.err.println("Error obteniendo likes del comentario: " + e.getMessage());
+			this.getCommentLikeCount().setText("0");
+		}
 		}
 	}
 }

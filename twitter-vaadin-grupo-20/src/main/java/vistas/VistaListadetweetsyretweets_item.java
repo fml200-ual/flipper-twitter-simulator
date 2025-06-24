@@ -38,6 +38,10 @@ public class VistaListadetweetsyretweets_item extends LitTemplate {
 	private Icon commentsIcon;
 	@Id("likesCountLabel")
 	private Element likesCountLabel;
+	@Id("xLabel")
+	private Element xLabel;
+	@Id("zLabel")
+	private Element zLabel;
 
 	public VistaListadetweetsyretweets_item() {
 		// You can initialise any data required for the connected UI components here.
@@ -77,9 +81,16 @@ public class VistaListadetweetsyretweets_item extends LitTemplate {
 	public Element getLikesCountLabel() {
 		return likesCountLabel;
 	}
-	
-	public Element getUsername() {
+		public Element getUsername() {
 		return username;
+	}
+	
+	public Element getXLabel() {
+		return xLabel;
+	}
+	
+	public Element getZLabel() {
+		return zLabel;
 	}
 
 	// Método para actualizar el contenido del tweet

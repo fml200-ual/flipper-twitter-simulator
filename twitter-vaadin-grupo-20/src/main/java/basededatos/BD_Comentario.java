@@ -65,4 +65,29 @@ public class BD_Comentario {
 		return comentario;
 	}
 	
+	/**
+	 * Método para obtener el contador de me gusta de un comentario de forma segura
+	 */
+	public int contarLikesComentario(int id_comentario) {
+		try {
+			PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+					.getSession().beginTransaction();
+			
+			basededatos.Comentario comentario = ComentarioDAO.getComentarioByORMID(id_comentario);
+			int contador = 0;
+			
+			if (comentario != null && comentario.recibe_me_gusta != null) {
+				contador = comentario.recibe_me_gusta.size();
+			}
+			
+			t.commit();
+			ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+			return contador;
+			
+		} catch (Exception e) {
+			System.err.println("Error contando likes del comentario: " + e.getMessage());
+			return 0;
+		}
+	}
+	
 }

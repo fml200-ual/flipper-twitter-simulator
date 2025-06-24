@@ -118,15 +118,16 @@ public class Verperfiladministrador extends Verperfil {
 				if (u.getFechaDeRegistro() != null) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMMM yyyy");
 					this.getJoinDate().setText("Se unió en " + sdf.format(u.getFechaDeRegistro()));
-				}
-						// Calcular y mostrar contadores reales de seguidores y seguidos desde la base de datos
+				}				// Calcular y mostrar contadores reales de seguidores y seguidos desde la base de datos
 				try {
+					basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+					
 					// Número de usuarios que sigue este usuario
-					int siguiendo = u.seguidosPropiedadesseguidoss.size();
+					int siguiendo = bd.contarSeguidos(u.getId_usuario());
 					this.getFollowingCount().setText(siguiendo + " siguiendo");
 					
 					// Número de usuarios que siguen a este usuario
-					int seguidores = u.seguidoresPropiedadesseguidoss.size();
+					int seguidores = bd.contarSeguidores(u.getId_usuario());
 					String seguidoresTexto;
 					if (seguidores >= 1000) {
 						double seguidoresK = seguidores / 1000.0;

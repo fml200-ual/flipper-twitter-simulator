@@ -41,12 +41,13 @@ public class Listadehashtags_item extends VistaListadehashtags_item {
 				this.getHashtagText().setText("#" + hashtag);
 			}
 		}
-		
-		// Número de tweets que usan este hashtag
+				// Número de tweets que usan este hashtag usando BD para evitar LazyInitializationException
 		try {
-			int numTweets = h.pertenece != null ? h.pertenece.size() : 0;
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+			int numTweets = bd.contarTweetsHashtag(h.getORMID());
 			this.getPostCount().setText(numTweets + " posts");
 		} catch (Exception e) {
+			System.err.println("Error obteniendo conteo de tweets del hashtag: " + e.getMessage());
 			this.getPostCount().setText("0 posts");
 		}
 		

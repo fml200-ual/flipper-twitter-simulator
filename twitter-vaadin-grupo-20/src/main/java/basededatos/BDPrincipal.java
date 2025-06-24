@@ -444,4 +444,64 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		}
 	}
 	
+	/**
+	 * Contar número de likes de un tweet
+	 */
+	public int contarLikesTweet(int idTweet) {
+		try {
+			return this.bd_tweet.contarMeGustaTweet(idTweet);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Contar número de retweets de un tweet
+	 */
+	public int contarRetweetsTweet(int idTweet) {
+		try {
+			return this.bd_tweet.contarRetweetsTweet(idTweet);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Contar número de comentarios de un tweet
+	 */
+	public int contarComentariosTweet(int idTweet) {
+		try {
+			return this.bd_tweet.contarComentariosTweet(idTweet);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Contar número de likes de un comentario
+	 */
+	public int contarLikesComentario(int idComentario) {
+		try {
+			return this.bd_comentario.contarLikesComentario(idComentario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Contar número de tweets que usan un hashtag
+	 */
+	public int contarTweetsHashtag(int idHashtag) {
+		try {
+			return this.bd_hashtag.contarTweetsHashtag(idHashtag);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 }

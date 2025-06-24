@@ -65,4 +65,30 @@ public class BD_Hashtag {
 		}
 		return hashtags;
 	}
+	
+	/**
+	 * Método para contar cuántos tweets usan un hashtag específico
+	 */
+	public int contarTweetsHashtag(int id_hashtag) {
+		try {
+			PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+					.getSession().beginTransaction();
+			
+			Hashtag hashtag = HashtagDAO.getHashtagByORMID(id_hashtag);
+			int contador = 0;
+			
+			if (hashtag != null && hashtag.pertenece != null) {
+				contador = hashtag.pertenece.size();
+			}
+			
+			t.commit();
+			ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+			return contador;
+			
+		} catch (Exception e) {
+			System.err.println("Error contando tweets del hashtag: " + e.getMessage());
+			return 0;
+		}
+	}
+	
 }

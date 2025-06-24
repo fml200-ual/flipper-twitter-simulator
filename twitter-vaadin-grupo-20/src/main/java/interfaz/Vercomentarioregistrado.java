@@ -3,7 +3,6 @@ package interfaz;
 import mds2.MainView;
 import mds2.MainView.Pantalla;
 import basededatos.BD_Usuario_Registrado;
-import basededatos.Comentario;
 import basededatos.Usuario_Registrado;
 import org.orm.PersistentException;
 import com.vaadin.flow.component.notification.Notification;
@@ -101,20 +100,21 @@ public class Vercomentarioregistrado extends Vercomentario {
 			this.getCommentLikeButton().getStyle().set("color", "#8899a6"); // Gris outline
 		}
 	}
-
 	private void actualizarContadores() {
 		if (c != null) {
 			try {
-				// Recargar el comentario para obtener datos actualizados
-				Comentario comentarioActualizado = basededatos.ComentarioDAO.getComentarioByORMID(c.getId_comentario());
-				int numMeGusta = comentarioActualizado.recibe_me_gusta.size();
+				// Usar BD para obtener los contadores de forma segura
+				basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+				int numMeGusta = bd.contarLikesComentario(c.getId_comentario());
 				this.getCommentLikeCount().setText(String.valueOf(numMeGusta));
-						// Actualizar también en el item padre si existe
+				
+				// Actualizar también en el item padre si existe
 				if (_listadecomentariosregistrado != null) {
 					// TODO: Implementar actualizarContadores en el item padre
 					// _listadecomentariosregistrado.actualizarContadores();
 				}
 			} catch (Exception e) {
+				System.err.println("Error actualizando contadores del comentario: " + e.getMessage());
 				e.printStackTrace();
 			}
 		}

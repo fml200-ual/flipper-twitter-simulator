@@ -49,11 +49,28 @@ public class Vertweetnoregistrado extends TweetRetweetnoregistrado {
 			if (t.getFechaPublicacion() != null) {
 				this.getFechaPublicacion().setText(t.getFechaPublicacion().toString());
 			}
+					// Rellenar contadores usando BD para evitar LazyInitializationException
+		try {
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 			
-			// Rellenar contadores (solo visuales para no registrado)
-			this.getNumMegusta().setText("" + t.recibe_me_gusta.size());
-			this.getNumeroRetweets().setText("" + t.retweets.size());
-			this.getNumeroRetweets1().setText("" + t.tiene.size()); // comentarios
+			// Contar likes usando método BD
+			int likesCount = bd.contarLikesTweet(t.getORMID());
+			this.getNumMegusta().setText("" + likesCount);
+			
+			// Contar retweets usando método BD
+			int retweetsCount = bd.contarRetweetsTweet(t.getORMID());
+			this.getNumeroRetweets().setText("" + retweetsCount);
+			
+			// Contar comentarios usando método BD
+			int comentariosCount = bd.contarComentariosTweet(t.getORMID());
+			this.getNumeroRetweets1().setText("" + comentariosCount);
+			
+		} catch (Exception e) {
+			System.err.println("Error obteniendo contadores del tweet: " + e.getMessage());
+			this.getNumMegusta().setText("0");
+			this.getNumeroRetweets().setText("0");
+			this.getNumeroRetweets1().setText("0");
+		}
 		}
 	}
 }
