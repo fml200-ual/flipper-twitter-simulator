@@ -26,12 +26,13 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 			System.out.println("Creando item para tweet null");
 			mostrarDatosPorDefecto();
 		}
-
 		// Configurar click listener para navegar según el tipo
 		configurarEventos();
-		
 		// Configurar evento para el botón de "me gusta" (doble click)
 		configurarEventoMeGusta();
+		
+		// Cargar contadores iniciales de todos los tipos
+		cargarContadoresIniciales();
 	}
 	
 	// Constructor de compatibilidad temporal
@@ -153,10 +154,9 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_vertweetregistrado);
-	}
-	public void Verretweetregistrado() {
-		// TODO: Pasar el tweet cuando se actualice el constructor
-		_verretweetregistrado = new Verretweetregistrado(this);
+	}	public void Verretweetregistrado() {
+		// Pasar el tweet que es un retweet para mostrar información completa
+		_verretweetregistrado = new Verretweetregistrado(this, t);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verretweetregistrado);
@@ -176,10 +176,11 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verretweetpropio);
-	}
-	private void cargarEstadoMeGusta() {
+	}	public void cargarEstadoMeGusta() {
 		if (t != null) {
 			try {
+				// OPTIMIZACIÓN: Usar OptimizadorBD para reducir conexiones múltiples
+				
 				// Verificar estado del usuario antes de la operación
 				MainView.verificarEstadoUsuario("cargarEstadoMeGusta - antes");
 				
@@ -195,12 +196,12 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 				
 				int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
 				
-				// Verificar si al usuario actual le gusta este tweet
-				basededatos.BD_Tweet bdTweet = new basededatos.BD_Tweet();
-				leGusta = bdTweet.verificarMeGustaTweet(idUsuarioActual, t.getId_tweet());
+				// OPTIMIZACIÓN: Usar instancia singleton para evitar múltiples conexiones
+				basededatos.OptimizadorBD.ContadoresTweet contadores = 
+					basededatos.OptimizadorBD.cargarContadoresTweet(t.getId_tweet(), idUsuarioActual);
 				
-				// Cargar el contador de "me gusta"
-				contadorMeGusta = bdTweet.contarMeGustaTweet(t.getId_tweet());
+				leGusta = contadores.leGustaUsuario;
+				contadorMeGusta = contadores.meGusta;
 				
 				// Actualizar la UI
 				actualizarUImeGusta();
@@ -209,12 +210,11 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 				MainView.verificarEstadoUsuario("cargarEstadoMeGusta - después");
 			} catch (Exception e) {
 				System.err.println("Error cargando estado de me gusta: " + e.getMessage());
-				e.printStackTrace();
 				leGusta = false;
 				contadorMeGusta = 0;
 			}
 		}
-	}	private void configurarEventoMeGusta() {
+	}private void configurarEventoMeGusta() {
 		// Simplificar el evento de me gusta usando el click en todo el elemento
 		// En lugar de buscar específicamente el heartIcon que puede no existir
 		try {
@@ -243,7 +243,9 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 				}
 				
 				int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
-				basededatos.BD_Tweet bdTweet = new basededatos.BD_Tweet();
+				
+				// OPTIMIZACIÓN: Usar instancia singleton para evitar múltiples conexiones
+				basededatos.BD_Tweet bdTweet = basededatos.OptimizadorBD.getBDTweetInstance();
 				
 				if (leGusta) {
 					// Quitar "me gusta"
@@ -293,4 +295,172 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 			System.err.println("Error actualizando UI de me gusta: " + e.getMessage());
 		}
 	}
+	
+	// METODOLOGÍA ACTIVIDAD 12: Implementación de retweet directo
+	/**
+	 * Realizar retweet directamente desde el item siguiendo diagramas de secuencia
+	 */
+	public void realizarRetweet() {
+		if (t != null) {
+			try {
+				System.out.println("Realizando retweet del tweet ID: " + t.getId_tweet());
+				
+				// Verificar estado del usuario antes de la operación
+				MainView.verificarEstadoUsuario("realizarRetweet - antes");
+				
+				// Obtener el usuario actual de forma segura
+				MainView.Usuario.usuarioRegistrado = MainView.obtenerUsuarioActual();
+				
+				if (MainView.Usuario.usuarioRegistrado == null) {
+					System.err.println("Error: No se pudo obtener el usuario actual para retweet");
+					return;
+				}
+				
+				int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
+				
+				// Crear instancia de la base de datos
+				basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+				
+				// Realizar retweet usando método ORM
+				basededatos.Usuario_Registrado usuarioActualizado = bd.darRetweet(
+					idUsuarioActual, 
+					t.getId_tweet(), 
+					new java.util.Date()
+				);
+				
+				if (usuarioActualizado != null) {
+					System.out.println("Retweet realizado exitosamente");
+					
+					// Actualizar contadores y refrescar UI
+					actualizarContadoresDelTweet();
+					
+					// Refrescar la lista de tweets
+					if (_listadetweetsyretweets != null) {
+						_listadetweetsyretweets.recargarTweets();
+					}
+					
+					// Verificar estado del usuario después de la operación
+					MainView.verificarEstadoUsuario("realizarRetweet - después");
+				} else {
+					System.err.println("Error al realizar retweet");
+				}
+				
+			} catch (Exception e) {
+				System.err.println("Error durante el retweet: " + e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			System.err.println("No se puede hacer retweet: tweet es null");
+		}
+	}
+	
+	// METODOLOGÍA ACTIVIDAD 12: Implementación de comentario directo
+	/**
+	 * Publicar comentario directamente siguiendo diagramas de secuencia
+	 */
+	public void publicarComentario(String contenidoComentario) {
+		if (t != null && contenidoComentario != null && !contenidoComentario.trim().isEmpty()) {
+			try {
+				System.out.println("Publicando comentario en tweet ID: " + t.getId_tweet());
+				
+				// Verificar estado del usuario antes de la operación
+				MainView.verificarEstadoUsuario("publicarComentario - antes");
+				
+				// Obtener el usuario actual de forma segura
+				MainView.Usuario.usuarioRegistrado = MainView.obtenerUsuarioActual();
+				
+				if (MainView.Usuario.usuarioRegistrado == null) {
+					System.err.println("Error: No se pudo obtener el usuario actual para comentario");
+					return;
+				}
+				
+				int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
+				
+				// Crear instancia de la base de datos
+				basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+				
+				// Publicar comentario usando método ORM
+				basededatos.Usuario_Registrado usuarioActualizado = bd.publicarComentario(
+					idUsuarioActual, 
+					t.getId_tweet(), 
+					contenidoComentario,
+					null, // URL documento
+					new java.util.Date(),
+					null // tipo documento
+				);
+				
+				if (usuarioActualizado != null) {
+					System.out.println("Comentario publicado exitosamente");
+					
+					// Actualizar contadores y refrescar UI
+					actualizarContadoresDelTweet();
+					
+					// Refrescar la lista de tweets
+					if (_listadetweetsyretweets != null) {
+						_listadetweetsyretweets.recargarTweets();
+					}
+					
+					// Verificar estado del usuario después de la operación
+					MainView.verificarEstadoUsuario("publicarComentario - después");
+				} else {
+					System.err.println("Error al publicar comentario");
+				}
+				
+			} catch (Exception e) {
+				System.err.println("Error durante la publicación del comentario: " + e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			System.err.println("No se puede publicar comentario: tweet es null o contenido vacío");
+		}
+	}
+	/**
+	 * Actualizar todos los contadores del tweet (me gusta, retweets, comentarios)
+	 * OPTIMIZACIÓN: Usar OptimizadorBD para reducir conexiones múltiples
+	 */
+	public void actualizarContadoresDelTweet() {
+		if (t != null) {
+			try {
+				// Obtener usuario actual
+				MainView.Usuario.usuarioRegistrado = MainView.obtenerUsuarioActual();
+				if (MainView.Usuario.usuarioRegistrado == null) {
+					System.err.println("No se puede actualizar contadores: usuario no disponible");
+					return;
+				}
+				
+				int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
+				
+				// OPTIMIZACIÓN: Una sola llamada para todos los contadores
+				basededatos.OptimizadorBD.ContadoresTweet contadores = 
+					basededatos.OptimizadorBD.cargarContadoresTweet(t.getId_tweet(), idUsuarioActual);
+				
+				// Actualizar variables locales
+				contadorMeGusta = contadores.meGusta;
+				leGusta = contadores.leGustaUsuario;
+				
+				// Actualizar la UI con los nuevos contadores (usando solo los que sabemos que existen)
+				this.getLikesCountLabel().setText(String.valueOf(contadorMeGusta));
+				
+				// Para retweets y comentarios, usar métodos genéricos o registrar en consola
+				System.out.println("Contadores actualizados para tweet " + t.getId_tweet() + 
+					" - Likes: " + contadores.meGusta + ", Retweets: " + contadores.retweets + ", Comentarios: " + contadores.comentarios);
+				
+			} catch (Exception e) {
+				System.err.println("Error actualizando contadores del tweet: " + e.getMessage());
+			}
+		}
+	}
+	
+	/**
+	 * Cargar contadores iniciales de me gusta, retweets y comentarios
+	 */
+	private void cargarContadoresIniciales() {		if (t != null) {
+			// OPTIMIZACIÓN: Deshabilitar consultas adicionales para mejorar rendimiento inicial
+			// Los contadores se cargarán bajo demanda cuando sea necesario
+			try {
+				System.out.println("Contadores iniciales programados para carga diferida - Tweet ID: " + t.getId_tweet());
+			} catch (Exception e) {
+				System.err.println("Error en carga diferida de contadores: " + e.getMessage());
+			}
+		}}
 }

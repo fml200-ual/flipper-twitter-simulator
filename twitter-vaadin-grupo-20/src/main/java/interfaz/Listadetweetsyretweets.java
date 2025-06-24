@@ -156,4 +156,33 @@ public class Listadetweetsyretweets extends VistaListadetweetsyretweets {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Refrescar un tweet específico en la lista
+	 */
+	public void refrescarTweet(int idTweet) {
+		try {
+			System.out.println("Refrescando tweet ID: " + idTweet);
+			
+			// Buscar el item del tweet en la lista
+			for (Listadetweetsyretweets_item item : _item) {
+				if (item instanceof Listadetweetsyretweetsregistrado_item) {
+					Listadetweetsyretweetsregistrado_item itemRegistrado = (Listadetweetsyretweetsregistrado_item) item;
+					if (itemRegistrado.t != null && itemRegistrado.t.getId_tweet() == idTweet) {
+						// Recargar datos del tweet y actualizar contadores
+						itemRegistrado.actualizarContadoresDelTweet();
+						itemRegistrado.cargarEstadoMeGusta();
+						System.out.println("Tweet " + idTweet + " refrescado exitosamente");
+						return;
+					}
+				}
+			}
+			
+			System.out.println("No se encontró el tweet " + idTweet + " en la lista actual");
+			
+		} catch (Exception e) {
+			System.err.println("Error refrescando tweet " + idTweet + ": " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }

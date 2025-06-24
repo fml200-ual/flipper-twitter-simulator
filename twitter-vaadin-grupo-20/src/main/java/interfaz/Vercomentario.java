@@ -19,27 +19,27 @@ public class Vercomentario extends VistaVercomentario {
 	public Vercomentario() {
 		this(null);
 	}
-	
-	private void rellenarDatosComentario() {
+		private void rellenarDatosComentario() {
 		if (c != null) {
 			// Rellenar contenido del comentario
 			if (c.getContenidoComentario() != null) {
-				// this.getCommentText().setText(c.getContenidoComentario());
+				this.getCommentText().setText(c.getContenidoComentario());
 			}
 			
 			// Rellenar datos del usuario
 			if (c.getPublicado_por() != null) {
-				// this.getUsername().setText(c.getPublicado_por().getNombre());
-				// this.getUserHandle().setText("@" + c.getPublicado_por().getNickname());
+				this.getCommenterUsername().setText(c.getPublicado_por().getNickname());
+				this.getCommenterHandle().setText("@" + c.getPublicado_por().getNickname());
 			}
 			
 			// Rellenar fecha
 			if (c.getFechaPublicacion() != null) {
-				// this.getCommentDate().setText(c.getFechaPublicacion().toString());
+				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd MMM yyyy");
+				this.getCommentDate().setText(sdf.format(c.getFechaPublicacion()));
 			}
 			
 			// Rellenar contadores de me gusta
-			// this.getCommentLikeCount().setText("" + c.recibe_me_gusta.size());
+			this.getCommentLikeCount().setText("" + c.recibe_me_gusta.size());
 		}
 	}
 }

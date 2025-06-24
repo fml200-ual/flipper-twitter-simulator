@@ -600,4 +600,64 @@ public class BD_Usuario_Registrado {
 		}
 		return numSeguidos;
 	}
+	
+	/**
+	 * Verifica si un usuario le dio me gusta a un tweet específico
+	 * @param idUsuario ID del usuario
+	 * @param idTweet ID del tweet
+	 * @return true si le gusta, false si no
+	 */
+	public boolean yaLeGustaTweet(int idUsuario, int idTweet) throws PersistentException {
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Buscar directamente en la tabla de relación many-to-many
+			String query = "SELECT COUNT(*) FROM Tweet_Usuario_Registrado " +
+						   "WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario + 
+						   " AND TweetId_tweet = " + idTweet;
+			
+			// Usar HQL para la consulta
+			org.hibernate.Query hibernateQuery = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().createSQLQuery(query);
+			
+			Object result = hibernateQuery.uniqueResult();
+			int count = result != null ? ((Number) result).intValue() : 0;
+			
+			t.commit();
+			return count > 0;
+		} catch (Exception e) {
+			t.rollback();
+			throw new PersistentException(e);
+		}
+	}
+	
+	/**
+	 * Verifica si un usuario le dio me gusta a un comentario específico
+	 * @param idUsuario ID del usuario
+	 * @param idComentario ID del comentario
+	 * @return true si le gusta, false si no
+	 */
+	public boolean yaLeGustaComentario(int idUsuario, int idComentario) throws PersistentException {
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Buscar directamente en la tabla de relación many-to-many
+			String query = "SELECT COUNT(*) FROM Comentario_Usuario_Registrado2 " +
+						   "WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario + 
+						   " AND ComentarioId_comentario = " + idComentario;
+			
+			// Usar HQL para la consulta
+			org.hibernate.Query hibernateQuery = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().createSQLQuery(query);
+			
+			Object result = hibernateQuery.uniqueResult();
+			int count = result != null ? ((Number) result).intValue() : 0;
+			
+			t.commit();
+			return count > 0;
+		} catch (Exception e) {
+			t.rollback();
+			throw new PersistentException(e);
+		}
+	}
 }

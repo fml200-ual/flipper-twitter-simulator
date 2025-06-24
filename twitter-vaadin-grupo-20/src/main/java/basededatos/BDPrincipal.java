@@ -302,7 +302,31 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		}
 		return null;
 	}
-
+		// METODOLOGÍA ACTIVIDAD 12: Cargar comentarios de un tweet específico
+	public Comentario[] cargarComentariosDeTweet(int id_tweet) {
+		try {
+			System.out.println("Cargando comentarios del tweet ID: " + id_tweet);
+			
+			// Obtener el tweet primero
+			Tweet tweet = this.obtenerTweetByID(id_tweet);
+			
+			if (tweet != null && tweet.tiene != null) {
+				// Convertir la colección de comentarios a array
+				basededatos.Comentario[] comentarios = tweet.tiene.toArray();
+				System.out.println("Encontrados " + comentarios.length + " comentarios para el tweet");
+				return comentarios;
+			} else {
+				System.out.println("No se encontraron comentarios para el tweet ID: " + id_tweet);
+				return new Comentario[0];
+			}
+			
+		} catch (Exception e) {
+			System.err.println("Error cargando comentarios del tweet: " + e.getMessage());
+			e.printStackTrace();
+			return new Comentario[0];
+		}
+	}
+	
 	public Usuario_Registrado obtenerUsuarioByID(int id_usuario) {
 		try {
 			return this.bd_userR.obtenerUsuarioByID(id_usuario);

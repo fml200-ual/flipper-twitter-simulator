@@ -312,24 +312,40 @@ public class BD_Tweet {
 		return exito;
 	}
 	
-	public boolean verificarMeGustaTweet(int id_usuario, int id_tweet) throws PersistentException {
-		boolean leGusta = false;
-		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
-				.getSession().beginTransaction();
+	/**
+	 * Verifica si un usuario le dio me gusta a un tweet específico
+	 * @param idUsuario ID del usuario
+	 * @param idTweet ID del tweet
+	 * @return true si le gusta, false si no
+	 */
+	public boolean verificarMeGustaTweet(int idUsuario, int idTweet) {
 		try {
-			Usuario_Registrado usuario = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
-			Tweet tweet = TweetDAO.getTweetByORMID(id_tweet);
-			
-			if (usuario != null && tweet != null) {
-				leGusta = usuario.me_gusta_tweets.contains(tweet);
+			PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+					.getSession().beginTransaction();
+			try {
+				// Buscar directamente en la tabla de relación many-to-many
+				String query = "SELECT COUNT(*) FROM Tweet_Usuario_Registrado " +
+							   "WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario + 
+							   " AND TweetId_tweet = " + idTweet;
+				
+				// Usar SQL para la consulta
+				org.hibernate.Query hibernateQuery = ProyectoMDS120242025PersistentManager.instance()
+					.getSession().createSQLQuery(query);
+				
+				Object result = hibernateQuery.uniqueResult();
+				int count = result != null ? ((Number) result).intValue() : 0;
+				
+				t.commit();
+				return count > 0;
+			} catch (Exception e) {
+				t.rollback();
+				System.err.println("Error verificando me gusta: " + e.getMessage());
+				return false;
 			}
-			t.commit();
 		} catch (Exception e) {
-			t.rollback();
-			e.printStackTrace();
+			System.err.println("Error en verificarMeGustaTweet: " + e.getMessage());
+			return false;
 		}
-		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
-		return leGusta;
 	}
 	/**
 	 * Método para obtener el contador de "me gusta" de un tweet de forma segura
