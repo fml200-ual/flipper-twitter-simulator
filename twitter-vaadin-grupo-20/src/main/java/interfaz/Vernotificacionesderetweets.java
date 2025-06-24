@@ -12,6 +12,7 @@ public class Vernotificacionesderetweets extends VistaVernotificacionesderetweet
 
 		Listadenotificaciones();
 	}
+
 	public void Listadenotificaciones() {
 		_listadenotificaciones = new Listadenotificaciones(this);
 		// Solo crear el contenedor, las notificaciones reales se cargarán desde la BD

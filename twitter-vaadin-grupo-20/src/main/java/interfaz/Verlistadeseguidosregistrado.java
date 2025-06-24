@@ -34,16 +34,13 @@ public class Verlistadeseguidosregistrado extends VistaVerlistadeseguidosregistr
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(_verpropioperfil);
 		});
-	}	public void Listadeusuarios() {
+	}
+
+	public void Listadeusuarios() {
 		_listadeusuarios = new Listadeusuarios(this);
-		
-		// TEMPORAL: Eliminar toda la carga de usuarios para depurar
-		System.out.println("=== DEPURACIÓN: No cargando usuarios ===");
-		
-		// Mostrar mensaje de no hay seguidos por ahora
+
 		this.getNoFollowedMessage().setVisible(true);
-		this.getNoFollowedMessage().setText("DEPURACIÓN: Lista vacía intencionalmente");
-		
+
 		// Agregar la lista vacía al contenedor
 		this.getFollowedListContainer().as(VerticalLayout.class).add(_listadeusuarios);
 	}
