@@ -6,15 +6,28 @@ public class Verretweetpropio extends TweetRetweetpropio {
 	public Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado;
 	
 	// Objeto ORMPersistable para el retweet que se muestra
-	public basededatos.Retweet r;
+	public basededatos.Retweet r;	// Constructor directo que acepta un Tweet que es un retweet propio
+	public Verretweetpropio(basededatos.Tweet tweetRetweet) {
+		super(tweetRetweet);
+		
+		// Rellenar datos del tweet retweet
+		rellenarDatosTweetDirecto(tweetRetweet);
+		configurarEventos();
+	}
 
+	// Constructor legacy para compatibilidad (deprecado)
+	@Deprecated
 	public Verretweetpropio(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado, basededatos.Retweet r) {
-		super();
+		super(r != null ? r.getTweet() : null);
 		this._listadetweetsyretweetsregistrado = _listadetweetsyretweetsregistrado;
 		this.r = r;
 
 		// Rellenar datos del retweet
 		rellenarDatosRetweet();
+		configurarEventos();
+	}
+
+	private void configurarEventos() {
 
 		this.getBotonVolver().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
@@ -60,6 +73,25 @@ public class Verretweetpropio extends TweetRetweetpropio {
 			// Rellenar fecha del retweet
 			if (r.getFechaPublicacion() != null) {
 				this.getFechaPublicacion().setText(r.getFechaPublicacion().toString());
+			}
+		}
+	}
+
+	private void rellenarDatosTweetDirecto(basededatos.Tweet tweetRetweet) {
+		if (tweetRetweet != null) {
+			// Rellenar contenido del tweet
+			if (tweetRetweet.getContenidoTweet() != null) {
+				this.getTextoPublicacion().setText(tweetRetweet.getContenidoTweet());
+			}
+			
+			// Rellenar datos del usuario
+			if (tweetRetweet.getPublicado_por() != null) {
+				this.getArrobaUsuario().setText("@" + tweetRetweet.getPublicado_por().getNickname());
+			}
+			
+			// Rellenar fecha
+			if (tweetRetweet.getFechaPublicacion() != null) {
+				this.getFechaPublicacion().setText(tweetRetweet.getFechaPublicacion().toString());
 			}
 		}
 	}

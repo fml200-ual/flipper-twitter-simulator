@@ -91,4 +91,30 @@ public class BD_Hashtag {
 		}
 	}
 	
+	/**
+	 * Método para cargar tweets de un hashtag específico con manejo correcto de sesiones Hibernate
+	 */
+	public Tweet[] cargarTweetsDeHashtag(int id_hashtag) {
+		try {
+			PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+					.getSession().beginTransaction();
+			
+			Hashtag hashtag = HashtagDAO.getHashtagByORMID(id_hashtag);
+			Tweet[] tweets = null;
+			
+			if (hashtag != null && hashtag.pertenece != null) {
+				tweets = hashtag.pertenece.toArray();
+			}
+			
+			t.commit();
+			ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+			return tweets;
+			
+		} catch (Exception e) {
+			System.err.println("Error cargando tweets del hashtag: " + e.getMessage());
+			e.printStackTrace();
+			return new Tweet[0]; // Retornar array vacío en caso de error
+		}
+	}
+	
 }

@@ -16,9 +16,20 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 	public Tweet tweetRetweet; // Tweet que es un retweet
 	private BD_Usuario_Registrado bdUsuario = new BD_Usuario_Registrado();
 	private boolean yaLeGusta = false;
+	// Constructor directo que acepta un Tweet que es un retweet
+	public Verretweetregistrado(Tweet tweetRetweet) {
+		super(tweetRetweet);
+		this.tweetRetweet = tweetRetweet;
 
+		// Rellenar datos del tweet retweet
+		rellenarDatosTweetRetweet();
+		configurarEventos();
+	}
+
+	// Constructor legacy para compatibilidad (deprecado)
+	@Deprecated
 	public Verretweetregistrado(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado, basededatos.Retweet r) {
-		super();
+		super(r != null ? r.getTweet() : null);
 		this._listadetweetsyretweetsregistrado = _listadetweetsyretweetsregistrado;
 		this.r = r;
 
@@ -27,9 +38,10 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 		configurarEventos();
 	}
 	
-	// Constructor que acepta un Tweet que es un retweet
+	// Constructor legacy para compatibilidad (deprecado)
+	@Deprecated
 	public Verretweetregistrado(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado, Tweet tweetRetweet) {
-		super();
+		super(tweetRetweet);
 		this._listadetweetsyretweetsregistrado = _listadetweetsyretweetsregistrado;
 		this.tweetRetweet = tweetRetweet;
 

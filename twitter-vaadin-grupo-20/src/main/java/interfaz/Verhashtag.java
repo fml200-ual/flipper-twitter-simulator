@@ -19,20 +19,19 @@ public class Verhashtag extends VistaVerhashtag {
 	public Verhashtag() {
 		this(null);
 	}
-	
-	private void rellenarDatosHashtag() {
+		private void rellenarDatosHashtag() {
 		if (h != null) {
-			// Rellenar nombre del hashtag
+			// Rellenar nombre del hashtag en el título
 			if (h.getHashtag() != null) {
-				// Mostrar el hashtag en el título
-				// this.getHashtagTitle().setText("#" + h.getHashtag());
+				// Mostrar el hashtag en el título H1
+				this.getH1().setText("#" + h.getHashtag());
 			}
 			
-			// Mostrar número de tweets que usan este hashtag
-			// this.getTweetCount().setText("" + h.pertenece.size() + " tweets");
-			
-			// Cargar y mostrar los tweets que contienen este hashtag
-			// TODO: Implementar lista de tweets que contienen este hashtag
+			// TODO: Si necesitas mostrar el número de tweets, se puede agregar aquí
+			// Ejemplo: this.getTweetCount().setText("" + conteo + " tweets");
+		} else {
+			// Si no hay hashtag específico, mostrar título genérico
+			this.getH1().setText("#Hashtag");
 		}
 	}
 }

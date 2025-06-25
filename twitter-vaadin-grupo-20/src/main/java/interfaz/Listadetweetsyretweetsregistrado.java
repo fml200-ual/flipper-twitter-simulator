@@ -28,29 +28,37 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 	public void cargarTweetsDeHashtag(basededatos.Hashtag hashtag) {
 		cargarTweetsDeHashtag(hashtag, false);
 	}
-	
-	// Método para cargar tweets de un hashtag específico con opción de agrupación
+		// Método para cargar tweets de un hashtag específico con opción de agrupación
 	public void cargarTweetsDeHashtag(basededatos.Hashtag hashtag, boolean agrupar) {
 		if (hashtag == null) return;
-		
-		try {
+				try {
 			// Limpiar la lista actual
 			this.getMainContainer().as(VerticalLayout.class).removeAll();
 			this._item.clear();
-					// Cargar tweets que contienen este hashtag usando toArray() para evitar LazyInitializationException
-		if (hashtag.pertenece != null) {
-			Tweet[] tweets = hashtag.pertenece.toArray();
+			
+			// Configurar layout principal para ser más compacto
+			VerticalLayout mainLayout = this.getMainContainer().as(VerticalLayout.class);
+			mainLayout.setPadding(false);
+			mainLayout.setSpacing(false);
+			mainLayout.setMargin(false);
+			
+			// Cargar tweets que contienen este hashtag usando BDPrincipal para manejar sesiones correctamente
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+			Tweet[] tweets = bd.cargarTweetsDeHashtag(hashtag.getId_hashtag());
+			
+			if (tweets != null && tweets.length > 0) {
+				System.out.println("Tweets encontrados para hashtag " + hashtag.getHashtag() + ": " + tweets.length);
 				
 				if (agrupar) {
 					// Mostrar como grupo agrupado
 					crearVistaAgrupadaHashtag(hashtag, tweets);
 				} else {
-					// Mostrar tweets individuales (comportamiento original)
+					// Mostrar tweets individuales (comportamiento original) con layout compacto
 					for (Tweet tweet : tweets) {
 						if (tweet != null) {
 							Listadetweetsyretweetsregistrado_item item = 
 								new Listadetweetsyretweetsregistrado_item(this, tweet);
-							this.getMainContainer().as(VerticalLayout.class).add(item);
+							mainLayout.add(item);
 							this._item.add(item);
 						}
 					}

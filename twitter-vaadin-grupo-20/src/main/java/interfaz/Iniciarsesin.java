@@ -163,12 +163,16 @@ public class Iniciarsesin extends VistaIniciarsesin {
 		this.getUsernameField().setErrorMessage("Credenciales incorrectas");
 		this.getPasswordField().setErrorMessage("Credenciales incorrectas");
 	}
-
 	public void Contraseaolvidada() {
-		// Aquí iría la lógica para restablecer contraseña
-		System.out.println("Procesando recuperación de contraseña...");
-		// Navegar a la vista de restablecer contraseña si existe
-		// Restablecercontrasea restablecerContrasea = new Restablecercontrasea(this);
+		// Navegar a la vista de restablecer contraseña
+		System.out.println("Navegando a restablecimiento de contraseña...");
+		
+		// Crear instancia de la vista de restablecimiento
+		Restablecercontrasea restablecerContrasena = new Restablecercontrasea(_aCT01UsuarioNoRegistrado);
+		
+		// Navegar a la nueva vista
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(restablecerContrasena);
 	}
 
 	public void Reenviarcorreo() {

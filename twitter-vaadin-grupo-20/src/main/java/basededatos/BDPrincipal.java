@@ -504,4 +504,16 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		}
 	}
 	
+	/**
+	 * Cargar tweets de un hashtag específico
+	 */
+	public Tweet[] cargarTweetsDeHashtag(int id_hashtag) {
+		try {
+			return this.bd_hashtag.cargarTweetsDeHashtag(id_hashtag);
+		} catch (Exception e) {
+			System.err.println("Error en BDPrincipal.cargarTweetsDeHashtag: " + e.getMessage());
+			return new Tweet[0];
+		}
+	}
+	
 }
