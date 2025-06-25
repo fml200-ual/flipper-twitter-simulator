@@ -42,10 +42,31 @@ export class VistaListadetweetsyretweets_item extends LitElement {
       }
 
       #avatarIcon {
-        width: 24px;
-        height: 24px;
+        width: 32px; /* Tamaño aumentado para mejor visibilidad */
+        height: 32px;
         color: #00FFFF; /* Color del icono del avatar (turquesa) */
         flex-shrink: 0;
+        border-radius: 50%; /* Hacer circular */
+        border: 2px solid #00FFFF; /* Borde turquesa */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden; /* Evita que la imagen se desborde */
+        position: relative;
+      }
+
+      /* Estilo específico cuando tiene imagen de fondo */
+      #avatarIcon[style*="background-image: url"] {
+        color: transparent !important; /* Oculta el icono cuando hay imagen */
+      }
+
+      /* Asegurar que el icono SVG no se superponga */
+      #avatarIcon svg {
+        position: relative;
+        z-index: 1;
       }
 
       #userInfo {

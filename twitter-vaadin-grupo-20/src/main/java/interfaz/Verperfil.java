@@ -7,76 +7,86 @@ public class Verperfil extends VistaVerperfil {
 	public Agrupartweetsgustados _agrupartweetsgustados;
 	public Agruparretweets _agruparretweets;
 
-	basededatos.Usuario_Registrado _usuario;
-	
-	// Método para obtener el usuario del perfil desde las clases derivadas
-	public basededatos.Usuario_Registrado getUsuarioPerfil() {
-		// Retornar el usuario almacenado en el campo _usuario
-		return this._usuario;
+	public void Agrupartweets(basededatos.Usuario_Registrado o) {
+		_agrupartweets = new Agrupartweets(this, o);
+		this.getTweetsListLayout().removeAll();
+		this.getTweetsListLayout().add(_agrupartweets);
 	}
 
-	public void Agrupartweets() {
-		System.out.println("=== Método Agrupartweets() llamado ===");
-		System.out.println("Usuario del perfil desde getUsuarioPerfil(): " + (getUsuarioPerfil() != null ? getUsuarioPerfil().toString() : "NULL"));
-		
-		try {
-			System.out.println("=== Creando nuevo Agrupartweets ===");
-			_agrupartweets = new Agrupartweets(this, getUsuarioPerfil());
-			System.out.println("=== Agrupartweets creado exitosamente ===");
-			
-			System.out.println("=== Limpiando layout ===");
-			this.getTweetsListLayout().removeAll();
-			
-			System.out.println("=== Agregando componente al layout ===");
-			this.getTweetsListLayout().add(_agrupartweets);
-			System.out.println("=== Componente Agrupartweets agregado al layout ===");
-		} catch (Exception e) {
-			System.err.println("ERROR en Agrupartweets(): " + e.getMessage());
-			e.printStackTrace();
-		}
+	public void Agrupartweetsgustados(basededatos.Usuario_Registrado o) {
+		_agrupartweetsgustados = new Agrupartweetsgustados(this, o);
+		this.getTweetsListLayout().removeAll();
+		this.getTweetsListLayout().add(_agrupartweetsgustados);
 	}
 
-	public void Agrupartweetsgustados() {
-		System.err.println("\n\n💖💖💖 MÉTODO AGRUPARTWEETSGUSTADOS LLAMADO 💖💖💖");
-		System.err.println("💖💖💖 MÉTODO AGRUPARTWEETSGUSTADOS LLAMADO 💖💖💖");
-		System.err.println("Usuario del perfil desde getUsuarioPerfil(): " + (getUsuarioPerfil() != null ? getUsuarioPerfil().toString() : "NULL"));
-		
-		try {
-			System.err.println("💖 Creando nuevo Agrupartweetsgustados...");
-			_agrupartweetsgustados = new Agrupartweetsgustados(this, getUsuarioPerfil());
-			System.err.println("💖 Agrupartweetsgustados creado exitosamente");
-			
-			System.err.println("💖 Limpiando layout...");
-			this.getTweetsListLayout().removeAll();
-			
-			System.err.println("💖 Agregando componente al layout...");
-			this.getTweetsListLayout().add(_agrupartweetsgustados);
-			System.err.println("💖💖💖 COMPONENTE AGRUPARTWEETSGUSTADOS AGREGADO 💖💖💖\n");
-		} catch (Exception e) {
-			System.err.println("❌❌❌ ERROR EN AGRUPARTWEETSGUSTADOS: " + e.getMessage());
-			e.printStackTrace();
-		}
+	public void Agruparretweets(basededatos.Usuario_Registrado o) {
+		_agruparretweets = new Agruparretweets(this, o);
+		this.getTweetsListLayout().removeAll();
+		this.getTweetsListLayout().add(_agruparretweets);
 	}
 
-	public void Agruparretweets() {
-		System.err.println("\n\n🔄🔄🔄 MÉTODO AGRUPARRETWEETS LLAMADO 🔄🔄🔄");
-		System.err.println("🔄🔄🔄 MÉTODO AGRUPARRETWEETS LLAMADO 🔄🔄🔄");
-		System.err.println("Usuario del perfil desde getUsuarioPerfil(): " + (getUsuarioPerfil() != null ? getUsuarioPerfil().toString() : "NULL"));
-		
+	/**
+	 * Método protegido para configurar las imágenes de perfil y banner
+	 * Puede ser usado por todas las clases hijas (Verperfilregistrado, Verpropioperfil, etc.)
+	 */
+	protected void configurarImagenesPerfil(basededatos.Usuario_Registrado usuario) {
 		try {
-			System.err.println("🔄 Creando nuevo Agruparretweets...");
-			_agruparretweets = new Agruparretweets(this, getUsuarioPerfil());
-			System.err.println("🔄 Agruparretweets creado exitosamente");
-			
-			System.err.println("🔄 Limpiando layout...");
-			this.getTweetsListLayout().removeAll();
-			
-			System.err.println("🔄 Agregando componente al layout...");
-			this.getTweetsListLayout().add(_agruparretweets);
-			System.err.println("🔄🔄🔄 COMPONENTE AGRUPARRETWEETS AGREGADO 🔄🔄🔄\n");
+			if (usuario != null) {
+				// Configurar imagen de fondo/banner
+				String imagenFondoURL = usuario.getImagenFondoURL();
+				if (imagenFondoURL != null && !imagenFondoURL.trim().isEmpty() && 
+					!imagenFondoURL.equals("default-background.jpg")) {
+					// Configurar como imagen de fondo real
+					this.getCoverPhoto().getStyle()
+						.set("background-image", "url('" + imagenFondoURL + "')")
+						.set("background-size", "cover")
+						.set("background-position", "center")
+						.set("background-repeat", "no-repeat");
+					this.getCoverPhoto().setText(""); // Quitar la "X" placeholder
+				} else {
+					// Usar imagen por defecto o placeholder
+					this.getCoverPhoto().getStyle()
+						.set("background-image", "linear-gradient(135deg, #667eea 0%, #764ba2 100%)")
+						.set("background-size", "cover");
+					this.getCoverPhoto().setText("📷"); // Icono de cámara como placeholder
+				}
+
+				// Configurar imagen de perfil/avatar
+				String fotoPerfilURL = usuario.getFotoPerfilURL();
+				if (fotoPerfilURL != null && !fotoPerfilURL.trim().isEmpty() && 
+					!fotoPerfilURL.equals("default-profile.jpg")) {
+					// Configurar como imagen de perfil real
+					this.getProfilePicture().getStyle()
+						.set("background-image", "url('" + fotoPerfilURL + "')")
+						.set("background-size", "cover")
+						.set("background-position", "center")
+						.set("background-repeat", "no-repeat")
+						.set("border-radius", "50%"); // Hacer circular
+					this.getProfilePicture().setText(""); // Quitar la "X" placeholder
+				} else {
+					// Usar avatar por defecto
+					this.getProfilePicture().getStyle()
+						.set("background-image", "linear-gradient(135deg, #00FFFF 0%, #0080FF 100%)")
+						.set("background-size", "cover")
+						.set("border-radius", "50%");
+					this.getProfilePicture().setText("👤"); // Icono de usuario como placeholder
+				}
+
+				System.out.println("Imágenes de perfil configuradas para usuario: " + usuario.getNickname());
+			}
 		} catch (Exception e) {
-			System.err.println("❌❌❌ ERROR EN AGRUPARRETWEETS: " + e.getMessage());
-			e.printStackTrace();
+			System.err.println("Error configurando imágenes de perfil: " + e.getMessage());
+			// En caso de error, usar estilos por defecto
+			this.getCoverPhoto().getStyle()
+				.set("background-image", "linear-gradient(135deg, #667eea 0%, #764ba2 100%)")
+				.set("background-size", "cover");
+			this.getCoverPhoto().setText("📷");
+			
+			this.getProfilePicture().getStyle()
+				.set("background-image", "linear-gradient(135deg, #00FFFF 0%, #0080FF 100%)")
+				.set("background-size", "cover")
+				.set("border-radius", "50%");
+			this.getProfilePicture().setText("👤");
 		}
 	}
 

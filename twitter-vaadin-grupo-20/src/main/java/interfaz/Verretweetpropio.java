@@ -1,30 +1,23 @@
 package interfaz;
 
+import basededatos.Tweet;
 import mds2.MainView.Pantalla;
 
 public class Verretweetpropio extends TweetRetweetpropio {
 	public Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado;
-	
-	// Objeto ORMPersistable para el retweet que se muestra
-	public basededatos.Retweet r;	// Constructor directo que acepta un Tweet que es un retweet propio
-	public Verretweetpropio(basededatos.Tweet tweetRetweet) {
-		super(tweetRetweet);
-		
-		// Rellenar datos del tweet retweet
-		rellenarDatosTweetDirecto(tweetRetweet);
-		configurarEventos();
-	}
+	public basededatos.Tweet r;
 
-	// Constructor legacy para compatibilidad (deprecado)
-	@Deprecated
-	public Verretweetpropio(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado, basededatos.Retweet r) {
-		super(r != null ? r.getTweet() : null);
+	public Verretweetpropio(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado,
+			basededatos.Tweet r) {
+		super(r);
+
+		this.getBotonEliminarTweet().setVisible(false);
+
 		this._listadetweetsyretweetsregistrado = _listadetweetsyretweetsregistrado;
 		this.r = r;
 
-		// Rellenar datos del retweet
-		rellenarDatosRetweet();
 		configurarEventos();
+		cargarDatosRetweet();
 	}
 
 	private void configurarEventos() {
@@ -40,58 +33,84 @@ public class Verretweetpropio extends TweetRetweetpropio {
 			this.Escribircomentario();
 		});
 	}
-	
-	// Constructor de compatibilidad temporal
-	public Verretweetpropio(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado) {
-		this(_listadetweetsyretweetsregistrado, null);
-	}
-	
-	private void rellenarDatosRetweet() {
-		if (r != null) {
-			// Rellenar datos del tweet original
-			if (r.getTweet() != null) {
-				basededatos.Tweet tweetOriginal = r.getTweet();
-				
-				// Rellenar contenido del tweet original
-				if (tweetOriginal.getContenidoTweet() != null) {
-					this.getTextoPublicacion().setText(tweetOriginal.getContenidoTweet());
-				}
-				
-				// Rellenar datos del usuario original
-				if (tweetOriginal.getPublicado_por() != null) {
-					// this.getNombreUsuario().setText(tweetOriginal.getPublicado_por().getNombre());
-					this.getArrobaUsuario().setText("@" + tweetOriginal.getPublicado_por().getNickname());
-				}
-			}
-			
-			// Rellenar datos del usuario que hizo el retweet
-			if (r.getUsuario_Registrado() != null) {
-				// this.getNombreUsuarioRetweet().setText(r.getUsuario_Registrado().getNombre());
-				// this.getArrobaUsuarioRetweet().setText("@" + r.getUsuario_Registrado().getNickname());
-			}
-			
-			// Rellenar fecha del retweet
-			if (r.getFechaPublicacion() != null) {
-				this.getFechaPublicacion().setText(r.getFechaPublicacion().toString());
-			}
-		}
-	}
 
-	private void rellenarDatosTweetDirecto(basededatos.Tweet tweetRetweet) {
-		if (tweetRetweet != null) {
-			// Rellenar contenido del tweet
-			if (tweetRetweet.getContenidoTweet() != null) {
-				this.getTextoPublicacion().setText(tweetRetweet.getContenidoTweet());
+	private void cargarDatosRetweet() {
+		if (tweet == null)
+			return;
+
+		try {
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+
+			// DATOS DEL RETWEET (quien retweeteó y cuándo)
+			// Configurar datos del usuario que hizo el retweet
+			if (tweet.getPublicado_por() != null) {
+				if (this.getArrobaUsuario() != null) {
+					this.getArrobaUsuario().setText("@" + tweet.getPublicado_por().getNickname());
+				}
+				if (this.getNombreUsuario() != null) {
+					this.getNombreUsuario().setText(tweet.getPublicado_por().getNickname());
+				}
 			}
-			
-			// Rellenar datos del usuario
-			if (tweetRetweet.getPublicado_por() != null) {
-				this.getArrobaUsuario().setText("@" + tweetRetweet.getPublicado_por().getNickname());
+
+			// Configurar fecha del retweet
+			if (tweet.getFechaPublicacion() != null && this.getFechaPublicacion() != null) {
+				this.getFechaPublicacion().setText(tweet.getFechaPublicacion().toString());
 			}
-			
-			// Rellenar fecha
-			if (tweetRetweet.getFechaPublicacion() != null) {
-				this.getFechaPublicacion().setText(tweetRetweet.getFechaPublicacion().toString());
+
+			// Configurar contenido del retweet (si tiene texto adicional)
+			if (this.getTextoPublicacion() != null) {
+				String contenidoRetweet = tweet.getContenidoTweet() != null ? tweet.getContenidoTweet() : "";
+				this.getTextoPublicacion().setText(contenidoRetweet);
+			}
+
+			// DATOS DE LA PUBLICACIÓN CITADA (tweet original)
+			basededatos.Tweet tweetOriginal = tweet.getTweet_retweeteado();
+			if (tweetOriginal != null) {
+				// Configurar layout de publicación citada
+				if (this.getContenedorPublicacionCitada() != null) {
+					this.getContenedorPublicacionCitada().setVisible(true);
+
+					// Datos del usuario original en la sección citada
+					if (tweetOriginal.getPublicado_por() != null) {
+						if (this.getArrobaUsuarioCitado() != null) {
+							this.getArrobaUsuarioCitado().setText("@" + tweetOriginal.getPublicado_por().getNickname());
+						}
+						if (this.getNombreUsuarioCitado() != null) {
+							this.getNombreUsuarioCitado().setText(tweetOriginal.getPublicado_por().getNickname());
+						}
+					}
+
+					// Contenido del tweet original citado
+					if (this.getTextoPublicacionCitada() != null) {
+						String contenidoOriginal = tweetOriginal.getContenidoTweet() != null
+								? tweetOriginal.getContenidoTweet()
+								: "";
+						this.getTextoPublicacionCitada().setText(contenidoOriginal);
+					}
+				}
+			}
+
+			// Contadores del retweet (siempre se muestran)
+			int likesCount = bd.contarLikesTweet(tweet.getORMID());
+			int retweetsCount = bd.contarRetweetsTweet(tweet.getORMID());
+			int comentariosCount = bd.contarComentariosTweet(tweet.getORMID());
+
+			if (this.getNumMegusta() != null) {
+				this.getNumMegusta().setText(String.valueOf(likesCount));
+			}
+			if (this.getNumeroRetweets() != null) {
+				this.getNumeroRetweets().setText(String.valueOf(retweetsCount));
+			}
+			if (this.getNumeroRetweets1() != null) {
+				this.getNumeroRetweets1().setText(String.valueOf(comentariosCount));
+			}
+
+		} catch (Exception e) {
+			System.err.println("Error cargando datos del retweet: " + e.getMessage());
+			e.printStackTrace();
+			// Valores por defecto en caso de error
+			if (this.getTextoPublicacion() != null) {
+				this.getTextoPublicacion().setText("Error cargando retweet");
 			}
 		}
 	}

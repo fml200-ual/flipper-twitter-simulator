@@ -2,7 +2,12 @@ package interfaz;
 
 import mds2.MainView.Pantalla;
 import basededatos.BDPrincipal;
+import basededatos.BD_Hashtag;
+import basededatos.Hashtag;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Escribirtweet extends Escribirtweetretweet {
 	public ACT02UsuarioRegistrado _aCT02UsuarioRegistrado;
@@ -48,6 +53,17 @@ public class Escribirtweet extends Escribirtweetretweet {
 				// Extraer hashtags y menciones del contenido
 				String[] hashtags = extraerHashtags(contenido);
 				String[] menciones = extraerMenciones(contenido);
+
+				for (String hashtag : hashtags) {
+					System.out.println("Hashtag: " + hashtag);
+					BDPrincipal bdHashtag = new BDPrincipal();
+					Hashtag[] hashtag2 = bdHashtag.buscarHashtag(hashtag);
+					if (hashtag2 == null) {
+						System.out.println("Hashtag no encontrado");
+					} else {
+						System.out.println("Hashtag encontrado: " + hashtag);
+					}
+				}
 
 				// Seguir el patrón del diagrama: iactor.Send(padre.usuario.getID(),
 				// this.getMessage().getText())
@@ -122,30 +138,16 @@ public class Escribirtweet extends Escribirtweetretweet {
 	 * @param contenido El contenido del tweet
 	 * @return Array de hashtags encontrados (sin el símbolo #)
 	 */
-	private String[] extraerHashtags(String contenido) {
-		if (contenido == null || contenido.trim().isEmpty()) {
-			return new String[0];
-		}
+	private static String[] extraerHashtags(String texto) {
+		List<String> hashtags = new ArrayList<>();
+		String[] palabras = texto.split("\\s+"); // Divide el texto por espacios
 
-		try {
-			java.util.List<String> hashtags = new java.util.ArrayList<>();
-			String[] palabras = contenido.split("\\s+");
-
-			for (String palabra : palabras) {
-				if (palabra.startsWith("#") && palabra.length() > 1) {
-					// Remover el # y limpiar caracteres especiales al final
-					String hashtag = palabra.substring(1).replaceAll("[^a-zA-Z0-9_]$", "");
-					if (!hashtag.isEmpty() && !hashtags.contains(hashtag)) {
-						hashtags.add(hashtag);
-					}
-				}
+		for (String palabra : palabras) {
+			if (palabra.startsWith("#") && palabra.length() > 1) {
+				hashtags.add(palabra.substring(1).toLowerCase().trim()); // Guarda la palabra sin el #
 			}
-
-			return hashtags.toArray(new String[0]);
-		} catch (Exception e) {
-			System.err.println("Error extrayendo hashtags: " + e.getMessage());
-			return new String[0];
 		}
+		return hashtags.toArray(new String[0]); // Convierte la lista en un array
 	}
 
 	/**

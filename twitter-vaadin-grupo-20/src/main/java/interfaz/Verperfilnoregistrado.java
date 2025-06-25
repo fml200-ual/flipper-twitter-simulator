@@ -1,7 +1,6 @@
 package interfaz;
 
 import mds2.MainView.Pantalla;
-import basededatos.BDPrincipal;
 
 public class Verperfilnoregistrado extends Verperfil {
 	public Listafijadeusuariosnoregistrado _listafijadeusuariosnoregistrado;
@@ -27,7 +26,7 @@ public class Verperfilnoregistrado extends Verperfil {
 		this.getDeleteProfileButton().setVisible(false);
 		this.getEditAccountButton().setVisible(false);
 
-		this.Agrupartweets();
+		this.Agrupartweets(u);
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
@@ -35,9 +34,9 @@ public class Verperfilnoregistrado extends Verperfil {
 		});
 		this.getFollowersCount().addClickListener(event -> Verlistaseguidoresnoregistrado());
 		this.getFollowingCount().addClickListener(event -> Verlistaseguidosnoregistrado());
-		this.getUserTweetsTab().addClickListener(event -> Agrupartweets());
-		this.getRetweetsTab().addClickListener(event -> Agruparretweets());
-		this.getLikedTweetsTab().addClickListener(event -> Agrupartweetsgustados());
+		this.getUserTweetsTab().addClickListener(event -> Agrupartweets(u));
+		this.getRetweetsTab().addClickListener(event -> Agruparretweets(u));
+		this.getLikedTweetsTab().addClickListener(event -> Agrupartweetsgustados(u));
 	}
 
 	public Verperfilnoregistrado(Verlistaampliadadeusuariosnoregistrado _verlistaampliadadeusuariosnoregistrado,
@@ -55,7 +54,7 @@ public class Verperfilnoregistrado extends Verperfil {
 			rellenarDatosPerfil();
 		}
 
-		this.Agrupartweets();
+		this.Agrupartweets(u);
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
@@ -63,9 +62,9 @@ public class Verperfilnoregistrado extends Verperfil {
 		});
 		this.getFollowersCount().addClickListener(event -> Verlistaseguidoresnoregistrado());
 		this.getFollowingCount().addClickListener(event -> Verlistaseguidosnoregistrado());
-		this.getUserTweetsTab().addClickListener(event -> Agrupartweets());
-		this.getRetweetsTab().addClickListener(event -> Agruparretweets());
-		this.getLikedTweetsTab().addClickListener(event -> Agrupartweetsgustados());
+		this.getUserTweetsTab().addClickListener(event -> Agrupartweets(u));
+		this.getRetweetsTab().addClickListener(event -> Agruparretweets(u));
+		this.getLikedTweetsTab().addClickListener(event -> Agrupartweetsgustados(u));
 	}
 
 	public void Verlistaseguidoresnoregistrado() {
@@ -129,6 +128,9 @@ public class Verperfilnoregistrado extends Verperfil {
 					System.err.println("Error calculando seguidores/siguiendo: " + e.getMessage());
 				}
 
+				// Configurar imágenes de perfil
+				configurarImagenesPerfil();
+
 				System.out.println("Datos de perfil cargados para usuario no registrado viendo: " + u.getNickname());
 			} else {
 				System.err.println("Error: No se pudo acceder a los datos del usuario");
@@ -136,6 +138,65 @@ public class Verperfilnoregistrado extends Verperfil {
 		} catch (Exception e) {
 			System.err.println("Error al cargar datos del perfil: " + e.getMessage());
 			e.printStackTrace();
+		}
+	}
+
+	private void configurarImagenesPerfil() {
+		try {
+			if (u != null) {
+				// Configurar imagen de fondo/banner
+				String imagenFondoURL = u.getImagenFondoURL();
+				if (imagenFondoURL != null && !imagenFondoURL.trim().isEmpty() && 
+					!imagenFondoURL.equals("default-background.jpg")) {
+					// Configurar como imagen de fondo real
+					this.getCoverPhoto().getStyle()
+						.set("background-image", "url('" + imagenFondoURL + "')")
+						.set("background-size", "cover")
+						.set("background-position", "center")
+						.set("background-repeat", "no-repeat");
+					this.getCoverPhoto().setText(""); // Quitar la "X" placeholder
+				} else {
+					// Usar imagen por defecto o placeholder
+					this.getCoverPhoto().getStyle()
+						.set("background-image", "linear-gradient(135deg, #667eea 0%, #764ba2 100%)")
+						.set("background-size", "cover");
+					this.getCoverPhoto().setText("📷"); // Icono de cámara como placeholder
+				}
+
+				// Configurar imagen de perfil/avatar
+				String fotoPerfilURL = u.getFotoPerfilURL();
+				if (fotoPerfilURL != null && !fotoPerfilURL.trim().isEmpty() && 
+					!fotoPerfilURL.equals("default-profile.jpg")) {
+					// Configurar como imagen de perfil real
+					this.getProfilePicture().getStyle()
+						.set("background-image", "url('" + fotoPerfilURL + "')")
+						.set("background-size", "cover")
+						.set("background-position", "center")
+						.set("background-repeat", "no-repeat")
+						.set("border-radius", "50%"); // Hacer circular
+					this.getProfilePicture().setText(""); // Quitar la "X" placeholder
+				} else {
+					// Usar avatar por defecto
+					this.getProfilePicture().getStyle()
+						.set("background-color", "#4CAF50")
+						.set("border-radius", "50%");
+					// Usar la primera letra del nickname como avatar
+					String iniciales = u.getNickname() != null && u.getNickname().length() > 0 
+						? u.getNickname().substring(0, 1).toUpperCase() 
+						: "U";
+					this.getProfilePicture().setText(iniciales);
+				}
+
+				System.out.println("✅ Imágenes de perfil configuradas:");
+				System.out.println("   📷 Banner: " + (imagenFondoURL != null ? imagenFondoURL : "Por defecto"));
+				System.out.println("   👤 Avatar: " + (fotoPerfilURL != null ? fotoPerfilURL : "Por defecto"));
+			}
+		} catch (Exception e) {
+			System.err.println("Error configurando imágenes de perfil: " + e.getMessage());
+			e.printStackTrace();
+			// En caso de error, usar placeholders por defecto
+			this.getCoverPhoto().setText("📷");
+			this.getProfilePicture().setText("👤");
 		}
 	}
 }

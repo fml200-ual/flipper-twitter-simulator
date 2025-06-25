@@ -8,14 +8,13 @@ import mds2.MainView.Pantalla;
 
 public class Vertweetpropio extends TweetRetweetpropio {
 	private basededatos.Tweet tweet;
+
 	public Vertweetpropio(basededatos.Tweet tweet) {
 		super(tweet); // Pasar el tweet al constructor padre
 		this.tweet = tweet;
 
-		// Configurar elementos específicos para tweets propios
 		this.getContenedorPublicacionCitada().setVisible(false);
-		// Los usuarios pueden eliminar sus propios tweets
-		this.getBotonEliminarTweet().setVisible(true);
+		this.getBotonEliminarTweet().setVisible(false);
 
 		// Cargar datos del tweet
 		cargarDatosTweet();
@@ -31,28 +30,19 @@ public class Vertweetpropio extends TweetRetweetpropio {
 	}
 
 	private void cargarDatosTweet() {
-		if (tweet == null) return;
+		if (tweet == null)
+			return;
 
 		try {
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 
 			// Contenido del tweet
-			this.getTextoPublicacion().setText(tweet.getContenidoTweet() != null ? 
-				tweet.getContenidoTweet() : "");
+			this.getTextoPublicacion().setText(tweet.getContenidoTweet() != null ? tweet.getContenidoTweet() : "");
 
-			// Datos del usuario (propios)
+			// Datos del usuario
 			if (tweet.getPublicado_por() != null) {
 				this.getArrobaUsuario().setText("@" + tweet.getPublicado_por().getNickname());
-				
-				// Cargar foto de perfil si está disponible
-				if (tweet.getPublicado_por().getFotoPerfilURL() != null) {
-					Image img = new Image(tweet.getPublicado_por().getFotoPerfilURL(), "Foto de perfil");
-					img.setWidth("50px");
-					img.setHeight("50px");
-					// Agregar la imagen al contenedor de avatar si existe
-					this.getDivAvatar().removeAll();
-					this.getDivAvatar().add(img);
-				}
+				this.getNombreUsuario().setText(tweet.getPublicado_por().getNickname());
 			}
 
 			// Fecha de publicación
@@ -60,7 +50,7 @@ public class Vertweetpropio extends TweetRetweetpropio {
 				this.getFechaPublicacion().setText(tweet.getFechaPublicacion().toString());
 			}
 
-			// Contadores usando métodos BD para evitar LazyInitializationException
+			// Contadores
 			int likesCount = bd.contarLikesTweet(tweet.getORMID());
 			int retweetsCount = bd.contarRetweetsTweet(tweet.getORMID());
 			int comentariosCount = bd.contarComentariosTweet(tweet.getORMID());
@@ -123,16 +113,18 @@ public class Vertweetpropio extends TweetRetweetpropio {
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(new ACT02UsuarioRegistrado(Pantalla.MainView, null));
 		});
-		
+
 		// Configurar click en avatar/nickname para ver perfil (como en Ver_tweet_comun)
 		this.getArrobaUsuario().addClickListener(event -> {
 			verPerfilUsuario();
 		});
 	}
+
 	private void verPerfilUsuario() {
 		try {
 			if (tweet.getPublicado_por() != null) {
-				// Navegar al perfil del usuario - usar la clase apropiada según el tipo de usuario
+				// Navegar al perfil del usuario - usar la clase apropiada según el tipo de
+				// usuario
 				Verperfilregistrado verPerfil = new Verperfilregistrado(tweet.getPublicado_por());
 				Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 				Pantalla.MainView.removeAll();
@@ -147,14 +139,11 @@ public class Vertweetpropio extends TweetRetweetpropio {
 	private void configurarBotonesInteraccion() {
 		// Para tweets propios, el usuario no puede darse me gusta a sí mismo
 		// pero sí puede hacer retweet y comentar
-		
-		// Deshabilitar me gusta en tweets propios
-		this.getIconoMeGusta().setVisible(false);
-		
+
 		// Habilitar retweet y comentarios
 		this.getIconoRetweet().addClickListener(event -> darRetweet());
 		this.getIconoComentarios().addClickListener(event -> escribirComentario());
-		
+
 		// Configurar botón de eliminar tweet
 		this.getBotonEliminarTweet().addClickListener(event -> eliminarTweet());
 	}
@@ -166,7 +155,7 @@ public class Vertweetpropio extends TweetRetweetpropio {
 			dialog.add("¿Deseas hacer retweet de tu propio tweet?");
 			dialog.setWidth("300px");
 			dialog.setHeight("150px");
-			
+
 			dialog.addOpenedChangeListener(event -> {
 				if (!event.isOpened()) {
 					// Actualizar contador después de cerrar el diálogo
@@ -179,9 +168,9 @@ public class Vertweetpropio extends TweetRetweetpropio {
 					}
 				}
 			});
-			
+
 			dialog.open();
-			
+
 		} catch (Exception e) {
 			System.err.println("Error en retweet: " + e.getMessage());
 			Notification.show("Error al procesar retweet");
@@ -193,12 +182,12 @@ public class Vertweetpropio extends TweetRetweetpropio {
 			// Funcionalidad de comentario en tweet propio
 			System.out.println("Escribir comentario en tweet propio: " + tweet.getORMID());
 			Notification.show("Función de comentario activada");
-			
+
 			// Actualizar contador de comentarios
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 			int nuevosComentarios = bd.contarComentariosTweet(tweet.getORMID());
 			this.getNumeroRetweets1().setText(String.valueOf(nuevosComentarios));
-			
+
 		} catch (Exception e) {
 			System.err.println("Error en comentario: " + e.getMessage());
 			Notification.show("Error al procesar comentario");
@@ -212,7 +201,7 @@ public class Vertweetpropio extends TweetRetweetpropio {
 			dialog.add("¿Estás seguro de que deseas eliminar este tweet?");
 			dialog.setWidth("350px");
 			dialog.setHeight("150px");
-			
+
 			dialog.addOpenedChangeListener(event -> {
 				if (!event.isOpened()) {
 					// Aquí se implementaría la lógica de eliminación
@@ -220,22 +209,22 @@ public class Vertweetpropio extends TweetRetweetpropio {
 					try {
 						basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 						bd.eliminarTweet(tweet.getORMID());
-						
+
 						Notification.show("Tweet eliminado");
-						
+
 						// Volver a la pantalla principal
 						Pantalla.MainView.removeAll();
 						Pantalla.MainView.add(new ACT02UsuarioRegistrado(Pantalla.MainView, null));
-						
+
 					} catch (Exception e) {
 						System.err.println("Error eliminando tweet: " + e.getMessage());
 						Notification.show("Error al eliminar tweet");
 					}
 				}
 			});
-			
+
 			dialog.open();
-			
+
 		} catch (Exception e) {
 			System.err.println("Error en eliminación: " + e.getMessage());
 			Notification.show("Error al procesar eliminación");
