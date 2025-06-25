@@ -28,14 +28,14 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 	}
 
 	private void cargarDatosTweet() {
-		if (tweet == null) return;
+		if (tweet == null)
+			return;
 
 		try {
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 
 			// Contenido del tweet
-			this.getTextoPublicacion().setText(tweet.getContenidoTweet() != null ? 
-				tweet.getContenidoTweet() : "");
+			this.getTextoPublicacion().setText(tweet.getContenidoTweet() != null ? tweet.getContenidoTweet() : "");
 
 			// Datos del usuario
 			if (tweet.getPublicado_por() != null) {
@@ -67,6 +67,7 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 			this.getNumeroRetweets1().setText("0");
 		}
 	}
+
 	private void configurarRetweets() {
 		// Si es un retweet con cita, mostrar información básica del tweet original
 		if (tweet.getTweet_retweeteado() != null) {
@@ -95,17 +96,18 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 			// En una implementación real, aquí se llamaría al método correspondiente de BD
 			System.out.println("Me gusta dado al tweet: " + tweet.getORMID());
 			Notification.show("Me gusta procesado");
-			
+
 			// Actualizar contador (simulado)
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 			int nuevosLikes = bd.contarLikesTweet(tweet.getORMID());
 			this.getNumMegusta().setText(String.valueOf(nuevosLikes));
-			
+
 		} catch (Exception e) {
 			System.err.println("Error en me gusta: " + e.getMessage());
 			Notification.show("Error al procesar me gusta");
 		}
 	}
+
 	private void darRetweet() {
 		try {
 			// Mostrar diálogo simple para retweet
@@ -113,7 +115,7 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 			dialog.add("¿Deseas hacer retweet de este tweet?");
 			dialog.setWidth("300px");
 			dialog.setHeight("150px");
-			
+
 			dialog.addOpenedChangeListener(event -> {
 				if (!event.isOpened()) {
 					// Actualizar contador después de cerrar el diálogo
@@ -126,9 +128,9 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 					}
 				}
 			});
-			
+
 			dialog.open();
-			
+
 		} catch (Exception e) {
 			System.err.println("Error en retweet: " + e.getMessage());
 			Notification.show("Error al procesar retweet");
@@ -138,15 +140,16 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 	private void escribirComentario() {
 		try {
 			// Simulación de funcionalidad de comentario
-			// En una implementación real, aquí se abriría un diálogo para escribir comentario
+			// En una implementación real, aquí se abriría un diálogo para escribir
+			// comentario
 			System.out.println("Escribir comentario para tweet: " + tweet.getORMID());
 			Notification.show("Función de comentario activada");
-			
+
 			// Actualizar contador de comentarios
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 			int nuevosComentarios = bd.contarComentariosTweet(tweet.getORMID());
 			this.getNumeroRetweets1().setText(String.valueOf(nuevosComentarios));
-			
+
 		} catch (Exception e) {
 			System.err.println("Error en comentario: " + e.getMessage());
 			Notification.show("Error al procesar comentario");

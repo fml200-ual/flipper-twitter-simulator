@@ -2,6 +2,7 @@ package interfaz;
 
 import mds2.MainView.Credenciales;
 import mds2.MainView.Pantalla;
+import mds2.MainView.TipoUser;
 import mds2.MainView.Usuario;
 import vistas.VistaIniciarsesin;
 import basededatos.BDPrincipal;
@@ -117,10 +118,12 @@ public class Iniciarsesin extends VistaIniciarsesin {
 
 			if (administrador != null) {
 				System.out.println("Login exitoso como administrador: " + administrador.getNickname());
+				Usuario.tipoUsuario = TipoUser.ADMINISTRADOR;
 				navegarAAdministrador(administrador);
 				return;
 			} else if (usuarioRegistrado != null) {
 				System.out.println("Login exitoso como usuario registrado: " + usuarioRegistrado.getNickname());
+				Usuario.tipoUsuario = TipoUser.REGISTRADO;
 
 				// Seguir el patrón: padre.MainView.removeAll() + crear vista + add
 				Pantalla.MainView.removeAll(); // Crear la vista del usuario logueado con el usuario de la BD

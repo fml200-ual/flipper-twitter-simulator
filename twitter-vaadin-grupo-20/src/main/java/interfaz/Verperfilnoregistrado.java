@@ -1,7 +1,6 @@
 package interfaz;
 
 import mds2.MainView.Pantalla;
-import basededatos.BDPrincipal;
 
 public class Verperfilnoregistrado extends Verperfil {
 	public Listafijadeusuariosnoregistrado _listafijadeusuariosnoregistrado;
@@ -27,7 +26,7 @@ public class Verperfilnoregistrado extends Verperfil {
 		this.getDeleteProfileButton().setVisible(false);
 		this.getEditAccountButton().setVisible(false);
 
-		this.Agrupartweets();
+		this.Agrupartweets(u);
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
@@ -35,9 +34,9 @@ public class Verperfilnoregistrado extends Verperfil {
 		});
 		this.getFollowersCount().addClickListener(event -> Verlistaseguidoresnoregistrado());
 		this.getFollowingCount().addClickListener(event -> Verlistaseguidosnoregistrado());
-		this.getUserTweetsTab().addClickListener(event -> Agrupartweets());
-		this.getRetweetsTab().addClickListener(event -> Agruparretweets());
-		this.getLikedTweetsTab().addClickListener(event -> Agrupartweetsgustados());
+		this.getUserTweetsTab().addClickListener(event -> Agrupartweets(u));
+		this.getRetweetsTab().addClickListener(event -> Agruparretweets(u));
+		this.getLikedTweetsTab().addClickListener(event -> Agrupartweetsgustados(u));
 	}
 
 	public Verperfilnoregistrado(Verlistaampliadadeusuariosnoregistrado _verlistaampliadadeusuariosnoregistrado,
@@ -55,7 +54,7 @@ public class Verperfilnoregistrado extends Verperfil {
 			rellenarDatosPerfil();
 		}
 
-		this.Agrupartweets();
+		this.Agrupartweets(u);
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
@@ -63,9 +62,9 @@ public class Verperfilnoregistrado extends Verperfil {
 		});
 		this.getFollowersCount().addClickListener(event -> Verlistaseguidoresnoregistrado());
 		this.getFollowingCount().addClickListener(event -> Verlistaseguidosnoregistrado());
-		this.getUserTweetsTab().addClickListener(event -> Agrupartweets());
-		this.getRetweetsTab().addClickListener(event -> Agruparretweets());
-		this.getLikedTweetsTab().addClickListener(event -> Agrupartweetsgustados());
+		this.getUserTweetsTab().addClickListener(event -> Agrupartweets(u));
+		this.getRetweetsTab().addClickListener(event -> Agruparretweets(u));
+		this.getLikedTweetsTab().addClickListener(event -> Agrupartweetsgustados(u));
 	}
 
 	public void Verlistaseguidoresnoregistrado() {

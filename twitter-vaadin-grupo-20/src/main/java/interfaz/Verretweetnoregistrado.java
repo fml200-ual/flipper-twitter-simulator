@@ -12,7 +12,7 @@ public class Verretweetnoregistrado extends TweetRetweetnoregistrado {
 
 		// Configurar elementos específicos para usuarios no registrados
 		configurarElementosNoRegistrado();
-		
+
 		// Cargar datos del retweet
 		cargarDatosRetweet();
 
@@ -23,14 +23,14 @@ public class Verretweetnoregistrado extends TweetRetweetnoregistrado {
 		configurarNavegacion();
 	}
 
-	// Constructor legacy para compatibilidad (deprecado)
-	@Deprecated
-	public Verretweetnoregistrado(Listadetweetsyretweetsnoregistrado_item _listadetweetsyretweetsnoregistrado) {
-		super(null);
+	public Verretweetnoregistrado(Listadetweetsyretweetsnoregistrado_item _listadetweetsyretweetsnoregistrado,
+			basededatos.Tweet tweet) {
+		super(tweet);
 		this._listadetweetsyretweetsnoregistrado = _listadetweetsyretweetsnoregistrado;
-		
+
 		// Configurar elementos específicos para usuarios no registrados
 		configurarElementosNoRegistrado();
+		cargarDatosRetweet();
 
 		// Configurar lista de comentarios para usuarios no registrados
 		this.Listadecomentariosnoregistrado();
@@ -47,7 +47,8 @@ public class Verretweetnoregistrado extends TweetRetweetnoregistrado {
 	}
 
 	private void cargarDatosRetweet() {
-		if (tweet == null) return;
+		if (tweet == null)
+			return;
 
 		try {
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
@@ -55,11 +56,11 @@ public class Verretweetnoregistrado extends TweetRetweetnoregistrado {
 			// Si es un retweet, mostrar información del tweet original
 			if (tweet.getTweet_retweeteado() != null) {
 				basededatos.Tweet tweetOriginal = tweet.getTweet_retweeteado();
-				
+
 				// Configurar contenido del tweet original
 				if (this.getTextoPublicacion() != null) {
-					String contenido = tweetOriginal.getContenidoTweet() != null ? 
-						tweetOriginal.getContenidoTweet() : "";
+					String contenido = tweetOriginal.getContenidoTweet() != null ? tweetOriginal.getContenidoTweet()
+							: "";
 					this.getTextoPublicacion().setText(contenido);
 				}
 
@@ -118,11 +119,11 @@ public class Verretweetnoregistrado extends TweetRetweetnoregistrado {
 		if (this.getIconoMeGusta() != null) {
 			this.getIconoMeGusta().addClickListener(event -> redirigirALogin());
 		}
-		
+
 		if (this.getIconoRetweet() != null) {
 			this.getIconoRetweet().addClickListener(event -> redirigirALogin());
 		}
-		
+
 		if (this.getIconoComentarios() != null) {
 			this.getIconoComentarios().addClickListener(event -> redirigirALogin());
 		}

@@ -10,12 +10,13 @@ import com.vaadin.flow.component.notification.Notification;
 
 public class Verretweetregistrado extends TweetRetweetajeno {
 	public Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado;
-	
+
 	// Objeto ORMPersistable para el retweet que se muestra
 	public basededatos.Retweet r;
 	public Tweet tweetRetweet; // Tweet que es un retweet
 	private BD_Usuario_Registrado bdUsuario = new BD_Usuario_Registrado();
 	private boolean yaLeGusta = false;
+
 	// Constructor directo que acepta un Tweet que es un retweet
 	public Verretweetregistrado(Tweet tweetRetweet) {
 		super(tweetRetweet);
@@ -28,7 +29,8 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 
 	// Constructor legacy para compatibilidad (deprecado)
 	@Deprecated
-	public Verretweetregistrado(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado, basededatos.Retweet r) {
+	public Verretweetregistrado(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado,
+			basededatos.Retweet r) {
 		super(r != null ? r.getTweet() : null);
 		this._listadetweetsyretweetsregistrado = _listadetweetsyretweetsregistrado;
 		this.r = r;
@@ -37,10 +39,9 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 		rellenarDatosRetweet();
 		configurarEventos();
 	}
-	
-	// Constructor legacy para compatibilidad (deprecado)
-	@Deprecated
-	public Verretweetregistrado(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado, Tweet tweetRetweet) {
+
+	public Verretweetregistrado(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado,
+			Tweet tweetRetweet) {
 		super(tweetRetweet);
 		this._listadetweetsyretweetsregistrado = _listadetweetsyretweetsregistrado;
 		this.tweetRetweet = tweetRetweet;
@@ -49,12 +50,12 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 		rellenarDatosTweetRetweet();
 		configurarEventos();
 	}
-	
+
 	// Constructor de compatibilidad temporal
 	public Verretweetregistrado(Listadetweetsyretweetsregistrado_item _listadetweetsyretweetsregistrado) {
 		this(_listadetweetsyretweetsregistrado, (basededatos.Retweet) null);
 	}
-	
+
 	private void configurarEventos() {
 		this.Listadecomentariosregistrado();
 
@@ -64,29 +65,31 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 				Pantalla.MainView.add(Pantalla.Anterior);
 			} else {
 				Pantalla.MainView.removeAll();
-				Pantalla.MainView.add(new ACT02UsuarioRegistrado(Pantalla.MainView, MainView.Usuario.usuarioRegistrado));
+				Pantalla.MainView
+						.add(new ACT02UsuarioRegistrado(Pantalla.MainView, MainView.Usuario.usuarioRegistrado));
 			}
 		});
-		
+
 		this.getIconoRetweet().addClickListener(event -> {
 			this.Darretweet();
 		});
-		
+
 		this.getIconoComentarios().addClickListener(event -> {
 			this.Escribircomentario();
 		});
-				// Configurar me gusta para el tweet original
+		// Configurar me gusta para el tweet original
 		this.getIconoMeGusta().addClickListener(event -> {
 			if (yaLeGusta) {
 				eliminarMeGusta();
 			} else {
 				darMeGusta();
-			}		});
-		
+			}
+		});
+
 		actualizarEstadoMeGusta();
 		actualizarContadores();
 	}
-	
+
 	private void rellenarDatosRetweet() {
 		if (r != null) {
 			try {
@@ -95,26 +98,26 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 					this.getArrobaUsuario().setText("@" + r.getUsuario_Registrado().getNickname());
 					this.getNombreUsuario().setText(r.getUsuario_Registrado().getNickname());
 				}
-				
+
 				// TWEET EXTERIOR: Fecha del retweet
 				if (r.getFechaPublicacion() != null) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd MMM yyyy");
 					this.getFechaPublicacion().setText(sdf.format(r.getFechaPublicacion()));
 				}
-				
+
 				// TWEET EXTERIOR: Contenido del retweet
 				// Los retweets simples no tienen contenido adicional
 				this.getTextoPublicacion().setText("Retweeteó:");
-				
+
 				// TWEET INTERIOR (CITADO): Datos del tweet original
 				if (r.getTweet() != null) {
 					basededatos.Tweet tweetOriginal = r.getTweet();
-					
+
 					// Tweet citado: Contenido del tweet original
 					if (tweetOriginal.getContenidoTweet() != null) {
 						this.getTextoPublicacionCitada().setText(tweetOriginal.getContenidoTweet());
 					}
-					
+
 					// Tweet citado: Usuario original
 					if (tweetOriginal.getPublicado_por() != null) {
 						this.getArrobaUsuarioCitado().setText("@" + tweetOriginal.getPublicado_por().getNickname());
@@ -127,7 +130,8 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 			}
 		}
 	}
-		private void rellenarDatosTweetRetweet() {
+
+	private void rellenarDatosTweetRetweet() {
 		if (tweetRetweet != null) {
 			try {
 				// TWEET EXTERIOR (RETWEET): Datos del usuario que hizo el retweet
@@ -135,13 +139,13 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 					this.getArrobaUsuario().setText("@" + tweetRetweet.getPublicado_por().getNickname());
 					this.getNombreUsuario().setText(tweetRetweet.getPublicado_por().getNickname());
 				}
-				
+
 				// TWEET EXTERIOR: Fecha del retweet
 				if (tweetRetweet.getFechaPublicacion() != null) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd MMM yyyy");
 					this.getFechaPublicacion().setText(sdf.format(tweetRetweet.getFechaPublicacion()));
 				}
-				
+
 				// TWEET EXTERIOR: Contenido del retweet
 				// Para tweets que son retweets, mostrar el contenido del retweet si existe
 				if (tweetRetweet.getContenidoTweet() != null && !tweetRetweet.getContenidoTweet().trim().isEmpty()) {
@@ -149,16 +153,16 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 				} else {
 					this.getTextoPublicacion().setText("Retweeteó:");
 				}
-				
+
 				// TWEET INTERIOR (CITADO): Datos del tweet original
 				if (tweetRetweet.getTweet_retweeteado() != null) {
 					Tweet tweetOriginal = tweetRetweet.getTweet_retweeteado();
-					
+
 					// Tweet citado: Contenido del tweet original
 					if (tweetOriginal.getContenidoTweet() != null) {
 						this.getTextoPublicacionCitada().setText(tweetOriginal.getContenidoTweet());
 					}
-					
+
 					// Tweet citado: Usuario original
 					if (tweetOriginal.getPublicado_por() != null) {
 						this.getArrobaUsuarioCitado().setText("@" + tweetOriginal.getPublicado_por().getNickname());
@@ -171,18 +175,18 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 			}
 		}
 	}
-	
+
 	public void darMeGusta() {
 		try {
 			Usuario_Registrado usuarioActual = MainView.obtenerUsuarioActual();
 			Tweet tweetParaMeGusta = obtenerTweetParaMeGusta();
-			
+
 			if (usuarioActual != null && tweetParaMeGusta != null) {
 				bdUsuario.darMeGustaTweet(usuarioActual.getId_usuario(), tweetParaMeGusta.getId_tweet());
 				yaLeGusta = true;
 				actualizarUIBotonMeGusta();
 				actualizarContadores();
-				
+
 				Notification.show("¡Te gusta este tweet!", 2000, Notification.Position.BOTTOM_CENTER);
 			}
 		} catch (PersistentException e) {
@@ -195,13 +199,13 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 		try {
 			Usuario_Registrado usuarioActual = MainView.obtenerUsuarioActual();
 			Tweet tweetParaMeGusta = obtenerTweetParaMeGusta();
-			
+
 			if (usuarioActual != null && tweetParaMeGusta != null) {
 				bdUsuario.eliminarMgTweet(usuarioActual.getId_usuario(), tweetParaMeGusta.getId_tweet());
 				yaLeGusta = false;
 				actualizarUIBotonMeGusta();
 				actualizarContadores();
-				
+
 				Notification.show("Ya no te gusta este tweet", 2000, Notification.Position.BOTTOM_CENTER);
 			}
 		} catch (PersistentException e) {
@@ -209,7 +213,7 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 			Notification.show("Error al eliminar me gusta", 3000, Notification.Position.BOTTOM_CENTER);
 		}
 	}
-	
+
 	private Tweet obtenerTweetParaMeGusta() {
 		// Determinar qué tweet usar para me gusta (el original, no el retweet)
 		if (r != null && r.getTweet() != null) {
@@ -218,15 +222,18 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 			return tweetRetweet.getTweet_retweeteado();
 		}
 		return null;
-	}	private void actualizarEstadoMeGusta() {
+	}
+
+	private void actualizarEstadoMeGusta() {
 		try {
 			Usuario_Registrado usuarioActual = MainView.obtenerUsuarioActual();
 			Tweet tweetParaMeGusta = obtenerTweetParaMeGusta();
-			
+
 			if (usuarioActual != null && tweetParaMeGusta != null) {
 				// Usar método seguro de BD_Tweet que no depende de colecciones lazy
 				basededatos.BD_Tweet bdTweet = new basededatos.BD_Tweet();
-				yaLeGusta = bdTweet.verificarMeGustaTweet(usuarioActual.getId_usuario(), tweetParaMeGusta.getId_tweet());
+				yaLeGusta = bdTweet.verificarMeGustaTweet(usuarioActual.getId_usuario(),
+						tweetParaMeGusta.getId_tweet());
 				actualizarUIBotonMeGusta();
 			}
 		} catch (Exception e) {
@@ -235,6 +242,7 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 			actualizarUIBotonMeGusta();
 		}
 	}
+
 	private void actualizarUIBotonMeGusta() {
 		if (yaLeGusta) {
 			this.getIconoMeGusta().getStyle().set("color", "#e0245e"); // Rojo filled
@@ -242,20 +250,24 @@ public class Verretweetregistrado extends TweetRetweetajeno {
 			this.getIconoMeGusta().getStyle().set("color", "#8899a6"); // Gris outline
 		}
 	}
+
 	private void actualizarContadores() {
 		Tweet tweetParaMeGusta = obtenerTweetParaMeGusta();
 		if (tweetParaMeGusta != null) {
-			try {				// Usar métodos seguros de BD_Tweet para evitar LazyInitializationException
+			try { // Usar métodos seguros de BD_Tweet para evitar LazyInitializationException
 				basededatos.BD_Tweet bdTweet = new basededatos.BD_Tweet();
 				int numMeGusta = bdTweet.contarMeGustaTweet(tweetParaMeGusta.getId_tweet());
 				int numRetweets = bdTweet.contarRetweetsTweet(tweetParaMeGusta.getId_tweet());
-				// int numComentarios = bdTweet.contarComentariosTweet(tweetParaMeGusta.getId_tweet()); // Para uso futuro
-				
+				// int numComentarios =
+				// bdTweet.contarComentariosTweet(tweetParaMeGusta.getId_tweet()); // Para uso
+				// futuro
+
 				// Actualizar contadores en la UI
 				this.getNumMegusta().setText(String.valueOf(numMeGusta));
 				this.getNumeroRetweets().setText(String.valueOf(numRetweets));
-				// TODO: Actualizar contador de comentarios cuando esté disponible el elemento UI
-				
+				// TODO: Actualizar contador de comentarios cuando esté disponible el elemento
+				// UI
+
 				// Actualizar también en el item padre si existe
 				if (_listadetweetsyretweetsregistrado != null) {
 					// TODO: Implementar actualizarContadores en el item padre
