@@ -17,11 +17,19 @@ public class Verperfilregistrado extends Verperfil {
 	// Objeto ORMPersistable para el usuario cuyo perfil se muestra
 	public basededatos.Usuario_Registrado u;
 
+	@Override
+	public basededatos.Usuario_Registrado getUsuarioPerfil() {
+		return this.u;
+	}
+
 	public Verperfilregistrado(Listafijadeusuariosregistrado _listafijadeusuariosregistrado,
 			basededatos.Usuario_Registrado u) {
 		super();
 		this._listafijadeusuariosregistrado = _listafijadeusuariosregistrado;
 		this.u = u;
+
+		System.out.println("=== Verperfilregistrado constructor 1 inicializado ===");
+		System.out.println("Usuario del perfil: " + (u != null ? u.toString() : "NULL"));
 
 		// Rellenar datos del perfil con información del usuario
 		if (u != null) {
@@ -37,6 +45,7 @@ public class Verperfilregistrado extends Verperfil {
 		// establecerEstadoInicialBotones)
 		this.getEditAccountButton().setText("Seguir");
 
+		System.out.println("=== A punto de llamar Agrupartweets() ===");
 		this.Agrupartweets();
 
 		this.getBanProfileButton().addClickListener(event -> {
@@ -52,12 +61,15 @@ public class Verperfilregistrado extends Verperfil {
 			Verlistadeseguidoresregistrado();
 		});
 		this.getLikedTweetsTab().addClickListener(event -> {
+			System.out.println("=== CLICK en LikedTweetsTab detectado en Verperfilregistrado constructor 1 ===");
 			this.Agrupartweetsgustados();
 		});
 		this.getRetweetsTab().addClickListener(event -> {
+			System.out.println("=== CLICK en RetweetsTab detectado en Verperfilregistrado constructor 1 ===");
 			this.Agruparretweets();
 		});
 		this.getUserTweetsTab().addClickListener(event -> {
+			System.out.println("=== CLICK en UserTweetsTab detectado en Verperfilregistrado constructor 1 ===");
 			this.Agrupartweets();
 		});
 		this.getBackButton().addClickListener(event -> {
@@ -72,6 +84,9 @@ public class Verperfilregistrado extends Verperfil {
 		this._verlistaampliadadeusuariosregistrado = _verlistaampliadadeusuariosregistrado;
 		this.u = u;
 
+		System.out.println("=== Verperfilregistrado constructor 2 inicializado ===");
+		System.out.println("Usuario del perfil: " + (u != null ? u.toString() : "NULL"));
+
 		// Rellenar datos del perfil con información del usuario
 		if (u != null) {
 			rellenarDatosPerfil();
@@ -86,6 +101,7 @@ public class Verperfilregistrado extends Verperfil {
 		// establecerEstadoInicialBotones)
 		this.getEditAccountButton().setText("Seguir");
 
+		System.out.println("=== A punto de llamar Agrupartweets() ===");
 		this.Agrupartweets();
 
 		this.getBanProfileButton().addClickListener(event -> {
@@ -101,12 +117,15 @@ public class Verperfilregistrado extends Verperfil {
 			Verlistadeseguidoresregistrado();
 		});
 		this.getLikedTweetsTab().addClickListener(event -> {
+			System.out.println("=== CLICK en LikedTweetsTab detectado en Verperfilregistrado constructor 2 ===");
 			this.Agrupartweetsgustados();
 		});
 		this.getRetweetsTab().addClickListener(event -> {
+			System.out.println("=== CLICK en RetweetsTab detectado en Verperfilregistrado constructor 2 ===");
 			this.Agruparretweets();
 		});
 		this.getUserTweetsTab().addClickListener(event -> {
+			System.out.println("=== CLICK en UserTweetsTab detectado en Verperfilregistrado constructor 2 ===");
 			this.Agrupartweets();
 		});
 		this.getBackButton().addClickListener(event -> {
@@ -177,11 +196,6 @@ public class Verperfilregistrado extends Verperfil {
 	// Verlistaampliadadeusuariosregistrado
 	public Verperfilregistrado(Verlistaampliadadeusuariosregistrado _verlistaampliadadeusuariosregistrado) {
 		this(_verlistaampliadadeusuariosregistrado, null);
-	}
-
-	@Override
-	public basededatos.Usuario_Registrado getUsuarioPerfil() {
-		return u;
 	}
 
 	private void rellenarDatosPerfil() {

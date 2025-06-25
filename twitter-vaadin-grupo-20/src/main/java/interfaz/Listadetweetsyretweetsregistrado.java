@@ -27,8 +27,6 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 	public Listadetweetsyretweetsregistrado(Verhashtagregistrado verhashtagregistrado) {
 		super();
 		this._verhashtagregistrado = verhashtagregistrado;
-		// No llamamos a inicializarTweetsRegistrado aquí porque se usará
-		// cargarTweetsDeHashtag
 	} // Método para cargar tweets de un hashtag específico
 
 	public void cargarTweetsDeHashtag(basededatos.Hashtag hashtag) {
@@ -317,4 +315,92 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 		System.out.println("=== Fin carga tweets del usuario ===");
 	}
 
+	
+	// Método para cargar tweets que le gustan a un usuario específico
+	public void cargarTweetsQueGustanAlUsuario(basededatos.Usuario_Registrado usuario) {
+		if (usuario == null) {
+			System.err.println("No se puede cargar tweets gustados: usuario es null");
+			return;
+		}
+		
+		try {
+			System.out.println("=== Cargando tweets que le gustan al usuario: " + usuario.getNickname() + " ===");
+			
+			// Limpiar la lista actual
+			this.getMainContainer().as(VerticalLayout.class).removeAll();
+			this._item.clear();
+			
+			// Crear instancia de la base de datos
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+			
+			// Usar el método ORM para cargar tweets que le gustan al usuario
+			Tweet[] tweetsGustados = bd.cargarTweetsQueGustan(usuario.getId_usuario());
+			
+			if (tweetsGustados != null && tweetsGustados.length > 0) {
+				System.out.println("Cargados " + tweetsGustados.length + " tweets que le gustan al usuario: " + usuario.getNickname());
+				
+				// Crear items específicos para los tweets gustados
+				for (Tweet tweet : tweetsGustados) {
+					if (tweet != null) {
+						Listadetweetsyretweetsregistrado_item item = 
+							new Listadetweetsyretweetsregistrado_item(this, tweet);
+						this.getMainContainer().as(VerticalLayout.class).add(item);
+						this._item.add(item);
+					}
+				}
+			} else {
+				System.out.println("No hay tweets que le gusten al usuario: " + usuario.getNickname());
+			}
+		} catch (Exception e) {
+			System.err.println("Error cargando tweets que gustan al usuario: " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		System.out.println("=== Fin carga tweets gustados para usuario: " + usuario.getNickname() + " ===");
+	}
+	
+	// Método para cargar retweets de un usuario específico
+	public void cargarRetweetsDelUsuario(basededatos.Usuario_Registrado usuario) {
+		if (usuario == null) {
+			System.err.println("No se puede cargar retweets: usuario es null");
+			return;
+		}
+		
+		try {
+			System.out.println("=== Cargando retweets del usuario: " + usuario.getNickname() + " ===");
+			
+			// Limpiar la lista actual
+			this.getMainContainer().as(VerticalLayout.class).removeAll();
+			this._item.clear();
+			
+			// Crear instancia de la base de datos
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+			
+			// Usar el método ORM para cargar retweets del usuario
+			Tweet[] retweets = bd.cargarRetweets(usuario.getId_usuario());
+			
+			if (retweets != null && retweets.length > 0) {
+				System.out.println("Cargados " + retweets.length + " retweets del usuario: " + usuario.getNickname());
+				
+				// Crear items específicos para los retweets
+				for (Tweet retweet : retweets) {
+					if (retweet != null) {
+						Listadetweetsyretweetsregistrado_item item = 
+							new Listadetweetsyretweetsregistrado_item(this, retweet);
+						this.getMainContainer().as(VerticalLayout.class).add(item);
+						this._item.add(item);
+					}
+				}
+			} else {
+				System.out.println("No hay retweets del usuario: " + usuario.getNickname());
+			}
+		} catch (Exception e) {
+			System.err.println("Error cargando retweets del usuario: " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		System.out.println("=== Fin carga retweets para usuario: " + usuario.getNickname() + " ===");
+	}
+	
+	
 }
