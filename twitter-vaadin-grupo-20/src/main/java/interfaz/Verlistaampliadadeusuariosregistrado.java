@@ -1,5 +1,7 @@
 package interfaz;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
 import mds2.MainView;
 import mds2.MainView.Pantalla;
 
@@ -33,14 +35,18 @@ public class Verlistaampliadadeusuariosregistrado extends Verlistaampliadadeusua
 				.filter(u -> !u.getNickname().equals(nickname))
 				.toArray(basededatos.Usuario_Registrado[]::new);
 
-		// Crear lista ampliada de usuarios para usuario no registrado
+		// Crear lista ampliada de usuarios para usuario registrado
 		Listadeusuarios listaUsuarios = new Listadeusuarios(this);
 
 		for (basededatos.Usuario_Registrado usuario_Registrado : usuarios) {
 			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios, usuario_Registrado);
 
+			// Agregar el item a la lista inmediatamente
+			listaUsuarios.getMainContainer().as(VerticalLayout.class).add(item);
+
 			item.getMainContainer().addClickListener(event -> {
 				boolean usuarioBloqueado = false;
+				// Verificar si el usuario está bloqueado
 				for (basededatos.Usuario_Registrado bloqueado : bloqueados) {
 					if (bloqueado.getNickname().equals(usuario_Registrado.getNickname())) {
 						usuarioBloqueado = true;

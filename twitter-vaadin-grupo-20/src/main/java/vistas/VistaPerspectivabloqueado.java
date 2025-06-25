@@ -8,6 +8,7 @@ import com.vaadin.flow.component.template.Id;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.button.Button;
 
 @Tag("vista-perspectivabloqueado")
 @JsModule("./views/vista-perspectivabloqueado.ts")
@@ -15,6 +16,8 @@ public class VistaPerspectivabloqueado extends LitTemplate {
 
 	@Id("profileHeader")
 	private Div profileHeader;
+	@Id("backButton")
+	private Button backButton;
 	@Id("bannerImage")
 	private Image bannerImage;
 	@Id("profileImage")
@@ -35,6 +38,22 @@ public class VistaPerspectivabloqueado extends LitTemplate {
 	private Span blockedText;
 
 	public VistaPerspectivabloqueado() {
+		// Agregar listener para el evento personalizado del botón volver
+		getElement().addEventListener("back-clicked", e -> onBackClicked());
+	}
+
+	private void onBackClicked() {
+		// Aquí puedes implementar la lógica para volver
+		// Por ejemplo, navegar a la vista anterior o cerrar esta vista
+		getUI().ifPresent(ui -> ui.navigate(""));
+	}
+
+	public Button getBackButton() {
+		return backButton;
+	}
+
+	public void setBackButton(Button backButton) {
+		this.backButton = backButton;
 	}
 
 	public Div getProfileHeader() {
