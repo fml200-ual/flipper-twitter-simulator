@@ -1,46 +1,36 @@
 package interfaz;
 
 import mds2.MainView.Pantalla;
+import mds2.MainView.Usuario;
 import vistas.VistaPublicacinvistaadministrador;
 
 public class Publicacinvistaadministrador extends VistaPublicacinvistaadministrador {
-	// private event _eliminarpublicacin;
+	// Variables para identificar qué eliminar
 
-	public void Eliminarpublicacin() {
-		throw new UnsupportedOperationException();
+	public void Eliminarpublicacin(Object publicacionActual) {
+		if (publicacionActual instanceof basededatos.Tweet) {
+			basededatos.Tweet tweet = (basededatos.Tweet) publicacionActual;
+			if (tweet.getTweet_retweeteado() != null) {
+				System.out.println("Eliminando retweet ID: " + tweet.getId_tweet());
+				Usuario.iAdministrador.eliminarTweet(tweet.getId_tweet());
+			} else {
+				System.out.println("Eliminando tweet ID: " + tweet.getId_tweet());
+				Usuario.iAdministrador.eliminarTweet(tweet.getId_tweet());
+			}
+		} else if (publicacionActual instanceof basededatos.Comentario) {
+			basededatos.Comentario comentario = (basededatos.Comentario) publicacionActual;
+			System.out.println("Eliminando comentario ID: " + comentario.getId_comentario());
+			Usuario.iAdministrador.eliminarComentario(comentario.getId_comentario());
+		}
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(new ACT03Administrador(Pantalla.MainView));
 	}
 
 	public void volver() {
 		this.getBotonVolver().addClickListener(event -> {
 			// Navegar directamente a ACT03Administrador
 			Pantalla.MainView.removeAll();
-
-			// Verificar si la vista anterior es ACT03Administrador para reutilizarla
-			if (Pantalla.Anterior instanceof ACT03Administrador) {
-				ACT03Administrador admin = (ACT03Administrador) Pantalla.Anterior;
-				// Recargar la lista de tweets para reflejar posibles cambios
-				if (admin._listafijadetweetsadministrador != null) {
-					admin._listafijadetweetsadministrador.recargarTweets();
-				}
-				Pantalla.MainView.add(admin);
-			} else if (Pantalla.Anterior instanceof Verlistaampliadadetweetsadministrador) {
-				// Si venimos de la vista ampliada, también recargar
-				Verlistaampliadadetweetsadministrador vistaAmpliada = (Verlistaampliadadetweetsadministrador) Pantalla.Anterior;
-				vistaAmpliada.Listadetweetsyretweetsadministrador();
-				Pantalla.MainView.add(vistaAmpliada);
-			} else {
-				// En cualquier otro caso, crear nueva instancia de ACT03Administrador
-				try {
-					ACT03Administrador admin = new ACT03Administrador(null);
-					if (admin._listafijadetweetsadministrador != null) {
-						admin._listafijadetweetsadministrador.recargarTweets();
-					}
-					Pantalla.MainView.add(admin);
-				} catch (Exception e) {
-					// Si falla, usar la vista anterior como respaldo
-					Pantalla.MainView.add(Pantalla.Anterior != null ? Pantalla.Anterior : new ACT03Administrador(null));
-				}
-			}
+			Pantalla.MainView.add(new ACT03Administrador(Pantalla.MainView));
 		});
 	}
 }

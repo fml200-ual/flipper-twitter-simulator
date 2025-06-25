@@ -49,7 +49,7 @@ public class MainView extends VerticalLayout {
 		public static basededatos.Administrador administrador;
 
 		public static TipoUser tipoUsuario = TipoUser.NO_REGISTRADO;
-		public static iAdministrador administradorInterfaz = new BDPrincipal();
+		public static iAdministrador iAdministrador = new BDPrincipal();
 		public static iUsuarioRegistrado usuarioRegistradoInterfaz = new BDPrincipal();
 		public static iUsuarioNoRegistrado usuarioNoRegistradoInterfaz = new BDPrincipal();
 	}
@@ -88,9 +88,9 @@ public class MainView extends VerticalLayout {
 	}
 
 	private boolean inicioSesion() {
-		if (!leerCredenciales()) {
-			return false;
-		}
+		// if (!leerCredenciales()) {
+		// return false;s
+		// }
 
 		System.out.println("Intentando login con usuario: " + Credenciales.user);
 		Usuario.usuarioRegistrado = Usuario.usuarioNoRegistradoInterfaz.login(Credenciales.user, Credenciales.pass);

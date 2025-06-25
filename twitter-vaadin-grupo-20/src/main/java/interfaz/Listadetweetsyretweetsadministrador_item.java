@@ -1,135 +1,101 @@
 package interfaz;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
+import basededatos.Tweet;
 import mds2.MainView.Pantalla;
 
 public class Listadetweetsyretweetsadministrador_item extends Listadetweetsyretweets_item {
 	public Vertweetadministrador _vertweetadministrador;
 	public Verretweetadministrador _verretweetadministrador;
+	public basededatos.Tweet _tweet;
 
-	public Listadetweetsyretweetsadministrador_item(Listadetweetsyretweets listadetweetsyretweets, basededatos.Tweet t) {
-		super(listadetweetsyretweets, t);
-		
-		// Configurar elementos específicos para administrador
-		configurarVisibilidadAdministrador();
-		
-		// Configurar retweets anidados
-		configurarRetweetAnidado();
-		
-		// Configurar eventos de navegación específicos para administrador
-		configurarEventosAdministrador();
-	}
+	public Listadetweetsyretweetsadministrador_item(Listadetweetsyretweets _listadetweetsyretweets,
+			basededatos.Tweet tweet) {
+		super(_listadetweetsyretweets);
 
-	private void configurarVisibilidadAdministrador() {
-		// Ocultar botones de interacción no disponibles para administradores
-		// Los administradores pueden ver pero no interactuar con tweets
-		try {
-			// Ocultar elementos de interacción si existen
-			if (this.getElement().getChildren().anyMatch(child -> 
-				child.getAttribute("id") != null && child.getAttribute("id").contains("retweet"))) {
-				// Ocultar botones de retweet
+		this._tweet = tweet;
+
+		// Rellenar los datos del tweet en el item
+		rellenarDatos(tweet);
+
+		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
+			if (tweet.getTweet_retweeteado() != null) {
+				// Es un retweet
+				Verretweetadministrador(tweet);
+			} else {
+				// Es un tweet normal
+				Vertweetadministrador(tweet);
 			}
-			if (this.getElement().getChildren().anyMatch(child -> 
-				child.getAttribute("id") != null && child.getAttribute("id").contains("megusta"))) {
-				// Ocultar botones de me gusta
-			}
-		} catch (Exception e) {
-			System.err.println("Error configurando visibilidad administrador: " + e.getMessage());
-		}
+		});
 	}
 
-	private void configurarRetweetAnidado() {
-		// Configurar retweets anidados como en el patrón de Lista_de_tweets_Administrador_item
+	private void rellenarDatos(basededatos.Tweet tweet) {
+		if (tweet == null)
+			return;
+
 		try {
-			basededatos.Tweet tweetRT = this.t.getTweet_retweeteado();
-			if (tweetRT != null) {
-				// Crear item anidado para el tweet retweeteado
-				Listadetweetsyretweetsadministrador_item itemAnidado = 
-					new Listadetweetsyretweetsadministrador_item(this._listadetweetsyretweets, tweetRT);
-				
-				// Ocultar elementos de interacción en el item anidado
-				ocultarElementosInteraccionAnidado(itemAnidado);
-				
-				// Agregar al contenedor de retweet si existe
-				if (this.getElement().getChildren().anyMatch(child -> 
-					child.getAttribute("class") != null && child.getAttribute("class").contains("retweet"))) {
-					// Agregar el item anidado al contenedor de retweet
-					this.getElement().appendChild(itemAnidado.getElement());
-				}
+			// Obtener datos del usuario que publicó
+			basededatos.Usuario_Registrado usuario = tweet.getPublicado_por();
+			if (usuario != null) {
+				// Establecer nickname del usuario (Usuario_Registrado extiende
+				// Usuario_Autentificado)
+				this.getNickName().setText("@" + usuario.getNickname());
+				this.getUsername().setText(usuario.getNickname());
 			}
-		} catch (Exception e) {
-			System.err.println("Error configurando retweet anidado: " + e.getMessage());
-		}
-	}
 
-	private void ocultarElementosInteraccionAnidado(Listadetweetsyretweetsadministrador_item itemAnidado) {
-		// Ocultar elementos de interacción en el item anidado
-		try {
-			// Los items anidados no deben mostrar botones de interacción
-			itemAnidado.getElement().getChildren().forEach(child -> {
-				String className = child.getAttribute("class");
-				if (className != null && (className.contains("button") || className.contains("icon"))) {
-					child.setVisible(false);
+			// Establecer contenido del tweet
+			String contenido = "";
+			if (tweet.getTweet_retweeteado() != null) {
+				// Es un retweet
+				contenido = "RT: " + (tweet.getTweet_retweeteado().getContenidoTweet() != null
+						? tweet.getTweet_retweeteado().getContenidoTweet()
+						: "");
+				// Si el retweet tiene comentario adicional
+				if (tweet.getContenidoTweet() != null && !tweet.getContenidoTweet().trim().isEmpty()) {
+					contenido = tweet.getContenidoTweet() + "\n\n" + contenido;
 				}
-			});
+			} else {
+				// Es un tweet original
+				contenido = tweet.getContenidoTweet() != null ? tweet.getContenidoTweet() : "";
+			}
+			this.getContentText().setText(contenido);
+
+			// Establecer fecha de publicación
+			if (tweet.getFechaPublicacion() != null) {
+				this.getDateLabel().setText(tweet.getFechaPublicacion().toString());
+			}
+
+			// Contar likes (me gusta)
+			int likesCount = tweet.recibe_me_gusta != null ? tweet.recibe_me_gusta.size() : 0;
+			this.getLikesCountLabel().setText(String.valueOf(likesCount));
+
+			// Contar retweets
+			int retweetsCount = tweet.retweets != null ? tweet.retweets.size() : 0;
+			this.getXLabel().setText(String.valueOf(retweetsCount));
+
+			// Contar comentarios
+			int commentsCount = tweet.tiene != null ? tweet.tiene.size() : 0;
+			this.getZLabel().setText(String.valueOf(commentsCount));
+
 		} catch (Exception e) {
-			System.err.println("Error ocultando elementos de interacción: " + e.getMessage());
+			// En caso de error, mostrar información básica
+			this.getContentText().setText("Error al cargar tweet");
+			this.getNickName().setText("Usuario desconocido");
 		}
 	}
 
-	private void configurarEventosAdministrador() {
-		// Configurar eventos específicos para administrador
-		if (this.getMainContainer() != null) {
-			this.getMainContainer().addEventListener("click", event -> {
-				if (t != null && t.getTweet_retweeteado() != null) {
-					// Es un retweet
-					Verretweetadministrador();
-				} else {
-					// Es un tweet normal
-					Vertweetadministrador();
-				}
-			});
-		}
-	}
-
-	public void Vertweetadministrador() {
-		// Navegación directa pasando solo el tweet
-		_vertweetadministrador = new Vertweetadministrador(t);
+	public void Vertweetadministrador(Tweet tweet) {
+		_vertweetadministrador = new Vertweetadministrador(this, tweet);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_vertweetadministrador);
 	}
 
-	public void Verretweetadministrador() {
-		// Navegación directa pasando solo el tweet (que es un retweet)
-		_verretweetadministrador = new Verretweetadministrador(t);
+	public void Verretweetadministrador(Tweet tweet) {
+		_verretweetadministrador = new Verretweetadministrador(this, tweet);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verretweetadministrador);
-	}
-
-	// Sobrescribir métodos de navegación de la clase padre para usar vistas de administrador
-	@Override
-	public void verTweet() {
-		if (t != null && t.getTweet_retweeteado() != null) {
-			Verretweetadministrador();
-		} else {
-			Vertweetadministrador();
-		}
-	}
-
-	@Override
-	public void verPerfilUsuario() {
-		try {
-			if (t.getPublicado_por() != null) {
-				// Los administradores pueden ver perfiles pero con vista especial
-				// Por ahora usar la vista estándar
-				Verperfilregistrado verPerfil = new Verperfilregistrado(t.getPublicado_por());
-				Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
-				Pantalla.MainView.removeAll();
-				Pantalla.MainView.add(verPerfil);
-			}
-		} catch (Exception e) {
-			System.err.println("Error navegando al perfil desde administrador: " + e.getMessage());
-		}
 	}
 }
