@@ -13,22 +13,12 @@ public class Verhashtagnoregistrado extends Verhashtag {
 	public Listadetweetsyretweetsnoregistrado _listadetweetsyretweetsnoregistrado;
 	public basededatos.Hashtag _hashtag;
 
-<<<<<<< HEAD
-
-	public basededatos.Hashtag h;
-
-	public Verhashtagnoregistrado(Listafijadehashtagsnoregistrado _listafijadehashtagsnoregistrado, basededatos.Hashtag hashtag) {
-		super();
-		this._listafijadehashtagsnoregistrado = _listafijadehashtagsnoregistrado;
-		this.h = hashtag;
-=======
 	public Verhashtagnoregistrado(Listafijadehashtagsnoregistrado _listafijadehashtagsnoregistrado, Hashtag hashtag) {
 		super();
 		this._listafijadehashtagsnoregistrado = _listafijadehashtagsnoregistrado;
 		this._hashtag = hashtag;
 
 		this.getH1().setText("#" + hashtag.getHashtag());
->>>>>>> f181314abb8f924194337209199b7bceaa2730b5
 
 		Listadetweetsyretweetsnoregistrado();
 
@@ -39,20 +29,12 @@ public class Verhashtagnoregistrado extends Verhashtag {
 
 	}
 
-<<<<<<< HEAD
-	public Verhashtagnoregistrado(Verlistaampliadadehashtagsnoregistrado _verlistaampliadadehashtagsnoregistrado, basededatos.Hashtag hashtag) {
-		super();
-		this._verlistaampliadadehashtagsnoregistrado = _verlistaampliadadehashtagsnoregistrado;
-
-		this.h = hashtag;
-=======
 	public Verhashtagnoregistrado(Verlistaampliadadehashtagsnoregistrado _verlistaampliadadehashtagsnoregistrado,
 			Hashtag hashtag) {
 		super();
 		this._verlistaampliadadehashtagsnoregistrado = _verlistaampliadadehashtagsnoregistrado;
 
 		this.getH1().setText("#" + hashtag.getHashtag());
->>>>>>> f181314abb8f924194337209199b7bceaa2730b5
 
 		Listadetweetsyretweetsnoregistrado();
 

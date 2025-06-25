@@ -17,7 +17,7 @@ public class Agrupartweets extends VistaAgrupartweets {
 
 		
 		Listadetweetsyretweets(usuario);
-		this.getMoreTweetsButtonContainer().setVisible(true);
+		this.getMoreTweetsButtonContainer().setVisible(false);
 
 	}	
 	
@@ -30,16 +30,9 @@ public class Agrupartweets extends VistaAgrupartweets {
 			
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 			
-			if (usuario != null) {
-				// Cargar tweets específicos del usuario (filtrar por ID y nombre de usuario)
-				tweets = bd.cargarTweetsPorUsuario(usuario.getId_usuario());
-				System.out.println("Cargando " + (tweets != null ? tweets.length : 0) + " tweets del usuario: " + usuario.getNickname());
-			} else {
-				// Fallback: cargar todos los tweets
-				tweets = bd.cargarTweets();
-				System.out.println("Cargando tweets desde la base de datos...");
-				System.out.println("Cargados " + (tweets != null ? tweets.length : 0) + " tweets desde la BD");
-			}
+			// Cargar tweets específicos del usuario (filtrar por ID y nombre de usuario)
+			tweets = bd.cargarTweetsPorUsuario(usuario.getId_usuario());
+			System.out.println("Cargando " + (tweets != null ? tweets.length : 0) + " tweets del usuario: " + usuario.getNickname());
 			
 			// Crear la lista según el tipo de usuario
 			switch (Pantalla.usuario) {
