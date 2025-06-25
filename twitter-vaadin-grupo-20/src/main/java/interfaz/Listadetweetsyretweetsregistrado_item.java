@@ -20,6 +20,22 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 		});
 	}
 
+	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets, basededatos.Tweet tweet) {
+		super(_listadetweetsyretweets);
+
+		// Configurar datos del tweet si está disponible
+		if (tweet != null) {
+			// Aquí se podrían configurar los datos del tweet en la vista
+			System.out.println("Tweet configurado: " + tweet.getContenidoTweet());
+		}
+
+		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
+			// Luego hay que diferenciar entre tweet y retweet. Tambien si es propio o no
+			// Llamar a la vista de ver tweet registrado por defecto
+			Vertweetregistrado();
+		});
+	}
+
 	public void Vertweetregistrado() {
 		_vertweetregistrado = new Vertweetregistrado(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
