@@ -24,13 +24,9 @@ public class Listafijadehashtagsnoregistrado extends Listafijadehashtags {
 		BDPrincipal bd = new BDPrincipal();
 		try {
 			Hashtag[] hashtags = bd.cargarHashtags();
+			Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
 			if (hashtags != null && hashtags.length > 0) {
-				System.out.println("Cargando " + hashtags.length + " hashtags en lista scrolleable");
-				
-				// Ordenar hashtags alfabéticamente
-				Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
 
-				// Mostrar todos los hashtags (sin límite de 5) para scroll
 				for (int i = 0; i < hashtags.length; i++) {
 					basededatos.Hashtag hashtag = hashtags[i];
 					Listadehashtags_item item = new Listadehashtags_item(null, hashtag);
@@ -42,16 +38,14 @@ public class Listafijadehashtagsnoregistrado extends Listafijadehashtags {
 					this.getMainContainer().as(VerticalLayout.class).add(item);
 					_item.add(item);
 				}
-				
+
 				// Configurar el contenedor como scrolleable
 				this.getMainContainer().getStyle()
-					.set("height", "300px")  // Altura fija para permitir scroll (más pequeña que usuarios)
-					.set("overflow-y", "auto")  // Scroll vertical
-					.set("overflow-x", "hidden")  // Sin scroll horizontal
-					.set("padding", "5px")
-					.set("gap", "3px");  // Gap más pequeño para hashtags
-				
-				System.out.println("Lista fija de hashtags configurada como scrolleable con " + hashtags.length + " hashtags");
+						.set("height", "300px") // Altura fija para permitir scroll (más pequeña que usuarios)
+						.set("overflow-y", "auto") // Scroll vertical
+						.set("overflow-x", "hidden") // Sin scroll horizontal
+						.set("padding", "5px")
+						.set("gap", "3px"); // Gap más pequeño para hashtags
 			}
 		} catch (Exception e) {
 			System.err.println("Error cargando hashtags: " + e.getMessage());

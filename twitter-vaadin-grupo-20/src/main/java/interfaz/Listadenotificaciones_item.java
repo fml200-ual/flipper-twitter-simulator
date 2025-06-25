@@ -1,5 +1,6 @@
 package interfaz;
 
+import basededatos.BDPrincipal;
 import vistas.VistaListadenotificaciones_item;
 
 public class Listadenotificaciones_item extends VistaListadenotificaciones_item {
@@ -23,13 +24,12 @@ public class Listadenotificaciones_item extends VistaListadenotificaciones_item 
 
 		this.getDescriptionLabel().setText("@" + this.u.getNickname() + " ha hecho retweet a uno de tus tweets");
 
-		this.getSeenCheckbox().addClickListener(event -> {
-			Eliminarnotificacin();
-		});
+		this.getSeenCheckbox().setVisible(false);
 	}
 
 	public void Eliminarnotificacin() {
-		// TODO: Implementar eliminación de notificación usando el objeto notificacion
+		// TODO: A lo mejor elimnar metodo
+
 	}
 
 	public void Mostrarmsnotificaciones() {

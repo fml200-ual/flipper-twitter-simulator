@@ -15,12 +15,16 @@ public class Perspectivabloqueado extends VistaPerspectivabloqueado {
 			mds2.MainView.Pantalla.MainView.removeAll();
 			mds2.MainView.Pantalla.MainView.add(_listafijadeusuariosregistrado._aCT02UsuarioRegistrado);
 		});
-
 	}
 
 	public Perspectivabloqueado(Verlistaampliadadeusuariosregistrado _verlistaampliadadeusuariosregistrado) {
 		super();
 		this._verlistaampliadadeusuariosregistrado = _verlistaampliadadeusuariosregistrado;
+
+		this.getBackButton().addClickListener(event -> {
+			mds2.MainView.Pantalla.MainView.removeAll();
+			mds2.MainView.Pantalla.MainView.add(_verlistaampliadadeusuariosregistrado);
+		});
 	}
 
 }

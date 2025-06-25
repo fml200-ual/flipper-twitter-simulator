@@ -30,7 +30,6 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 	private void cargarDatosTweet() {
 		if (tweet == null)
 			return;
-
 		try {
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 
@@ -40,6 +39,7 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 			// Datos del usuario
 			if (tweet.getPublicado_por() != null) {
 				this.getArrobaUsuario().setText("@" + tweet.getPublicado_por().getNickname());
+				this.getNombreUsuario().setText(tweet.getPublicado_por().getNickname());
 			}
 
 			// Fecha de publicación
@@ -47,7 +47,7 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 				this.getFechaPublicacion().setText(tweet.getFechaPublicacion().toString());
 			}
 
-			// Contadores usando métodos BD para evitar LazyInitializationException
+			// Contadores
 			int likesCount = bd.contarLikesTweet(tweet.getORMID());
 			int retweetsCount = bd.contarRetweetsTweet(tweet.getORMID());
 			int comentariosCount = bd.contarComentariosTweet(tweet.getORMID());
