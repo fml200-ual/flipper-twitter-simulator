@@ -12,7 +12,6 @@ public class Registrarse extends VistaRegistrarse {
 	public Introducircdigodeverificacin _introducircdigodeverificacin;
 	public ACT05Google _aCT05Google;
 	public IniciarsesinconGoogle _iniciarsesinconGoogle;
-	public ACT04SistemadeCorreo _sistemaCorreo;
 	public String _codigoVerificacion;
 
 	public Registrarse(ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado) {
@@ -68,8 +67,8 @@ public class Registrarse extends VistaRegistrarse {
 		this.getNickField().setPlaceholder("nombre_usuario");
 		this.getPasswordField().setPlaceholder("Mínimo 8 caracteres");
 		this.getAtSignField().setPlaceholder("@usuario");
-		this.getProfilePhotoUrlField().setPlaceholder("URL de foto opcional (máx. 255 caracteres)");
-		this.getBackgroundUrlField().setPlaceholder("URL de fondo opcional (máx. 255 caracteres)");
+		this.getProfilePhotoUrlField().setPlaceholder("URL de foto opcional");
+		this.getBackgroundUrlField().setPlaceholder("URL de fondo opcional");
 		this.getDescriptionField().setPlaceholder("Cuéntanos algo sobre ti...");
 	}
 
@@ -121,27 +120,13 @@ public class Registrarse extends VistaRegistrarse {
 			}
 		});
 
-		// Listeners para preview de imágenes y validación de longitud
+		// Listeners para preview de imágenes (simulado)
 		this.getProfilePhotoUrlField().addValueChangeListener(event -> {
-			String url = event.getValue();
-			if (url != null && url.length() > 255) {
-				this.getProfilePhotoUrlField().setInvalid(true);
-				this.getProfilePhotoUrlField().setErrorMessage("La URL de la foto de perfil es demasiado larga (máximo 255 caracteres)");
-			} else {
-				this.getProfilePhotoUrlField().setInvalid(false);
-				updateImagePreview(url, "profile");
-			}
+			updateImagePreview(event.getValue(), "profile");
 		});
 
 		this.getBackgroundUrlField().addValueChangeListener(event -> {
-			String url = event.getValue();
-			if (url != null && url.length() > 255) {
-				this.getBackgroundUrlField().setInvalid(true);
-				this.getBackgroundUrlField().setErrorMessage("La URL de la imagen de fondo es demasiado larga (máximo 255 caracteres)");
-			} else {
-				this.getBackgroundUrlField().setInvalid(false);
-				updateImagePreview(url, "background");
-			}
+			updateImagePreview(event.getValue(), "background");
 		});
 	}
 
@@ -198,21 +183,6 @@ public class Registrarse extends VistaRegistrarse {
 			isValid = false;
 		}
 
-		// Validar URLs de imágenes (longitud)
-		String profileUrl = this.getProfilePhotoUrlField().getValue();
-		if (profileUrl != null && profileUrl.length() > 255) {
-			this.getProfilePhotoUrlField().setInvalid(true);
-			this.getProfilePhotoUrlField().setErrorMessage("La URL de la foto de perfil es demasiado larga (máximo 255 caracteres)");
-			isValid = false;
-		}
-
-		String backgroundUrl = this.getBackgroundUrlField().getValue();
-		if (backgroundUrl != null && backgroundUrl.length() > 255) {
-			this.getBackgroundUrlField().setInvalid(true);
-			this.getBackgroundUrlField().setErrorMessage("La URL de la imagen de fondo es demasiado larga (máximo 255 caracteres)");
-			isValid = false;
-		}
-
 		return isValid;
 	}
 
@@ -251,25 +221,9 @@ public class Registrarse extends VistaRegistrarse {
 			}
 			if (fotoPerfilURL == null || fotoPerfilURL.trim().isEmpty()) {
 				fotoPerfilURL = "default-profile.jpg";
-			} else {
-				// Validar y truncar URL de foto de perfil si es muy larga
-				fotoPerfilURL = validarYTruncarURL(fotoPerfilURL, "foto de perfil");
 			}
 			if (imagenFondoURL == null || imagenFondoURL.trim().isEmpty()) {
 				imagenFondoURL = "default-background.jpg";
-			} else {
-				// Validar y truncar URL de imagen de fondo si es muy larga
-				imagenFondoURL = validarYTruncarURL(imagenFondoURL, "imagen de fondo");
-			}
-
-			// Validar longitud de URLs para evitar errores de BD
-			if (fotoPerfilURL != null && fotoPerfilURL.length() > 255) {
-				fotoPerfilURL = fotoPerfilURL.substring(0, 255);
-				System.out.println("URL de foto de perfil truncada a 255 caracteres");
-			}
-			if (imagenFondoURL != null && imagenFondoURL.length() > 255) {
-				imagenFondoURL = imagenFondoURL.substring(0, 255);
-				System.out.println("URL de imagen de fondo truncada a 255 caracteres");
 			}
 
 			System.out.println("Procesando registro para usuario: " + nick);
@@ -341,17 +295,17 @@ public class Registrarse extends VistaRegistrarse {
 	}
 
 	public void Introducircdigodeverificacin() {
-		// Crear instancia del sistema de correo y enviar código
-		_introducircdigodeverificacin = new Introducircdigodeverificacin(this);
-		
-		// Inicializar el sistema de correo que enviará automáticamente el código
-		_sistemaCorreo = new ACT04SistemadeCorreo(_introducircdigodeverificacin, this.getEmailField().getValue());
-		
-		// Navegar a la vista de código de verificación
+		// Navegar directamente a la vista de código de verificación
 		System.out.println("Navegando a introducir código de verificación...");
+		System.out.println("_aCT01UsuarioNoRegistrado es null: " + (_aCT01UsuarioNoRegistrado == null));
+		System.out.println("_iniciarsesin es null: " + (_iniciarsesin == null));
+
+		_introducircdigodeverificacin = new Introducircdigodeverificacin(this);
+
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_introducircdigodeverificacin);
+
 	}
 
 	public boolean Comprobarnoduplicadodedatos() {
@@ -367,31 +321,6 @@ public class Registrarse extends VistaRegistrarse {
 		}
 
 		return true; // No hay duplicados
-	}
-
-	private String validarYTruncarURL(String url, String tipoImagen) {
-		if (url == null || url.trim().isEmpty()) {
-			return url;
-		}
-
-		String urlLimpia = url.trim();
-		
-		// Límite de 255 caracteres para evitar errores de base de datos
-		final int LIMITE_URL = 255;
-		
-		if (urlLimpia.length() > LIMITE_URL) {
-			System.out.println("⚠️ URL de " + tipoImagen + " demasiado larga (" + urlLimpia.length() + " caracteres). Truncando a " + LIMITE_URL + " caracteres.");
-			urlLimpia = urlLimpia.substring(0, LIMITE_URL);
-			
-			// Mostrar advertencia al usuario
-			if (tipoImagen.equals("foto de perfil")) {
-				this.getProfilePhotoUrlField().setHelperText("URL truncada automáticamente (máx. " + LIMITE_URL + " caracteres)");
-			} else if (tipoImagen.equals("imagen de fondo")) {
-				this.getBackgroundUrlField().setHelperText("URL truncada automáticamente (máx. " + LIMITE_URL + " caracteres)");
-			}
-		}
-		
-		return urlLimpia;
 	}
 
 	public void IniciarsesinconGoogle() {

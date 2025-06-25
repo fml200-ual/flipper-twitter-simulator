@@ -154,6 +154,16 @@ public class Verperfiladministrador extends Verperfil {
 
 	public void Eliminarperfil() {
 		System.out.println("Eliminar perfil");
+		try {
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+			bd.eliminarUsuario(u.getId_usuario());
+			System.out.println("Perfil eliminado correctamente");
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(new ACT01UsuarioNoRegistrado(null));
+		} catch (Exception e) {
+			System.err.println("Error al eliminar el perfil: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	public void Banearusuario() {

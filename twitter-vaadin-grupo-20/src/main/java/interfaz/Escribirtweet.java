@@ -67,12 +67,19 @@ public class Escribirtweet extends Escribirtweetretweet {
 
 				// Seguir el patrón del diagrama: iactor.Send(padre.usuario.getID(),
 				// this.getMessage().getText())
+				
+				// Obtener información de multimedia si existe
+				String urlMultimedia = this.getURLMultimedia(); // Método heredado de Escribirgeneral
+				String tipoDocumento = this.getTipoDocumento(); // Método heredado de Escribirgeneral
+				
+				System.out.println("Multimedia - URL: " + urlMultimedia + ", Tipo: " + tipoDocumento);
+				
 				iactor.publicarTweet(
 						_aCT02UsuarioRegistrado.u.getORMID(),
 						contenido,
 						new Date(),
-						null, // URLDocumento
-						null, // tipoDocumento
+						urlMultimedia, // URL del documento multimedia
+						tipoDocumento, // Tipo detectado automáticamente
 						hashtags,
 						menciones);
 
@@ -90,8 +97,9 @@ public class Escribirtweet extends Escribirtweetretweet {
 					// Mostrar notificación de éxito
 					com.vaadin.flow.component.notification.Notification.show("Tweet publicado exitosamente!");
 
-					// Limpiar el campo de texto
+					// Limpiar el campo de texto y multimedia
 					this.getTweetTextArea().clear();
+					this.limpiarMultimedia(); // Limpiar multimedia heredado de Escribirgeneral
 
 					// Cerrar la vista de escribir tweet y volver a la vista principal
 					cerrarVista();

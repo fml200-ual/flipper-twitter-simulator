@@ -40,6 +40,8 @@ public class Vertweetregistrado extends TweetRetweetajeno {
 			if (tweet.getPublicado_por() != null) {
 				this.getArrobaUsuario().setText("@" + tweet.getPublicado_por().getNickname());
 				this.getNombreUsuario().setText(tweet.getPublicado_por().getNickname());
+				
+
 			}
 
 			// Fecha de publicación
