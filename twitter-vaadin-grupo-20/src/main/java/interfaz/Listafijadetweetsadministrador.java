@@ -4,6 +4,7 @@ import vistas.VistaListafijadetweetsadministrador;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import mds2.MainView.Pantalla;
+import mds2.MainView.Usuario;
 
 import java.util.Vector;
 
@@ -19,6 +20,7 @@ public class Listafijadetweetsadministrador extends VistaListafijadetweetsadmini
 		// Inicializar la lista de tweets
 		cargarTweetsAdministrador();
 	}
+
 	public void cargarTweetsAdministrador() {
 		// Cargar tweets reales de la base de datos
 		VerticalLayout container = this.getTweetsListContainer().as(VerticalLayout.class);
@@ -29,17 +31,20 @@ public class Listafijadetweetsadministrador extends VistaListafijadetweetsadmini
 
 		try {
 			// Cargar tweets reales de la base de datos
-			basededatos.Tweet[] tweets = ((basededatos.BDPrincipal) mds2.MainView.Usuario.administradorInterfaz).cargarTweets();
-					if (tweets != null && tweets.length > 0) {
-				// Crear items con datos reales (máximo 10 tweets para la lista fija)
-				for (int i = 0; i < Math.min(tweets.length, 10); i++) {
-					Listadetweetsyretweetsadministrador_item tweetItem = 
-						new Listadetweetsyretweetsadministrador_item((Listadetweetsyretweets)null, tweets[i]);
+			basededatos.Tweet[] tweets = Usuario.iAdministrador.cargarTweets();
+			Listadetweetsyretweetsadministrador lista = new Listadetweetsyretweetsadministrador(
+					_verlistaampliadadetweetsadministrador);
+			if (tweets != null && tweets.length > 0) {
+				for (int i = 0; i < Math.min(tweets.length, 5); i++) {
+					Listadetweetsyretweetsadministrador_item tweetItem = new Listadetweetsyretweetsadministrador_item(
+							lista, tweets[i]);
 					_tweets.add(tweetItem);
 					container.add(tweetItem);
-				}			} else {
+				}
+			} else {
 				System.out.println("No se encontraron tweets en la base de datos para administrador");
-			}		} catch (Exception e) {
+			}
+		} catch (Exception e) {
 			System.err.println("Error cargando tweets para administrador: " + e.getMessage());
 			e.printStackTrace();
 		}
@@ -47,50 +52,8 @@ public class Listafijadetweetsadministrador extends VistaListafijadetweetsadmini
 
 	public void Verlistaampliadadetweetsadministrador() {
 		_verlistaampliadadetweetsadministrador = new Verlistaampliadadetweetsadministrador(this);
-		// Guardar referencia al administrador actual para la navegación de vuelta
-		Pantalla.Anterior = this._aCT03Administrador;
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verlistaampliadadetweetsadministrador);
-	}
-
-	public Vector<Listadetweetsyretweetsadministrador_item> getTweets() {
-		return _tweets;
-	}
-	/**
-	 * Añade un nuevo tweet a la lista
-	 */
-	public void añadirTweet() {
-		// Por defecto añadir como tweet (no retweet)
-		Listadetweetsyretweetsadministrador_item nuevoTweet = new Listadetweetsyretweetsadministrador_item((Listadetweetsyretweets)null, null);
-		_tweets.add(nuevoTweet);
-		VerticalLayout container = this.getTweetsListContainer().as(VerticalLayout.class);
-		container.add(nuevoTweet);
-	}
-
-	/**
-	 * Añade un nuevo retweet a la lista
-	 */
-	public void añadirRetweet() {
-		Listadetweetsyretweetsadministrador_item nuevoRetweet = new Listadetweetsyretweetsadministrador_item((Listadetweetsyretweets)null, null);
-		_tweets.add(nuevoRetweet);
-		VerticalLayout container = this.getTweetsListContainer().as(VerticalLayout.class);
-		container.add(nuevoRetweet);
-	}
-
-	/**
-	 * Limpia todos los tweets de la lista
-	 */
-	public void limpiarTweets() {
-		_tweets.clear();
-		VerticalLayout container = this.getTweetsListContainer().as(VerticalLayout.class);
-		container.removeAll();
-	}
-
-	/**
-	 * Recarga la lista de tweets
-	 */
-	public void recargarTweets() {
-		limpiarTweets();
-		cargarTweetsAdministrador();
 	}
 }

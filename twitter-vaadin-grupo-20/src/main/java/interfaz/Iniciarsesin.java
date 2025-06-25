@@ -1,6 +1,8 @@
 package interfaz;
 
+import mds2.MainView.Credenciales;
 import mds2.MainView.Pantalla;
+import mds2.MainView.Usuario;
 import vistas.VistaIniciarsesin;
 import basededatos.BDPrincipal;
 
@@ -111,7 +113,13 @@ public class Iniciarsesin extends VistaIniciarsesin {
 		try {
 			// Seguir el patrón del diagrama: usuario = iactor.Login(login, password)
 			basededatos.Usuario_Registrado usuarioRegistrado = iactor.login(username, password);
-			if (usuarioRegistrado != null) {
+			basededatos.Administrador administrador = iactor.loginAdmin(username, password);
+
+			if (administrador != null) {
+				System.out.println("Login exitoso como administrador: " + administrador.getNickname());
+				navegarAAdministrador(administrador);
+				return;
+			} else if (usuarioRegistrado != null) {
 				System.out.println("Login exitoso como usuario registrado: " + usuarioRegistrado.getNickname());
 
 				// Seguir el patrón: padre.MainView.removeAll() + crear vista + add
@@ -136,10 +144,11 @@ public class Iniciarsesin extends VistaIniciarsesin {
 		}
 	}
 
-	private void navegarAAdministrador() {
+	private void navegarAAdministrador(basededatos.Administrador administrador) {
 		try {
 			// Crear la vista de administrador
-			ACT03Administrador administradorView = new ACT03Administrador(null);
+			Usuario.administrador = administrador;
+			ACT03Administrador administradorView = new ACT03Administrador(Pantalla.MainView);
 
 			// Navegar a la nueva vista
 			Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
@@ -166,13 +175,14 @@ public class Iniciarsesin extends VistaIniciarsesin {
 		this.getUsernameField().setErrorMessage("Credenciales incorrectas");
 		this.getPasswordField().setErrorMessage("Credenciales incorrectas");
 	}
+
 	public void Contraseaolvidada() {
 		// Navegar a la vista de restablecer contraseña
 		System.out.println("Navegando a restablecimiento de contraseña...");
-		
+
 		// Crear instancia de la vista de restablecimiento
 		Restablecercontrasea restablecerContrasena = new Restablecercontrasea(_aCT01UsuarioNoRegistrado);
-		
+
 		// Navegar a la nueva vista
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(restablecerContrasena);
