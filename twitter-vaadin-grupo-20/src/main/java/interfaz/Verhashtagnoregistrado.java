@@ -9,9 +9,13 @@ public class Verhashtagnoregistrado extends Verhashtag {
 	public Verlistaampliadadehashtagsnoregistrado _verlistaampliadadehashtagsnoregistrado;
 	public Listadetweetsyretweetsnoregistrado _listadetweetsyretweetsnoregistrado;
 
-	public Verhashtagnoregistrado(Listafijadehashtagsnoregistrado _listafijadehashtagsnoregistrado) {
+
+	public basededatos.Hashtag h;
+
+	public Verhashtagnoregistrado(Listafijadehashtagsnoregistrado _listafijadehashtagsnoregistrado, basededatos.Hashtag hashtag) {
 		super();
 		this._listafijadehashtagsnoregistrado = _listafijadehashtagsnoregistrado;
+		this.h = hashtag;
 
 		Listadetweetsyretweetsnoregistrado();
 
@@ -22,9 +26,11 @@ public class Verhashtagnoregistrado extends Verhashtag {
 
 	}
 
-	public Verhashtagnoregistrado(Verlistaampliadadehashtagsnoregistrado _verlistaampliadadehashtagsnoregistrado) {
+	public Verhashtagnoregistrado(Verlistaampliadadehashtagsnoregistrado _verlistaampliadadehashtagsnoregistrado, basededatos.Hashtag hashtag) {
 		super();
 		this._verlistaampliadadehashtagsnoregistrado = _verlistaampliadadehashtagsnoregistrado;
+
+		this.h = hashtag;
 
 		Listadetweetsyretweetsnoregistrado();
 

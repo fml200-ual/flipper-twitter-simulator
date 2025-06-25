@@ -1,7 +1,5 @@
 package interfaz;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Vector;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -25,13 +23,29 @@ public class Listafijadehashtagsnoregistrado extends Listafijadehashtags {
 		try {
 			Hashtag[] hashtags = bd.cargarHashtags();
 			if (hashtags != null && hashtags.length > 0) {
-				// Ordenar hashtags alfabéticamente
-				Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
-				
-				// Limitar a los primeros 5 hashtags
-				int limite = Math.min(hashtags.length, 5);
-				for (int i = 0; i < limite; i++) {
-					Listadehashtags_item item = new Listadehashtags_item(null, hashtags[i]);
+				// Agrupar hashtags por texto
+				java.util.Map<String, java.util.List<Hashtag>> grouped = new java.util.TreeMap<>();
+				for (Hashtag h : hashtags) {
+					if (h != null && h.getHashtag() != null) {
+						grouped.computeIfAbsent(h.getHashtag(), k -> new java.util.ArrayList<>()).add(h);
+					}
+				}
+				// Limitar a los primeros 5 hashtags únicos
+				int limite = Math.min(grouped.size(), 5);
+				int count = 0;
+				for (String text : grouped.keySet()) {
+					if (count++ >= limite) break;
+					java.util.List<Hashtag> group = grouped.get(text);
+					// Obtener total de posts para este hashtag
+					int totalPosts = 0;
+					for (Hashtag h : group) {
+						totalPosts += bd.contarTweetsHashtag(h.getORMID());
+					}
+					// Crear item usando el primer Hashtag del grupo
+					Hashtag h0 = group.get(0);
+					Listadehashtags_item item = new Listadehashtags_item(null, h0);
+					// Actualizar contador de posts con total agrupado
+					item.getPostCount().setText(totalPosts + " posts");
 					this.getMainContainer().as(VerticalLayout.class).add(item);
 					_item.add(item);
 				}

@@ -1,7 +1,5 @@
 package interfaz;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Vector;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -25,13 +23,19 @@ public class Listafijadehashtagsregistrado extends Listafijadehashtags {
 		try {
 			Hashtag[] hashtags = bd.cargarHashtags();
 			if (hashtags != null && hashtags.length > 0) {
-				// Ordenar hashtags alfabéticamente
-				Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
-				
-				// Limitar a los primeros 5 hashtags
-				int limite = Math.min(hashtags.length, 5);
+				// Agrupar hashtags únicos por texto y ordenar alfabéticamente
+				java.util.Map<String, Hashtag> unico = new java.util.TreeMap<>();
+				for (Hashtag h : hashtags) {
+					if (h != null && h.getHashtag() != null) {
+						unico.put(h.getHashtag(), h);
+					}
+				}
+				java.util.List<Hashtag> listaUnica = new java.util.ArrayList<>(unico.values());
+				// Limitar a los primeros 5 hashtags únicos
+				int limite = Math.min(listaUnica.size(), 5);
 				for (int i = 0; i < limite; i++) {
-					Listadehashtags_item item = new Listadehashtags_item(null, hashtags[i]);
+					Hashtag h = listaUnica.get(i);
+					Listadehashtags_item item = new Listadehashtags_item(null, h);  // pasar null en lugar de this
 					this.getMainContainer().as(VerticalLayout.class).add(item);
 					_item.add(item);
 				}
