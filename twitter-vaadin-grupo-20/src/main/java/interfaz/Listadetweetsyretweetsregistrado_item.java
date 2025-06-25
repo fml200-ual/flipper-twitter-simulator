@@ -11,7 +11,8 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 	public Verretweetpropio _verretweetpropio;
 	public basededatos.Tweet _tweet;
 
-	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets, basededatos.Tweet tweet) {
+	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets,
+			basededatos.Tweet tweet) {
 		super(_listadetweetsyretweets);
 
 		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {

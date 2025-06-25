@@ -8,20 +8,11 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 	public Verhashtagregistrado _verhashtagregistrado;
 
 	public Listadetweetsyretweetsregistrado(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado) {
-
-	public Verhashtagregistrado _verhashtagregistrado;
-
-	public Listadetweetsyretweetsregistrado(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado) {
 		super(); // Constructor base sin inicialización
 		this._aCT02UsuarioRegistrado = _aCT02UsuarioRegistrado;
 		// Inicializar manualmente para usuarios registrados
 		inicializarTweetsRegistrado();
 	}
-
-	// Constructor específico para cargar tweets de un usuario específico (Mis
-	// tweets)
-	public Listadetweetsyretweetsregistrado(ACT02UsuarioRegistrado _aCT02UsuarioRegistrado,
-			basededatos.Usuario_Registrado usuario) {
 
 	// Constructor específico para cargar tweets de un usuario específico (Mis
 	// tweets)
@@ -38,8 +29,15 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 		this._verhashtagregistrado = verhashtagregistrado;
 		// No llamamos a inicializarTweetsRegistrado aquí porque se usará
 		// cargarTweetsDeHashtag
-	} // Método para cargar tweets de un hashtag específico
+	}
 
+	// Constructor para contexto de visualización de perfil (sin inicialización
+	// automática)
+	public Listadetweetsyretweetsregistrado() {
+		super(); // Constructor base sin inicialización
+		// No asignar _aCT02UsuarioRegistrado ni _verhashtagregistrado
+		// Este constructor se usa cuando se cargarán tweets manualmente desde otra
+		// clase
 	} // Método para cargar tweets de un hashtag específico
 
 	public void cargarTweetsDeHashtag(basededatos.Hashtag hashtag) {
@@ -47,19 +45,13 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 	}
 
 	// Método para cargar tweets de un hashtag específico con opción de agrupación
-
-	// Método para cargar tweets de un hashtag específico con opción de agrupación
 	public void cargarTweetsDeHashtag(basededatos.Hashtag hashtag, boolean agrupar) {
-		if (hashtag == null)
-			return;
-		try {
 		if (hashtag == null)
 			return;
 		try {
 			// Limpiar la lista actual
 			this.getMainContainer().as(VerticalLayout.class).removeAll();
 			this._item.clear();
-
 
 			// Configurar layout principal para ser más compacto
 			VerticalLayout mainLayout = this.getMainContainer().as(VerticalLayout.class);
@@ -69,16 +61,11 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 
 			// Cargar tweets que contienen este hashtag usando BDPrincipal para manejar
 			// sesiones correctamente
-
-			// Cargar tweets que contienen este hashtag usando BDPrincipal para manejar
-			// sesiones correctamente
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 			Tweet[] tweets = bd.cargarTweetsDeHashtag(hashtag.getId_hashtag());
 
-
 			if (tweets != null && tweets.length > 0) {
 				System.out.println("Tweets encontrados para hashtag " + hashtag.getHashtag() + ": " + tweets.length);
-
 
 				if (agrupar) {
 					// Mostrar como grupo agrupado
@@ -87,8 +74,6 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 					// Mostrar tweets individuales (comportamiento original) con layout compacto
 					for (Tweet tweet : tweets) {
 						if (tweet != null) {
-							Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(this,
-									tweet);
 							Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(this,
 									tweet);
 							mainLayout.add(item);
@@ -107,8 +92,6 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 	}
 
 	/**
-	 * 
-	 * /**
 	 * Crear una vista agrupada para un hashtag que muestra:
 	 * - El hashtag como título
 	 * - Número total de tweets
@@ -118,7 +101,6 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 		try {
 			// Crear un contenedor usando componentes Vaadin existentes
 			com.vaadin.flow.component.orderedlayout.VerticalLayout grupoHashtag = new com.vaadin.flow.component.orderedlayout.VerticalLayout();
-			com.vaadin.flow.component.orderedlayout.VerticalLayout grupoHashtag = new com.vaadin.flow.component.orderedlayout.VerticalLayout();
 			grupoHashtag.setWidth("100%");
 			grupoHashtag.setPadding(true);
 			grupoHashtag.setSpacing(true);
@@ -126,12 +108,8 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 
 			// Crear cabecera del grupo
 			com.vaadin.flow.component.orderedlayout.HorizontalLayout cabecera = new com.vaadin.flow.component.orderedlayout.HorizontalLayout();
-			com.vaadin.flow.component.orderedlayout.HorizontalLayout cabecera = new com.vaadin.flow.component.orderedlayout.HorizontalLayout();
 			cabecera.setWidth("100%");
 			cabecera.setAlignItems(com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.CENTER);
-			cabecera.setJustifyContentMode(
-					com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode.BETWEEN);
-
 			cabecera.setJustifyContentMode(
 					com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode.BETWEEN);
 
@@ -182,13 +160,6 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 					"🔄 " + totalRetweets);
 			com.vaadin.flow.component.html.Span comentariosTotales = new com.vaadin.flow.component.html.Span(
 					"💬 " + totalComentarios);
-
-			com.vaadin.flow.component.html.Span likesTotales = new com.vaadin.flow.component.html.Span(
-					"❤️ " + totalLikes);
-			com.vaadin.flow.component.html.Span retweetsTotales = new com.vaadin.flow.component.html.Span(
-					"🔄 " + totalRetweets);
-			com.vaadin.flow.component.html.Span comentariosTotales = new com.vaadin.flow.component.html.Span(
-					"💬 " + totalComentarios);
 			contadores.add(likesTotales, retweetsTotales, comentariosTotales);
 
 			// Contador de tweets
@@ -203,7 +174,6 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 
 			// Crear contenedor de tweets expandible usando Details
 			com.vaadin.flow.component.orderedlayout.VerticalLayout contenedorTweets = new com.vaadin.flow.component.orderedlayout.VerticalLayout();
-			com.vaadin.flow.component.orderedlayout.VerticalLayout contenedorTweets = new com.vaadin.flow.component.orderedlayout.VerticalLayout();
 			contenedorTweets.setSpacing(false);
 			contenedorTweets.setPadding(false);
 
@@ -214,16 +184,12 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 				if (tweets[i] != null) {
 					Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(this,
 							tweets[i]);
-					Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(this,
-							tweets[i]);
 					contenedorTweets.add(item);
 				}
 			}
 
 			// Si hay más tweets, mostrar indicador
 			if (tweets != null && tweets.length > maxTweetsIniciales) {
-				com.vaadin.flow.component.html.Span masIndicador = new com.vaadin.flow.component.html.Span(
-						"+" + (tweets.length - maxTweetsIniciales) + " tweets más...");
 				com.vaadin.flow.component.html.Span masIndicador = new com.vaadin.flow.component.html.Span(
 						"+" + (tweets.length - maxTweetsIniciales) + " tweets más...");
 				masIndicador.getStyle().set("color", "#1DA1F2");
@@ -233,8 +199,6 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 			}
 
 			// Crear Details (componente expandible de Vaadin)
-			com.vaadin.flow.component.details.Details detallesExpandibles = new com.vaadin.flow.component.details.Details(
-					"Ver tweets", contenedorTweets);
 			com.vaadin.flow.component.details.Details detallesExpandibles = new com.vaadin.flow.component.details.Details(
 					"Ver tweets", contenedorTweets);
 			detallesExpandibles.setWidth("100%");
@@ -249,8 +213,6 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 					if (tweets != null) {
 						for (Tweet tweet : tweets) {
 							if (tweet != null) {
-								Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
-										this, tweet);
 								Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
 										this, tweet);
 								contenedorTweets.add(item);
@@ -269,7 +231,6 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 			for (Tweet tweet : tweets) {
 				if (tweet != null) {
 					Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(this, tweet);
-					Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(this, tweet);
 					this.getMainContainer().as(VerticalLayout.class).add(item);
 					this._item.add(item);
 				}
@@ -278,38 +239,27 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 	}
 
 	private void inicializarTweetsRegistrado() {
-	// Cargar tweets reales desde la base de datos específicamente para usuarios
-	// registrados
-
-	private void inicializarTweetsRegistrado() {
 		// Cargar tweets reales desde la base de datos específicamente para usuarios
 		// registrados
 		try {
 			System.out.println("=== Cargando tweets para usuario registrado ===");
 
-
 			// Verificar el estado del usuario antes de cargar tweets
 			mds2.MainView.verificarEstadoUsuario("inicializarTweetsRegistrado - inicio");
-
 
 			// Crear instancia de la base de datos
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 
-
 			// Cargar tweets reales de la base de datos
 			Tweet[] tweets = bd.cargarTweets();
 
-
 			if (tweets != null && tweets.length > 0) {
 				System.out.println("Cargados " + tweets.length + " tweets desde la BD para usuario registrado");
-
 
 				// Crear items específicos para usuarios registrados con datos reales
 				for (Tweet tweet : tweets) {
 					if (tweet != null) {
 						System.out.println("Creando item para tweet: " + tweet.getId_tweet());
-						Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(this,
-								tweet);
 						Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(this,
 								tweet);
 						this.getMainContainer().as(VerticalLayout.class).add(item);
@@ -318,22 +268,14 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 				}
 				System.out.println("Items de tweets creados: " + _item.size());
 			} else {
-				System.out.println("Items de tweets creados: " + _item.size());
-			} else {
 				System.out.println("No se encontraron tweets en la base de datos");
 			}
 		} catch (Exception e) {
-			}
-		}catch(
-
-	Exception e)
-	{
-		System.err.println("Error cargando tweets para usuario registrado: " + e.getMessage());
-		e.printStackTrace();
-	}System.out.println("=== Fin carga tweets para usuario registrado ===");
+			System.err.println("Error cargando tweets para usuario registrado: " + e.getMessage());
+			e.printStackTrace();
+		}
+		System.out.println("=== Fin carga tweets para usuario registrado ===");
 	}
-
-	// Método para cargar tweets específicos de un usuario (para "Mis tweets")
 
 	// Método para cargar tweets específicos de un usuario (para "Mis tweets")
 	// usando los métodos ORM definidos en BDPrincipal
@@ -355,25 +297,15 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 
 			// Usar el método ORM definido para cargar solo los tweets de este usuario
 			// específico
-
-			// Usar el método ORM definido para cargar solo los tweets de este usuario
-			// específico
 			Tweet[] tweetsUsuario = bd.cargarTweetsPorUsuario(usuario.getId_usuario());
 
 			if (tweetsUsuario != null && tweetsUsuario.length > 0) {
 				System.out
 						.println("Cargados " + tweetsUsuario.length + " tweets del usuario: " + usuario.getNickname());
 
-				System.out
-						.println("Cargados " + tweetsUsuario.length + " tweets del usuario: " + usuario.getNickname());
-
 				// Crear items específicos para los tweets del usuario
 				for (Tweet tweet : tweetsUsuario) {
 					if (tweet != null) {
-						System.out.println("Creando item para tweet del usuario: " + tweet.getId_tweet() + " - "
-								+ tweet.getContenidoTweet());
-						Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(this,
-								tweet);
 						System.out.println("Creando item para tweet del usuario: " + tweet.getId_tweet() + " - "
 								+ tweet.getContenidoTweet());
 						Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(this,
