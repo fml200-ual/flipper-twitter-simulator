@@ -29,53 +29,71 @@ public class Verretweetadministrador extends TweetRetwetadministrador {
 			return;
 
 		try {
-			// Obtener datos del usuario que publicó el tweet
-			basededatos.Usuario_Registrado usuario = tweet.getPublicado_por();
-			if (usuario != null) {
-				// Establecer nombre y handle del usuario
-				this.getSpanNombreUsuario().setText(usuario.getNickname());
-				this.getSpanHandleUsuario().setText("@" + usuario.getNickname());
+			// Esta vista solo muestra retweets, por lo que siempre hay un tweet retweeteado
+			Tweet tweetOriginal = tweet.getTweet_retweeteado();
+
+			// Obtener datos del usuario que hizo el retweet
+			basededatos.Usuario_Registrado usuarioRetweet = tweet.getPublicado_por();
+			if (usuarioRetweet != null) {
+				// Establecer nombre y handle del usuario que hizo el retweet
+				this.getSpanNombreUsuario().setText(usuarioRetweet.getNickname());
+				this.getSpanHandleUsuario().setText("@" + usuarioRetweet.getNickname());
 			}
 
-			// Establecer contenido del tweet
-			String contenido = "";
-			if (tweet.getTweet_retweeteado() != null) {
-				// Es un retweet
-				contenido = "RT: " + (tweet.getTweet_retweeteado().getContenidoTweet() != null
-						? tweet.getTweet_retweeteado().getContenidoTweet()
-						: "");
-				// Si el retweet tiene comentario adicional
-				if (tweet.getContenidoTweet() != null && !tweet.getContenidoTweet().trim().isEmpty()) {
-					contenido = tweet.getContenidoTweet() + "\n\n" + contenido;
-				}
+			// Contenido del retweet (comentario del usuario que retweetea)
+			String contenidoRetweet = tweet.getContenidoTweet();
+			if (contenidoRetweet != null && !contenidoRetweet.trim().isEmpty()) {
+				this.getPTextoPublicacion().setText(contenidoRetweet);
 			} else {
-				// Es un tweet original
-				contenido = tweet.getContenidoTweet() != null ? tweet.getContenidoTweet() : "";
+				this.getPTextoPublicacion().setText(""); // Retweet sin comentario
 			}
-			this.getPTextoPublicacion().setText(contenido);
 
-			// Establecer fecha de publicación
+			// Establecer fecha de publicación del retweet
 			if (tweet.getFechaPublicacion() != null) {
 				this.getSpanFecha().setText(tweet.getFechaPublicacion().toString());
 			}
 
-			// Contar likes (me gusta)
-			int likesCount = tweet.recibe_me_gusta != null ? tweet.recibe_me_gusta.size() : 0;
-			this.getSpanContadorMeGusta().setText(String.valueOf(likesCount));
+			// Siempre mostrar el layout de publicación citada
+			this.getLayoutPublicacionCitada().getStyle().set("display", "block");
 
-			// Contar retweets
-			int retweetsCount = tweet.retweets != null ? tweet.retweets.size() : 0;
-			this.getSpanContadorRetweet().setText(String.valueOf(retweetsCount));
+			// Rellenar datos del tweet original en la sección citada
+			if (tweetOriginal != null) {
+				basededatos.Usuario_Registrado autorOriginal = tweetOriginal.getPublicado_por();
+				if (autorOriginal != null) {
+					this.getSpanNombreUsuarioCitado().setText(autorOriginal.getNickname());
+					this.getSpanHandleUsuarioCitado().setText("@" + autorOriginal.getNickname());
+				}
 
-			// Contar comentarios
-			int commentsCount = tweet.tiene != null ? tweet.tiene.size() : 0;
-			this.getSpanContadorComentarios().setText(String.valueOf(commentsCount));
+				// Contenido del tweet original
+				String contenidoOriginal = tweetOriginal.getContenidoTweet();
+				if (contenidoOriginal != null) {
+					this.getPTextoPublicacionCitada().setText(contenidoOriginal);
+				}
+
+				// Usar estadísticas del tweet original
+				int likesCount = tweetOriginal.recibe_me_gusta != null ? tweetOriginal.recibe_me_gusta.size() : 0;
+				this.getSpanContadorMeGusta().setText(String.valueOf(likesCount));
+
+				int retweetsCount = tweetOriginal.retweets != null ? tweetOriginal.retweets.size() : 0;
+				this.getSpanContadorRetweet().setText(String.valueOf(retweetsCount));
+
+				int commentsCount = tweetOriginal.tiene != null ? tweetOriginal.tiene.size() : 0;
+				this.getSpanContadorComentarios().setText(String.valueOf(commentsCount));
+			} else {
+				// Caso fallback si no hay tweet original (no debería ocurrir en esta vista)
+				this.getPTextoPublicacionCitada().setText("Tweet original no disponible");
+				this.getSpanNombreUsuarioCitado().setText("Usuario no disponible");
+				this.getSpanHandleUsuarioCitado().setText("@desconocido");
+			}
 
 		} catch (Exception e) {
 			// En caso de error, mostrar información básica
-			this.getPTextoPublicacion().setText("Error al cargar tweet");
+			this.getPTextoPublicacion().setText("Error al cargar retweet");
 			this.getSpanNombreUsuario().setText("Usuario desconocido");
 			this.getSpanHandleUsuario().setText("@desconocido");
+			this.getPTextoPublicacionCitada().setText("Error al cargar tweet citado");
+			this.getSpanNombreUsuarioCitado().setText("Usuario desconocido");
+			this.getSpanHandleUsuarioCitado().setText("@desconocido");
 		}
 	}
 

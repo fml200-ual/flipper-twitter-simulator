@@ -1,9 +1,5 @@
 package interfaz;
 
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import basededatos.Tweet;
-import mds2.MainView;
-
 public class Listadetweetsyretweetsnoregistrado extends Listadetweetsyretweets {
 
 	public Verhashtagnoregistrado _verhashtagnoregistrado;

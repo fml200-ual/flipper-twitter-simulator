@@ -18,9 +18,10 @@ public class Listadetweetsyretweetsadministrador_item extends Listadetweetsyretw
 
 		// Rellenar los datos del tweet en el item
 		rellenarDatos(tweet);
+		boolean esRetweet = tweet.getTweet_retweeteado() != null;
 
 		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
-			if (tweet.getTweet_retweeteado() != null) {
+			if (esRetweet) {
 				// Es un retweet
 				Verretweetadministrador(tweet);
 			} else {
