@@ -124,6 +124,9 @@ public class Verpropioperfil extends Verperfil {
 					System.err.println("Error calculando seguidores/siguiendo: " + e.getMessage());
 				}
 
+				// Configurar imágenes de perfil y banner
+				configurarImagenesPerfil(usuario);
+				
 				System.out.println("Datos del propio perfil cargados para usuario: " + usuario.getNickname());
 			} else {
 				System.err.println("Error: No se pudo acceder a los datos del usuario registrado");
@@ -165,4 +168,38 @@ public class Verpropioperfil extends Verperfil {
 			}
 		}
 	}
+
+	    /**
+     * Método público para actualizar las imágenes del perfil tras editar cuenta.
+     * Recarga el usuario desde la BD y actualiza tanto el perfil como el avatar superior.
+     */
+    public void actualizarImagenesPerfil() {
+        try {
+            // Recargar el usuario desde la base de datos para obtener los datos más recientes
+            BDPrincipal bd = new BDPrincipal();
+            Usuario_Registrado usuarioActualizado = bd.cargarUsuarioPorId(MainView.obtenerUsuarioActual().getId_usuario());
+            
+            if (usuarioActualizado != null) {
+                // Actualizar la referencia global
+                MainView.Usuario.usuarioRegistrado = usuarioActualizado;
+                
+                // Actualizar las imágenes del perfil usando el método heredado
+                configurarImagenesPerfil(usuarioActualizado);
+                
+                // Actualizar el avatar superior en la vista principal
+                if (_aCT02UsuarioRegistrado != null) {
+                    _aCT02UsuarioRegistrado.u = usuarioActualizado;
+                    _aCT02UsuarioRegistrado.actualizarAvatarSuperior();
+                }
+                
+                // Rellenar otros datos del perfil
+                rellenarDatosPropiosPerfil();
+                
+                System.out.println("Imágenes del perfil actualizadas tras edición de cuenta");
+            }
+        } catch (Exception e) {
+            System.err.println("Error actualizando imágenes del perfil: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

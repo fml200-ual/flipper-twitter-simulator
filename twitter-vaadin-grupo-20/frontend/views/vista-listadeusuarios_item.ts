@@ -41,10 +41,31 @@ export class VistaListadeusuarios_item extends LitElement {  static get styles()
       }
 
       #avatarIcon {
-        width: 32px; /* Tamaño del icono del avatar */
-        height: 32px;
+        width: 40px; /* Tamaño del icono del avatar aumentado */
+        height: 40px;
         color: #00FFFF; /* Color turquesa para el avatar */
         flex-shrink: 0;
+        border-radius: 50%; /* Hacer circular */
+        border: 2px solid #00FFFF; /* Borde turquesa */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden; /* Evita que la imagen se desborde */
+        position: relative; /* Para controlar la superposición */
+      }
+
+      /* Estilo específico cuando tiene imagen de fondo */
+      #avatarIcon[style*="background-image: url"] {
+        color: transparent !important; /* Oculta el icono cuando hay imagen */
+      }
+
+      /* Asegurar que el icono SVG no se superponga */
+      #avatarIcon svg {
+        position: relative;
+        z-index: 1;
       }
 
       #textInfo {

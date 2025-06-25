@@ -8,6 +8,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 public class Restablecercontrasea extends VistaRestablecercontrasea{
 	public ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado;
 	public Introducircdigodeverificacin _introducircdigodeverificacin;
+	public ACT04SistemadeCorreo _aCT04SistemadeCorreo; // Para enviar el correo de verificación
 	
 	// Campo temporal para almacenar el correo electrónico del usuario
 	private String correoElectronico;
@@ -165,8 +166,15 @@ public class Restablecercontrasea extends VistaRestablecercontrasea{
 		try {
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 			basededatos.Usuario_Registrado usuario = bd.validacionCorreo(correo);
-			
+			// Generar y mandar el PIN (re-utiliza la misma clase)
+
+
 			if (usuario != null) {
+
+				ACT04SistemadeCorreo mailer = new ACT04SistemadeCorreo(correo);
+				this._introducircdigodeverificacin = null;   // si tu flujo lo necesita
+				// Guarda mailer en un atributo si vas a validarlo después
+				this._aCT04SistemadeCorreo = mailer;
 				// Correo válido, pasar al siguiente paso
 				this.correoElectronico = correo;
 				this.solicitandoCorreo = false;
