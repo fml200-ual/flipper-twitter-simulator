@@ -2,6 +2,9 @@ package interfaz;
 
 import java.util.Vector;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import mds2.MainView.Pantalla;
@@ -23,22 +26,31 @@ public class Listafijadehashtagsregistrado extends Listafijadehashtags {
 		try {
 			Hashtag[] hashtags = bd.cargarHashtags();
 			if (hashtags != null && hashtags.length > 0) {
-				// Agrupar hashtags únicos por texto y ordenar alfabéticamente
-				java.util.Map<String, Hashtag> unico = new java.util.TreeMap<>();
-				for (Hashtag h : hashtags) {
-					if (h != null && h.getHashtag() != null) {
-						unico.put(h.getHashtag(), h);
-					}
-				}
-				java.util.List<Hashtag> listaUnica = new java.util.ArrayList<>(unico.values());
-				// Limitar a los primeros 5 hashtags únicos
-				int limite = Math.min(listaUnica.size(), 5);
-				for (int i = 0; i < limite; i++) {
-					Hashtag h = listaUnica.get(i);
-					Listadehashtags_item item = new Listadehashtags_item(null, h);  // pasar null en lugar de this
+				System.out.println("Cargando " + hashtags.length + " hashtags en lista scrolleable (registrado)");
+				
+				// Ordenar hashtags alfabéticamente
+				Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
+
+				// Mostrar todos los hashtags (sin límite de 5) para scroll
+				for (int i = 0; i < hashtags.length; i++) {
+					basededatos.Hashtag hashtag = hashtags[i];
+					Listadehashtags_item item = new Listadehashtags_item(null, hashtag);
+					item.getHashtagContainer().addClickListener(event -> {
+						Verhashtagregistrado(hashtag);
+					});
 					this.getMainContainer().as(VerticalLayout.class).add(item);
 					_item.add(item);
 				}
+				
+				// Configurar el contenedor como scrolleable
+				this.getMainContainer().getStyle()
+					.set("height", "300px")  // Altura fija para permitir scroll
+					.set("overflow-y", "auto")  // Scroll vertical
+					.set("overflow-x", "hidden")  // Sin scroll horizontal
+					.set("padding", "5px")
+					.set("gap", "3px");  // Gap más pequeño para hashtags
+				
+				System.out.println("Lista fija de hashtags configurada como scrolleable con " + hashtags.length + " hashtags");
 			}
 		} catch (Exception e) {
 			System.err.println("Error cargando hashtags: " + e.getMessage());
@@ -52,8 +64,8 @@ public class Listafijadehashtagsregistrado extends Listafijadehashtags {
 		Pantalla.MainView.add(_verlistaampliadadehashtagsregistrado);
 	}
 
-	public void Verhashtagregistrado() {
-		_verhashtagregistrado = new Verhashtagregistrado(this);
+	public void Verhashtagregistrado(basededatos.Hashtag hashtag) {
+		_verhashtagregistrado = new Verhashtagregistrado(this, hashtag);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verhashtagregistrado);
