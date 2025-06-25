@@ -26,8 +26,7 @@ public class Listafijadehashtagsregistrado extends Listafijadehashtags {
 		try {
 			Hashtag[] hashtags = bd.cargarHashtags();
 			if (hashtags != null && hashtags.length > 0) {
-				System.out.println("Cargando " + hashtags.length + " hashtags en lista scrolleable (registrado)");
-				
+
 				// Ordenar hashtags alfabéticamente
 				Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
 
@@ -41,16 +40,15 @@ public class Listafijadehashtagsregistrado extends Listafijadehashtags {
 					this.getMainContainer().as(VerticalLayout.class).add(item);
 					_item.add(item);
 				}
-				
+
 				// Configurar el contenedor como scrolleable
 				this.getMainContainer().getStyle()
-					.set("height", "300px")  // Altura fija para permitir scroll
-					.set("overflow-y", "auto")  // Scroll vertical
-					.set("overflow-x", "hidden")  // Sin scroll horizontal
-					.set("padding", "5px")
-					.set("gap", "3px");  // Gap más pequeño para hashtags
-				
-				System.out.println("Lista fija de hashtags configurada como scrolleable con " + hashtags.length + " hashtags");
+						.set("height", "300px") // Altura fija para permitir scroll
+						.set("overflow-y", "auto") // Scroll vertical
+						.set("overflow-x", "hidden") // Sin scroll horizontal
+						.set("padding", "5px")
+						.set("gap", "3px"); // Gap más pequeño para hashtags
+
 			}
 		} catch (Exception e) {
 			System.err.println("Error cargando hashtags: " + e.getMessage());

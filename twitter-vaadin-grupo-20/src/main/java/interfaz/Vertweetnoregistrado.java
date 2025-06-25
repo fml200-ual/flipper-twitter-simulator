@@ -6,7 +6,8 @@ public class Vertweetnoregistrado extends TweetRetweetnoregistrado {
 	public Listadetweetsyretweetsnoregistrado_item _listadetweetsyretweetsnoregistrado;
 	private basededatos.Tweet tweet;
 
-	public Vertweetnoregistrado(Listadetweetsyretweetsnoregistrado_item listadetweetsyretweetsnoregistrado, basededatos.Tweet tweet) {
+	public Vertweetnoregistrado(Listadetweetsyretweetsnoregistrado_item listadetweetsyretweetsnoregistrado,
+			basededatos.Tweet tweet) {
 		super(tweet);
 		this.tweet = tweet;
 
@@ -55,6 +56,7 @@ public class Vertweetnoregistrado extends TweetRetweetnoregistrado {
 			// Datos del usuario
 			if (tweet.getPublicado_por() != null) {
 				this.getArrobaUsuario().setText("@" + tweet.getPublicado_por().getNickname());
+				this.getNombreUsuario().setText(tweet.getPublicado_por().getNickname());
 			}
 
 			// Fecha de publicación

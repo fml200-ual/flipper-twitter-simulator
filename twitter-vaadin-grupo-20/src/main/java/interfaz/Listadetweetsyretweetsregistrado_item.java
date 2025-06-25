@@ -23,27 +23,24 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 		});
 	}
 
-	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets, Tweet tweet,
-			int id_usuario) {
+	public Listadetweetsyretweetsregistrado_item(Listadetweetsyretweets _listadetweetsyretweets,
+			Tweet tweet) {
 		super(_listadetweetsyretweets, tweet);
 		this._tweet = tweet;
-
 		Usuario_Registrado usuario_Registrado = mds2.MainView.obtenerUsuarioActual();
-
-		// Rellenar datos del tweet
 
 		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
 			// Luego hay que diferenciar entre tweet y retweet. Tambien si es propio o no
 			if (tweet.getTweet_retweeteado() != null) {
 				// Es un retweet
-				if (usuario_Registrado.getId_usuario() == id_usuario) {
+				if (usuario_Registrado.getId_usuario() == tweet.getPublicado_por().getId_usuario()) {
 					Verretweetpropio();
 				} else {
 					Verretweetregistrado();
 				}
 			} else {
 				// Es un tweet
-				if (usuario_Registrado.getId_usuario() == id_usuario) {
+				if (usuario_Registrado.getId_usuario() == tweet.getPublicado_por().getId_usuario()) {
 					Vertweetpropio();
 				} else {
 					Vertweetregistrado();
