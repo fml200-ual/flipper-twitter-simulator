@@ -28,9 +28,13 @@ public class Listadetweetsyretweets_item extends VistaListadetweetsyretweets_ite
 			if (tweet.getPublicado_por() != null) {
 				this.getNickName().setText(tweet.getPublicado_por().getNickname());
 				this.getUsername().setText("@" + tweet.getPublicado_por().getNickname());
+				
+				// Configurar imagen de perfil del autor del tweet
+				configurarImagenPerfilTweet(tweet.getPublicado_por());
 			} else {
 				this.getNickName().setText("Usuario desconocido");
 				this.getUsername().setText("@desconocido");
+				configurarImagenPerfilPorDefecto();
 			}
 
 			// Establecer el contenido del tweet
@@ -87,6 +91,56 @@ public class Listadetweetsyretweets_item extends VistaListadetweetsyretweets_ite
 			this.getXLabel().setText("0");
 			this.getZLabel().setText("0");
 		}
+	}
+
+	private void configurarImagenPerfilTweet(basededatos.Usuario_Registrado usuario) {
+		try {
+			if (usuario != null && usuario.getFotoPerfilURL() != null && 
+				!usuario.getFotoPerfilURL().trim().isEmpty() && 
+				!usuario.getFotoPerfilURL().equals("default-profile.jpg")) {
+				
+				// Configurar como imagen de perfil real usando CSS background
+				this.getAvatarIcon().getStyle()
+					.set("background-image", "url('" + usuario.getFotoPerfilURL() + "')")
+					.set("background-size", "cover")
+					.set("background-position", "center")
+					.set("background-repeat", "no-repeat")
+					.set("border-radius", "50%")
+					.set("border", "2px solid #00FFFF")
+					.set("width", "32px")
+					.set("height", "32px");
+				
+				// Ocultar completamente el icono de vaadin
+				this.getAvatarIcon().removeAttribute("icon");
+				this.getAvatarIcon().setProperty("innerHTML", "");
+				this.getAvatarIcon().getStyle()
+					.set("--vaadin-icon-width", "0px")
+					.set("--vaadin-icon-height", "0px")
+					.set("color", "transparent");
+				
+				System.out.println("Imagen de perfil configurada para tweet de: " + usuario.getNickname());
+			} else {
+				configurarImagenPerfilPorDefecto();
+			}
+		} catch (Exception e) {
+			System.err.println("Error configurando imagen de perfil en tweet: " + e.getMessage());
+			configurarImagenPerfilPorDefecto();
+		}
+	}
+
+	private void configurarImagenPerfilPorDefecto() {
+		// Usar icono por defecto
+		this.getAvatarIcon().setAttribute("icon", "vaadin:user");
+		this.getAvatarIcon().getStyle()
+			.set("background-image", "none")
+			.set("color", "#00FFFF")
+			.set("border-radius", "50%")
+			.set("border", "2px solid #00FFFF")
+			.set("width", "32px")
+			.set("height", "32px");
+		this.getAvatarIcon().getStyle()
+			.set("--vaadin-icon-width", "20px")
+			.set("--vaadin-icon-height", "20px");
 	}
 
 	public void Mostrarmstweets() {

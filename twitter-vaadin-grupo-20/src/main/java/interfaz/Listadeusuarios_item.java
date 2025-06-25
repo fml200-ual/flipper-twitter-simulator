@@ -1,7 +1,5 @@
 package interfaz;
 
-import com.vaadin.flow.component.html.Image;
-
 import vistas.VistaListadeusuarios_item;
 import basededatos.Usuario_Registrado;
 import basededatos.BDPrincipal;
@@ -40,25 +38,8 @@ public class Listadeusuarios_item extends VistaListadeusuarios_item {
 			this.getDescriptionText().setText("Sin descripción");
 		}
 
-		// Actualizar foto de perfil si hay URL
-		if (u.getFotoPerfilURL() != null && !u.getFotoPerfilURL().trim().isEmpty()) {
-			try {
-				// Reemplazar el icono por defecto con una imagen real
-				Image img = new Image(u.getFotoPerfilURL(), "Foto de perfil");
-				img.setWidth("32px");
-				img.setHeight("32px");
-				img.getStyle().set("border-radius", "50%"); // Hacer circular
-
-				// Reemplazar el icono de avatar con la imagen
-				this.getAvatarIcon().getParent().ifPresent(parent -> {
-					parent.getElement().removeChild(this.getAvatarIcon().getElement());
-					parent.getElement().appendChild(img.getElement());
-				});
-			} catch (Exception e) {
-				// Si hay error con la imagen, mantener el icono por defecto
-				System.err.println("Error cargando imagen de perfil: " + e.getMessage());
-			}
-		}
+		// Configurar imagen de perfil/avatar
+		configurarImagenPerfil();
 
 		// Actualizar número de seguidores desde la base de datos
 		try {
@@ -89,6 +70,59 @@ public class Listadeusuarios_item extends VistaListadeusuarios_item {
 		this.getNickName().setText("Usuario");
 		this.getDescriptionText().setText("Sin datos disponibles");
 		this.getFollowersCount().setText("0");
+	}
+
+	private void configurarImagenPerfil() {
+		try {
+			if (u != null && u.getFotoPerfilURL() != null && !u.getFotoPerfilURL().trim().isEmpty() && 
+				!u.getFotoPerfilURL().equals("default-profile.jpg")) {
+				
+				// Configurar como imagen de perfil real usando CSS background
+				this.getAvatarIcon().getStyle()
+					.set("background-image", "url('" + u.getFotoPerfilURL() + "')")
+					.set("background-size", "cover")
+					.set("background-position", "center")
+					.set("background-repeat", "no-repeat")
+					.set("border-radius", "50%")
+					.set("border", "2px solid #00FFFF")
+					.set("width", "40px")
+					.set("height", "40px");
+				
+				// Ocultar completamente el icono de vaadin
+				this.getAvatarIcon().getElement().removeAttribute("icon");
+				this.getAvatarIcon().getElement().setProperty("innerHTML", "");
+				this.getAvatarIcon().getElement().getStyle()
+					.set("--vaadin-icon-width", "0px")
+					.set("--vaadin-icon-height", "0px")
+					.set("color", "transparent");
+				
+				System.out.println("Imagen de perfil configurada para usuario: " + u.getNickname() + " con URL: " + u.getFotoPerfilURL());
+			} else {
+				// Usar icono por defecto
+				this.getAvatarIcon().getElement().setAttribute("icon", "vaadin:user");
+				this.getAvatarIcon().getStyle()
+					.set("background-image", "none")
+					.set("color", "#00FFFF")
+					.set("width", "40px")
+					.set("height", "40px");
+				this.getAvatarIcon().getElement().getStyle()
+					.set("--vaadin-icon-width", "24px")
+					.set("--vaadin-icon-height", "24px");
+				System.out.println("Usando icono por defecto para usuario: " + (u != null ? u.getNickname() : "desconocido"));
+			}
+		} catch (Exception e) {
+			System.err.println("Error configurando imagen de perfil: " + e.getMessage());
+			// En caso de error, usar icono por defecto
+			this.getAvatarIcon().getElement().setAttribute("icon", "vaadin:user");
+			this.getAvatarIcon().getStyle()
+				.set("background-image", "none")
+				.set("color", "#00FFFF")
+				.set("width", "40px")
+				.set("height", "40px");
+			this.getAvatarIcon().getElement().getStyle()
+				.set("--vaadin-icon-width", "24px")
+				.set("--vaadin-icon-height", "24px");
+		}
 	}
 
 	public void Mostrarmsusuarios() {

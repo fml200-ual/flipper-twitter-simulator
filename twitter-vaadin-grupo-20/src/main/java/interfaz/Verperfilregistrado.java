@@ -209,6 +209,9 @@ public class Verperfilregistrado extends Verperfil {
 					this.getDescription().setText("Usuario de Twitter");
 				}
 
+				// Configurar imágenes de perfil y fondo usando el método heredado
+				configurarImagenesPerfil(u);
+
 				// Rellenar fecha de registro
 				if (u.getFechaDeRegistro() != null) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMMM yyyy");
