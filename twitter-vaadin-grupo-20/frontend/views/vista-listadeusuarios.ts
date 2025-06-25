@@ -15,16 +15,37 @@ export class VistaListadeusuarios extends LitElement {  static get styles() {
       }
       #mainContainer {
         width: 100%;
-        height: 100%;
+        height: 400px; /* Altura fija para permitir scroll */
         max-width: 100%; /* Evita desbordamiento horizontal */
-        overflow-y: auto; /* Permite desplazamiento si la lista es muy larga */
+        overflow-y: auto; /* Permite desplazamiento vertical */
         overflow-x: hidden; /* Oculta el scroll horizontal */
-        padding: 0;
+        padding: 5px;
         align-items: stretch; /* Asegura que los items se estiren a lo ancho */
         gap: 5px; /* Espacio reducido entre los ítems */
         box-sizing: border-box;
         background-color: #000000 !important;
-        /* Removido position: absolute que causaba que se saliera del layout */
+        border: 1px solid #333; /* Borde sutil para definir el área de scroll */
+        border-radius: 8px; /* Bordes redondeados */
+        scrollbar-width: thin; /* Firefox: scroll más delgado */
+      }
+      
+      /* Estilo personalizado para scrollbar en Webkit browsers */
+      #mainContainer::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      #mainContainer::-webkit-scrollbar-track {
+        background: #1a1a1a;
+        border-radius: 4px;
+      }
+      
+      #mainContainer::-webkit-scrollbar-thumb {
+        background: #555;
+        border-radius: 4px;
+      }
+      
+      #mainContainer::-webkit-scrollbar-thumb:hover {
+        background: #777;
       }
       `;
   }

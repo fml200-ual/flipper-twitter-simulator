@@ -3,113 +3,90 @@ package interfaz;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import mds2.MainView.Pantalla;
+import basededatos.BDPrincipal;
+import basededatos.Tweet;
+import basededatos.Usuario_Registrado;
 import vistas.VistaAgrupartweets;
 
 public class Agrupartweets extends VistaAgrupartweets {
 	public Verperfil _verperfil;
 	public Listadetweetsyretweets _listadetweetsyretweets;
-	basededatos.Usuario_Registrado _usuario;
+	public Usuario_Registrado usuarioDelPerfil;
 
-	public Agrupartweets(Verperfil _verperfil, basededatos.Usuario_Registrado usuario) {
+	public Agrupartweets(Verperfil _verperfil, Usuario_Registrado usuario) {
 		super();
 		this._verperfil = _verperfil;
-		this._usuario = usuario;
+		this.usuarioDelPerfil = usuario;
 
-		
+		this.getMoreTweetsButtonContainer().setVisible(false);
+
 		Listadetweetsyretweets(usuario);
-		this.getMoreTweetsButtonContainer().setVisible(true);
+	}
 
-	}	
-	
-	public void Listadetweetsyretweets(basededatos.Usuario_Registrado usuario) {
-		basededatos.Tweet[] tweets = null; // Declarar fuera del try
-		
-		try {
-			// Obtener el usuario del perfil
-			System.out.println("Usuario obtenido del perfil: " + (usuario != null ? usuario.getNickname() : "null"));
-			
-			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
-			
-			if (usuario != null) {
-				// Cargar tweets específicos del usuario (filtrar por ID y nombre de usuario)
-				tweets = bd.cargarTweetsPorUsuario(usuario.getId_usuario());
-				System.out.println("Cargando " + (tweets != null ? tweets.length : 0) + " tweets del usuario: " + usuario.getNickname());
-			} else {
-				// Fallback: cargar todos los tweets
-				tweets = bd.cargarTweets();
-				System.out.println("Cargando tweets desde la base de datos...");
-				System.out.println("Cargados " + (tweets != null ? tweets.length : 0) + " tweets desde la BD");
-			}
-			
-			// Crear la lista según el tipo de usuario
-			switch (Pantalla.usuario) {
-				case 1:
-					_listadetweetsyretweets = new Listadetweetsyretweetsnoregistrado(null);
-					// Agregar tweets del usuario específico hasta un máximo de 10
-					if (tweets != null && tweets.length > 0) {
-						int maxTweets1 = Math.min(10, tweets.length);
-						for (int i = 0; i < maxTweets1; i++) {
-							if (tweets[i] != null) {
-								Listadetweetsyretweetsnoregistrado_item item = new Listadetweetsyretweetsnoregistrado_item(
-										_listadetweetsyretweets, tweets[i]);
-								_listadetweetsyretweets.getMainContainer().as(VerticalLayout.class).add(item);
-							}
-						}
-					}
-					break;
-				case 2:
-					_listadetweetsyretweets = new Listadetweetsyretweetsregistrado((ACT02UsuarioRegistrado) null);
-					// Agregar tweets del usuario específico hasta un máximo de 10
-					if (tweets != null && tweets.length > 0) {
-						int maxTweets2 = Math.min(10, tweets.length);
-						for (int i = 0; i < maxTweets2; i++) {
-							if (tweets[i] != null) {
-								Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
-										_listadetweetsyretweets, tweets[i]);
-								_listadetweetsyretweets.getMainContainer().as(VerticalLayout.class).add(item);
-							}
-						}
-					}
-					break;
-				case 3:
-					_listadetweetsyretweets = new Listadetweetsyretweetsadministrador(null);
-					// Agregar tweets del usuario específico hasta un máximo de 10
-					if (tweets != null && tweets.length > 0) {
-						int maxTweets3 = Math.min(10, tweets.length);
-						for (int i = 0; i < maxTweets3; i++) {
-							if (tweets[i] != null) {
-								Listadetweetsyretweetsadministrador_item item = new Listadetweetsyretweetsadministrador_item(
-										_listadetweetsyretweets, tweets[i]);
-								_listadetweetsyretweets.getMainContainer().as(VerticalLayout.class).add(item);
-							}
-						}
-					}
-					break;
-				default:
-					_listadetweetsyretweets = new Listadetweetsyretweets(this);
-					break;
-			}			
-		} catch (Exception e) {
-			System.err.println("Error al cargar tweets del usuario: " + e.getMessage());
-			e.printStackTrace();
-			
-			// Fallback: crear listas vacías
-			switch (Pantalla.usuario) {
-				case 1:
-					_listadetweetsyretweets = new Listadetweetsyretweetsnoregistrado(null);
-					break;
-				case 2:
-					_listadetweetsyretweets = new Listadetweetsyretweetsregistrado((ACT02UsuarioRegistrado) null);
-					break;
-				case 3:
-					_listadetweetsyretweets = new Listadetweetsyretweetsadministrador(null);
-					break;
-				default:
-					_listadetweetsyretweets = new Listadetweetsyretweets(this);
-					break;
-			}
+	public void Listadetweetsyretweets(Usuario_Registrado usuario) {
+		// Diferenciamos según el tipo de usuario que está visualizando el perfil
+		// y utilizamos los constructores que aprovechan la lógica de agrupación interna
+		switch (Pantalla.usuario) {
+			case 1:
+				// Usuario no registrado - usar constructor sin parámetros y cargar manualmente
+				_listadetweetsyretweets = new Listadetweetsyretweetsnoregistrado();
+				cargarTweetsManualmente(usuario);
+				break;
+			case 2:
+				// Usuario registrado - usar constructor que aprovecha la agrupación automática
+				_listadetweetsyretweets = new Listadetweetsyretweetsregistrado(null, usuario);
+				// La lista se encarga automáticamente de cargar y agrupar los tweets del usuario
+				break;
+			case 3:
+				// Administrador - usar constructor sin parámetros y cargar manualmente
+				_listadetweetsyretweets = new Listadetweetsyretweetsadministrador();
+				cargarTweetsManualmente(usuario);
+				break;
+			default:
+				_listadetweetsyretweets = new Listadetweetsyretweets(this);
+				break;
 		}
 
 		this.getTweetsContainer().as(VerticalLayout.class).add(_listadetweetsyretweets);
+	}
+	
+	/**
+	 * Método auxiliar para cargar tweets manualmente (para usuarios no registrados y administradores)
+	 */
+	private void cargarTweetsManualmente(Usuario_Registrado usuario) {
+		BDPrincipal bd = new BDPrincipal();
+		Tweet[] tweets = null;
+		
+		try {
+			if (usuario != null) {
+				// Cargar tweets específicos del usuario
+				tweets = bd.cargarTweetsPorUsuario(usuario.getId_usuario());
+			} else {
+				// Fallback: cargar todos los tweets
+				tweets = bd.cargarTweets();
+			}
+		} catch (Exception e) {
+			System.err.println("Error cargando tweets del usuario: " + e.getMessage());
+			tweets = new Tweet[0]; // Array vacío como fallback
+		}
+		
+		// Agregar los tweets a la lista manualmente
+		if (tweets != null && tweets.length > 0) {
+			// Mostrar máximo 10 tweets del usuario
+			int maxTweets = Math.min(10, tweets.length);
+			for (int i = 0; i < maxTweets; i++) {
+				if (Pantalla.usuario == 1) {
+					// Usuario no registrado
+					Listadetweetsyretweetsnoregistrado_item item = new Listadetweetsyretweetsnoregistrado_item(
+							_listadetweetsyretweets, tweets[i]);
+					_listadetweetsyretweets.getMainContainer().as(VerticalLayout.class).add(item);
+				} else if (Pantalla.usuario == 3) {
+					// Administrador
+					Listadetweetsyretweetsadministrador_item item = new Listadetweetsyretweetsadministrador_item(
+							_listadetweetsyretweets, tweets[i]);
+					_listadetweetsyretweets.getMainContainer().as(VerticalLayout.class).add(item);
+				}
+			}
+		}
 	}
 }

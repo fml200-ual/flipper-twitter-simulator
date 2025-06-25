@@ -4,6 +4,7 @@ import com.vaadin.flow.component.html.Image;
 
 import vistas.VistaListadeusuarios_item;
 import basededatos.Usuario_Registrado;
+import basededatos.BDPrincipal;
 
 public class Listadeusuarios_item extends VistaListadeusuarios_item {
 	public Listadeusuarios _listadeusuarios;
@@ -59,10 +60,29 @@ public class Listadeusuarios_item extends VistaListadeusuarios_item {
 			}
 		}
 
-		// Actualizar número de seguidores (si el ORM lo proporciona)
-		// Nota: Esto requeriría una relación en el modelo ORM para contar seguidores
-		// Por ahora, mostrar un número por defecto o calculado
-		this.getFollowersCount().setText("0");
+		// Actualizar número de seguidores desde la base de datos
+		try {
+			BDPrincipal bd = new BDPrincipal();
+			int numSeguidores = bd.contarSeguidores(u.getId_usuario());
+			
+			// Formatear el número de seguidores de manera amigable
+			String seguidoresTexto;
+			if (numSeguidores >= 1000000) {
+				double seguidoresM = numSeguidores / 1000000.0;
+				seguidoresTexto = String.format("%.1fM", seguidoresM);
+			} else if (numSeguidores >= 1000) {
+				double seguidoresK = numSeguidores / 1000.0;
+				seguidoresTexto = String.format("%.1fK", seguidoresK);
+			} else {
+				seguidoresTexto = String.valueOf(numSeguidores);
+			}
+			
+			this.getFollowersCount().setText(seguidoresTexto);
+			System.out.println("Usuario " + u.getNickname() + " tiene " + numSeguidores + " seguidores");
+		} catch (Exception e) {
+			System.err.println("Error obteniendo número de seguidores para " + u.getNickname() + ": " + e.getMessage());
+			this.getFollowersCount().setText("0");
+		}
 	}
 
 	private void mostrarDatosPorDefecto() {
