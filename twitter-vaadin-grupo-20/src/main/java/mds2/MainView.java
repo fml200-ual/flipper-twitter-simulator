@@ -130,6 +130,7 @@ public class MainView extends VerticalLayout {
 
 		if (!inicioSesion()) {
 			// Si no hay sesión válida, mostrar interfaz de usuario no registrado
+			Usuario.tipoUsuario = TipoUser.NO_REGISTRADO;
 			ACT01UsuarioNoRegistrado inicioNoRegistrado = new ACT01UsuarioNoRegistrado(this);
 			add(inicioNoRegistrado);
 		}
