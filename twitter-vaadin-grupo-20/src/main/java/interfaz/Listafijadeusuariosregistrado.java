@@ -2,6 +2,7 @@ package interfaz;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
+import mds2.MainView;
 import mds2.MainView.Pantalla;
 
 public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
@@ -16,27 +17,38 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 
 		Listadeusuarios();
 	}
+
 	public void Listadeusuarios() {
+		this.getMainContainer().as(VerticalLayout.class).removeAll();
 		try {
 			// Crear conexión a la base de datos para obtener usuarios reales
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 			basededatos.Usuario_Registrado[] usuarios = bd.cargarUsuarios();
-			
+
+			// Filtrar para eliminar el usuario actual
+			String usuarioActual = MainView.obtenerUsuarioActual().getNickname();
+			usuarios = java.util.Arrays.stream(usuarios)
+					.filter(u -> !u.getNickname().equals(usuarioActual))
+					.toArray(basededatos.Usuario_Registrado[]::new);
+
 			Listadeusuarios listaUsuarios = new Listadeusuarios(_verlistaampliadadeusuariosregistrado);
+
+			// Si no hay usuarios, mostrar mensaje de error
 
 			// Mostrar hasta 5 usuarios de la base de datos
 			int maxUsuarios = Math.min(5, usuarios.length);
 			for (int i = 0; i < maxUsuarios; i++) {
 				basededatos.Usuario_Registrado usuario = usuarios[i];
 				Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios, usuario);
-				
-				// Agregar ClickListener personalizado para navegar al perfil con el usuario correcto
+
+				// Agregar ClickListener personalizado para navegar al perfil con el usuario
+				// correcto
 				item.getMainContainer().addClickListener(event -> {
 					VerperfilregistradoConUsuario(usuario);
 				});
 				listaUsuarios.getMainContainer().as(VerticalLayout.class).add(item);
 			}
-			
+
 			// Si no hay usuarios en la BD, mostrar items por defecto
 			if (usuarios.length == 0) {
 				for (int i = 0; i < 5; i++) {
@@ -49,11 +61,11 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 			}
 
 			this.getMainContainer().as(VerticalLayout.class).add(listaUsuarios);
-			
+
 		} catch (Exception e) {
 			System.err.println("Error al cargar usuarios: " + e.getMessage());
 			e.printStackTrace();
-			
+
 			// Fallback: mostrar items por defecto
 			Listadeusuarios listaUsuarios = new Listadeusuarios(_verlistaampliadadeusuariosregistrado);
 			for (int i = 0; i < 5; i++) {

@@ -241,14 +241,14 @@ public class Verperfilregistrado extends Verperfil {
 	}
 
 	public void Verlistadeseguidosregistrado() {
-		_verlistadeseguidosregistrado = new Verlistadeseguidosregistrado(this);
+		_verlistadeseguidosregistrado = new Verlistadeseguidosregistrado(this, u);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verlistadeseguidosregistrado);
 	}
 
 	public void Verlistadeseguidoresregistrado() {
-		_verlistadeseguidoresregistrado = new Verlistadeseguidoresregistrado(this);
+		_verlistadeseguidoresregistrado = new Verlistadeseguidoresregistrado(this, u);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verlistadeseguidoresregistrado);

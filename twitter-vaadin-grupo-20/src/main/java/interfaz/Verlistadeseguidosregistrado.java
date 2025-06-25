@@ -9,26 +9,32 @@ public class Verlistadeseguidosregistrado extends VistaVerlistadeseguidosregistr
 	public Verperfilregistrado _verperfilregistrado;
 	public Verpropioperfil _verpropioperfil;
 	public Listadeusuarios _listadeusuarios;
+	basededatos.Usuario_Registrado u;
 
-	public Verlistadeseguidosregistrado(Verperfilregistrado verperfilregistrado) {
+	public Verlistadeseguidosregistrado(Verperfilregistrado verperfilregistrado, basededatos.Usuario_Registrado u) {
 		this._verperfilregistrado = verperfilregistrado;
+		this.u = u;
 
 		this.getNoFollowedMessage().setVisible(false);
+		this.getUsername().setText(u.getNickname());
 
-		Listadeusuarios();
+		Listadeusuarios(u);
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(_verperfilregistrado);
 		});
+
 	}
 
 	public Verlistadeseguidosregistrado(Verpropioperfil verpropioperfil) {
 		this._verpropioperfil = verpropioperfil;
+		basededatos.Usuario_Registrado usuarioActual = mds2.MainView.obtenerUsuarioActual();
 
 		this.getNoFollowedMessage().setVisible(false);
+		this.getUsername().setText(usuarioActual.getNickname());
 
-		Listadeusuarios();
+		Listadeusuarios(usuarioActual);
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
@@ -36,10 +42,8 @@ public class Verlistadeseguidosregistrado extends VistaVerlistadeseguidosregistr
 		});
 	}
 
-	public void Listadeusuarios() {
-		_listadeusuarios = new Listadeusuarios(this);
-
-		this.getNoFollowedMessage().setVisible(true);
+	public void Listadeusuarios(basededatos.Usuario_Registrado u) {
+		_listadeusuarios = new Listadeusuarios(this, u);
 
 		// Agregar la lista vacía al contenedor
 		this.getFollowedListContainer().as(VerticalLayout.class).add(_listadeusuarios);

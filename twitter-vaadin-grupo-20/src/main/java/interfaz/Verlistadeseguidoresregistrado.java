@@ -10,12 +10,13 @@ public class Verlistadeseguidoresregistrado extends VistaVerlistadeseguidoresreg
 	public Verpropioperfil _verpropioperfil;
 	public Listadeusuarios _listadeusuarios;
 
-	public Verlistadeseguidoresregistrado(Verperfilregistrado verperfilregistrado) {
+	public Verlistadeseguidoresregistrado(Verperfilregistrado verperfilregistrado, basededatos.Usuario_Registrado u) {
 		this._verperfilregistrado = verperfilregistrado;
 
 		this.getNoFollowersMessage().setVisible(false);
+		this.getUsername().setText(u.getNickname());
 
-		Listadeusuarios();
+		Listadeusuarios(u);
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
@@ -25,26 +26,22 @@ public class Verlistadeseguidoresregistrado extends VistaVerlistadeseguidoresreg
 
 	public Verlistadeseguidoresregistrado(Verpropioperfil verpropioperfil) {
 		this._verpropioperfil = verpropioperfil;
+		basededatos.Usuario_Registrado usuarioActual = mds2.MainView.obtenerUsuarioActual();
 
 		this.getNoFollowersMessage().setVisible(false);
+		this.getUsername().setText(usuarioActual.getNickname());
 
-		Listadeusuarios();
+		Listadeusuarios(usuarioActual);
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(_verpropioperfil);
 		});
-	}	public void Listadeusuarios() {
-		_listadeusuarios = new Listadeusuarios(this);
-		
-		// TEMPORAL: Eliminar toda la carga de usuarios para depurar
-		System.out.println("=== DEPURACIÓN: No cargando usuarios (seguidores) ===");
-		
-		// Mostrar mensaje de no hay seguidores por ahora
-		this.getNoFollowersMessage().setVisible(true);
-		this.getNoFollowersMessage().setText("DEPURACIÓN: Lista vacía intencionalmente");
-		
-		// Agregar la lista vacía al contenedor
+	}
+
+	public void Listadeusuarios(basededatos.Usuario_Registrado usuario) {
+		_listadeusuarios = new Listadeusuarios(this, usuario);
+
 		this.getFollowersListContainer().as(VerticalLayout.class).add(_listadeusuarios);
 	}
 }

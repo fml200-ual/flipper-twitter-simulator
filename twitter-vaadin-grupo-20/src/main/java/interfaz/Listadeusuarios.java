@@ -20,7 +20,7 @@ public class Listadeusuarios extends VistaListadeusuarios {
 	public Listadeusuarios(Verlistaampliadadeusuarios _verlistaampliadadeusuarios) {
 		super();
 		this._verlistaampliadadeusuarios = _verlistaampliadadeusuarios;
-		inicializar();
+		// inicializar();
 	}
 
 	public Listadeusuarios(Verlistaseguidosnoregistrado _verlistaseguidosnoregistrado) {
@@ -35,14 +35,14 @@ public class Listadeusuarios extends VistaListadeusuarios {
 		inicializar();
 	}
 
-	public Listadeusuarios(Verlistadeseguidosregistrado _verlistadeseguidosregistrado) {
+	public Listadeusuarios(Verlistadeseguidosregistrado _verlistadeseguidosregistrado,
+			basededatos.Usuario_Registrado u) {
 		super();
 		this._verlistadeseguidosregistrado = _verlistadeseguidosregistrado;
 
-		basededatos.Usuario_Registrado usuarioActual = mds2.MainView.obtenerUsuarioActual();
 		BDPrincipal bd = new BDPrincipal();
 
-		Usuario_Registrado[] seguidos = bd.cargarSeguidos(usuarioActual.getId_usuario());
+		Usuario_Registrado[] seguidos = bd.cargarSeguidos(u.getId_usuario());
 
 		for (Usuario_Registrado seguido : seguidos) {
 			Listadeusuarios_item item = new Listadeusuarios_item(this, seguido);
@@ -56,10 +56,24 @@ public class Listadeusuarios extends VistaListadeusuarios {
 
 	}
 
-	public Listadeusuarios(Verlistadeseguidoresregistrado _verlistadeseguidoresregistrado) {
+	public Listadeusuarios(Verlistadeseguidoresregistrado _verlistadeseguidoresregistrado,
+			basededatos.Usuario_Registrado u) {
 		super();
 		this._verlistadeseguidoresregistrado = _verlistadeseguidoresregistrado;
-		inicializar();
+
+		BDPrincipal bd = new BDPrincipal();
+
+		Usuario_Registrado[] seguidores = bd.cargarSeguidos(u.getId_usuario());
+
+		for (Usuario_Registrado seguidor : seguidores) {
+			Listadeusuarios_item item = new Listadeusuarios_item(this, seguidor);
+			item.getMainContainer().addClickListener(event -> {
+				new Verperfilregistrado(
+						_verlistadeseguidoresregistrado._verperfilregistrado._listafijadeusuariosregistrado, seguidor);
+			});
+			this.getMainContainer().as(VerticalLayout.class).add(item);
+			_item.add(item);
+		}
 	}
 
 	private void inicializar() {

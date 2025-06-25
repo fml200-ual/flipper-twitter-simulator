@@ -96,8 +96,6 @@ public class Listadenotificaciones extends VistaListadenotificaciones {
 			this.getMainContainer().as(VerticalLayout.class).add(item);
 		}
 
-		// TODO:
-		this.getMainContainer().as(VerticalLayout.class).add(new Listadenotificaciones_item(this));
 	}
 
 }

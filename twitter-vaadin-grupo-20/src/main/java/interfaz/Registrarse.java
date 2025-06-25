@@ -12,6 +12,7 @@ public class Registrarse extends VistaRegistrarse {
 	public Introducircdigodeverificacin _introducircdigodeverificacin;
 	public ACT05Google _aCT05Google;
 	public IniciarsesinconGoogle _iniciarsesinconGoogle;
+	public String _codigoVerificacion;
 
 	public Registrarse(ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado) {
 		super();
@@ -47,11 +48,6 @@ public class Registrarse extends VistaRegistrarse {
 			if (validarTodosLosCampos()) {
 				procesarRegistro();
 			}
-		});
-
-		// Configurar botón de Google
-		this.getGoogleLoginButton().addClickListener(event -> {
-			IniciarsesinconGoogle();
 		});
 	}
 
@@ -204,11 +200,13 @@ public class Registrarse extends VistaRegistrarse {
 			System.out.println("Actualizando preview de " + type + " con URL: " + url);
 			// Aquí se podría implementar lógica para mostrar preview real
 		}
-	}	private void procesarRegistro() {
+	}
+
+	private void procesarRegistro() {
 		try {
 			// Declaración del atributo IActor como en el patrón del diagrama de secuencia
 			BDPrincipal iactor = new BDPrincipal();
-			
+
 			// Obtener los valores de los campos siguiendo el patrón
 			String email = this.getEmailField().getValue().trim();
 			String nick = this.getNickField().getValue().trim();
@@ -216,7 +214,7 @@ public class Registrarse extends VistaRegistrarse {
 			String descripcion = this.getDescriptionField().getValue();
 			String fotoPerfilURL = this.getProfilePhotoUrlField().getValue();
 			String imagenFondoURL = this.getBackgroundUrlField().getValue();
-			
+
 			// Usar valores por defecto si están vacíos
 			if (descripcion == null || descripcion.trim().isEmpty()) {
 				descripcion = "Nuevo usuario de Twitter";
@@ -227,27 +225,26 @@ public class Registrarse extends VistaRegistrarse {
 			if (imagenFondoURL == null || imagenFondoURL.trim().isEmpty()) {
 				imagenFondoURL = "default-background.jpg";
 			}
-			
+
 			System.out.println("Procesando registro para usuario: " + nick);
-			
+
 			// Seguir el patrón del diagrama: actor = iactor.Join(FirstName, LastName,...)
 			basededatos.Usuario_Registrado nuevoUsuario = iactor.registrar(
-				nick, 
-				descripcion, 
-				imagenFondoURL, 
-				fotoPerfilURL, 
-				email, 
-				password, 
-				new Date()
-			);
-			
+					nick,
+					descripcion,
+					imagenFondoURL,
+					fotoPerfilURL,
+					email,
+					password,
+					new Date());
+
 			if (nuevoUsuario != null) {
 				System.out.println("Registro exitoso para usuario: " + nick);
-				
+
 				// Almacenar el usuario registrado para el flujo de verificación
 				// Esto simula el envío del código de verificación por email
 				storeUserForVerification(nuevoUsuario);
-				
+
 				// Navegar a la vista de código de verificación siguiendo el flujo
 				System.out.println("Navegando a código de verificación...");
 				Introducircdigodeverificacin();
@@ -256,7 +253,7 @@ public class Registrarse extends VistaRegistrarse {
 				// Mostrar mensaje de error apropiado
 				Mensajedeerrorregistro();
 			}
-			
+
 		} catch (Exception e) {
 			System.err.println("Error durante el registro: " + e.getMessage());
 			e.printStackTrace();
@@ -264,25 +261,26 @@ public class Registrarse extends VistaRegistrarse {
 			Mensajedeerrorregistro();
 		}
 	}
-	
+
 	// Método para almacenar temporalmente el usuario para verificación
 	private void storeUserForVerification(basededatos.Usuario_Registrado usuario) {
 		// En una implementación real, aquí se enviaría el email de verificación
 		// y se almacenaría temporalmente el estado del registro
 		System.out.println("Almacenando usuario para verificación: " + usuario.getNickname());
 		System.out.println("Simulando envío de código de verificación a: " + usuario.getCorreoElectronico());
-		
+
 		// Simular generación y envío de código
-		String codigoVerificacion = generateVerificationCode();
-		System.out.println("Código de verificación generado: " + codigoVerificacion);
-		
-		// En una implementación real, se guardaría en una tabla temporal o cache		// y se enviaría por email usando el ACT04SistemadeCorreo
+		_codigoVerificacion = generateVerificationCode();
+		System.out.println("Código de verificación generado: " + _codigoVerificacion);
+
+		// En una implementación real, se guardaría en una tabla temporal o cache // y
+		// se enviaría por email usando el ACT04SistemadeCorreo
 	}
-	
+
 	// Método para generar código de verificación
 	private String generateVerificationCode() {
 		// Generar código de 4 dígitos aleatorio
-		return String.format("%04d", (int)(Math.random() * 10000));
+		return String.format("%04d", (int) (Math.random() * 10000));
 	}
 
 	public void Mensajedeerrorregistro() {
@@ -295,6 +293,7 @@ public class Registrarse extends VistaRegistrarse {
 		// También se podría mostrar una notificación general
 		System.out.println("Error: Datos duplicados encontrados");
 	}
+
 	public void Introducircdigodeverificacin() {
 		// Navegar directamente a la vista de código de verificación
 		System.out.println("Navegando a introducir código de verificación...");
@@ -303,20 +302,10 @@ public class Registrarse extends VistaRegistrarse {
 
 		_introducircdigodeverificacin = new Introducircdigodeverificacin(this);
 
-		// Navegar a la vista de código de verificación
-		if (_aCT01UsuarioNoRegistrado != null) {
-			_aCT01UsuarioNoRegistrado.getVerticalLayoutCentralNoRegistrado()
-					.as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class).removeAll();
-			_aCT01UsuarioNoRegistrado.getVerticalLayoutCentralNoRegistrado()
-					.as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class)
-					.add(_introducircdigodeverificacin);
-		} else if (_iniciarsesin != null) {
-			_iniciarsesin._aCT01UsuarioNoRegistrado.getVerticalLayoutCentralNoRegistrado()
-					.as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class).removeAll();
-			_iniciarsesin._aCT01UsuarioNoRegistrado.getVerticalLayoutCentralNoRegistrado()
-					.as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class)
-					.add(_introducircdigodeverificacin);
-		}
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_introducircdigodeverificacin);
+
 	}
 
 	public boolean Comprobarnoduplicadodedatos() {
