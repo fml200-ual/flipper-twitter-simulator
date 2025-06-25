@@ -22,15 +22,7 @@ public class Verlistaampliadadetweetsadministrador extends VistaVerlistaampliada
 		Button backButton = new Button("← Volver", event -> {
 			// Limpiar la vista principal
 			Pantalla.MainView.removeAll();
-			// Restaurar la vista anterior (ACT03Administrador)
-			if (Pantalla.Anterior instanceof ACT03Administrador) {
-				ACT03Administrador admin = (ACT03Administrador) Pantalla.Anterior;
-				// Asegurarse de que la lista de tweets se recargue correctamente
-				admin._listafijadetweetsadministrador.recargarTweets();
-				Pantalla.MainView.add(admin);
-			} else {
-				Pantalla.MainView.add(Pantalla.Anterior);
-			}
+			Pantalla.MainView.add(_listafijadetweetsadministrador._aCT03Administrador);
 		});
 		backButton.getStyle().set("background-color", "#00FFFF");
 		backButton.getStyle().set("color", "black");

@@ -16,16 +16,16 @@ INSERT INTO usuario_autentificado (Id_usuario, Nickname, Contrasena) VALUES
 (2, 'juan_perez', 'password123'),
 (3, 'maria_garcia', 'mipassword'),
 (4, 'carlos_lopez', 'carlitos2023'),
-(5, 'ana_martin', 'ana456'),
-(6, 'luis_fernandez', 'luis789'),
+(5, 'ana_martin', 'ana456789'),
+(6, 'luis_fernandez', 'luis789abc'),
 (7, 'sofia_ruiz', 'sofia2023'),
 (8, 'miguel_santos', 'miguel321'),
 (9, 'laura_jimenez', 'laura987'),
-(10, 'pablo_moreno', 'pablo654'),
-(11, 'elena_castillo', 'elena111'),
-(12, 'diego_herrera', 'diego222'),
-(13, 'carmen_vega', 'carmen333'),
-(14, 'raul_mendez', 'raul444'),
+(10, 'pablo_moreno', 'pablo654xyz'),
+(11, 'elena_castillo', 'elena111abc'),
+(12, 'diego_herrera', 'diego222xyz'),
+(13, 'carmen_vega', 'carmen333def'),
+(14, 'raul_mendez', 'raul444ghi'),
 (15, 'natalia_torres', 'natalia555');
 
 -- =======================================================
