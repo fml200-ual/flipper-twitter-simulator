@@ -18,19 +18,12 @@ public class Verlistadeseguidoresregistrado extends VistaVerlistadeseguidoresreg
 
 		Listadeusuarios(u);
 
-
-		// Configurar botón "Mostrar más seguidores"
-		this.getShowMoreFollowersButton().addClickListener(event -> {
-			// Navegar a la lista completa de seguidores del usuario
-			Pantalla.MainView.removeAll();
-			Verlistadeseguidoresregistrado listaCompleta = new Verlistadeseguidoresregistrado(_verperfilregistrado);
-			Pantalla.MainView.add(listaCompleta);
-		});
-
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
-			Pantalla.MainView.add(_verperfilregistrado);		});
+			Pantalla.MainView.add(_verperfilregistrado);
+		});
 	}
+
 	public Verlistadeseguidoresregistrado(Verpropioperfil verpropioperfil) {
 		this._verpropioperfil = verpropioperfil;
 		basededatos.Usuario_Registrado usuarioActual = mds2.MainView.obtenerUsuarioActual();
@@ -38,16 +31,11 @@ public class Verlistadeseguidoresregistrado extends VistaVerlistadeseguidoresreg
 		this.getNoFollowersMessage().setVisible(false);
 		this.getUsername().setText(usuarioActual.getNickname());
 
-
 		Listadeusuarios(usuarioActual);
 
-
-		// Configurar botón "Mostrar más seguidores"
-		this.getShowMoreFollowersButton().addClickListener(event -> {
-			// Navegar a la lista completa de seguidores del usuario actual
+		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
-			Verlistadeseguidoresregistrado listaCompleta = new Verlistadeseguidoresregistrado(_verpropioperfil);
-			Pantalla.MainView.add(listaCompleta);
+			Pantalla.MainView.add(_verpropioperfil);
 		});
 	}
 
