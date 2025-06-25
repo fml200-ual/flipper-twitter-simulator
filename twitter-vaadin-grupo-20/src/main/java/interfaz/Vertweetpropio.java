@@ -13,10 +13,8 @@ public class Vertweetpropio extends TweetRetweetpropio {
 		super(tweet); // Pasar el tweet al constructor padre
 		this.tweet = tweet;
 
-		// Configurar elementos específicos para tweets propios
 		this.getContenedorPublicacionCitada().setVisible(false);
-		// Los usuarios pueden eliminar sus propios tweets
-		this.getBotonEliminarTweet().setVisible(true);
+		this.getBotonEliminarTweet().setVisible(false);
 
 		// Cargar datos del tweet
 		cargarDatosTweet();
@@ -41,19 +39,10 @@ public class Vertweetpropio extends TweetRetweetpropio {
 			// Contenido del tweet
 			this.getTextoPublicacion().setText(tweet.getContenidoTweet() != null ? tweet.getContenidoTweet() : "");
 
-			// Datos del usuario (propios)
+			// Datos del usuario
 			if (tweet.getPublicado_por() != null) {
 				this.getArrobaUsuario().setText("@" + tweet.getPublicado_por().getNickname());
-
-				// Cargar foto de perfil si está disponible
-				if (tweet.getPublicado_por().getFotoPerfilURL() != null) {
-					Image img = new Image(tweet.getPublicado_por().getFotoPerfilURL(), "Foto de perfil");
-					img.setWidth("50px");
-					img.setHeight("50px");
-					// Agregar la imagen al contenedor de avatar si existe
-					this.getDivAvatar().removeAll();
-					this.getDivAvatar().add(img);
-				}
+				this.getNombreUsuario().setText(tweet.getPublicado_por().getNickname());
 			}
 
 			// Fecha de publicación
@@ -61,7 +50,7 @@ public class Vertweetpropio extends TweetRetweetpropio {
 				this.getFechaPublicacion().setText(tweet.getFechaPublicacion().toString());
 			}
 
-			// Contadores usando métodos BD para evitar LazyInitializationException
+			// Contadores
 			int likesCount = bd.contarLikesTweet(tweet.getORMID());
 			int retweetsCount = bd.contarRetweetsTweet(tweet.getORMID());
 			int comentariosCount = bd.contarComentariosTweet(tweet.getORMID());

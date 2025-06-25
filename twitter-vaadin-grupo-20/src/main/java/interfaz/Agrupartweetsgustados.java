@@ -2,7 +2,6 @@ package interfaz;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-import basededatos.Administrador;
 import basededatos.BDPrincipal;
 import basededatos.Tweet;
 import basededatos.Usuario_Registrado;
@@ -41,7 +40,7 @@ public class Agrupartweetsgustados extends VistaAgrupartweetsgustados {
 				_listadetweetsyretweets = new Listadetweetsyretweetsregistrado((ACT02UsuarioRegistrado) null);
 				for (Tweet tweet : tweets) {
 					Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
-							_listadetweetsyretweets, tweet, usuario.getId_usuario());
+							_listadetweetsyretweets, tweet);
 					_listadetweetsyretweets.getMainContainer().as(VerticalLayout.class).add(item);
 				}
 				break;

@@ -42,7 +42,7 @@ public class Agruparretweets extends VistaAgruparretweets {
 				_listadetweetsyretweets = new Listadetweetsyretweetsregistrado((ACT02UsuarioRegistrado) null);
 				for (Tweet tweet : tweets) {
 					Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
-							_listadetweetsyretweets, tweet, usuario.getId_usuario());
+							_listadetweetsyretweets, tweet);
 					_listadetweetsyretweets.getMainContainer().as(VerticalLayout.class).add(item);
 				}
 				break;

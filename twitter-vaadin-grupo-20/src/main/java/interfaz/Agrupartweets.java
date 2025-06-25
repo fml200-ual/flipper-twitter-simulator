@@ -2,13 +2,9 @@ package interfaz;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-import mds2.MainView;
-import mds2.MainView.Pantalla;
 import mds2.MainView.Usuario;
-import basededatos.Administrador;
 import basededatos.BDPrincipal;
 import basededatos.Tweet;
-import basededatos.Usuario_Registrado;
 import vistas.VistaAgrupartweets;
 
 public class Agrupartweets extends VistaAgrupartweets {
@@ -41,7 +37,7 @@ public class Agrupartweets extends VistaAgrupartweets {
 				_listadetweetsyretweets = new Listadetweetsyretweetsregistrado((ACT02UsuarioRegistrado) null);
 				for (Tweet tweet : tweets) {
 					Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
-							_listadetweetsyretweets, tweet, usuario.getId_usuario());
+							_listadetweetsyretweets, tweet);
 					_listadetweetsyretweets.getMainContainer().as(VerticalLayout.class).add(item);
 				}
 				break;
