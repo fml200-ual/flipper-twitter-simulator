@@ -64,8 +64,8 @@ public class Editarcuenta extends VistaEditarcuenta {
 
 			System.out.println("Datos del usuario cargados en el formulario de edición");
 		}
-	}
-
+	}	
+	
 	public void guardarCambios() {
 		if (u == null) {
 			System.err.println("No hay usuario para modificar");
@@ -143,8 +143,14 @@ public class Editarcuenta extends VistaEditarcuenta {
 			e.printStackTrace();
 			Errordeedicin();
 		}
-	}
 
+				// Actualizar las imágenes del perfil y el avatar superior tras guardar cambios
+		if (_verpropioperfil != null) {
+			_verpropioperfil.actualizarImagenesPerfil();
+		}
+	}
+	
+	
 	public void Eliminarcuenta() {
 		if (u == null) {
 			System.err.println("No hay usuario para eliminar");
