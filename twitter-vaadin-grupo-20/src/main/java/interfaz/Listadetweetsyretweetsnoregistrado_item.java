@@ -1,165 +1,36 @@
 package interfaz;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
 import mds2.MainView.Pantalla;
 
 public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretweets_item {
-	public Vertweetnoregistrado _vertweetnoregistrado;
 	public Verretweetnoregistrado _verretweetnoregistrado;
+	public Vertweetnoregistrado _vertweetnoregistrado;
 
-	// Constructor que acepta Tweet - METODOLOGÍA ACTIVIDAD 12
-	public Listadetweetsyretweetsnoregistrado_item(Listadetweetsyretweets _listadetweetsyretweets,
-			basededatos.Tweet t) {
-		super(_listadetweetsyretweets, t);
+	public Listadetweetsyretweetsnoregistrado_item(Listadetweetsyretweets _listadetweetsyretweets) {
+		super(_listadetweetsyretweets);
 
-		// Rellenar datos del tweet si está disponible
-		if (t != null) {
-			rellenarDatosTweet();
-			cargarContadoresIniciales();
-		}
-
-		configurarEventos();
-	}
-
-	private void rellenarDatosTweet() {
-		if (t != null) {
-			try {
-				// Rellenar contenido del tweet
-				String contenido;
-				if (t.getContenidoTweet() != null && !t.getContenidoTweet().trim().isEmpty()) {
-					if (t.getTweet_retweeteado() != null) {
-						contenido = "🔄 Retweeteado: " + t.getContenidoTweet();
-					} else {
-						contenido = t.getContenidoTweet();
-					}
-				} else {
-					contenido = "Tweet sin contenido";
-				}
-
-				// Rellenar datos del usuario
-				String usuario;
-				String username;
-				if (t.getPublicado_por() != null) {
-					basededatos.Usuario_Registrado usuarioPublicador = t.getPublicado_por();
-					if (usuarioPublicador.getNickname() != null && !usuarioPublicador.getNickname().trim().isEmpty()) {
-						usuario = usuarioPublicador.getNickname();
-						username = "@" + usuarioPublicador.getNickname();
-					} else {
-						usuario = "Usuario";
-						username = "@usuario";
-					}
-				} else {
-					usuario = "Usuario";
-					username = "@usuario";
-				}
-
-				// Rellenar fecha
-				String fecha;
-				if (t.getFechaPublicacion() != null) {
-					fecha = formatearFecha(t.getFechaPublicacion());
-				} else {
-					fecha = "Fecha";
-				}
-
-				// Actualizar elementos UI
-				this.getContentText().setText(contenido);
-				this.getNickName().setText(usuario);
-				this.getUsername().setText(username);
-				this.getDateLabel().setText(fecha);
-
-			} catch (Exception e) {
-				System.err.println("Error rellenando datos del tweet para no registrado: " + e.getMessage());
-			}
-		}
-	}
-
-	// Método de utilidad para formatear fechas
-	private String formatearFecha(java.util.Date fecha) {
-		try {
-			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm");
-			return formatter.format(fecha);
-		} catch (Exception e) {
-			return "Fecha";
-		}
-	}
-
-	/**
-	 * Cargar contadores iniciales de me gusta, retweets y comentarios para usuarios
-	 * no registrados
-	 */
-	private void cargarContadoresIniciales() {
-		if (t != null) {
-			try {
-				// Cargar contadores usando métodos seguros de BD_Tweet
-				basededatos.BD_Tweet bdTweet = new basededatos.BD_Tweet();
-				int numMeGusta = bdTweet.contarMeGustaTweet(t.getId_tweet());
-				int numRetweets = bdTweet.contarRetweetsTweet(t.getId_tweet());
-				int numComentarios = bdTweet.contarComentariosTweet(t.getId_tweet());
-
-				// Actualizar los contadores en la UI
-				this.getLikesCountLabel().setText(String.valueOf(numMeGusta));
-				this.getXLabel().setText(String.valueOf(numRetweets));
-				this.getZLabel().setText(String.valueOf(numComentarios));
-
-			} catch (Exception e) {
-				System.err.println("Error cargando contadores para no registrado: " + e.getMessage());
-				// Valores por defecto en caso de error
-				this.getLikesCountLabel().setText("0");
-				this.getXLabel().setText("0");
-				this.getZLabel().setText("0");
-			}
-		}
-	}
-
-	private void configurarEventos() {
-		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
-			if (t != null && t.getTweet_retweeteado() != null) {
-				// Es un retweet
-				Verretweetnoregistrado();
-			} else {
-				// Es un tweet normal
-				Vertweetnoregistrado();
-			}
-		});
-	}
-
-	public void Vertweetnoregistrado() {
-		// Navegación directa pasando solo el tweet
-		_vertweetnoregistrado = new Vertweetnoregistrado(t);
-		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
-		Pantalla.MainView.removeAll();
-		Pantalla.MainView.add(_vertweetnoregistrado);
+		// Luego hay que diferenciar si es un tweet o retweet
+		this.getMainContainer().as(VerticalLayout.class)
+				.addClickListener(event -> {
+					// Por ahora solo se implementa para retweets
+					// Luego se implementará para tweets
+					Verretweetnoregistrado();
+				});
 	}
 
 	public void Verretweetnoregistrado() {
-		// Navegación directa pasando solo el tweet (que es un retweet)
-		_verretweetnoregistrado = new Verretweetnoregistrado(t);
+		_verretweetnoregistrado = new Verretweetnoregistrado(this);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verretweetnoregistrado);
 	}
 
-	// Sobrescribir método de navegación de la clase padre para usar vista de no
-	// registrado
-	@Override
-	public void verTweet() {
-		if (t != null && t.getTweet_retweeteado() != null) {
-			// Es un retweet
-			Verretweetnoregistrado();
-		} else {
-			// Es un tweet normal
-			Vertweetnoregistrado();
-		}
-	}
-
-	@Override
-	public void verPerfilUsuario() {
-		// Para usuarios no registrados, redirigir a login cuando intentan ver perfiles
-		try {
-			Pantalla.MainView.removeAll();
-			Pantalla.MainView.add(new ACT01UsuarioNoRegistrado(Pantalla.MainView));
-		} catch (Exception e) {
-			System.err.println("Error navegando desde usuario no registrado: " + e.getMessage());
-		}
+	public void Vertweetnoregistrado() {
+		_vertweetnoregistrado = new Vertweetnoregistrado(this);
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_vertweetnoregistrado);
 	}
 }
