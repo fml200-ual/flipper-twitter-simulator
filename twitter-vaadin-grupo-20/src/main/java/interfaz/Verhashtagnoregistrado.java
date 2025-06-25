@@ -52,7 +52,7 @@ public class Verhashtagnoregistrado extends Verhashtag {
         _listadetweetsyretweetsnoregistrado = new Listadetweetsyretweetsnoregistrado(this);
 
         for (Tweet tweet : tweets) {
-            Listadetweetsyretweetsregistrado_item tweetDiv = new Listadetweetsyretweetsregistrado_item(
+            Listadetweetsyretweetsnoregistrado_item tweetDiv = new Listadetweetsyretweetsnoregistrado_item(
                     _listadetweetsyretweetsnoregistrado, tweet);
 
             _listadetweetsyretweetsnoregistrado.getMainContainer()
