@@ -6,20 +6,22 @@ import mds2.MainView.Pantalla;
 public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretweets_item {
 	public Vertweetnoregistrado _vertweetnoregistrado;
 	public Verretweetnoregistrado _verretweetnoregistrado;
-	
+
 	// Constructor que acepta Tweet - METODOLOGÍA ACTIVIDAD 12
-	public Listadetweetsyretweetsnoregistrado_item(Listadetweetsyretweets _listadetweetsyretweets, basededatos.Tweet t) {
+	public Listadetweetsyretweetsnoregistrado_item(Listadetweetsyretweets _listadetweetsyretweets,
+			basededatos.Tweet t) {
 		super(_listadetweetsyretweets, t);
-		
+
 		// Rellenar datos del tweet si está disponible
 		if (t != null) {
 			rellenarDatosTweet();
 			cargarContadoresIniciales();
 		}
-		
+
 		configurarEventos();
 	}
-		private void rellenarDatosTweet() {
+
+	private void rellenarDatosTweet() {
 		if (t != null) {
 			try {
 				// Rellenar contenido del tweet
@@ -33,7 +35,7 @@ public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretwe
 				} else {
 					contenido = "Tweet sin contenido";
 				}
-				
+
 				// Rellenar datos del usuario
 				String usuario;
 				String username;
@@ -50,7 +52,7 @@ public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretwe
 					usuario = "Usuario";
 					username = "@usuario";
 				}
-				
+
 				// Rellenar fecha
 				String fecha;
 				if (t.getFechaPublicacion() != null) {
@@ -58,19 +60,19 @@ public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretwe
 				} else {
 					fecha = "Fecha";
 				}
-				
+
 				// Actualizar elementos UI
 				this.getContentText().setText(contenido);
 				this.getNickName().setText(usuario);
 				this.getUsername().setText(username);
 				this.getDateLabel().setText(fecha);
-				
+
 			} catch (Exception e) {
 				System.err.println("Error rellenando datos del tweet para no registrado: " + e.getMessage());
 			}
 		}
 	}
-	
+
 	// Método de utilidad para formatear fechas
 	private String formatearFecha(java.util.Date fecha) {
 		try {
@@ -80,9 +82,10 @@ public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretwe
 			return "Fecha";
 		}
 	}
-	
+
 	/**
-	 * Cargar contadores iniciales de me gusta, retweets y comentarios para usuarios no registrados
+	 * Cargar contadores iniciales de me gusta, retweets y comentarios para usuarios
+	 * no registrados
 	 */
 	private void cargarContadoresIniciales() {
 		if (t != null) {
@@ -92,12 +95,12 @@ public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretwe
 				int numMeGusta = bdTweet.contarMeGustaTweet(t.getId_tweet());
 				int numRetweets = bdTweet.contarRetweetsTweet(t.getId_tweet());
 				int numComentarios = bdTweet.contarComentariosTweet(t.getId_tweet());
-				
+
 				// Actualizar los contadores en la UI
 				this.getLikesCountLabel().setText(String.valueOf(numMeGusta));
 				this.getXLabel().setText(String.valueOf(numRetweets));
 				this.getZLabel().setText(String.valueOf(numComentarios));
-				
+
 			} catch (Exception e) {
 				System.err.println("Error cargando contadores para no registrado: " + e.getMessage());
 				// Valores por defecto en caso de error
@@ -107,7 +110,8 @@ public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretwe
 			}
 		}
 	}
-		private void configurarEventos() {
+
+	private void configurarEventos() {
 		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
 			if (t != null && t.getTweet_retweeteado() != null) {
 				// Es un retweet
@@ -117,7 +121,9 @@ public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretwe
 				Vertweetnoregistrado();
 			}
 		});
-	}	public void Vertweetnoregistrado() {
+	}
+
+	public void Vertweetnoregistrado() {
 		// Navegación directa pasando solo el tweet
 		_vertweetnoregistrado = new Vertweetnoregistrado(t);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
@@ -133,7 +139,8 @@ public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretwe
 		Pantalla.MainView.add(_verretweetnoregistrado);
 	}
 
-	// Sobrescribir método de navegación de la clase padre para usar vista de no registrado
+	// Sobrescribir método de navegación de la clase padre para usar vista de no
+	// registrado
 	@Override
 	public void verTweet() {
 		if (t != null && t.getTweet_retweeteado() != null) {

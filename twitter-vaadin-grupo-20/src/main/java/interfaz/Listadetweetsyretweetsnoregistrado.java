@@ -11,6 +11,7 @@ public class Listadetweetsyretweetsnoregistrado extends Listadetweetsyretweets {
 	public Listadetweetsyretweetsnoregistrado(Verhashtagnoregistrado _verhashtagnoregistrado) {
 		super(); // No llamar al inicializar del padre
 		this._verhashtagnoregistrado = _verhashtagnoregistrado;
+<<<<<<< HEAD
 		inicializarTweetsNoRegistrado();
 	}
 	
@@ -62,4 +63,8 @@ public class Listadetweetsyretweetsnoregistrado extends Listadetweetsyretweets {
 			e.printStackTrace();
 		}
 	}
+=======
+	}
+
+>>>>>>> f181314abb8f924194337209199b7bceaa2730b5
 }

@@ -1,19 +1,18 @@
 package interfaz;
 
 import basededatos.Hashtag;
-import mds2.MainView.Pantalla;
 import vistas.VistaListadehashtags_item;
 
 public class Listadehashtags_item extends VistaListadehashtags_item {
 	public Listadehashtags _listadehashtags;
-	
+
 	Hashtag h;
-	
+
 	public Listadehashtags_item(Listadehashtags listadehashtags, Hashtag h) {
 		super();
 		this._listadehashtags = listadehashtags;
 		this.h = h;
-		
+
 		// Configurar el texto del hashtag
 		if (h != null && h.getHashtag() != null) {
 			String hashtagText = h.getHashtag();
@@ -21,7 +20,7 @@ public class Listadehashtags_item extends VistaListadehashtags_item {
 				hashtagText = "#" + hashtagText;
 			}
 			this.getHashtagText().setText(hashtagText);
-			
+
 			// Configurar el conteo de posts
 			try {
 				basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
@@ -30,26 +29,6 @@ public class Listadehashtags_item extends VistaListadehashtags_item {
 			} catch (Exception e) {
 				this.getPostCount().setText("0 posts");
 			}
-		}
-		
-		// Configurar click listener
-		this.getHashtagContainer().addClickListener(event -> Hashtag());
-	}
-	
-	public void Hashtag() {
-		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
-		Pantalla.MainView.removeAll();
-		
-		if (Pantalla.usuario == 2) { // Usuario registrado
-			Listafijadehashtagsregistrado lista = new Listafijadehashtagsregistrado(null);
-			Verhashtagregistrado vista = new Verhashtagregistrado(lista);
-			vista.cargarTweetsDeHashtag(this.h);
-			Pantalla.MainView.add(vista);
-		} else { // Usuario no registrado
-			Listafijadehashtagsnoregistrado lista = new Listafijadehashtagsnoregistrado(null);
-			Verhashtagnoregistrado vista = new Verhashtagnoregistrado(lista);
-			vista.cargarTweetsDeHashtag(this.h);
-			Pantalla.MainView.add(vista);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package interfaz;
 
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import mds2.MainView;
@@ -24,6 +25,7 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 			// Crear conexión a la base de datos para obtener usuarios reales
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 			basededatos.Usuario_Registrado[] usuarios = bd.cargarUsuarios();
+			basededatos.Usuario_Registrado[] bloqueados = MainView.obtenerUsuarioActual().meTienenBloqueado.toArray();
 
 			// Filtrar para eliminar el usuario actual
 			String usuarioActual = MainView.obtenerUsuarioActual().getNickname();
@@ -44,43 +46,35 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 				// Agregar ClickListener personalizado para navegar al perfil con el usuario
 				// correcto
 				item.getMainContainer().addClickListener(event -> {
-					VerperfilregistradoConUsuario(usuario);
+					boolean usuarioBloqueado = false;
+					for (basededatos.Usuario_Registrado bloqueado : bloqueados) {
+						if (bloqueado.getNickname().equals(usuario.getNickname())) {
+							usuarioBloqueado = true;
+							break;
+						}
+					}
+
+					if (usuarioBloqueado) {
+						Perspectivabloqueado();
+					} else {
+						Verperfilregistrado(usuario);
+					}
 				});
 				listaUsuarios.getMainContainer().as(VerticalLayout.class).add(item);
 			}
-
-			// Si no hay usuarios en la BD, mostrar items por defecto
-			if (usuarios.length == 0) {
-				for (int i = 0; i < 5; i++) {
-					Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios, null);
-					item.getMainContainer().addClickListener(event -> {
-						Verperfilregistrado();
-					});
-					listaUsuarios.getMainContainer().as(VerticalLayout.class).add(item);
-				}
-			}
-
 			this.getMainContainer().as(VerticalLayout.class).add(listaUsuarios);
 
 		} catch (Exception e) {
 			System.err.println("Error al cargar usuarios: " + e.getMessage());
 			e.printStackTrace();
 
-			// Fallback: mostrar items por defecto
-			Listadeusuarios listaUsuarios = new Listadeusuarios(_verlistaampliadadeusuariosregistrado);
-			for (int i = 0; i < 5; i++) {
-				Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios, null);
-				item.getMainContainer().addClickListener(event -> {
-					Verperfilregistrado();
-				});
-				listaUsuarios.getMainContainer().as(VerticalLayout.class).add(item);
-			}
-			this.getMainContainer().as(VerticalLayout.class).add(listaUsuarios);
+			this.getMainContainer().as(VerticalLayout.class)
+					.add(new Span("No se pudieron cargar los usuarios. Por favor, inténtelo de nuevo más tarde."));
 		}
 	}
 
-	public void Verperfilregistrado() {
-		_verperfilregistrado = new Verperfilregistrado(this);
+	public void Verperfilregistrado(basededatos.Usuario_Registrado usuario) {
+		_verperfilregistrado = new Verperfilregistrado(this, usuario);
 		mds2.MainView.Pantalla.MainView.removeAll();
 		mds2.MainView.Pantalla.MainView.add(_verperfilregistrado);
 	}
@@ -97,11 +91,5 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verlistaampliadadeusuariosregistrado);
-	}
-
-	public void VerperfilregistradoConUsuario(basededatos.Usuario_Registrado usuario) {
-		_verperfilregistrado = new Verperfilregistrado(this, usuario);
-		mds2.MainView.Pantalla.MainView.removeAll();
-		mds2.MainView.Pantalla.MainView.add(_verperfilregistrado);
 	}
 }

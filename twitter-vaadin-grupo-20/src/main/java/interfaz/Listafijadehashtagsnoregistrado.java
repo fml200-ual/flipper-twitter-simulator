@@ -17,12 +17,13 @@ public class Listafijadehashtagsnoregistrado extends Listafijadehashtags {
 	public Listafijadehashtagsnoregistrado(ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado) {
 		super();
 		this._aCT01UsuarioNoRegistrado = _aCT01UsuarioNoRegistrado;
-		
+
 		// Cargar hashtags desde la base de datos
 		BDPrincipal bd = new BDPrincipal();
 		try {
 			Hashtag[] hashtags = bd.cargarHashtags();
 			if (hashtags != null && hashtags.length > 0) {
+<<<<<<< HEAD
 				// Agrupar hashtags por texto
 				java.util.Map<String, java.util.List<Hashtag>> grouped = new java.util.TreeMap<>();
 				for (Hashtag h : hashtags) {
@@ -46,6 +47,21 @@ public class Listafijadehashtagsnoregistrado extends Listafijadehashtags {
 					Listadehashtags_item item = new Listadehashtags_item(null, h0);
 					// Actualizar contador de posts con total agrupado
 					item.getPostCount().setText(totalPosts + " posts");
+=======
+				// Ordenar hashtags alfabéticamente
+				Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
+
+				// Limitar a los primeros 5 hashtags
+				int limite = Math.min(hashtags.length, 5);
+				for (int i = 0; i < limite; i++) {
+					basededatos.Hashtag hashtag = hashtags[i];
+					Listadehashtags_item item = new Listadehashtags_item(null, hashtag);
+
+					item.getHashtagContainer().addClickListener(event -> {
+						Verhashtagnoregistrado(hashtag);
+					});
+
+>>>>>>> f181314abb8f924194337209199b7bceaa2730b5
 					this.getMainContainer().as(VerticalLayout.class).add(item);
 					_item.add(item);
 				}
@@ -55,8 +71,8 @@ public class Listafijadehashtagsnoregistrado extends Listafijadehashtags {
 		}
 	}
 
-	public void Verhashtagnoregistrado() {
-		_verhashtagnoregistrado = new Verhashtagnoregistrado(this);
+	public void Verhashtagnoregistrado(basededatos.Hashtag hashtag) {
+		_verhashtagnoregistrado = new Verhashtagnoregistrado(this, hashtag);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verhashtagnoregistrado);

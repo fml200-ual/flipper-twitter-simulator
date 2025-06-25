@@ -1,5 +1,6 @@
 package interfaz;
 
+import mds2.MainView;
 import mds2.MainView.Pantalla;
 import basededatos.BDPrincipal;
 
@@ -255,7 +256,31 @@ public class Verperfilregistrado extends Verperfil {
 	}
 
 	public void BloquearDesbloquearUsuario() {
+		try {
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+			basededatos.Usuario_Registrado usuarioActual = MainView.obtenerUsuarioActual();
 
+			if (usuarioActual == null || this.u == null) {
+				System.err.println("Error: Usuario actual o usuario destino es null");
+				return;
+			}
+
+			// Realizar la operación de bloqueo/desbloqueo
+
+			if (this.getBanProfileButton().getText().equals("Bloquear")) {
+				// Si estaba desbloqueado, ahora lo bloqueamos
+				bd.bloquear(usuarioActual.getId_usuario(),
+						this.u.getId_usuario());
+				this.getBanProfileButton().setText("Desbloquear");
+			} else {
+				bd.desbloquear(usuarioActual.getId_usuario(), this.u.getId_usuario());
+				this.getBanProfileButton().setText("Bloquear");
+			}
+
+		} catch (Exception e) {
+			System.err.println("Error al bloquear/desbloquear usuario: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	public void Seguirusuario() {
@@ -354,7 +379,7 @@ public class Verperfilregistrado extends Verperfil {
 			}
 
 			// Verificar si el usuario está bloqueado
-			boolean estaBloqueado = verificarSiEstaBloqueado(usuarioActual, u);
+			boolean estaBloqueado = verificarSiEstaBloqueado();
 			this.getBanProfileButton().setText(estaBloqueado ? "Desbloquear" : "Bloquear");
 
 			// Verificar si el usuario está siendo seguido
@@ -376,32 +401,43 @@ public class Verperfilregistrado extends Verperfil {
 	 * Verifica si un usuario está bloqueado por el usuario actual
 	 * Consulta la BD directamente para obtener el estado actual
 	 */
-	@SuppressWarnings("unchecked")
-	private boolean verificarSiEstaBloqueado(basededatos.Usuario_Registrado usuarioActual,
-			basededatos.Usuario_Registrado usuarioDestino) {
+	private boolean verificarSiEstaBloqueado() {
 		try {
 			// Usar BDPrincipal para consultar directamente el estado de bloqueo
 			BDPrincipal bd = new BDPrincipal();
+			basededatos.Usuario_Registrado usuarioActual = MainView.obtenerUsuarioActual();
 
-			// Cargar el usuario actual actualizado desde la BD
+			if (usuarioActual == null || this.u == null) {
+				return false;
+			}
+
+			// Cargar el usuario actual actualizado desde la BD para asegurar que esté en
+			// una sesión activa
 			basededatos.Usuario_Registrado usuarioActualActualizado = bd
 					.cargarUsuarioPorId(usuarioActual.getId_usuario());
 
-			if (usuarioActualActualizado != null && usuarioActualActualizado.bloqueados != null) {
-				// Acceder a la colección bloqueados del usuario actual
-				for (java.util.Iterator<basededatos.Usuario_Registrado> iter = usuarioActualActualizado.bloqueados
-						.getIterator(); iter.hasNext();) {
-					basededatos.Usuario_Registrado bloqueado = iter.next();
-					if (bloqueado.getId_usuario() == usuarioDestino.getId_usuario()) {
-						System.out.println("Usuario " + usuarioDestino.getNickname() + " está bloqueado por "
-								+ usuarioActual.getNickname());
-						return true;
+			if (usuarioActualActualizado != null) {
+				try {
+					// Inicializar la colección lazy dentro de la sesión activa
+					org.hibernate.Hibernate.initialize(usuarioActualActualizado.bloqueados);
+
+					// Ahora podemos usar toArray() de forma segura
+					basededatos.Usuario_Registrado[] bloqueados = usuarioActualActualizado.bloqueados.toArray();
+
+					for (basededatos.Usuario_Registrado usuario : bloqueados) {
+						if (this.u.getId_usuario() == usuario.getId_usuario()) {
+							System.out.println("Usuario " + this.u.getNickname() + " está bloqueado por "
+									+ usuarioActual.getNickname());
+							return true;
+						}
 					}
+				} catch (Exception e) {
+					System.err.println("Error inicializando colección bloqueados: " + e.getMessage());
 				}
 			}
 
-			System.out.println("Usuario " + usuarioDestino.getNickname() + " NO está bloqueado por "
-					+ usuarioActual.getNickname());
+			System.out.println(
+					"Usuario " + this.u.getNickname() + " NO está bloqueado por " + usuarioActual.getNickname());
 			return false;
 		} catch (Exception e) {
 			System.err.println("Error verificando estado de bloqueo: " + e.getMessage());
