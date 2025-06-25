@@ -2,6 +2,7 @@ package interfaz;
 
 import mds2.MainView.Pantalla;
 import vistas.VistaIniciarsesin;
+import basededatos.BDPrincipal;
 
 public class Iniciarsesin extends VistaIniciarsesin {
 	// private event _mensajedeerroriniciosesin;
@@ -95,23 +96,57 @@ public class Iniciarsesin extends VistaIniciarsesin {
 			Pantalla.MainView.add(_aCT01UsuarioNoRegistrado);
 		});
 
-	}
-
-	public void Validardatos() {
+	}	public void Validardatos() {
+		// Declaración del atributo IActor como en el patrón
+		BDPrincipal iactor = new BDPrincipal();
+		
 		// Obtener los valores de los campos
 		String username = this.getUsernameField().getValue();
 		String password = this.getPasswordField().getValue();
 
-		// Aquí iría la lógica de validación de credenciales
 		System.out.println("Intentando iniciar sesión con usuario: " + username);
-		System.out.println("Validando credenciales...");
-
-		// Ejemplo de manejo de error (esto se reemplazaría con lógica real)
-		if ("error".equals(username) || password == null || password.length() < 3) {
+		
+		try {
+			// Seguir el patrón del diagrama: usuario = iactor.Login(login, password)
+			basededatos.Usuario_Registrado usuarioRegistrado = iactor.login(username, password);
+					if (usuarioRegistrado != null) {
+				System.out.println("Login exitoso como usuario registrado: " + usuarioRegistrado.getNickname());
+				
+				// Seguir el patrón: padre.MainView.removeAll() + crear vista + add
+				Pantalla.MainView.removeAll();				// Crear la vista del usuario logueado con el usuario de la BD
+				ACT02UsuarioRegistrado usuarioLogueado = new ACT02UsuarioRegistrado(
+					mds2.MainView.Pantalla.MainView, usuarioRegistrado);
+				Pantalla.MainView.add(usuarioLogueado);
+				
+				// Actualizar el usuario en la sesión global
+				mds2.MainView.Usuario.usuarioRegistrado = usuarioRegistrado;
+				
+				return;			}
+			
+			// Si llegamos aquí, las credenciales son incorrectas
+			System.out.println("Credenciales incorrectas para usuario: " + username);
 			Mensajedeerroriniciosesin();
-		} else {
-			// Credenciales válidas - aquí iría la navegación a la siguiente vista
-			System.out.println("Credenciales válidas, iniciando sesión...");
+					} catch (Exception e) {
+			System.err.println("Error durante el login: " + e.getMessage());
+			e.printStackTrace();
+			Mensajedeerroriniciosesin();
+		}
+	}
+
+	private void navegarAAdministrador() {
+		try {
+			// Crear la vista de administrador
+			ACT03Administrador administradorView = new ACT03Administrador(null);
+			
+			// Navegar a la nueva vista
+			Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(administradorView);
+			
+			System.out.println("Navegación exitosa a vista de administrador");
+		} catch (Exception e) {
+			System.err.println("Error al navegar a administrador: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -128,12 +163,16 @@ public class Iniciarsesin extends VistaIniciarsesin {
 		this.getUsernameField().setErrorMessage("Credenciales incorrectas");
 		this.getPasswordField().setErrorMessage("Credenciales incorrectas");
 	}
-
 	public void Contraseaolvidada() {
-		// Aquí iría la lógica para restablecer contraseña
-		System.out.println("Procesando recuperación de contraseña...");
-		// Navegar a la vista de restablecer contraseña si existe
-		// Restablecercontrasea restablecerContrasea = new Restablecercontrasea(this);
+		// Navegar a la vista de restablecer contraseña
+		System.out.println("Navegando a restablecimiento de contraseña...");
+		
+		// Crear instancia de la vista de restablecimiento
+		Restablecercontrasea restablecerContrasena = new Restablecercontrasea(_aCT01UsuarioNoRegistrado);
+		
+		// Navegar a la nueva vista
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(restablecerContrasena);
 	}
 
 	public void Reenviarcorreo() {

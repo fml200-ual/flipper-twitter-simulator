@@ -11,7 +11,7 @@ public class BD_Documento {
 	public Vector<Documento> _contiene_Documento = new Vector<Documento>();
 
 	public void nuevoDocumentoTweet(int id_tweet, String URLDocumento, String tipoDocumento) throws PersistentException {
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Documento documento = DocumentoDAO.createDocumento();
@@ -24,11 +24,11 @@ public class BD_Documento {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 	}
 
 	public void nuevoDocumentoComentario(int id_comentario, String URLDocumento, String tipoDocumento) throws PersistentException {
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Documento documento = DocumentoDAO.createDocumento();
@@ -41,6 +41,6 @@ public class BD_Documento {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 	}
 }

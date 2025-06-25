@@ -34,9 +34,14 @@ public class VistaListadetweetsyretweets_item extends LitTemplate {
 	@Id("heartIcon")
 	private Element heartIcon;
 	@Id("retweetIcon")
-	private Element retweetIcon;
-	@Id("commentsIcon")
+	private Element retweetIcon;	@Id("commentsIcon")
 	private Icon commentsIcon;
+	@Id("likesCountLabel")
+	private Element likesCountLabel;
+	@Id("xLabel")
+	private Element xLabel;
+	@Id("zLabel")
+	private Element zLabel;
 
 	public VistaListadetweetsyretweets_item() {
 		// You can initialise any data required for the connected UI components here.
@@ -57,13 +62,35 @@ public class VistaListadetweetsyretweets_item extends LitTemplate {
 	public void setNickName(Element nickName) {
 		this.nickName = nickName;
 	}
-
 	public Element getContentText() {
 		return contentText;
 	}
 
 	public void setContentText(Element contentText) {
 		this.contentText = contentText;
+	}
+	
+	public Element getAvatarIcon() {
+		return avatarIcon;
+	}
+	
+	public Element getDateLabel() {
+		return dateLabel;
+	}
+	
+	public Element getLikesCountLabel() {
+		return likesCountLabel;
+	}
+		public Element getUsername() {
+		return username;
+	}
+	
+	public Element getXLabel() {
+		return xLabel;
+	}
+	
+	public Element getZLabel() {
+		return zLabel;
 	}
 
 	// Método para actualizar el contenido del tweet

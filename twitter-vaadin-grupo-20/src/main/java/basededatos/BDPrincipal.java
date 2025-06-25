@@ -239,9 +239,36 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new Tweet[0];
 	}
-
+	
+	public Tweet[] cargarTweetsPorUsuario(int id_usuario) {
+		try {
+			return this.bd_tweet.cargarTweetsPorUsuario(id_usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Tweet[0];
+	}
+	
+	public Tweet[] cargarTweetsQueGustan(int id_usuario) {
+		try {
+			return this.bd_tweet.cargarTweetsQueGustan(id_usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Tweet[0];
+	}
+	
+	public Tweet[] cargarRetweets(int id_usuario) {
+		try {
+			return this.bd_tweet.cargarRetweets(id_usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Tweet[0];
+	}
+	
 	public void eliminarTweet(int id_tweet) {
 		try {
 			this.bd_tweet.eliminarTweet(id_tweet);
@@ -275,7 +302,31 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		}
 		return null;
 	}
-
+		// METODOLOGÍA ACTIVIDAD 12: Cargar comentarios de un tweet específico
+	public Comentario[] cargarComentariosDeTweet(int id_tweet) {
+		try {
+			System.out.println("Cargando comentarios del tweet ID: " + id_tweet);
+			
+			// Obtener el tweet primero
+			Tweet tweet = this.obtenerTweetByID(id_tweet);
+			
+			if (tweet != null && tweet.tiene != null) {
+				// Convertir la colección de comentarios a array
+				basededatos.Comentario[] comentarios = tweet.tiene.toArray();
+				System.out.println("Encontrados " + comentarios.length + " comentarios para el tweet");
+				return comentarios;
+			} else {
+				System.out.println("No se encontraron comentarios para el tweet ID: " + id_tweet);
+				return new Comentario[0];
+			}
+			
+		} catch (Exception e) {
+			System.err.println("Error cargando comentarios del tweet: " + e.getMessage());
+			e.printStackTrace();
+			return new Comentario[0];
+		}
+	}
+	
 	public Usuario_Registrado obtenerUsuarioByID(int id_usuario) {
 		try {
 			return this.bd_userR.obtenerUsuarioByID(id_usuario);
@@ -301,6 +352,168 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public Usuario_Registrado activarCuenta(String correoElectronico, String nickname) {
+		try {
+			// En una implementación real, aquí se marcaría la cuenta como verificada
+			// Por ahora, simplemente devolvemos el usuario si existe
+			Usuario_Registrado usuario = this.bd_userR.validacionCorreo(correoElectronico);
+			if (usuario != null && usuario.getNickname().equals(nickname)) {
+				System.out.println("Cuenta activada para usuario: " + nickname);
+				return usuario;
+			}
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public Usuario_Registrado cargarUsuarioPorId(int idUsuario) {
+		try {
+			return this.bd_userR.cargarUsuarioPorId(idUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public void dejarDeSeguir(int idSeguidor, int idSeguido) {
+		try {
+			this.bd_userR.dejarDeSeguir(idSeguidor, idSeguido);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Hashtag[] buscarHashtag(String hashtag) {
+		try {
+			return this.bd_hashtag.buscarHashtag(hashtag);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Cargar lista de seguidores de un usuario
+	 */
+	public Usuario_Registrado[] cargarSeguidores(int idUsuario) {
+		try {
+			return this.bd_userR.cargarSeguidores(idUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * Cargar lista de usuarios seguidos por un usuario
+	 */
+	public Usuario_Registrado[] cargarSeguidos(int idUsuario) {
+		try {
+			return this.bd_userR.cargarSeguidos(idUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * Contar número de seguidores de un usuario
+	 */
+	public int contarSeguidores(int idUsuario) {
+		try {
+			return this.bd_userR.contarSeguidores(idUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Contar número de seguidos de un usuario
+	 */
+	public int contarSeguidos(int idUsuario) {
+		try {
+			return this.bd_userR.contarSeguidos(idUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Contar número de likes de un tweet
+	 */
+	public int contarLikesTweet(int idTweet) {
+		try {
+			return this.bd_tweet.contarMeGustaTweet(idTweet);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Contar número de retweets de un tweet
+	 */
+	public int contarRetweetsTweet(int idTweet) {
+		try {
+			return this.bd_tweet.contarRetweetsTweet(idTweet);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Contar número de comentarios de un tweet
+	 */
+	public int contarComentariosTweet(int idTweet) {
+		try {
+			return this.bd_tweet.contarComentariosTweet(idTweet);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Contar número de likes de un comentario
+	 */
+	public int contarLikesComentario(int idComentario) {
+		try {
+			return this.bd_comentario.contarLikesComentario(idComentario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Contar número de tweets que usan un hashtag
+	 */
+	public int contarTweetsHashtag(int idHashtag) {
+		try {
+			return this.bd_hashtag.contarTweetsHashtag(idHashtag);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * Cargar tweets de un hashtag específico
+	 */
+	public Tweet[] cargarTweetsDeHashtag(int id_hashtag) {
+		try {
+			return this.bd_hashtag.cargarTweetsDeHashtag(id_hashtag);
+		} catch (Exception e) {
+			System.err.println("Error en BDPrincipal.cargarTweetsDeHashtag: " + e.getMessage());
+			return new Tweet[0];
+		}
 	}
 	
 }

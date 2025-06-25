@@ -30,17 +30,25 @@ public class Verhashtagregistrado extends Verhashtag {
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(_listafijadehashtagsregistrado._aCT02UsuarioRegistrado);
 		});
-	}
-
-	public void Listadetweetsyretweetsregistrado() {
+	}	// Método para cargar tweets del hashtag específico
+	public void cargarTweetsDeHashtag(basededatos.Hashtag hashtag) {
+		this.h = hashtag;
+		
+		// Actualizar el título con el hashtag real
+		if (hashtag != null && hashtag.getHashtag() != null) {
+			this.getH1().setText("#" + hashtag.getHashtag());
+		}
+		
+		// Recargar la lista de tweets con los del hashtag específico usando agrupación
+		if (_listadetweetsyretweetsregistrado != null) {
+			_listadetweetsyretweetsregistrado.cargarTweetsDeHashtag(hashtag, true); // true = agrupar
+		}
+	}public void Listadetweetsyretweetsregistrado() {
 		_listadetweetsyretweetsregistrado = new Listadetweetsyretweetsregistrado(this);
 
-		for (int i = 0; i < 5; i++) {
-			Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
-					_listadetweetsyretweetsregistrado);
-			_listadetweetsyretweetsregistrado
-					.getMainContainer().as(VerticalLayout.class)
-					.add(item);
+		// Cargar tweets del hashtag si ya está establecido
+		if (h != null) {
+			_listadetweetsyretweetsregistrado.cargarTweetsDeHashtag(h, true); // true = agrupar
 		}
 
 		this.getMainLayout().as(VerticalLayout.class)

@@ -10,10 +10,9 @@ import org.orm.PersistentTransaction;
 public class BD_Usuario_Registrado {
 	public BDPrincipal _bd_prin_userR;
 	public Vector<Usuario_Registrado> _contiene_userR = new Vector<Usuario_Registrado>();
-
 	public Usuario_Registrado login(String nombreUsuario, String contrasena) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Usuario_Autentificado userAux = Usuario_AutentificadoDAO.loadUsuario_AutentificadoByQuery(
@@ -30,10 +29,9 @@ public class BD_Usuario_Registrado {
 		}
 		return user;
 	}
-
 	public Usuario_Registrado validacionCorreo(String correoElectronico) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.loadUsuario_RegistradoByQuery("CorreoElectronico = '" + correoElectronico + "'", null);
@@ -43,9 +41,8 @@ public class BD_Usuario_Registrado {
 		}
 		return user;
 	}
-
 	public void cambiarContrasena(int id_usuario, String contrasena) throws PersistentException {
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Usuario_Registrado user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -55,12 +52,36 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 	}
 
 	public Usuario_Registrado registrar(String nickname, String descripcion, String imagenFondoURL, String fotoPerfilURL, String correoElectronico, String contrasena, Date fechaRegistro) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();		try {
+			user = Usuario_RegistradoDAO.createUsuario_Registrado();
+			user.setNickname(nickname);
+			user.setDescripcion(descripcion);
+			user.setImagenFondoURL(imagenFondoURL);
+			user.setFotoPerfilURL(fotoPerfilURL);
+			user.setCorreoElectronico(correoElectronico);
+			user.setContrasena(contrasena);
+			// Comentado porque el campo fechaDeRegistro no existe en la base de datos
+			// user.setFechaDeRegistro(fechaRegistro);
+			Usuario_RegistradoDAO.save(user);
+			t.commit();
+		} catch (Exception e) {
+			user = null;
+			t.rollback();
+		}
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
+		return user;
+	}
+
+	// Sobrecarga del método registrar sin fecha de registro
+	public Usuario_Registrado registrar(String nickname, String descripcion, String imagenFondoURL, String fotoPerfilURL, String correoElectronico, String contrasena) throws PersistentException {
+		Usuario_Registrado user = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.createUsuario_Registrado();
@@ -70,20 +91,20 @@ public class BD_Usuario_Registrado {
 			user.setFotoPerfilURL(fotoPerfilURL);
 			user.setCorreoElectronico(correoElectronico);
 			user.setContrasena(contrasena);
-			user.setFechaDeRegistro(fechaRegistro);
+			// No se establece fecha de registro porque no existe en la base de datos
 			Usuario_RegistradoDAO.save(user);
 			t.commit();
 		} catch (Exception e) {
 			user = null;
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado modificarPerfilSimple(int id_usuario, String nickname, String descripcion, String imagenFondoURL, String fotoPerfilURL, String contrasena) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -98,13 +119,13 @@ public class BD_Usuario_Registrado {
 			user = null;
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado modificarPerfilCompleto(int id_usuario, String nickname, String descripcion, String imagenFondoURL, String fotoPerfilURL, String correoElectronico, String contrasena) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -119,33 +140,73 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
-	}
-
-	public Usuario_Registrado seguir(int id_usuario, int id_usuarioSeguido, Date fechaSeguimiento) throws PersistentException {
+	}	public Usuario_Registrado seguir(int id_usuario, int id_usuarioSeguido, Date fechaSeguimiento) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
-			Usuario_Registrado usuario_seguido = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuarioSeguido);
-			PropiedadesSeguidos cp = PropiedadesSeguidosDAO.createPropiedadesSeguidos();
-			cp.setSeguidoresUsuario_registrado(user);
-			cp.setSeguidosUsuario_registrado(usuario_seguido);
-			cp.setFecha(fechaSeguimiento);
-			PropiedadesSeguidosDAO.save(cp);
+			Usuario_Registrado usuario_seguido = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuarioSeguido);			if (user != null && usuario_seguido != null && id_usuario != id_usuarioSeguido) {
+				// Verificar si ya existe una relación de seguimiento
+				// Simplificar la consulta usando un método alternativo
+				try {
+					// Buscar si ya existe la relación directamente
+					boolean yaExiste = false;
+					PropiedadesSeguidos[] todasLasRelaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(null, null);
+					
+					if (todasLasRelaciones != null) {
+						for (PropiedadesSeguidos relacion : todasLasRelaciones) {
+							if (relacion.getSeguidoresUsuario_registrado() != null && 
+								relacion.getSeguidosUsuario_registrado() != null &&
+								relacion.getSeguidoresUsuario_registrado().getId_usuario() == id_usuario &&
+								relacion.getSeguidosUsuario_registrado().getId_usuario() == id_usuarioSeguido) {
+								yaExiste = true;
+								break;
+							}
+						}
+					}
+					
+					if (!yaExiste) {
+						// No existe la relación, crearla
+						PropiedadesSeguidos cp = PropiedadesSeguidosDAO.createPropiedadesSeguidos();
+						// El usuario que sigue (user) es el seguidor
+						cp.setSeguidoresUsuario_registrado(user);
+						// El usuario que es seguido (usuario_seguido) es el seguido
+						cp.setSeguidosUsuario_registrado(usuario_seguido);
+						cp.setFecha(fechaSeguimiento);
+						PropiedadesSeguidosDAO.save(cp);
+						System.out.println("Relación de seguimiento creada exitosamente");
+					} else {
+						System.out.println("La relación de seguimiento ya existe");
+					}
+				} catch (Exception e) {
+					System.err.println("Error al verificar relación existente: " + e.getMessage());
+					// Si falla la verificación, intentar crear la relación directamente
+					PropiedadesSeguidos cp = PropiedadesSeguidosDAO.createPropiedadesSeguidos();
+					cp.setSeguidoresUsuario_registrado(user);
+					cp.setSeguidosUsuario_registrado(usuario_seguido);
+					cp.setFecha(fechaSeguimiento);
+					PropiedadesSeguidosDAO.save(cp);
+					System.out.println("Relación de seguimiento creada (sin verificación previa)");
+				}
+			} else {
+				System.out.println("Error: usuarios no válidos o intentando seguirse a sí mismo");
+			}
 			t.commit();
 		} catch (Exception e) {
 			t.rollback();
+			e.printStackTrace();
+			System.out.println("Error en seguir: " + e.getMessage());
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public void eliminarUsuario(int id_usuario) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -230,12 +291,12 @@ public class BD_Usuario_Registrado {
 			t.rollback();
 			e.printStackTrace();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 	}
 
 	public Usuario_Registrado darMeGustaTweet(int id_usuario, int id_tweet) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -245,13 +306,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado bloquear(int id_usuario, int id_usuarioBloqueado) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -265,13 +326,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado darRetweet(int id_usuario, int id_tweet, Date fechaPublicacion) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -286,13 +347,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado[] cargarUsuarios() throws PersistentException {
 		Usuario_Registrado[] usuarios = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			usuarios = Usuario_RegistradoDAO.listUsuario_RegistradoByQuery(null, null);
@@ -305,7 +366,7 @@ public class BD_Usuario_Registrado {
 
 	public Usuario_Registrado obtenerUsuarioByID(int id_usuario) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -318,7 +379,7 @@ public class BD_Usuario_Registrado {
 
 	public Usuario_Registrado darMeGustaComentario(int id_usuario, int id_comentario) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -328,13 +389,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 
 	public Usuario_Registrado eliminarMgTweet(int id_usuario, int id_tweet) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -344,13 +405,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 	
 	public Usuario_Registrado eliminarMgComentario(int id_usuario, int id_comentario) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -360,13 +421,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 	
 	public Usuario_Registrado desbloquear(int id_usuario, int id_usuario_desbloqueado) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -376,13 +437,13 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 	
 	public Usuario_Registrado quitarSeguimiento(int id_usuario, int id_usuario_quitadoSeguimiento) throws PersistentException {
 		Usuario_Registrado user = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
@@ -392,8 +453,211 @@ public class BD_Usuario_Registrado {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return user;
 	}
 	
+	public Usuario_Registrado cargarUsuarioPorId(int idUsuario) throws PersistentException {
+		Usuario_Registrado user = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(idUsuario);
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+		}
+		return user;
+	}
+		public void dejarDeSeguir(int idSeguidor, int idSeguido) throws PersistentException {
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Obtener los usuarios
+			Usuario_Registrado seguidor = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(idSeguidor);
+			Usuario_Registrado seguido = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(idSeguido);
+					if (seguidor != null && seguido != null) {
+				// Buscar la relación de seguimiento existente
+				// Seguidor = Usuario_RegistradoUsuario_AutentificadoId_usuario2
+				// Seguido = Usuario_RegistradoUsuario_AutentificadoId_usuario
+				String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario2 = " + idSeguidor + 
+							   " AND Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idSeguido;
+				PropiedadesSeguidos[] relaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(query, null);
+				
+				// Eliminar la relación si existe
+				for (PropiedadesSeguidos relacion : relaciones) {
+					PropiedadesSeguidosDAO.delete(relacion);
+				}
+				
+				System.out.println("Usuario " + seguidor.getNickname() + " dejó de seguir a " + seguido.getNickname());
+			}
+			
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			throw e;
+		}
+	}	/**
+	 * Cargar lista de seguidores de un usuario
+	 */
+	public Usuario_Registrado[] cargarSeguidores(int idUsuario) throws PersistentException {
+		Usuario_Registrado[] seguidores = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Buscar todas las relaciones donde el usuario es seguido
+			// En la BD: Usuario_RegistradoUsuario_AutentificadoId_usuario = usuario seguido
+			String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario;
+			PropiedadesSeguidos[] relaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(query, null);
+			
+			if (relaciones != null && relaciones.length > 0) {
+				System.out.println("Encontradas " + relaciones.length + " relaciones de seguimiento para usuario " + idUsuario);
+				seguidores = new Usuario_Registrado[relaciones.length];
+				for (int i = 0; i < relaciones.length; i++) {
+					// El seguidor es quien tiene la relación (Usuario_RegistradoUsuario_AutentificadoId_usuario2)
+					seguidores[i] = relaciones[i].getSeguidoresUsuario_registrado();
+				}
+			} else {
+				System.out.println("No se encontraron seguidores para usuario " + idUsuario);
+			}
+			
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			System.err.println("Error al cargar seguidores: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return seguidores;
+	}
+	
+	/**
+	 * Cargar lista de usuarios seguidos por un usuario
+	 */
+	public Usuario_Registrado[] cargarSeguidos(int idUsuario) throws PersistentException {
+		Usuario_Registrado[] seguidos = null;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Buscar todas las relaciones donde el usuario es el seguidor
+			// En la BD: Usuario_RegistradoUsuario_AutentificadoId_usuario2 = usuario seguidor
+			String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario2 = " + idUsuario;
+			PropiedadesSeguidos[] relaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(query, null);
+			
+			if (relaciones != null && relaciones.length > 0) {
+				System.out.println("Encontradas " + relaciones.length + " relaciones donde usuario " + idUsuario + " sigue a otros");
+				seguidos = new Usuario_Registrado[relaciones.length];
+				for (int i = 0; i < relaciones.length; i++) {
+					// El seguido es el objetivo de la relación (Usuario_RegistradoUsuario_AutentificadoId_usuario)
+					seguidos[i] = relaciones[i].getSeguidosUsuario_registrado();
+				}
+			} else {
+				System.out.println("Usuario " + idUsuario + " no sigue a nadie");
+			}
+			
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			System.err.println("Error al cargar seguidos: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return seguidos;
+	}
+	
+	/**
+	 * Contar número de seguidores de un usuario
+	 */
+	public int contarSeguidores(int idUsuario) throws PersistentException {
+		int numSeguidores = 0;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario;
+			PropiedadesSeguidos[] relaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(query, null);
+			numSeguidores = relaciones != null ? relaciones.length : 0;
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			System.err.println("Error al contar seguidores: " + e.getMessage());
+		}
+		return numSeguidores;
+	}
+	
+	/**
+	 * Contar número de seguidos de un usuario
+	 */
+	public int contarSeguidos(int idUsuario) throws PersistentException {
+		int numSeguidos = 0;
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			String query = "Usuario_RegistradoUsuario_AutentificadoId_usuario2 = " + idUsuario;
+			PropiedadesSeguidos[] relaciones = PropiedadesSeguidosDAO.listPropiedadesSeguidosByQuery(query, null);
+			numSeguidos = relaciones != null ? relaciones.length : 0;
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			System.err.println("Error al contar seguidos: " + e.getMessage());
+		}
+		return numSeguidos;
+	}
+	
+	/**
+	 * Verifica si un usuario le dio me gusta a un tweet específico
+	 * @param idUsuario ID del usuario
+	 * @param idTweet ID del tweet
+	 * @return true si le gusta, false si no
+	 */
+	public boolean yaLeGustaTweet(int idUsuario, int idTweet) throws PersistentException {
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Buscar directamente en la tabla de relación many-to-many
+			String query = "SELECT COUNT(*) FROM Tweet_Usuario_Registrado " +
+						   "WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario + 
+						   " AND TweetId_tweet = " + idTweet;
+			
+			// Usar HQL para la consulta
+			org.hibernate.Query hibernateQuery = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().createSQLQuery(query);
+			
+			Object result = hibernateQuery.uniqueResult();
+			int count = result != null ? ((Number) result).intValue() : 0;
+			
+			t.commit();
+			return count > 0;
+		} catch (Exception e) {
+			t.rollback();
+			throw new PersistentException(e);
+		}
+	}
+	
+	/**
+	 * Verifica si un usuario le dio me gusta a un comentario específico
+	 * @param idUsuario ID del usuario
+	 * @param idComentario ID del comentario
+	 * @return true si le gusta, false si no
+	 */
+	public boolean yaLeGustaComentario(int idUsuario, int idComentario) throws PersistentException {
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().beginTransaction();
+		try {
+			// Buscar directamente en la tabla de relación many-to-many
+			String query = "SELECT COUNT(*) FROM Comentario_Usuario_Registrado2 " +
+						   "WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario + 
+						   " AND ComentarioId_comentario = " + idComentario;
+			
+			// Usar HQL para la consulta
+			org.hibernate.Query hibernateQuery = ProyectoMDS120242025PersistentManager.instance()
+				.getSession().createSQLQuery(query);
+			
+			Object result = hibernateQuery.uniqueResult();
+			int count = result != null ? ((Number) result).intValue() : 0;
+			
+			t.commit();
+			return count > 0;
+		} catch (Exception e) {
+			t.rollback();
+			throw new PersistentException(e);
+		}
+	}
 }

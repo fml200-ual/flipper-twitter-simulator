@@ -2,6 +2,8 @@ package interfaz;
 
 import mds2.MainView.Pantalla;
 import vistas.VistaRegistrarse;
+import basededatos.BDPrincipal;
+import java.util.Date;
 
 public class Registrarse extends VistaRegistrarse {
 	// private event _mensajedeerrorregistro;
@@ -202,12 +204,85 @@ public class Registrarse extends VistaRegistrarse {
 			System.out.println("Actualizando preview de " + type + " con URL: " + url);
 			// Aquí se podría implementar lógica para mostrar preview real
 		}
+	}	private void procesarRegistro() {
+		try {
+			// Declaración del atributo IActor como en el patrón del diagrama de secuencia
+			BDPrincipal iactor = new BDPrincipal();
+			
+			// Obtener los valores de los campos siguiendo el patrón
+			String email = this.getEmailField().getValue().trim();
+			String nick = this.getNickField().getValue().trim();
+			String password = this.getPasswordField().getValue();
+			String descripcion = this.getDescriptionField().getValue();
+			String fotoPerfilURL = this.getProfilePhotoUrlField().getValue();
+			String imagenFondoURL = this.getBackgroundUrlField().getValue();
+			
+			// Usar valores por defecto si están vacíos
+			if (descripcion == null || descripcion.trim().isEmpty()) {
+				descripcion = "Nuevo usuario de Twitter";
+			}
+			if (fotoPerfilURL == null || fotoPerfilURL.trim().isEmpty()) {
+				fotoPerfilURL = "default-profile.jpg";
+			}
+			if (imagenFondoURL == null || imagenFondoURL.trim().isEmpty()) {
+				imagenFondoURL = "default-background.jpg";
+			}
+			
+			System.out.println("Procesando registro para usuario: " + nick);
+			
+			// Seguir el patrón del diagrama: actor = iactor.Join(FirstName, LastName,...)
+			basededatos.Usuario_Registrado nuevoUsuario = iactor.registrar(
+				nick, 
+				descripcion, 
+				imagenFondoURL, 
+				fotoPerfilURL, 
+				email, 
+				password, 
+				new Date()
+			);
+			
+			if (nuevoUsuario != null) {
+				System.out.println("Registro exitoso para usuario: " + nick);
+				
+				// Almacenar el usuario registrado para el flujo de verificación
+				// Esto simula el envío del código de verificación por email
+				storeUserForVerification(nuevoUsuario);
+				
+				// Navegar a la vista de código de verificación siguiendo el flujo
+				System.out.println("Navegando a código de verificación...");
+				Introducircdigodeverificacin();
+			} else {
+				System.err.println("Error durante el registro - posiblemente el usuario ya existe");
+				// Mostrar mensaje de error apropiado
+				Mensajedeerrorregistro();
+			}
+			
+		} catch (Exception e) {
+			System.err.println("Error durante el registro: " + e.getMessage());
+			e.printStackTrace();
+			// Mostrar mensaje de error genérico
+			Mensajedeerrorregistro();
+		}
 	}
-
-	private void procesarRegistro() {
-		// Proceder directamente con el código de verificación después de validar campos
-		System.out.println("Procesando registro, enviando código de verificación...");
-		Introducircdigodeverificacin();
+	
+	// Método para almacenar temporalmente el usuario para verificación
+	private void storeUserForVerification(basededatos.Usuario_Registrado usuario) {
+		// En una implementación real, aquí se enviaría el email de verificación
+		// y se almacenaría temporalmente el estado del registro
+		System.out.println("Almacenando usuario para verificación: " + usuario.getNickname());
+		System.out.println("Simulando envío de código de verificación a: " + usuario.getCorreoElectronico());
+		
+		// Simular generación y envío de código
+		String codigoVerificacion = generateVerificationCode();
+		System.out.println("Código de verificación generado: " + codigoVerificacion);
+		
+		// En una implementación real, se guardaría en una tabla temporal o cache		// y se enviaría por email usando el ACT04SistemadeCorreo
+	}
+	
+	// Método para generar código de verificación
+	private String generateVerificationCode() {
+		// Generar código de 4 dígitos aleatorio
+		return String.format("%04d", (int)(Math.random() * 10000));
 	}
 
 	public void Mensajedeerrorregistro() {
@@ -220,10 +295,11 @@ public class Registrarse extends VistaRegistrarse {
 		// También se podría mostrar una notificación general
 		System.out.println("Error: Datos duplicados encontrados");
 	}
-
 	public void Introducircdigodeverificacin() {
 		// Navegar directamente a la vista de código de verificación
 		System.out.println("Navegando a introducir código de verificación...");
+		System.out.println("_aCT01UsuarioNoRegistrado es null: " + (_aCT01UsuarioNoRegistrado == null));
+		System.out.println("_iniciarsesin es null: " + (_iniciarsesin == null));
 
 		_introducircdigodeverificacin = new Introducircdigodeverificacin(this);
 

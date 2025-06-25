@@ -192,23 +192,55 @@ public class Introducircdigodeverificacin extends VistaIntroducircdigodeverifica
 			return false;
 		}
 	}
-	
-	private void completarRegistro() {
+		private void completarRegistro() {
 		try {
-			// Registro completado exitosamente
-			System.out.println("Código válido. Registro completado exitosamente.");
+			// Código válido - completar el proceso de registro siguiendo el patrón ORM
+			System.out.println("Código válido. Completando registro...");
 			
-			// Aquí se navegaría a la vista de éxito o a la sesión iniciada
-			// Por ahora, volvemos a la vista principal
-			if (_registrarse != null && _registrarse._aCT01UsuarioNoRegistrado != null) {
-				_registrarse._aCT01UsuarioNoRegistrado.getVerticalLayoutCentralNoRegistrado()
-					.as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class).removeAll();
+			// Declaración del atributo IActor como en el patrón
+			basededatos.BDPrincipal iactor = new basededatos.BDPrincipal();
+			
+			if (_registrarse != null) {
+				// Obtener los datos del registro temporal
+				String nick = _registrarse.getNickField().getValue().trim();
+				String email = _registrarse.getEmailField().getValue().trim();
 				
-				// Mostrar mensaje de éxito (simulado)
-				System.out.println("¡Cuenta creada exitosamente!");
+				// Seguir el patrón: usuario = iactor.LoadUserById(ID)
+				// o en este caso, activar la cuenta del usuario recién registrado
+				basededatos.Usuario_Registrado usuarioVerificado = iactor.activarCuenta(email, nick);
+				
+				if (usuarioVerificado != null) {
+					System.out.println("¡Cuenta activada exitosamente para: " + usuarioVerificado.getNickname() + "!");
+					
+					// Seguir el patrón: padre.MainView.removeAll() + crear vista + add
+					mds2.MainView.Pantalla.MainView.removeAll();
+					
+					// Crear la vista del usuario logueado automáticamente después del registro
+					ACT02UsuarioRegistrado usuarioLogueado = new ACT02UsuarioRegistrado(
+						mds2.MainView.Pantalla.MainView, usuarioVerificado);
+					mds2.MainView.Pantalla.MainView.add(usuarioLogueado);
+					
+					// Actualizar el usuario en la sesión global
+					mds2.MainView.Usuario.usuarioRegistrado = usuarioVerificado;
+					
+					System.out.println("Usuario automáticamente logueado después del registro");
+				} else {
+					// Error en la activación
+					System.err.println("Error al activar la cuenta");
+					Mensajedeerrordecdigo();
+				}
+			} else {
+				// Fallback: volver a la vista principal sin login automático
+				System.out.println("Registro completado. Redirigiendo a página principal...");
+				if (_registrarse._aCT01UsuarioNoRegistrado != null) {
+					_registrarse._aCT01UsuarioNoRegistrado.getVerticalLayoutCentralNoRegistrado()
+						.as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class).removeAll();
+				}
 			}
 		} catch (Exception e) {
-			System.out.println("Error al completar registro: " + e.getMessage());
+			System.err.println("Error al completar registro: " + e.getMessage());
+			e.printStackTrace();
+			Mensajedeerrordecdigo();
 		}
 	}
 	

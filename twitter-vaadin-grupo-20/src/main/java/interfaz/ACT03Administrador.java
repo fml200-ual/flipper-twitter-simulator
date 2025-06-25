@@ -6,6 +6,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 public class ACT03Administrador extends ACT06SesinIniciada {
 
 	public Listafijadetweetsadministrador _listafijadetweetsadministrador;
+	
+	// Administrador no necesita objeto ORMPersistable porque no tiene relaciones con otros datos en BD
 
 	public ACT03Administrador(MainView MainView) {
 		super(MainView);
