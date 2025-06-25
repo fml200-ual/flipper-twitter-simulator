@@ -9,7 +9,6 @@ public class Verlistadeseguidosregistrado extends VistaVerlistadeseguidosregistr
 	public Verperfilregistrado _verperfilregistrado;
 	public Verpropioperfil _verpropioperfil;
 	public Listadeusuarios _listadeusuarios;
-
 	basededatos.Usuario_Registrado u;
 
 	public Verlistadeseguidosregistrado(Verperfilregistrado verperfilregistrado, basededatos.Usuario_Registrado u) {
@@ -19,25 +18,15 @@ public class Verlistadeseguidosregistrado extends VistaVerlistadeseguidosregistr
 		this.getNoFollowedMessage().setVisible(false);
 		this.getUsername().setText(u.getNickname());
 
-
 		Listadeusuarios(u);
-
-
-		// Configurar botón "Mostrar más seguidos"
-		this.getShowMoreFollowedButton().addClickListener(event -> {
-			// Navegar a la lista completa de seguidos del usuario
-			Pantalla.MainView.removeAll();
-			Verlistadeseguidosregistrado listaCompleta = new Verlistadeseguidosregistrado(_verperfilregistrado);
-			Pantalla.MainView.add(listaCompleta);
-		});
-
-
-	}
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
-			Pantalla.MainView.add(_verperfilregistrado);		});
+			Pantalla.MainView.add(_verperfilregistrado);
+		});
+
 	}
+
 	public Verlistadeseguidosregistrado(Verpropioperfil verpropioperfil) {
 		this._verpropioperfil = verpropioperfil;
 		basededatos.Usuario_Registrado usuarioActual = mds2.MainView.obtenerUsuarioActual();
@@ -47,12 +36,9 @@ public class Verlistadeseguidosregistrado extends VistaVerlistadeseguidosregistr
 
 		Listadeusuarios(usuarioActual);
 
-		// Configurar botón "Mostrar más seguidos"
-		this.getShowMoreFollowedButton().addClickListener(event -> {
-			// Navegar a la lista completa de seguidos del usuario actual
+		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
-			Verlistadeseguidosregistrado listaCompleta = new Verlistadeseguidosregistrado(_verpropioperfil);
-			Pantalla.MainView.add(listaCompleta);
+			Pantalla.MainView.add(_verpropioperfil);
 		});
 	}
 
