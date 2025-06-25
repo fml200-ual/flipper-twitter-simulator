@@ -2,33 +2,32 @@ package interfaz;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
+import basededatos.Usuario_Registrado;
 import mds2.MainView.Pantalla;
 import vistas.VistaVerlistaseguidosnoregistrado;
 
 public class Verlistaseguidosnoregistrado extends VistaVerlistaseguidosnoregistrado {
 	public Verperfilnoregistrado _verperfilnoregistrado;
-	public Listadeusuarios _listadeusuarios;	public Verlistaseguidosnoregistrado(Verperfilnoregistrado verperfilnoregistrado) {
-		this._verperfilnoregistrado = verperfilnoregistrado;
-		
-		this.getNoFollowedMessageNoReg().setVisible(false);
+	public Listadeusuarios _listadeusuarios;
 
-		// Seguir metodología de diagramas de secuencia
-		Cargar_Seguidos();
-		// Configurar botón "Mostrar más seguidos"
-		this.getShowMoreFollowedButtonNoReg().addClickListener(event -> {
-			// Navegar a la lista completa de seguidos del usuario
-			Pantalla.MainView.removeAll();
-			Verlistaseguidosnoregistrado listaCompleta = new Verlistaseguidosnoregistrado(_verperfilnoregistrado);
-			Pantalla.MainView.add(listaCompleta);
-		});
+	public Verlistaseguidosnoregistrado(Verperfilnoregistrado verperfilnoregistrado, Usuario_Registrado u) {
+		this._verperfilnoregistrado = verperfilnoregistrado;
+
+		this.getNoFollowedMessageNoReg().setVisible(false);
+		this.getUsername().setText("@" + u.getNickname());
+
+		Listadeusuarios(u);
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(_verperfilnoregistrado);
 		});
-	}	public void Cargar_Seguidos() {
-		// Usar la lista de usuarios con el usuario específico - mismo patrón que versión registrada
-		_listadeusuarios = new Listadeusuarios(this, _verperfilnoregistrado.u);
+	}
+
+	public void Listadeusuarios(basededatos.Usuario_Registrado u) {
+		_listadeusuarios = new Listadeusuarios(this, u);
+
+		// Agregar la lista vacía al contenedor
 		this.getFollowedListContainerNoReg().as(VerticalLayout.class).add(_listadeusuarios);
 	}
 

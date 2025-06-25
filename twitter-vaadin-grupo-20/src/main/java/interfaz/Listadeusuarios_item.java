@@ -64,7 +64,7 @@ public class Listadeusuarios_item extends VistaListadeusuarios_item {
 		try {
 			BDPrincipal bd = new BDPrincipal();
 			int numSeguidores = bd.contarSeguidores(u.getId_usuario());
-			
+
 			// Formatear el número de seguidores de manera amigable
 			String seguidoresTexto;
 			if (numSeguidores >= 1000000) {
@@ -76,7 +76,7 @@ public class Listadeusuarios_item extends VistaListadeusuarios_item {
 			} else {
 				seguidoresTexto = String.valueOf(numSeguidores);
 			}
-			
+
 			this.getFollowersCount().setText(seguidoresTexto);
 			System.out.println("Usuario " + u.getNickname() + " tiene " + numSeguidores + " seguidores");
 		} catch (Exception e) {

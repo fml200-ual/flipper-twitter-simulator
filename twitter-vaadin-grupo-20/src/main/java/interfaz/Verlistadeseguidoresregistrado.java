@@ -14,7 +14,7 @@ public class Verlistadeseguidoresregistrado extends VistaVerlistadeseguidoresreg
 		this._verperfilregistrado = verperfilregistrado;
 
 		this.getNoFollowersMessage().setVisible(false);
-		this.getUsername().setText(u.getNickname());
+		this.getUsername().setText("@" + u.getNickname());
 
 		Listadeusuarios(u);
 
@@ -29,7 +29,7 @@ public class Verlistadeseguidoresregistrado extends VistaVerlistadeseguidoresreg
 		basededatos.Usuario_Registrado usuarioActual = mds2.MainView.obtenerUsuarioActual();
 
 		this.getNoFollowersMessage().setVisible(false);
-		this.getUsername().setText(usuarioActual.getNickname());
+		this.getUsername().setText("@" + usuarioActual.getNickname());
 
 		Listadeusuarios(usuarioActual);
 
