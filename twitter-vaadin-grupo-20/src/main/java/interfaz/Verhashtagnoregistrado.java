@@ -18,7 +18,7 @@ public class Verhashtagnoregistrado extends Verhashtag {
 		this._listafijadehashtagsnoregistrado = _listafijadehashtagsnoregistrado;
 		this._hashtag = hashtag;
 
-		this.getH1().setText("#" + hashtag.getHashtag());
+		this.getH1().setText(hashtag.getHashtag());
 
 		Listadetweetsyretweetsnoregistrado();
 
@@ -33,8 +33,9 @@ public class Verhashtagnoregistrado extends Verhashtag {
 			Hashtag hashtag) {
 		super();
 		this._verlistaampliadadehashtagsnoregistrado = _verlistaampliadadehashtagsnoregistrado;
+		this._hashtag = hashtag;
 
-		this.getH1().setText("#" + hashtag.getHashtag());
+		this.getH1().setText(hashtag.getHashtag());
 
 		Listadetweetsyretweetsnoregistrado();
 

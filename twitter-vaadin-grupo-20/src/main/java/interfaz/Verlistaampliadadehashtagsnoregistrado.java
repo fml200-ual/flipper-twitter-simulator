@@ -35,21 +35,19 @@ public class Verlistaampliadadehashtagsnoregistrado extends Verlistaampliadadeha
 				// Ordenar hashtags alfabéticamente
 				Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
 
-				// Crear lista ampliada de hashtags (mostrar todos los hashtags disponibles)
-				Listadehashtags listaHashtags = new Listadehashtags(this);
+				Listadehashtags listadehashtags = new Listadehashtags(this);
 
 				for (Hashtag hashtag : hashtags) {
-					Listadehashtags_item item = new Listadehashtags_item(listaHashtags, hashtag);
+					Listadehashtags_item item = new Listadehashtags_item(listadehashtags, hashtag);
 
 					item.getHashtagContainer().addClickListener(event -> {
-						System.out.println("Clic en hashtag: " + hashtag.getHashtag());
+						System.out.println("CLICK EN HASHTAG: " + hashtag.getHashtag());
 						Verhashtagnoregistrado(hashtag);
 					});
 
-					listaHashtags.getMainContainer().as(VerticalLayout.class).add(item);
+					listadehashtags.getMainContainer().as(VerticalLayout.class).add(item);
 				}
-
-				this.getHashtagsListContainer().add(listaHashtags);
+				this.getHashtagsListContainer().add(listadehashtags);
 			}
 		} catch (Exception e) {
 			System.err.println("Error cargando hashtags ampliados: " + e.getMessage());
