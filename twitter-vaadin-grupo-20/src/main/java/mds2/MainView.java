@@ -15,8 +15,6 @@ import com.vaadin.flow.router.Route;
 import interfaz.*;
 import basededatos.*;
 
-
-
 /**
  * A sample Vaadin view class.
  * <p>
@@ -62,7 +60,7 @@ public class MainView extends VerticalLayout {
 	}
 
 	private static boolean leerCredenciales() {
-	
+
 		String rutaProyecto = System.getProperty("user.dir");
 		String rutaArchivo = Paths.get(rutaProyecto, "/src/main/resources/sesion.txt").toString();
 		try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
@@ -74,7 +72,7 @@ public class MainView extends VerticalLayout {
 
 			String usuario = br.readLine(); // Leer usuario
 			String password = br.readLine(); // Leer contraseña
-			
+
 			if (usuario != null && password != null) {
 				Credenciales.user = usuario;
 				Credenciales.pass = password;
@@ -87,22 +85,25 @@ public class MainView extends VerticalLayout {
 			System.out.println("Error al leer el archivo: " + e.getMessage());
 			return false;
 		}
-	}	private boolean inicioSesion() {
+	}
+
+	private boolean inicioSesion() {
 		if (!leerCredenciales()) {
 			return false;
 		}
-		
+
 		System.out.println("Intentando login con usuario: " + Credenciales.user);
 		Usuario.usuarioRegistrado = Usuario.usuarioNoRegistradoInterfaz.login(Credenciales.user, Credenciales.pass);
 		Usuario.administrador = Usuario.usuarioNoRegistradoInterfaz.loginAdmin(Credenciales.user, Credenciales.pass);
-		
-		if (Usuario.usuarioRegistrado != null) {			Usuario.tipoUsuario = TipoUser.REGISTRADO;
+
+		if (Usuario.usuarioRegistrado != null) {
+			Usuario.tipoUsuario = TipoUser.REGISTRADO;
 			Pantalla.usuario = 2; // Usuario registrado
 			System.out.println("Login exitoso como usuario registrado: " + Usuario.usuarioRegistrado.getNickname());
 			System.out.println("ID usuario: " + Usuario.usuarioRegistrado.getId_usuario());
-			ACT02UsuarioRegistrado inicioRegistrado = new ACT02UsuarioRegistrado(this, Usuario.usuarioRegistrado);	
+			ACT02UsuarioRegistrado inicioRegistrado = new ACT02UsuarioRegistrado(this, Usuario.usuarioRegistrado);
 			add(inicioRegistrado);
-		} else if (Usuario.administrador != null){
+		} else if (Usuario.administrador != null) {
 			Usuario.tipoUsuario = TipoUser.ADMINISTRADOR;
 			Pantalla.usuario = 3; // Administrador
 			System.out.println("Login exitoso como administrador");
@@ -126,13 +127,14 @@ public class MainView extends VerticalLayout {
 	 */
 	public MainView(@Autowired GreetService service) {
 		Pantalla.MainView = this;
-    
+
 		if (!inicioSesion()) {
 			// Si no hay sesión válida, mostrar interfaz de usuario no registrado
 			ACT01UsuarioNoRegistrado inicioNoRegistrado = new ACT01UsuarioNoRegistrado(this);
 			add(inicioNoRegistrado);
 		}
 	}
+
 	/**
 	 * Método utilitario para obtener el usuario actual de forma segura
 	 * Refresca el usuario desde la base de datos si es necesario
@@ -144,10 +146,12 @@ public class MainView extends VerticalLayout {
 				System.out.println("Usuario null, intentando relogin...");
 				if (Credenciales.user != null && Credenciales.pass != null) {
 					Usuario.usuarioRegistrado = Usuario.usuarioNoRegistradoInterfaz.login(
-						Credenciales.user, Credenciales.pass);
-					System.out.println("Relogin resultado: " + (Usuario.usuarioRegistrado != null ? "exitoso" : "fallido"));
+							Credenciales.user, Credenciales.pass);
+					System.out.println(
+							"Relogin resultado: " + (Usuario.usuarioRegistrado != null ? "exitoso" : "fallido"));
 					if (Usuario.usuarioRegistrado != null) {
-						System.out.println("Usuario recuperado: " + Usuario.usuarioRegistrado.getNickname() + " (ID: " + Usuario.usuarioRegistrado.getId_usuario() + ")");
+						System.out.println("Usuario recuperado: " + Usuario.usuarioRegistrado.getNickname() + " (ID: "
+								+ Usuario.usuarioRegistrado.getId_usuario() + ")");
 					}
 				} else {
 					System.err.println("No hay credenciales disponibles para relogin");
@@ -165,12 +169,13 @@ public class MainView extends VerticalLayout {
 					System.out.println("Usuario detached, relogueando...");
 					if (Credenciales.user != null && Credenciales.pass != null) {
 						Usuario.usuarioRegistrado = Usuario.usuarioNoRegistradoInterfaz.login(
-							Credenciales.user, Credenciales.pass);
-						System.out.println("Relogin por detached resultado: " + (Usuario.usuarioRegistrado != null ? "exitoso" : "fallido"));
+								Credenciales.user, Credenciales.pass);
+						System.out.println("Relogin por detached resultado: "
+								+ (Usuario.usuarioRegistrado != null ? "exitoso" : "fallido"));
 					}
 				}
 			}
-			
+
 			return Usuario.usuarioRegistrado;
 		} catch (Exception e) {
 			System.err.println("Error obteniendo usuario actual: " + e.getMessage());
@@ -179,8 +184,9 @@ public class MainView extends VerticalLayout {
 			if (Credenciales.user != null && Credenciales.pass != null) {
 				try {
 					Usuario.usuarioRegistrado = Usuario.usuarioNoRegistradoInterfaz.login(
-						Credenciales.user, Credenciales.pass);
-					System.out.println("Relogin de emergencia resultado: " + (Usuario.usuarioRegistrado != null ? "exitoso" : "fallido"));
+							Credenciales.user, Credenciales.pass);
+					System.out.println("Relogin de emergencia resultado: "
+							+ (Usuario.usuarioRegistrado != null ? "exitoso" : "fallido"));
 					return Usuario.usuarioRegistrado;
 				} catch (Exception e2) {
 					System.err.println("Error en relogin de emergencia: " + e2.getMessage());
@@ -189,14 +195,15 @@ public class MainView extends VerticalLayout {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Método para verificar el estado del usuario actual
 	 */
 	public static void verificarEstadoUsuario(String contexto) {
 		try {
 			if (Usuario.usuarioRegistrado != null) {
-				System.out.println("[" + contexto + "] Usuario OK: " + Usuario.usuarioRegistrado.getNickname() + " (ID: " + Usuario.usuarioRegistrado.getId_usuario() + ")");
+				System.out.println("[" + contexto + "] Usuario OK: " + Usuario.usuarioRegistrado.getNickname()
+						+ " (ID: " + Usuario.usuarioRegistrado.getId_usuario() + ")");
 			} else {
 				System.err.println("[" + contexto + "] ERROR: Usuario es NULL");
 			}

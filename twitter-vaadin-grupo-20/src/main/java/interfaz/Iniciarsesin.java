@@ -96,37 +96,40 @@ public class Iniciarsesin extends VistaIniciarsesin {
 			Pantalla.MainView.add(_aCT01UsuarioNoRegistrado);
 		});
 
-	}	public void Validardatos() {
+	}
+
+	public void Validardatos() {
 		// Declaración del atributo IActor como en el patrón
 		BDPrincipal iactor = new BDPrincipal();
-		
+
 		// Obtener los valores de los campos
 		String username = this.getUsernameField().getValue();
 		String password = this.getPasswordField().getValue();
 
 		System.out.println("Intentando iniciar sesión con usuario: " + username);
-		
+
 		try {
 			// Seguir el patrón del diagrama: usuario = iactor.Login(login, password)
 			basededatos.Usuario_Registrado usuarioRegistrado = iactor.login(username, password);
-					if (usuarioRegistrado != null) {
+			if (usuarioRegistrado != null) {
 				System.out.println("Login exitoso como usuario registrado: " + usuarioRegistrado.getNickname());
-				
+
 				// Seguir el patrón: padre.MainView.removeAll() + crear vista + add
-				Pantalla.MainView.removeAll();				// Crear la vista del usuario logueado con el usuario de la BD
+				Pantalla.MainView.removeAll(); // Crear la vista del usuario logueado con el usuario de la BD
 				ACT02UsuarioRegistrado usuarioLogueado = new ACT02UsuarioRegistrado(
-					mds2.MainView.Pantalla.MainView, usuarioRegistrado);
+						Pantalla.MainView, usuarioRegistrado);
 				Pantalla.MainView.add(usuarioLogueado);
-				
+
 				// Actualizar el usuario en la sesión global
 				mds2.MainView.Usuario.usuarioRegistrado = usuarioRegistrado;
-				
-				return;			}
-			
+
+				return;
+			}
+
 			// Si llegamos aquí, las credenciales son incorrectas
 			System.out.println("Credenciales incorrectas para usuario: " + username);
 			Mensajedeerroriniciosesin();
-					} catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println("Error durante el login: " + e.getMessage());
 			e.printStackTrace();
 			Mensajedeerroriniciosesin();
@@ -137,12 +140,12 @@ public class Iniciarsesin extends VistaIniciarsesin {
 		try {
 			// Crear la vista de administrador
 			ACT03Administrador administradorView = new ACT03Administrador(null);
-			
+
 			// Navegar a la nueva vista
 			Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(administradorView);
-			
+
 			System.out.println("Navegación exitosa a vista de administrador");
 		} catch (Exception e) {
 			System.err.println("Error al navegar a administrador: " + e.getMessage());
