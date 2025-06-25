@@ -7,12 +7,27 @@ public class TweetRetweetajeno extends TweetRetweetregistrado {
 	// private event _darmegusta;
 	// private event _eliminarmegusta;
 	public Darretweet _darretweet;
-	public Escribircomentario _escribircomentario;
-
-	public TweetRetweetajeno() {
-		super();
+	public Escribircomentario _escribircomentario;	public TweetRetweetajeno(basededatos.Tweet tweet) {
+		super(tweet);
 		// METODOLOGÍA ACTIVIDAD 12: Configurar eventos de me gusta
 		configurarEventosMeGusta();
+		
+		// Configurar eventos de interacción adicionales
+		configurarEventosInteraccion();
+	}
+	
+	/**
+	 * Configurar eventos para retweet y comentario (adicionales a los heredados)
+	 */
+	private void configurarEventosInteraccion() {
+		// Sobrescribir eventos para usar los métodos específicos de esta clase
+		this.getIconoRetweet().addClickListener(event -> {
+			Darretweet();
+		});
+		
+		this.getIconoComentarios().addClickListener(event -> {
+			Escribircomentario();
+		});
 	}
 
 	public void Darretweet() {
@@ -46,12 +61,8 @@ public class TweetRetweetajeno extends TweetRetweetregistrado {
 			}
 			
 			int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
-			
-			// Obtener el tweet al que dar me gusta
-			basededatos.Tweet tweet = null;
-			if (this instanceof Vertweetregistrado) {
-				tweet = ((Vertweetregistrado) this).t;
-			}
+					// Obtener el tweet al que dar me gusta
+			basededatos.Tweet tweet = getTweet();
 			
 			if (tweet == null) {
 				System.err.println("Error: No se pudo obtener el tweet para me gusta");
@@ -104,12 +115,8 @@ public class TweetRetweetajeno extends TweetRetweetregistrado {
 			}
 			
 			int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
-			
-			// Obtener el tweet del que quitar me gusta
-			basededatos.Tweet tweet = null;
-			if (this instanceof Vertweetregistrado) {
-				tweet = ((Vertweetregistrado) this).t;
-			}
+					// Obtener el tweet del que quitar me gusta
+			basededatos.Tweet tweet = getTweet();
 			
 			if (tweet == null) {
 				System.err.println("Error: No se pudo obtener el tweet para quitar me gusta");
@@ -154,14 +161,10 @@ public class TweetRetweetajeno extends TweetRetweetregistrado {
 	}
 		/**
 	 * Alternar estado de me gusta
-	 */
-	public void toggleMeGusta() {
+	 */	public void toggleMeGusta() {
 		try {
 			// Obtener el tweet
-			basededatos.Tweet tweet = null;
-			if (this instanceof Vertweetregistrado) {
-				tweet = ((Vertweetregistrado) this).t;
-			}
+			basededatos.Tweet tweet = getTweet();
 			
 			if (tweet == null) return;
 			

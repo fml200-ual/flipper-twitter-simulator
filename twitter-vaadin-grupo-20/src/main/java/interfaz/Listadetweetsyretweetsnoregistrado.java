@@ -37,7 +37,6 @@ public class Listadetweetsyretweetsnoregistrado extends Listadetweetsyretweets {
 	public void cargarTweetsDeHashtag(basededatos.Hashtag hashtag) {
 		cargarTweetsDeHashtag(hashtag, false);
 	}
-	
 	// Método para cargar tweets de un hashtag específico con opción de agrupación
 	public void cargarTweetsDeHashtag(basededatos.Hashtag hashtag, boolean agrupar) {
 		if (hashtag == null) return;
@@ -47,20 +46,29 @@ public class Listadetweetsyretweetsnoregistrado extends Listadetweetsyretweets {
 			this.getMainContainer().as(VerticalLayout.class).removeAll();
 			this._item.clear();
 			
-			// Cargar tweets que contienen este hashtag
-			if (hashtag.pertenece != null && hashtag.pertenece.size() > 0) {
-				Tweet[] tweets = hashtag.pertenece.toArray();
+			// Configurar layout principal para ser más compacto
+			VerticalLayout mainLayout = this.getMainContainer().as(VerticalLayout.class);
+			mainLayout.setPadding(false);
+			mainLayout.setSpacing(false);
+			mainLayout.setMargin(false);
+			
+			// Cargar tweets que contienen este hashtag usando BDPrincipal para manejar sesiones correctamente
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+			Tweet[] tweets = bd.cargarTweetsDeHashtag(hashtag.getId_hashtag());
+			
+			if (tweets != null && tweets.length > 0) {
+				System.out.println("Tweets encontrados para hashtag " + hashtag.getHashtag() + ": " + tweets.length);
 				
 				if (agrupar) {
 					// Mostrar como grupo agrupado
 					crearVistaAgrupadaHashtag(hashtag, tweets);
 				} else {
-					// Mostrar tweets individuales (comportamiento original)
+					// Mostrar tweets individuales (comportamiento original) con layout compacto
 					for (Tweet tweet : tweets) {
 						if (tweet != null) {
 							Listadetweetsyretweetsnoregistrado_item item = 
 								new Listadetweetsyretweetsnoregistrado_item(this, tweet);
-							this.getMainContainer().as(VerticalLayout.class).add(item);
+							mainLayout.add(item);
 							this._item.add(item);
 						}
 					}
@@ -74,26 +82,29 @@ public class Listadetweetsyretweetsnoregistrado extends Listadetweetsyretweets {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * Crear una vista agrupada para un hashtag para usuarios no registrados
+		/**
+	 * Crear una vista agrupada para un hashtag para usuarios no registrados (Layout compacto)
 	 */
 	private void crearVistaAgrupadaHashtag(basededatos.Hashtag hashtag, Tweet[] tweets) {
 		try {
-			// Crear un contenedor usando componentes Vaadin existentes
+			// Crear un contenedor compacto usando componentes Vaadin existentes
 			com.vaadin.flow.component.orderedlayout.VerticalLayout grupoHashtag = 
 				new com.vaadin.flow.component.orderedlayout.VerticalLayout();
 			grupoHashtag.setWidth("100%");
-			grupoHashtag.setPadding(true);
-			grupoHashtag.setSpacing(true);
-			grupoHashtag.addClassName("hashtag-group");
+			grupoHashtag.setPadding(false); // Sin padding
+			grupoHashtag.setSpacing(false); // Sin spacing
+			grupoHashtag.setMargin(false);  // Sin margin
+			grupoHashtag.addClassName("hashtag-group-compact");
 			
-			// Crear cabecera del grupo
+			// Crear cabecera del grupo más compacta
 			com.vaadin.flow.component.orderedlayout.HorizontalLayout cabecera = 
 				new com.vaadin.flow.component.orderedlayout.HorizontalLayout();
 			cabecera.setWidth("100%");
+			cabecera.setPadding(false);
+			cabecera.setSpacing(true);
 			cabecera.setAlignItems(com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.CENTER);
 			cabecera.setJustifyContentMode(com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode.BETWEEN);
+			cabecera.getStyle().set("margin-bottom", "10px");
 			
 			// Título del hashtag
 			com.vaadin.flow.component.html.H3 tituloHashtag = new com.vaadin.flow.component.html.H3();
@@ -108,6 +119,7 @@ public class Listadetweetsyretweetsnoregistrado extends Listadetweetsyretweets {
 			}
 			tituloHashtag.getStyle().set("margin", "0");
 			tituloHashtag.getStyle().set("color", "#1DA1F2"); // Color azul tipo Twitter
+			tituloHashtag.getStyle().set("font-size", "1.5em");
 			
 			// Calcular contadores agregados
 			int totalLikes = 0;
@@ -128,34 +140,34 @@ public class Listadetweetsyretweetsnoregistrado extends Listadetweetsyretweets {
 					System.err.println("Error calculando contadores agregados: " + e.getMessage());
 				}
 			}
-			
-			// Contadores agregados
+					// Contadores agregados compactos
 			com.vaadin.flow.component.html.Div contadores = new com.vaadin.flow.component.html.Div();
 			contadores.getStyle().set("display", "flex");
-			contadores.getStyle().set("gap", "15px");
+			contadores.getStyle().set("gap", "10px");
 			contadores.getStyle().set("color", "#657786");
-			contadores.getStyle().set("font-size", "14px");
+			contadores.getStyle().set("font-size", "13px");
 			
 			com.vaadin.flow.component.html.Span likesTotales = new com.vaadin.flow.component.html.Span("❤️ " + totalLikes);
 			com.vaadin.flow.component.html.Span retweetsTotales = new com.vaadin.flow.component.html.Span("🔄 " + totalRetweets);
 			com.vaadin.flow.component.html.Span comentariosTotales = new com.vaadin.flow.component.html.Span("💬 " + totalComentarios);
 			contadores.add(likesTotales, retweetsTotales, comentariosTotales);
 			
-			// Contador de tweets
+			// Contador de tweets compacto
 			com.vaadin.flow.component.html.Span contadorTweets = new com.vaadin.flow.component.html.Span();
 			int numTweets = tweets != null ? tweets.length : 0;
 			contadorTweets.setText(numTweets + " tweet" + (numTweets != 1 ? "s" : ""));
 			contadorTweets.getStyle().set("color", "#657786");
-			contadorTweets.getStyle().set("font-size", "14px");
+			contadorTweets.getStyle().set("font-size", "13px");
 			
 			cabecera.add(tituloHashtag, contadores, contadorTweets);
 			grupoHashtag.add(cabecera);
 			
-			// Crear contenedor de tweets expandible usando Details
+			// Crear contenedor de tweets expandible compacto usando Details
 			com.vaadin.flow.component.orderedlayout.VerticalLayout contenedorTweets = 
 				new com.vaadin.flow.component.orderedlayout.VerticalLayout();
-			contenedorTweets.setSpacing(false);
-			contenedorTweets.setPadding(false);
+			contenedorTweets.setSpacing(false); // Sin spacing entre tweets
+			contenedorTweets.setPadding(false); // Sin padding
+			contenedorTweets.setMargin(false);  // Sin margin
 			
 			// Cargar solo los primeros 3 tweets por defecto (para mejor rendimiento)
 			int maxTweetsIniciales = Math.min(3, tweets != null ? tweets.length : 0);

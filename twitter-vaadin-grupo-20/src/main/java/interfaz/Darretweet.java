@@ -6,32 +6,103 @@ import mds2.MainView.Pantalla;
 public class Darretweet extends Escribirtweetretweet {
 	public TweetRetweetajeno _tweetRetweetajeno;
 	public TweetRetweetpropio _tweetRetweetpropio;
-
 	public Darretweet(TweetRetweetajeno _tweetRetweetajeno) {
 		super();
 		this._tweetRetweetajeno = _tweetRetweetajeno;
 
 		// METODOLOGÍA ACTIVIDAD 12: Configurar funcionalidad de retweet
 		configurarEventosRetweet();
+		
+		// Asegurar que el textarea esté habilitado y configurado
+		configurarTextArea();
 
 		this.getCloseButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
 			// Puedes ser tweet o retweet
 			Pantalla.MainView.add((Vertweetregistrado) _tweetRetweetajeno);
 		});
-	}
-
-	public Darretweet(TweetRetweetpropio _tweetRetweetpropio) {
+	}	public Darretweet(TweetRetweetpropio _tweetRetweetpropio) {
 		super();
 		this._tweetRetweetpropio = _tweetRetweetpropio;
 
 		// METODOLOGÍA ACTIVIDAD 12: Configurar funcionalidad de retweet
 		configurarEventosRetweet();
+		
+		// Asegurar que el textarea esté habilitado y configurado
+		configurarTextArea();
 
 		this.getCloseButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
 			// Puedes ser tweet o retweet
 			Pantalla.MainView.add((Vertweetpropio) _tweetRetweetpropio);
+		});
+	}
+		public Darretweet(TweetRetweetregistrado _tweetRetweetregistrado) {
+		super();
+		// Para usuarios registrados genéricos, tratamos como ajeno
+		if (_tweetRetweetregistrado instanceof TweetRetweetajeno) {
+			this._tweetRetweetajeno = (TweetRetweetajeno) _tweetRetweetregistrado;
+		} else if (_tweetRetweetregistrado instanceof TweetRetweetpropio) {
+			this._tweetRetweetpropio = (TweetRetweetpropio) _tweetRetweetregistrado;
+		} else {
+			// Crear un TweetRetweetajeno temporal para casos genéricos
+			this._tweetRetweetajeno = new TweetRetweetajeno(_tweetRetweetregistrado.getTweet());
+		}
+
+		// METODOLOGÍA ACTIVIDAD 12: Configurar funcionalidad de retweet
+		configurarEventosRetweet();
+		
+		// Asegurar que el textarea esté habilitado y configurado
+		configurarTextArea();
+
+		this.getCloseButton().addClickListener(event -> {
+			Pantalla.MainView.removeAll();
+			if (_tweetRetweetpropio != null) {
+				Pantalla.MainView.add((Vertweetpropio) _tweetRetweetpropio);
+			} else {
+				Pantalla.MainView.add((Vertweetregistrado) _tweetRetweetajeno);
+			}
+		});
+	}
+		/**
+	 * Configurar el textarea para asegurar que sea editable
+	 */
+	private void configurarTextArea() {
+		// Usar UI.getCurrent().access() para asegurar que se ejecute en el hilo de la UI
+		com.vaadin.flow.component.UI.getCurrent().access(() -> {
+			try {
+				// Pequeño delay para asegurar que el componente esté completamente inicializado
+				Thread.sleep(100);
+				
+				// Asegurar que el textarea esté habilitado y configurado correctamente
+				if (this.getTweetTextArea() != null) {
+					this.getTweetTextArea().setEnabled(true);
+					this.getTweetTextArea().setReadOnly(false);
+					this.getTweetTextArea().setPlaceholder("Agrega un comentario...");
+					this.getTweetTextArea().setMaxLength(280);
+					this.getTweetTextArea().setValueChangeMode(com.vaadin.flow.data.value.ValueChangeMode.EAGER);
+					
+					// Asegurar que el componente sea visible
+					this.getTweetTextArea().setVisible(true);
+					
+					// Limpiar cualquier valor previo
+					this.getTweetTextArea().clear();
+					
+					// Configurar focus después de un pequeño delay
+					com.vaadin.flow.component.UI.getCurrent().access(() -> {
+						this.getTweetTextArea().focus();
+					});
+					
+					System.out.println("TextArea configurado: enabled=" + this.getTweetTextArea().isEnabled() + 
+									   ", readOnly=" + this.getTweetTextArea().isReadOnly() + 
+									   ", visible=" + this.getTweetTextArea().isVisible());
+				} else {
+					System.err.println("Error: getTweetTextArea() devolvió null");
+				}
+			} catch (Exception e) {
+				System.err.println("Error configurando textarea: " + e.getMessage());
+				e.printStackTrace();
+			}
 		});
 	}
 	
@@ -62,13 +133,12 @@ public class Darretweet extends Escribirtweetretweet {
 			}
 			
 			int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
-			
-			// Obtener el tweet que se va a retwetear
+					// Obtener el tweet que se va a retwetear
 			basededatos.Tweet tweetOriginal = null;
 			if (_tweetRetweetajeno instanceof Vertweetregistrado) {
-				tweetOriginal = ((Vertweetregistrado) _tweetRetweetajeno).t;
+				tweetOriginal = ((Vertweetregistrado) _tweetRetweetajeno).getTweet();
 			} else if (_tweetRetweetpropio instanceof Vertweetpropio) {
-				// tweetOriginal = ((Vertweetpropio) _tweetRetweetpropio).t; // Cuando esté disponible
+				tweetOriginal = ((Vertweetpropio) _tweetRetweetpropio).getTweet();
 			}
 			
 			if (tweetOriginal == null) {

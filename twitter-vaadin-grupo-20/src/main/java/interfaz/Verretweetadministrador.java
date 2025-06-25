@@ -8,9 +8,28 @@ public class Verretweetadministrador extends TweetRetwetadministrador {
 	
 	// Objeto ORMPersistable para el retweet que se muestra
 	public basededatos.Tweet t;
+	// Constructor directo que acepta un Tweet que es un retweet
+	public Verretweetadministrador(basededatos.Tweet t) {
+		super(t);
+		this.t = t;
 
+		// Rellenar datos del retweet
+		rellenarDatosRetweet();
+
+		volver();
+		this.Listadecomentariosadministrador();
+
+		if (this.getAvatarDivPrincipal() != null) {
+			this.getAvatarDivPrincipal().addClickListener(event -> {
+				Verperfiladministrador();
+			});
+		}
+	}
+
+	// Constructor legacy para compatibilidad (deprecado)
+	@Deprecated
 	public Verretweetadministrador(Listadetweetsyretweetsadministrador_item _listadetweetsyretweetsadministrador, basededatos.Tweet t) {
-		super();
+		super(t);
 		this._listadetweetsyretweetsadministrador = _listadetweetsyretweetsadministrador;
 		this.t = t;
 
@@ -20,9 +39,11 @@ public class Verretweetadministrador extends TweetRetwetadministrador {
 		volver();
 		this.Listadecomentariosadministrador();
 
-		this.getAvatarDivPrincipal().addClickListener(event -> {
-			Verperfiladministrador();
-		});
+		if (this.getAvatarDivPrincipal() != null) {
+			this.getAvatarDivPrincipal().addClickListener(event -> {
+				Verperfiladministrador();
+			});
+		}
 	}
 	
 	// Constructor de compatibilidad temporal

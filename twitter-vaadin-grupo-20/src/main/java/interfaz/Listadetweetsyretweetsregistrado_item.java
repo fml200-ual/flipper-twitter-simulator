@@ -148,35 +148,33 @@ public class Listadetweetsyretweetsregistrado_item extends Listadetweetsyretweet
 		// this.getUsername().setText("@usuario");
 		// this.getDateLabel().setText("Ahora");
 	}
-
 	public void Vertweetregistrado() {
-		_vertweetregistrado = new Vertweetregistrado(this, t);
+		// Navegación directa sin pasar 'this'
+		_vertweetregistrado = new Vertweetregistrado(t);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_vertweetregistrado);
 	}	public void Verretweetregistrado() {
-		// Pasar el tweet que es un retweet para mostrar información completa
-		_verretweetregistrado = new Verretweetregistrado(this, t);
+		// Navegación directa pasando solo el tweet (que es un retweet)
+		_verretweetregistrado = new Verretweetregistrado(t);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verretweetregistrado);
 	}
-
 	public void Vertweetpropio() {
-		// TODO: Pasar el tweet cuando se actualice el constructor
-		_vertweetpropio = new Vertweetpropio(this);
+		// Navegación directa pasando solo el tweet
+		_vertweetpropio = new Vertweetpropio(t);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_vertweetpropio);
 	}
-
 	public void Verretweetpropio() {
-		// TODO: Pasar el tweet cuando se actualice el constructor
-		_verretweetpropio = new Verretweetpropio(this);
+		// Navegación directa pasando solo el tweet
+		_verretweetpropio = new Verretweetpropio(t);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verretweetpropio);
-	}	public void cargarEstadoMeGusta() {
+	}public void cargarEstadoMeGusta() {
 		if (t != null) {
 			try {
 				// OPTIMIZACIÓN: Usar OptimizadorBD para reducir conexiones múltiples

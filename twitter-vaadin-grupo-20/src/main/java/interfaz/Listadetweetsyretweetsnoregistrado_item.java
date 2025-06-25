@@ -5,13 +5,9 @@ import mds2.MainView.Pantalla;
 
 public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretweets_item {
 	public Vertweetnoregistrado _vertweetnoregistrado;
+	public Verretweetnoregistrado _verretweetnoregistrado;
 	
-	// Constructor original
-	public Listadetweetsyretweetsnoregistrado_item(Listadetweetsyretweets _listadetweetsyretweets) {
-		super(_listadetweetsyretweets);
-		configurarEventos();
-	}
-		// Constructor que acepta Tweet - METODOLOGÍA ACTIVIDAD 12
+	// Constructor que acepta Tweet - METODOLOGÍA ACTIVIDAD 12
 	public Listadetweetsyretweetsnoregistrado_item(Listadetweetsyretweets _listadetweetsyretweets, basededatos.Tweet t) {
 		super(_listadetweetsyretweets, t);
 		
@@ -111,18 +107,52 @@ public class Listadetweetsyretweetsnoregistrado_item extends Listadetweetsyretwe
 			}
 		}
 	}
-	
-	private void configurarEventos() {
+		private void configurarEventos() {
 		this.getMainContainer().as(VerticalLayout.class).addClickListener(event -> {
-			Vertweetnoregistrado();
+			if (t != null && t.getTweet_retweeteado() != null) {
+				// Es un retweet
+				Verretweetnoregistrado();
+			} else {
+				// Es un tweet normal
+				Vertweetnoregistrado();
+			}
 		});
-	}
-
-	public void Vertweetnoregistrado() {
-		// Pasar el tweet a la vista de detalle
-		_vertweetnoregistrado = new Vertweetnoregistrado(this, t);
+	}	public void Vertweetnoregistrado() {
+		// Navegación directa pasando solo el tweet
+		_vertweetnoregistrado = new Vertweetnoregistrado(t);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_vertweetnoregistrado);
+	}
+
+	public void Verretweetnoregistrado() {
+		// Navegación directa pasando solo el tweet (que es un retweet)
+		_verretweetnoregistrado = new Verretweetnoregistrado(t);
+		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
+		Pantalla.MainView.removeAll();
+		Pantalla.MainView.add(_verretweetnoregistrado);
+	}
+
+	// Sobrescribir método de navegación de la clase padre para usar vista de no registrado
+	@Override
+	public void verTweet() {
+		if (t != null && t.getTweet_retweeteado() != null) {
+			// Es un retweet
+			Verretweetnoregistrado();
+		} else {
+			// Es un tweet normal
+			Vertweetnoregistrado();
+		}
+	}
+
+	@Override
+	public void verPerfilUsuario() {
+		// Para usuarios no registrados, redirigir a login cuando intentan ver perfiles
+		try {
+			Pantalla.MainView.removeAll();
+			Pantalla.MainView.add(new ACT01UsuarioNoRegistrado(Pantalla.MainView));
+		} catch (Exception e) {
+			System.err.println("Error navegando desde usuario no registrado: " + e.getMessage());
+		}
 	}
 }
