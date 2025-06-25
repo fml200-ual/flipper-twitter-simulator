@@ -1,6 +1,7 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 import '@vaadin/vertical-layout/src/vaadin-vertical-layout.js';
 import '@vaadin/horizontal-layout/src/vaadin-horizontal-layout.js';
+import '@vaadin/button/src/vaadin-button.js';
 
 @customElement('vista-perspectivabloqueado')
 export class VistaPerspectivabloqueado extends LitElement {
@@ -31,6 +32,29 @@ export class VistaPerspectivabloqueado extends LitElement {
         position: relative; /* Para posicionar elementos absolutos dentro */
         box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3); /* Mejora: Sombra sutil para el encabezado */
         flex-shrink: 0; /* Evita que se comprima */
+      }
+
+      #backButton {
+        position: absolute;
+        top: var(--lumo-space-m);
+        left: var(--lumo-space-m);
+        background-color: #000;
+        color: #00FFFF;
+        border: 2px solid #00FFFF;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        z-index: 10;
+        font-size: 1.2em;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      #backButton:hover {
+        background-color: #00FFFF;
+        color: #000;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
       }
 
       #bannerImage {
@@ -149,6 +173,7 @@ export class VistaPerspectivabloqueado extends LitElement {
   render() {
     return html`
       <div id="profileHeader">
+        <vaadin-button id="backButton" @click="${this._onBackClick}">←</vaadin-button>
         <img id="bannerImage" src="https://placehold.co/800x150/333333/00FFFF?text=Banner+Image" alt="Banner">
         <img id="profileImage" src="https://placehold.co/100x100/555555/00FFFF?text=Profile" alt="Profile Image">
       </div>
@@ -165,5 +190,12 @@ export class VistaPerspectivabloqueado extends LitElement {
 
       <img id="birdLogoImage" src="./img/imagenIcon.png" alt="Pájaro">
     `;
+  }
+
+  private _onBackClick() {
+    this.dispatchEvent(new CustomEvent('back-clicked', {
+      bubbles: true,
+      composed: true
+    }));
   }
 }

@@ -34,24 +34,28 @@ public class Verlistaampliadadehashtagsnoregistrado extends Verlistaampliadadeha
 			if (hashtags != null && hashtags.length > 0) {
 				// Ordenar hashtags alfabéticamente
 				Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
-				
-				// Crear lista ampliada de hashtags (mostrar todos los hashtags disponibles)
-				Listadehashtags listaHashtags = new Listadehashtags(this);
-				
-				for (int i = 0; i < hashtags.length; i++) {
-					Listadehashtags_item item = new Listadehashtags_item(listaHashtags, hashtags[i]);
-					listaHashtags.getMainContainer().as(VerticalLayout.class).add(item);
+
+				Listadehashtags listadehashtags = new Listadehashtags(this);
+
+				for (Hashtag hashtag : hashtags) {
+					Listadehashtags_item item = new Listadehashtags_item(listadehashtags, hashtag);
+
+					item.getHashtagContainer().addClickListener(event -> {
+						System.out.println("CLICK EN HASHTAG: " + hashtag.getHashtag());
+						Verhashtagnoregistrado(hashtag);
+					});
+
+					listadehashtags.getMainContainer().as(VerticalLayout.class).add(item);
 				}
-				
-				this.getHashtagsListContainer().add(listaHashtags);
+				this.getHashtagsListContainer().add(listadehashtags);
 			}
 		} catch (Exception e) {
 			System.err.println("Error cargando hashtags ampliados: " + e.getMessage());
 		}
 	}
 
-	public void Verhashtagnoregistrado() {
-		_verhashtagnoregistrado = new Verhashtagnoregistrado(this);
+	public void Verhashtagnoregistrado(basededatos.Hashtag hashtag) {
+		_verhashtagnoregistrado = new Verhashtagnoregistrado(this, hashtag);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verhashtagnoregistrado);

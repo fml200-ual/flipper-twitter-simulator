@@ -27,11 +27,15 @@ public class Listafijadehashtagsregistrado extends Listafijadehashtags {
 			if (hashtags != null && hashtags.length > 0) {
 				// Ordenar hashtags alfabéticamente
 				Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
-				
+
 				// Limitar a los primeros 5 hashtags
 				int limite = Math.min(hashtags.length, 5);
 				for (int i = 0; i < limite; i++) {
-					Listadehashtags_item item = new Listadehashtags_item(null, hashtags[i]);
+					basededatos.Hashtag hashtag = hashtags[i];
+					Listadehashtags_item item = new Listadehashtags_item(null, hashtag);
+					item.getHashtagContainer().addClickListener(event -> {
+						Verhashtagregistrado(hashtag);
+					});
 					this.getMainContainer().as(VerticalLayout.class).add(item);
 					_item.add(item);
 				}
@@ -48,8 +52,8 @@ public class Listafijadehashtagsregistrado extends Listafijadehashtags {
 		Pantalla.MainView.add(_verlistaampliadadehashtagsregistrado);
 	}
 
-	public void Verhashtagregistrado() {
-		_verhashtagregistrado = new Verhashtagregistrado(this);
+	public void Verhashtagregistrado(basededatos.Hashtag hashtag) {
+		_verhashtagregistrado = new Verhashtagregistrado(this, hashtag);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verhashtagregistrado);

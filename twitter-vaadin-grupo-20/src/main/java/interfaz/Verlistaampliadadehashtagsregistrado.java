@@ -35,15 +35,19 @@ public class Verlistaampliadadehashtagsregistrado extends Verlistaampliadadehash
 			if (hashtags != null && hashtags.length > 0) {
 				// Ordenar hashtags alfabéticamente
 				Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
-				
+
 				// Crear lista ampliada de hashtags (mostrar todos los hashtags disponibles)
 				Listadehashtags listaHashtags = new Listadehashtags(this);
-				
+
 				for (int i = 0; i < hashtags.length; i++) {
-					Listadehashtags_item item = new Listadehashtags_item(listaHashtags, hashtags[i]);
+					Hashtag hashtag = hashtags[i];
+					Listadehashtags_item item = new Listadehashtags_item(listaHashtags, hashtag);
+					item.getHashtagContainer().addClickListener(event -> {
+						Verhashtagregistrado(hashtag);
+					});
 					listaHashtags.getMainContainer().as(VerticalLayout.class).add(item);
 				}
-				
+
 				this.getHashtagsListContainer().add(listaHashtags);
 			}
 		} catch (Exception e) {
@@ -51,8 +55,8 @@ public class Verlistaampliadadehashtagsregistrado extends Verlistaampliadadehash
 		}
 	}
 
-	public void Verhashtagregistrado() {
-		_verhashtagregistrado = new Verhashtagregistrado(this);
+	public void Verhashtagregistrado(basededatos.Hashtag hashtag) {
+		_verhashtagregistrado = new Verhashtagregistrado(this, hashtag);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verhashtagregistrado);

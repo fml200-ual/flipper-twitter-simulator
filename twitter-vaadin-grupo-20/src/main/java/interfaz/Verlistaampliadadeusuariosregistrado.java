@@ -1,5 +1,8 @@
 package interfaz;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
+import mds2.MainView;
 import mds2.MainView.Pantalla;
 
 public class Verlistaampliadadeusuariosregistrado extends Verlistaampliadadeusuarios {
@@ -21,19 +24,44 @@ public class Verlistaampliadadeusuariosregistrado extends Verlistaampliadadeusua
 
 	@Override
 	public void Listadeusuarios() {
-		// Crear lista ampliada de usuarios para usuario no registrado
+		basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+		basededatos.Usuario_Registrado[] usuarios = bd.cargarUsuarios();
+		basededatos.Usuario_Registrado usuarioActual = MainView.obtenerUsuarioActual();
+		basededatos.Usuario_Registrado[] bloqueados = usuarioActual.meTienenBloqueado.toArray();
+
+		// Filtrar para eliminar el usuario actual
+		String nickname = usuarioActual.getNickname();
+		usuarios = java.util.Arrays.stream(usuarios)
+				.filter(u -> !u.getNickname().equals(nickname))
+				.toArray(basededatos.Usuario_Registrado[]::new);
+
+		// Crear lista ampliada de usuarios para usuario registrado
 		Listadeusuarios listaUsuarios = new Listadeusuarios(this);
 
-		for (int i = 0; i < 50; i++) {
-			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios, null);
-			// Agregar ClickListener personalizado para navegar a Verperfilnoregistrado
+		for (basededatos.Usuario_Registrado usuario_Registrado : usuarios) {
+			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios, usuario_Registrado);
+
+			// Agregar el item a la lista inmediatamente
+			listaUsuarios.getMainContainer().as(VerticalLayout.class).add(item);
+
 			item.getMainContainer().addClickListener(event -> {
-				// Verperfilregistrado o Perspectivabloqueado
-				Verperfilregistrado();
+				boolean usuarioBloqueado = false;
+				// Verificar si el usuario está bloqueado
+				for (basededatos.Usuario_Registrado bloqueado : bloqueados) {
+					if (bloqueado.getNickname().equals(usuario_Registrado.getNickname())) {
+						usuarioBloqueado = true;
+						break;
+					}
+				}
+
+				if (usuarioBloqueado) {
+					Perspectivabloqueado();
+				} else {
+					Verperfilregistrado(usuario_Registrado);
+				}
 			});
-			listaUsuarios.getMainContainer().as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class)
-					.add(item);
 		}
+
 		this.getUsersContainer().add(listaUsuarios);
 	}
 
@@ -44,8 +72,8 @@ public class Verlistaampliadadeusuariosregistrado extends Verlistaampliadadeusua
 		Pantalla.MainView.add(_perspectivabloqueado);
 	}
 
-	public void Verperfilregistrado() {
-		_verperfilregistrado = new Verperfilregistrado(this);
+	public void Verperfilregistrado(basededatos.Usuario_Registrado usuarioRegistrado) {
+		_verperfilregistrado = new Verperfilregistrado(this, usuarioRegistrado);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verperfilregistrado);
