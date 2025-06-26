@@ -1569,26 +1569,26 @@ packages:
   /@types/body-parser/1.19.6:
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
     dev: true
     resolution:
       integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==
   /@types/bonjour/3.5.13:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
     dev: true
     resolution:
       integrity: sha512-z9fJ5Im06zvUL548KvYNecEVlA7cVDkGUi6kZusb04mpyEFKCIZJvloCcmpmLaIahDpOQGHaHmG6imtPMmPXGQ==
   /@types/connect-history-api-fallback/1.5.4:
     dependencies:
       '@types/express-serve-static-core': 5.0.6
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
     dev: true
     resolution:
       integrity: sha512-n6Cr2xS1h4uAulPRdlw6Jl6s1oG8KrVilPN2yUITEs+K48EzMJJ3W1xy8K5eWuFvjp3R74AOIGSmp2UfBJ8HFw==
   /@types/connect/3.4.38:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
     dev: true
     resolution:
       integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==
@@ -1598,7 +1598,7 @@ packages:
       integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
   /@types/express-serve-static-core/4.19.6:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
       '@types/qs': 6.14.0
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.5
@@ -1607,7 +1607,7 @@ packages:
       integrity: sha512-N4LZ2xG7DatVqhCZzOGb1Yi5lMbXSZcmdLDe9EzSndPV2HpWYWzRbaerl2n27irrm94EPpprqa8KpskPT085+A==
   /@types/express-serve-static-core/5.0.6:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
       '@types/qs': 6.14.0
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.5
@@ -1633,7 +1633,7 @@ packages:
       integrity: sha512-r8Tayk8HJnX0FztbZN7oVqGccWgw98T/0neJphO91KkmOzug1KkofZURD4UaD5uH8AqcFLfdPErnBod0u71/qg==
   /@types/http-proxy/1.17.16:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
     dev: true
     resolution:
       integrity: sha512-sdWoUajOB1cd0A8cRRQ1cfyWNbmFKLAqBB89Y8x5iYyG/mkJHc0YUH8pdWBy2omi9qtCpiIgGjuwO0dQST2l5w==
@@ -1647,16 +1647,16 @@ packages:
       integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==
   /@types/node-forge/1.3.11:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
     dev: true
     resolution:
       integrity: sha512-FQx220y22OKNTqaByeBGqHWYz4cl94tpcxeFdvBo3wjG6XPBuZ0BNgNZRV5J5TFmmcsJ4IzsLkmGRiQbnYsBEQ==
-  /@types/node/24.0.3:
+  /@types/node/24.0.4:
     dependencies:
       undici-types: 7.8.0
     dev: true
     resolution:
-      integrity: sha512-R4I/kzCYAdRLzfiCabn9hxWfbuHS573x+r0dJMkkzThEa7pbrcDWK+9zu3e7aBOouf+rQAciqPFMnxwr0aWgKg==
+      integrity: sha512-ulyqAkrhnuNq9pB76DRBTkcS6YsmDALy6Ua63V8OhrOBgbcYt6IOdzpw5P1+dyRIyMerzLkeYWBeOXPpA9GMAA==
   /@types/parse-json/4.0.2:
     dev: true
     resolution:
@@ -1671,7 +1671,7 @@ packages:
       integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==
   /@types/resolve/1.17.1:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
     dev: true
     resolution:
       integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==
@@ -1682,7 +1682,7 @@ packages:
   /@types/send/0.17.5:
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
     dev: true
     resolution:
       integrity: sha512-z6F2D3cOStZvuk2SaP6YrwkNO65iTZcwA2ZkSABegdkAh/lf+Aa/YQndZVfmEXT5vgAp6zv06VQ3ejSVjAny4w==
@@ -1695,14 +1695,14 @@ packages:
   /@types/serve-static/1.15.8:
     dependencies:
       '@types/http-errors': 2.0.5
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
       '@types/send': 0.17.5
     dev: true
     resolution:
       integrity: sha512-roei0UY3LhpOJvjbIP6ZZFngyLKl5dskOtDhxY5THRSpO+ZI+nzJ+m5yUMzGrp89YRa7lvknKkMYjqQFGwA7Sg==
   /@types/sockjs/0.3.36:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
     dev: true
     resolution:
       integrity: sha512-MK9V6NzAS1+Ud7JV9lJLFqW85VbC9dq3LmwZCuBe4wBDgKC0Kj/jd8Xl+nSviU+Qc3+m7umHHyHg//2KSa0a0Q==
@@ -1725,7 +1725,7 @@ packages:
       integrity: sha512-TU+fZFBTBcXj/GpDpDaBmgWk/gn96kMZ+uocaFUlV2f8a6WdMzzI44QBCmGcCiYR0Y6ZlNRiyUyKKt5nl/lbzQ==
   /@types/webpack-sources/3.2.3:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
       '@types/source-list-map': 0.1.6
       source-map: 0.7.4
     dev: true
@@ -1733,7 +1733,7 @@ packages:
       integrity: sha512-4nZOdMwSPHZ4pTEZzSp0AsTM4K7Qmu40UKW4tJDiOVs20UzYF9l+qUe4s0ftfN0pin06n+5cWWDJXH+sbhAiDw==
   /@types/webpack/4.41.40:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
       '@types/tapable': 1.0.12
       '@types/uglify-js': 3.17.5
       '@types/webpack-sources': 3.2.3
@@ -1744,7 +1744,7 @@ packages:
       integrity: sha512-u6kMFSBM9HcoTpUXnL6mt2HSzftqb3JgYV6oxIgL2dl6sX6aCa5k6SOkzv5DuZjBTPUE/dJltKtwwuqrkZHpfw==
   /@types/ws/8.18.1:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
     dev: true
     resolution:
       integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==
@@ -4037,7 +4037,7 @@ packages:
   /browserslist/3.2.8:
     dependencies:
       caniuse-lite: 1.0.30001724
-      electron-to-chromium: 1.5.172
+      electron-to-chromium: 1.5.173
     dev: true
     hasBin: true
     resolution:
@@ -4045,7 +4045,7 @@ packages:
   /browserslist/4.25.0:
     dependencies:
       caniuse-lite: 1.0.30001724
-      electron-to-chromium: 1.5.172
+      electron-to-chromium: 1.5.173
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3_browserslist@4.25.0
     dev: true
@@ -4883,10 +4883,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-UeJmFfOrAQS8OJWPZ4qtgHyWExa088/MtK5UEyoJGFH67cDEXkZSviOiKRCZ4Xij0zxI3JECgYs3oKx+AizQBA==
-  /electron-to-chromium/1.5.172:
+  /electron-to-chromium/1.5.173:
     dev: true
     resolution:
-      integrity: sha512-fnKW9dGgmBfsebbYognQSv0CGGLFH1a5iV9EDYTBwmAQn+whbzHbLFlC+3XbHc8xaNtpO0etm8LOcRXs1qMRkQ==
+      integrity: sha512-2bFhXP2zqSfQHugjqJIDFVwa+qIxyNApenmXTp9EjaKtdPrES5Qcn9/aSFy/NaP2E+fWG/zxKu/LBvY36p5VNQ==
   /elliptic/6.6.1:
     dependencies:
       bn.js: 4.12.2
@@ -6424,7 +6424,7 @@ packages:
       integrity: sha512-2P4SQ0HrLQ+fw6llpLnOaGAvN2Zu6778SJMrCUwns4fOoG9ayrTiZk3VV8sCPkVZF8ab0zksVpS8FDY5pRCNBA==
   /jest-worker/26.6.2:
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.4
       merge-stream: 2.0.0
       supports-color: 7.2.0
     dev: true

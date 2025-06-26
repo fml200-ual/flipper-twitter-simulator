@@ -3,94 +3,144 @@ package interfaz;
 import java.security.SecureRandom;
 import java.util.Properties;
 
-import jakarta.mail.*;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  * Servicio muy sencillo que:
- *   • Genera un código aleatorio (4 dígitos)  
- *   • Lo envía al e-mail del usuario
- *   • Lo mantiene en memoria para que la UI pueda validarlo
+ * • Genera un código aleatorio (4 dígitos)
+ * • Lo envía al e-mail del usuario
+ * • Lo mantiene en memoria para que la UI pueda validarlo
  *
- *  *** NO USA BASE DE DATOS – SOLO MEMORIA ***
+ * *** NO USA BASE DE DATOS – SOLO MEMORIA ***
  */
 public class ACT04SistemadeCorreo {
 
-	/* :::::::::::::::::::  AJUSTA AQUÍ TUS CREDENCIALES  ::::::::::::::::::: */
-	private static final String SMTP_USER = "tucorreo@gmail.com";    // remitente
-	private static final String SMTP_PASS = "tu-app-password";       // app-password de Gmail
+	/* ::::::::::::::::::: AJUSTA AQUÍ TUS CREDENCIALES ::::::::::::::::::: */
+	private static final String SMTP_USER = "tate111104@gmail.com"; // remitente
+	private static final String SMTP_PASS = "nhvflcjrelbnnbng"; // app-password de Gmail
 	/* :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
 
-	private final String emailDestino;    // a quién le mandamos el código
-	private String codigo;                // último código generado
+	// ============ ALMACENAMIENTO DEL CÓDIGO EN MEMORIA ============
+	private String codigoGenerado;
+	private String emailDestinatario;
+	private long tiempoGeneracion;
+	private static final long TIEMPO_EXPIRACION = 5 * 60 * 1000; // 5 minutos en milisegundos
 
 	/* ============ CONSTRUCTOR ============ */
-	public ACT04SistemadeCorreo(String emailDestino) {
-		this.emailDestino = emailDestino;
-		this.codigo       = generarCodigo();
-		enviarCorreo("Código de verificación", cuerpoVerificacion());
+	public ACT04SistemadeCorreo() {
+
 	}
 
-	/* ============  API PÚBLICA  ============ */
-
-	/** Devuelve el código actual para que la vista lo compare. */
-	public String getCodigo() {
-		return codigo;
+	/* ============ MÉTODO PARA GENERAR CÓDIGO ALEATORIO ============ */
+	public String generarCodigo() {
+		SecureRandom random = new SecureRandom();
+		int codigo = 1000 + random.nextInt(9000); // Genera un número entre 1000 y 9999
+		return String.valueOf(codigo);
 	}
 
-	/** Pulsado el botón “Reenviar código” en la pantalla de PIN. */
-	public void Reenviarcdigo() {
-		codigo = generarCodigo();
-		enviarCorreo("Tu nuevo código", cuerpoVerificacion());
-	}
+	public void enviarCorreo(String destinatario, String codigo) {
+		// Almacenar el código y datos para validación posterior
+		this.codigoGenerado = codigo;
+		this.emailDestinatario = destinatario;
+		this.tiempoGeneracion = System.currentTimeMillis();
+		
+		Properties prop = new Properties();
+		prop.put("mail.smtp.host", "smtp.gmail.com"); // Servidor SMTP de Gmail
+		prop.put("mail.smtp.port", "587");
+		prop.put("mail.smtp.auth", "true");
+		prop.put("mail.smtp.starttls.enable", "true");
 
-	/** Para “Olvidé mi contraseña” (flujo de reset). */
-	public void Contraseaolvidada() {
-		codigo = generarCodigo();
-		enviarCorreo("Restablece tu contraseña", cuerpoReset());
-	}
-
-	/* ============  HELPER PRIVADOS  ============ */
-
-	private String generarCodigo() {
-		return String.format("%04d", new SecureRandom().nextInt(10_000)); // 0000-9999
-	}
-
-	private String cuerpoVerificacion() {
-		return "¡Hola!\n\nTu código de verificación es: " + codigo +
-		       "\n\nSi no solicitaste el registro, simplemente ignora este mensaje.";
-	}
-
-	private String cuerpoReset() {
-		return "Hemos recibido una solicitud para restablecer tu contraseña.\n\n" +
-		       "Código: " + codigo +
-		       "\n\nSi no fuiste tú, ignora este correo.";
-	}
-
-	private void enviarCorreo(String asunto, String cuerpo) {
-		Properties p = new Properties();
-		p.put("mail.smtp.host", "smtp.gmail.com");
-		p.put("mail.smtp.port", "587");
-		p.put("mail.smtp.auth", "true");
-		p.put("mail.smtp.starttls.enable", "true");
-
-		Session s = Session.getInstance(p, new Authenticator() {
-			@Override protected PasswordAuthentication getPasswordAuthentication() {
+		Session session = Session.getInstance(prop, new Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(SMTP_USER, SMTP_PASS);
 			}
 		});
 
 		try {
-			Message m = new MimeMessage(s);
-			m.setFrom(new InternetAddress(SMTP_USER, "Mi Twitter Clone"));
-			m.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailDestino, false));
-			m.setSubject(asunto);
-			m.setText(cuerpo);
-			Transport.send(m);
-			System.out.println("✉ Correo enviado a " + emailDestino + " | Código = " + codigo);
-		} catch (Exception e) {
-			System.err.println("❌ Error enviando correo: " + e.getMessage());
+			Message mensaje = new MimeMessage(session);
+			mensaje.setFrom(new InternetAddress(SMTP_USER));
+			mensaje.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+			mensaje.setSubject("Código de Verificación");
+			mensaje.setText("Tu código de verificación es: " + codigo);
+
+			Transport.send(mensaje);
+			System.out.println("Correo enviado con éxito.");
+		} catch (MessagingException e) {
+			e.printStackTrace();
 		}
+	}
+
+	/* ============ MÉTODO PARA VALIDAR CÓDIGO ============ */
+	public boolean validarCodigo(String codigoIngresado) {
+		// Verificar si hay un código generado
+		if (this.codigoGenerado == null || codigoIngresado == null) {
+			return false;
+		}
+		
+		// Verificar expiración (5 minutos)
+		long tiempoActual = System.currentTimeMillis();
+		if (tiempoActual - this.tiempoGeneracion > TIEMPO_EXPIRACION) {
+			System.out.println("Código expirado");
+			return false;
+		}
+		
+		// Verificar que el código coincida
+		boolean esValido = this.codigoGenerado.equals(codigoIngresado.trim());
+		System.out.println("Validando código: " + codigoIngresado + " vs " + this.codigoGenerado + " = " + esValido);
+		
+		if (esValido) {
+			// Limpiar el código después de usarlo (uso único)
+			this.codigoGenerado = null;
+			this.emailDestinatario = null;
+			this.tiempoGeneracion = 0;
+		}
+		
+		return esValido;
+	}
+	
+	/* ============ MÉTODO PARA OBTENER EL ÚLTIMO CÓDIGO GENERADO ============ */
+	public String obtenerCodigoGenerado() {
+		return this.codigoGenerado;
+	}
+	
+	/* ============ MÉTODO PARA VERIFICAR SI HAY UN CÓDIGO ACTIVO ============ */
+	public boolean hayCodigoActivo() {
+		if (this.codigoGenerado == null) {
+			return false;
+		}
+		
+		long tiempoActual = System.currentTimeMillis();
+		return (tiempoActual - this.tiempoGeneracion) <= TIEMPO_EXPIRACION;
+	}
+
+	/* ============ MÉTODO MAIN PARA PRUEBAS ============ */
+	public static void main(String[] args) {
+		System.out.println("=== PRUEBA DEL SISTEMA DE CORREO ===");
+
+		// Crear una instancia del sistema de correo
+		ACT04SistemadeCorreo sistemaCorreo = new ACT04SistemadeCorreo();
+
+		// Generar un código aleatorio
+		String codigo = sistemaCorreo.generarCodigo();
+		System.out.println("Código generado: " + codigo);
+
+		// Email de destino para la prueba
+		String emailDestino = "bezzaza4@gmail.com"; // Cambia esto por tu email real
+
+		System.out.println("Enviando correo a: " + emailDestino);
+		System.out.println("Por favor espera...");
+
+		try {
+			// Enviar el correo
+			sistemaCorreo.enviarCorreo(emailDestino, codigo);
+			System.out.println("✅ Proceso completado. Revisa tu bandeja de entrada.");
+		} catch (Exception e) {
+			System.err.println("❌ Error al enviar el correo:");
+			e.printStackTrace();
+		}
+
+		System.out.println("=== FIN DE LA PRUEBA ===");
 	}
 }

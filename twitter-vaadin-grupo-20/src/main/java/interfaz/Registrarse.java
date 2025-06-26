@@ -13,10 +13,12 @@ public class Registrarse extends VistaRegistrarse {
 	public ACT05Google _aCT05Google;
 	public IniciarsesinconGoogle _iniciarsesinconGoogle;
 	public String _codigoVerificacion;
+	private ACT04SistemadeCorreo _sistemaCorreo; // Agregar instancia del sistema de correo
 
 	public Registrarse(ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado) {
 		super();
 		this._aCT01UsuarioNoRegistrado = _aCT01UsuarioNoRegistrado;
+		this._sistemaCorreo = new ACT04SistemadeCorreo(); // Inicializar el sistema de correo
 		// Ensamblado dinámico - Configurar listeners para todos los botones y campos
 		setupRegisterButtons();
 		setupFormValidation();
@@ -31,6 +33,7 @@ public class Registrarse extends VistaRegistrarse {
 	public Registrarse(Iniciarsesin _iniciarsesin) {
 		super();
 		this._iniciarsesin = _iniciarsesin;
+		this._sistemaCorreo = new ACT04SistemadeCorreo(); // Inicializar el sistema de correo
 		// Ensamblado dinámico - Configurar listeners para todos los botones y campos
 		setupRegisterButtons();
 		setupFormValidation();
@@ -275,6 +278,8 @@ public class Registrarse extends VistaRegistrarse {
 
 		// En una implementación real, se guardaría en una tabla temporal o cache // y
 		// se enviaría por email usando el ACT04SistemadeCorreo
+		_sistemaCorreo.enviarCorreo(usuario.getCorreoElectronico(), _codigoVerificacion);
+
 	}
 
 	// Método para generar código de verificación
@@ -300,7 +305,7 @@ public class Registrarse extends VistaRegistrarse {
 		System.out.println("_aCT01UsuarioNoRegistrado es null: " + (_aCT01UsuarioNoRegistrado == null));
 		System.out.println("_iniciarsesin es null: " + (_iniciarsesin == null));
 
-		_introducircdigodeverificacin = new Introducircdigodeverificacin(this);
+		_introducircdigodeverificacin = new Introducircdigodeverificacin(this, _sistemaCorreo);
 
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();

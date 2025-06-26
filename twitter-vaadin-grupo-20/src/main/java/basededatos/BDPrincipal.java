@@ -1,6 +1,7 @@
 package basededatos;
 
 import java.util.Date;
+import org.orm.PersistentTransaction;
 
 
 public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iAdministrador {
@@ -356,15 +357,50 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 	
 	public Usuario_Registrado activarCuenta(String correoElectronico, String nickname) {
 		try {
-			// En una implementación real, aquí se marcaría la cuenta como verificada
-			// Por ahora, simplemente devolvemos el usuario si existe
+			System.out.println("Activando cuenta para email: " + correoElectronico + ", nickname: " + nickname);
+			
+			// Buscar el usuario por correo electrónico
 			Usuario_Registrado usuario = this.bd_userR.validacionCorreo(correoElectronico);
-			if (usuario != null && usuario.getNickname().equals(nickname)) {
-				System.out.println("Cuenta activada para usuario: " + nickname);
-				return usuario;
+			System.out.println("Usuario encontrado por email: " + (usuario != null ? usuario.getNickname() : "NULL"));
+			
+			if (usuario != null) {
+				// Verificar que coincida el nickname
+				if (usuario.getNickname().equals(nickname)) {
+					System.out.println("Cuenta activada exitosamente para usuario: " + nickname + " (ID: " + usuario.getId_usuario() + ")");
+					return usuario;
+				} else {
+					System.err.println("Error: Nickname no coincide. Esperado: " + nickname + ", Encontrado: " + usuario.getNickname());
+					return null;
+				}
+			} else {
+				System.err.println("Error: No se encontró usuario con email: " + correoElectronico);
+				
+				// Como fallback, intentar buscar por nickname directamente
+				try {
+					PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+							.getSession().beginTransaction();
+					Usuario_Registrado usuarioPorNick = Usuario_RegistradoDAO
+							.loadUsuario_RegistradoByQuery("Nickname = '" + nickname + "'", null);
+					t.commit();
+					
+					if (usuarioPorNick != null) {
+						System.out.println("Usuario encontrado por nickname: " + usuarioPorNick.getNickname() + 
+								" con email: " + usuarioPorNick.getCorreoElectronico());
+						
+						// Verificar si los emails coinciden (case insensitive)
+						if (usuarioPorNick.getCorreoElectronico().equalsIgnoreCase(correoElectronico)) {
+							System.out.println("Cuenta activada exitosamente (fallback) para usuario: " + nickname);
+							return usuarioPorNick;
+						}
+					}
+				} catch (Exception fallbackEx) {
+					System.err.println("Error en búsqueda fallback: " + fallbackEx.getMessage());
+				}
+				
+				return null;
 			}
-			return null;
 		} catch (Exception e) {
+			System.err.println("Error general en activarCuenta: " + e.getMessage());
 			e.printStackTrace();
 			return null;
 		}
