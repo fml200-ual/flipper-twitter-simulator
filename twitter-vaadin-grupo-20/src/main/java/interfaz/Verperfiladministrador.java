@@ -126,6 +126,9 @@ public class Verperfiladministrador extends Verperfil {
 					this.getJoinDate().setText("Se unió en " + sdf.format(u.getFechaDeRegistro()));
 				} // Calcular y mostrar contadores reales de seguidores y seguidos desde la base
 					// de datos
+				// mostrar imagen de perfil
+				configurarImagenesPerfil(u);
+
 				try {
 					basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 

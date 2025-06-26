@@ -79,6 +79,9 @@ public class Listadetweetsyretweets_item extends VistaListadetweetsyretweets_ite
 			this.getXLabel().setText(String.valueOf(retweetsCount));
 			this.getZLabel().setText(String.valueOf(comentariosCount));
 
+			// NUEVO: Mostrar multimedia si el tweet lo tiene
+			mostrarMultimediaTweet(tweetParaContadores);
+
 		} catch (Exception e) {
 			System.err.println("Error rellenando datos del tweet: " + e.getMessage());
 
@@ -141,6 +144,85 @@ public class Listadetweetsyretweets_item extends VistaListadetweetsyretweets_ite
 		this.getAvatarIcon().getStyle()
 			.set("--vaadin-icon-width", "20px")
 			.set("--vaadin-icon-height", "20px");
+	}
+
+	/**
+	 * Mostrar multimedia (imagen/video) si el tweet lo contiene
+	 */
+	private void mostrarMultimediaTweet(Tweet tweet) {
+		try {
+			// Verificar si el tweet tiene un documento asociado con multimedia
+			if (tweet.getDocumento() != null && 
+				tweet.getDocumento().getTipo() != null && 
+				tweet.getDocumento().getImagenVideoURL() != null && 
+				!tweet.getDocumento().getImagenVideoURL().trim().isEmpty()) {
+				
+				String tipoDocumento = tweet.getDocumento().getTipo();
+				String url = tweet.getDocumento().getImagenVideoURL();
+				
+				System.out.println("Mostrando multimedia en perfil - Tipo: " + tipoDocumento + ", URL: " + url);
+				
+				// Crear contenedor para el multimedia
+				com.vaadin.flow.component.html.Div multimediaContainer = new com.vaadin.flow.component.html.Div();
+				multimediaContainer.getStyle()
+					.set("margin-top", "10px")
+					.set("border-radius", "12px")
+					.set("overflow", "hidden")
+					.set("border", "1px solid #e1e8ed");
+				
+				if ("IMAGEN".equals(tipoDocumento)) {
+					// Mostrar imagen
+					com.vaadin.flow.component.html.Image imagen = new com.vaadin.flow.component.html.Image(url, "Imagen del tweet");
+					imagen.getStyle()
+						.set("width", "100%")
+						.set("max-width", "400px")
+						.set("height", "auto")
+						.set("border-radius", "12px")
+						.set("cursor", "pointer");
+					
+					// Hacer clic para ver imagen en grande (opcional)
+					imagen.addClickListener(event -> {
+						// Podrías abrir un diálogo para ver la imagen en grande
+						System.out.println("Clic en imagen: " + url);
+					});
+					
+					multimediaContainer.add(imagen);
+					
+				} else if ("VIDEO".equals(tipoDocumento)) {
+					// Mostrar video
+					if (url.contains("embed")) {
+						// Video embebido (YouTube, Vimeo, etc.)
+						com.vaadin.flow.component.html.IFrame videoFrame = new com.vaadin.flow.component.html.IFrame(url);
+						videoFrame.getStyle()
+							.set("width", "100%")
+							.set("max-width", "400px")
+							.set("height", "225px")
+							.set("border", "none")
+							.set("border-radius", "12px");
+						multimediaContainer.add(videoFrame);
+					} else {
+						// Video directo (MP4, etc.)
+						com.vaadin.flow.component.html.Div videoContainer = new com.vaadin.flow.component.html.Div();
+						videoContainer.getElement().setProperty("innerHTML", 
+							"<video controls style='width: 100%; max-width: 400px; border-radius: 12px;'>" +
+							"<source src='" + url + "' type='video/mp4'>" +
+							"Tu navegador no soporta el elemento video." +
+							"</video>");
+						multimediaContainer.add(videoContainer);
+					}
+				}
+				
+				// Agregar el contenedor de multimedia al layout principal del tweet
+				try {
+					this.getMainContainer().appendChild(multimediaContainer.getElement());
+				} catch (Exception e) {
+					System.err.println("Error agregando multimedia al contenedor: " + e.getMessage());
+				}
+			}
+		} catch (Exception e) {
+			System.err.println("Error mostrando multimedia del tweet: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	public void Mostrarmstweets() {

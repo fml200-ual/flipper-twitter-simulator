@@ -91,15 +91,27 @@ public class Escribirgeneral extends VistaEscribirgeneral {
 		dialog.setHeight("300px");
 		
 		// Configurar para que aparezca en primer plano
-		dialog.setModal(false);
-		dialog.setDraggable(true);
+		dialog.setModal(true);
+		dialog.setDraggable(false);
 		dialog.setResizable(false);
 		dialog.setCloseOnEsc(true);
-		dialog.setCloseOnOutsideClick(true);
+		dialog.setCloseOnOutsideClick(false);
 		
-		// Asegurar que aparezca por encima de otros elementos
-		dialog.getElement().getStyle().set("z-index", "10000");
+		// Z-INDEX MUY ALTO para aparecer por encima de cualquier modal
+		dialog.getElement().getStyle().set("z-index", "999999");
+		dialog.getElement().getStyle().set("position", "fixed");
 		dialog.getElement().setAttribute("aria-modal", "true");
+		dialog.getElement().setAttribute("role", "dialog");
+		
+		// Forzar que esté por encima usando CSS adicional
+		dialog.getElement().executeJs(
+			"this.style.zIndex = '999999';" +
+			"this.style.position = 'fixed';" +
+			"this.style.top = '50%';" +
+			"this.style.left = '50%';" +
+			"this.style.transform = 'translate(-50%, -50%)';" +
+			"document.body.appendChild(this);"
+		);
 		
 		// Título
 		Div titleDiv = new Div();
@@ -115,6 +127,9 @@ public class Escribirgeneral extends VistaEscribirgeneral {
 		urlField.setPlaceholder(placeholder);
 		urlField.setWidth("100%");
 		urlField.getStyle().set("margin-bottom", "10px");
+		
+		// Auto-focus en el campo
+		urlField.focus();
 		
 		// Información de ayuda
 		Div helpText = new Div();
@@ -161,6 +176,18 @@ public class Escribirgeneral extends VistaEscribirgeneral {
 		dialogLayout.setSpacing(true);
 		
 		dialog.add(dialogLayout);
+		
+		// Asegurar que se abra por encima de todo
+		dialog.addOpenedChangeListener(event -> {
+			if (event.isOpened()) {
+				dialog.getElement().executeJs(
+					"this.style.zIndex = '999999';" +
+					"var overlay = document.querySelector('vaadin-dialog-overlay');" +
+					"if (overlay) overlay.style.zIndex = '999998';"
+				);
+			}
+		});
+		
 		dialog.open();
 	}
 	
