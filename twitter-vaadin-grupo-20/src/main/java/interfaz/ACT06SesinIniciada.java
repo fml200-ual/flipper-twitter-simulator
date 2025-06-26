@@ -2,6 +2,8 @@ package interfaz;
 
 import mds2.MainView;
 import mds2.MainView.Pantalla;
+import mds2.MainView.TipoUser;
+import mds2.MainView.Usuario;
 import vistas.VistaAct06sesininiciada;
 
 public class ACT06SesinIniciada extends VistaAct06sesininiciada {
@@ -13,6 +15,7 @@ public class ACT06SesinIniciada extends VistaAct06sesininiciada {
 	}
 
 	public void Cerrarsesin() {
+		Usuario.tipoUsuario = TipoUser.NO_REGISTRADO;
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(new ACT01UsuarioNoRegistrado(MainView));
 	}

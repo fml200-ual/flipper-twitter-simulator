@@ -56,7 +56,6 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 		this.getBotonMasHashtags()
 				.addClickListener(event -> _listafijadehashtagsregistrado.Verlistaampliadadehashtagsregistrado());
 		this.getBotonCerrarSesionPrimerBoton().addClickListener(event -> {
-			Usuario.tipoUsuario = TipoUser.NO_REGISTRADO;
 			this.Cerrarsesin();
 		});
 		this.getBotonEscribirTweet().addClickListener(event -> {
