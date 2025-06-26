@@ -31,6 +31,7 @@ public class Verperfiladministrador extends Verperfil {
 
 	public Verperfiladministrador(Vertweetadministrador _vertweetadministrador, basededatos.Usuario_Registrado u) {
 		super();
+		Usuario.tipoUsuario = TipoUser.ADMINISTRADOR;
 		this._vertweetadministrador = _vertweetadministrador;
 		this.u = u;
 		this.getEditAccountButton().setVisible(false);
@@ -68,6 +69,7 @@ public class Verperfiladministrador extends Verperfil {
 
 	public Verperfiladministrador(Verretweetadministrador _verretweetadministrador, basededatos.Usuario_Registrado u) {
 		super();
+		Usuario.tipoUsuario = TipoUser.ADMINISTRADOR;
 		this._verretweetadministrador = _verretweetadministrador;
 		this.u = u;
 		this.getEditAccountButton().setVisible(false);
