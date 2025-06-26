@@ -23,3 +23,28 @@ vaadin-app-layout, vaadin-vertical-layout, vaadin-horizontal-layout {
   max-width: 250px;
 }
 
+/* Estilos para tweets con "me gusta" */
+.tweet-liked {
+  /* Estilo cuando el tweet tiene me gusta del usuario actual */
+  border-left: 2px solid red;
+}
+
+.tweet-liked #heartIcon {
+  color: red !important;
+}
+
+.tweet-not-liked {
+  /* Estilo cuando el tweet NO tiene me gusta del usuario actual */
+  border-left: 2px solid transparent;
+}
+
+.tweet-not-liked #heartIcon {
+  color: #00FFFF !important;
+}
+
+/* Efecto hover para los tweets */
+.tweet-liked:hover, .tweet-not-liked:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+

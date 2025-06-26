@@ -12,18 +12,41 @@ export class VistaListafijadehashtags extends LitElement {
           max-width: 100%; /* Evita que se desborde horizontalmente */
           padding: 5px; /* Padding reducido para evitar desbordamientos */
           box-sizing: border-box;
+          background-color: #000000;
       }
       #mainContainer {
         width: 100%;
-        height: 100%;
+        height: 300px; /* Altura fija para permitir scroll de hashtags */
         max-width: 100%; /* Evita desbordamiento horizontal */
-        overflow-y: auto; /* Permite desplazamiento si la lista es muy larga */
+        overflow-y: auto; /* Permite desplazamiento vertical */
         overflow-x: hidden; /* Oculta el scroll horizontal */
-        padding: 0;
+        padding: 5px;
         align-items: stretch; /* Asegura que los items se estiren a lo ancho */
-        gap: 5px; /* Espacio reducido entre los ítems */
+        gap: 3px; /* Espacio más pequeño entre hashtags */
         box-sizing: border-box;
-        /* Removido position: absolute que causaba que se saliera del layout */
+        background-color: #000000 !important;
+        border: 1px solid #333; /* Borde sutil */
+        border-radius: 8px; /* Bordes redondeados */
+        scrollbar-width: thin; /* Firefox: scroll más delgado */
+      }
+      
+      /* Estilo personalizado para scrollbar en Webkit browsers */
+      #mainContainer::-webkit-scrollbar {
+        width: 6px; /* Más delgado que el de usuarios */
+      }
+      
+      #mainContainer::-webkit-scrollbar-track {
+        background: #1a1a1a;
+        border-radius: 3px;
+      }
+      
+      #mainContainer::-webkit-scrollbar-thumb {
+        background: #555;
+        border-radius: 3px;
+      }
+      
+      #mainContainer::-webkit-scrollbar-thumb:hover {
+        background: #777;
       }
       `;
   }

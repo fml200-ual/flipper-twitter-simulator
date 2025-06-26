@@ -12,7 +12,7 @@ public class BD_Administrador {
 
 	public Administrador loginAdmin(String nombreUsuario, String contrasena) throws PersistentException {
 		Administrador admin = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			Usuario_Autentificado userAux = Usuario_AutentificadoDAO.loadUsuario_AutentificadoByQuery(
@@ -29,7 +29,7 @@ public class BD_Administrador {
 
 	public Administrador banear(int id_administrador, int id_usuarioBaneado, int duracionBaneo, Date fechaInicioBaneo) throws PersistentException {
 		Administrador admin = null;
-		PersistentTransaction t = MDS12425PFMurilloSuanesPersistentManager.instance()
+		PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
 				.getSession().beginTransaction();
 		try {
 			admin = AdministradorDAO.getAdministradorByORMID(id_administrador);
@@ -44,7 +44,7 @@ public class BD_Administrador {
 		} catch (Exception e) {
 			t.rollback();
 		}
-		MDS12425PFMurilloSuanesPersistentManager.instance().disposePersistentManager();
+		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 		return admin;
 	}
 }

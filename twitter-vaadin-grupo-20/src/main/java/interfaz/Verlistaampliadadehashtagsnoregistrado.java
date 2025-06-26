@@ -1,6 +1,13 @@
 package interfaz;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
 import mds2.MainView.Pantalla;
+import basededatos.BDPrincipal;
+import basededatos.Hashtag;
 
 public class Verlistaampliadadehashtagsnoregistrado extends Verlistaampliadadehashtags {
 	public Listafijadehashtagsnoregistrado _listafijadehashtagsnoregistrado;
@@ -9,7 +16,7 @@ public class Verlistaampliadadehashtagsnoregistrado extends Verlistaampliadadeha
 	public Verlistaampliadadehashtagsnoregistrado(Listafijadehashtagsnoregistrado _listafijadehashtagsnoregistrado) {
 		super();
 		this._listafijadehashtagsnoregistrado = _listafijadehashtagsnoregistrado;
-		// Ensamblado de componentes fijos
+
 		Listadehashtags();
 
 		this.getBackButton().addClickListener(event -> {
@@ -20,23 +27,35 @@ public class Verlistaampliadadehashtagsnoregistrado extends Verlistaampliadadeha
 
 	@Override
 	public void Listadehashtags() {
-		// Crear lista ampliada de hashtags para usuario no registrado
-		Listadehashtags listaHashtags = new Listadehashtags(this);
+		// Cargar hashtags desde la base de datos
+		BDPrincipal bd = new BDPrincipal();
+		try {
+			Hashtag[] hashtags = bd.cargarHashtags();
+			if (hashtags != null && hashtags.length > 0) {
+				// Ordenar hashtags alfabéticamente
+				Arrays.sort(hashtags, Comparator.comparing(Hashtag::getHashtag));
 
-		for (int i = 0; i < 5; i++) {
-			Listadehashtags_item item = new Listadehashtags_item(listaHashtags);
-			// Agregar ClickListener personalizado para navegar a Verhashtagnoregistrado
-			item.getHashtagContainer().addClickListener(event -> {
-				Verhashtagnoregistrado();
-			});
-			listaHashtags.getMainContainer().as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class)
-					.add(item);
+				Listadehashtags listadehashtags = new Listadehashtags(this);
+
+				for (Hashtag hashtag : hashtags) {
+					Listadehashtags_item item = new Listadehashtags_item(listadehashtags, hashtag);
+
+					item.getHashtagContainer().addClickListener(event -> {
+						System.out.println("CLICK EN HASHTAG: " + hashtag.getHashtag());
+						Verhashtagnoregistrado(hashtag);
+					});
+
+					listadehashtags.getMainContainer().as(VerticalLayout.class).add(item);
+				}
+				this.getHashtagsListContainer().add(listadehashtags);
+			}
+		} catch (Exception e) {
+			System.err.println("Error cargando hashtags ampliados: " + e.getMessage());
 		}
-		this.getHashtagsListContainer().add(listaHashtags);
 	}
 
-	public void Verhashtagnoregistrado() {
-		_verhashtagnoregistrado = new Verhashtagnoregistrado(this);
+	public void Verhashtagnoregistrado(basededatos.Hashtag hashtag) {
+		_verhashtagnoregistrado = new Verhashtagnoregistrado(this, hashtag);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verhashtagnoregistrado);

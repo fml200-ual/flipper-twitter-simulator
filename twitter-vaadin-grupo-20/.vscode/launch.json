@@ -1,70 +1,84 @@
 {
-    "configurations": [
-        {
-            "type": "java",
-            "name": "ListProyectoMDS120242025Data",
-            "request": "launch",
-            "mainClass": "ormsamples.ListProyectoMDS120242025Data",
-            "projectName": "twitter-vaadin-grupo-20"
-        },
-        {
-            "type": "java",
-            "name": "DropProyectoMDS120242025DatabaseSchema",
-            "request": "launch",
-            "mainClass": "ormsamples.DropProyectoMDS120242025DatabaseSchema",
-            "projectName": "twitter-vaadin-grupo-20"
-        },
-        {
-            "type": "java",
-            "name": "CreateProyectoMDS120242025DatabaseSchema",
-            "request": "launch",
-            "mainClass": "ormsamples.CreateProyectoMDS120242025DatabaseSchema",
-            "projectName": "twitter-vaadin-grupo-20"
-        },
-        {
-            "type": "java",
-            "name": "ListMDS22425PFMurilloSuanesData",
-            "request": "launch",
-            "mainClass": "ormsamples.ListMDS22425PFMurilloSuanesData",
-            "projectName": "twitter-vaadin-grupo-20"
-        },
-        {
-            "type": "java",
-            "name": "DropMDS22425PFMurilloSuanesDatabaseSchema",
-            "request": "launch",
-            "mainClass": "ormsamples.DropMDS22425PFMurilloSuanesDatabaseSchema",
-            "projectName": "twitter-vaadin-grupo-20"
-        },
-        {
-            "type": "java",
-            "name": "DeleteMDS22425PFMurilloSuanesData",
-            "request": "launch",
-            "mainClass": "ormsamples.DeleteMDS22425PFMurilloSuanesData",
-            "projectName": "twitter-vaadin-grupo-20"
-        },
-        {
-            "type": "java",
-            "name": "CreateMDS22425PFMurilloSuanesData",
-            "request": "launch",
-            "mainClass": "ormsamples.CreateMDS22425PFMurilloSuanesData",
-            "projectName": "twitter-vaadin-grupo-20"
-        },
-        {
-            "type": "java",
-            "name": "CreateMDS22425PFMurilloSuanesDatabaseSchema",
-            "request": "launch",
-            "mainClass": "ormsamples.CreateMDS22425PFMurilloSuanesDatabaseSchema",
-            "projectName": "twitter-vaadin-grupo-20"
-        },
-        {
-            "type": "java",
-            "name": "Spring Boot-Application<twitter-vaadin-grupo-20>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "mainClass": "mds2.Application",
-            "projectName": "twitter-vaadin-grupo-20",
-            "args": "",
-            "envFile": "${workspaceFolder}/.env"
-        }
-    ]
+  "configurations": [
+    {
+      "type": "java",
+      "name": "ACT04SistemadeCorreo",
+      "request": "launch",
+      "mainClass": "interfaz.ACT04SistemadeCorreo",
+      "projectName": "twitter-vaadin-grupo-20"
+    },
+    {
+      "type": "java",
+      "name": "DeleteProyectoMDS120242025Data",
+      "request": "launch",
+      "mainClass": "ormsamples.DeleteProyectoMDS120242025Data",
+      "projectName": "twitter-vaadin-grupo-20"
+    },
+    {
+      "type": "java",
+      "name": "ListProyectoMDS120242025Data",
+      "request": "launch",
+      "mainClass": "ormsamples.ListProyectoMDS120242025Data",
+      "projectName": "twitter-vaadin-grupo-20"
+    },
+    {
+      "type": "java",
+      "name": "DropProyectoMDS120242025DatabaseSchema",
+      "request": "launch",
+      "mainClass": "ormsamples.DropProyectoMDS120242025DatabaseSchema",
+      "projectName": "twitter-vaadin-grupo-20"
+    },
+    {
+      "type": "java",
+      "name": "CreateProyectoMDS120242025DatabaseSchema",
+      "request": "launch",
+      "mainClass": "ormsamples.CreateProyectoMDS120242025DatabaseSchema",
+      "projectName": "twitter-vaadin-grupo-20"
+    },
+    {
+      "type": "java",
+      "name": "ListMDS22425PFMurilloSuanesData",
+      "request": "launch",
+      "mainClass": "ormsamples.ListMDS22425PFMurilloSuanesData",
+      "projectName": "twitter-vaadin-grupo-20"
+    },
+    {
+      "type": "java",
+      "name": "DropMDS22425PFMurilloSuanesDatabaseSchema",
+      "request": "launch",
+      "mainClass": "ormsamples.DropMDS22425PFMurilloSuanesDatabaseSchema",
+      "projectName": "twitter-vaadin-grupo-20"
+    },
+    {
+      "type": "java",
+      "name": "DeleteMDS22425PFMurilloSuanesData",
+      "request": "launch",
+      "mainClass": "ormsamples.DeleteMDS22425PFMurilloSuanesData",
+      "projectName": "twitter-vaadin-grupo-20"
+    },
+    {
+      "type": "java",
+      "name": "CreateMDS22425PFMurilloSuanesData",
+      "request": "launch",
+      "mainClass": "ormsamples.CreateMDS22425PFMurilloSuanesData",
+      "projectName": "twitter-vaadin-grupo-20"
+    },
+    {
+      "type": "java",
+      "name": "CreateMDS22425PFMurilloSuanesDatabaseSchema",
+      "request": "launch",
+      "mainClass": "ormsamples.CreateMDS22425PFMurilloSuanesDatabaseSchema",
+      "projectName": "twitter-vaadin-grupo-20"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-Application<twitter-vaadin-grupo-20>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "mds2.Application",
+      "projectName": "twitter-vaadin-grupo-20",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
 }

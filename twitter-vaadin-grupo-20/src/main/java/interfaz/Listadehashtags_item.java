@@ -1,29 +1,34 @@
 package interfaz;
 
-import mds2.MainView.Pantalla;
+import basededatos.Hashtag;
 import vistas.VistaListadehashtags_item;
 
 public class Listadehashtags_item extends VistaListadehashtags_item {
-	// private event _mostrarmshashtags;
 	public Listadehashtags _listadehashtags;
 
-	public Listadehashtags_item(Listadehashtags _listadehashtags) {
-		super();
-		this._listadehashtags = _listadehashtags;
-	}
+	Hashtag h;
 
-	private void mostrarHashtag() {
-		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
-		Pantalla.MainView.removeAll();
-		if (Pantalla.usuario == 2) {
-			Pantalla.MainView.add(new Verhashtagregistrado((Listafijadehashtagsregistrado) null));
-		} else {
-			Pantalla.MainView.add(new Verhashtagnoregistrado((Listafijadehashtagsnoregistrado) null));
+	public Listadehashtags_item(Listadehashtags listadehashtags, Hashtag h) {
+		super();
+		this._listadehashtags = listadehashtags;
+		this.h = h;
+
+		// Configurar el texto del hashtag
+		if (h != null && h.getHashtag() != null) {
+			String hashtagText = h.getHashtag();
+			if (!hashtagText.startsWith("#")) {
+				hashtagText = "#" + hashtagText;
+			}
+			this.getHashtagText().setText(hashtagText);
+
+			// Configurar el conteo de posts
+			try {
+				basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+				int numTweets = bd.contarTweetsHashtag(h.getORMID());
+				this.getPostCount().setText(numTweets + " posts");
+			} catch (Exception e) {
+				this.getPostCount().setText("0 posts");
+			}
 		}
 	}
-
-	public void Mostrarmshashtags() {
-		mostrarHashtag();
-	}
-
 }

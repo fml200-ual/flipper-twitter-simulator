@@ -18,13 +18,18 @@ public class Listafijadeusuariosnoregistrado extends Listafijadeusuarios {
 	}
 
 	public void ListadeusuariosNR() {
+		basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+		basededatos.Usuario_Registrado[] usuarios = bd.cargarUsuarios();
 		Listadeusuarios listaUsuarios = new Listadeusuarios(_verlistaampliadadeusuariosnoregistrado);
 
-		for (int i = 0; i < 5; i++) {
-			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios);
-			// Agregar ClickListener personalizado para navegar a Verperfilnoregistrado
+		for (int i = 0; i < Math.min(5, usuarios.length); i++) {
+			basededatos.Usuario_Registrado usuario = usuarios[i];
+			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios, usuario);
+
+			// Agregar ClickListener personalizado para navegar al perfil con el usuario
+			// correcto
 			item.getMainContainer().addClickListener(event -> {
-				Verperfilnoregistrado();
+				Verperfilnoregistrado(usuario);
 			});
 			listaUsuarios.getMainContainer().as(VerticalLayout.class).add(item);
 		}
@@ -32,8 +37,8 @@ public class Listafijadeusuariosnoregistrado extends Listafijadeusuarios {
 		this.getMainContainer().as(VerticalLayout.class).add(listaUsuarios);
 	}
 
-	public void Verperfilnoregistrado() {
-		_verperfilnoregistrado = new Verperfilnoregistrado(this);
+	public void Verperfilnoregistrado(basededatos.Usuario_Registrado usuario) {
+		_verperfilnoregistrado = new Verperfilnoregistrado(this, usuario);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verperfilnoregistrado);

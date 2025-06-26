@@ -1,5 +1,7 @@
 package interfaz;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
 import mds2.MainView.Pantalla;
 
 public class Verlistaampliadadeusuariosnoregistrado extends Verlistaampliadadeusuarios {
@@ -20,23 +22,25 @@ public class Verlistaampliadadeusuariosnoregistrado extends Verlistaampliadadeus
 
 	@Override
 	public void Listadeusuarios() {
+		basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+		basededatos.Usuario_Registrado[] usuarios = bd.cargarUsuarios();
 		// Crear lista ampliada de usuarios para usuario no registrado
 		Listadeusuarios listaUsuarios = new Listadeusuarios(this);
 
-		for (int i = 0; i < 5; i++) {
-			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios);
-			// Agregar ClickListener personalizado para navegar a Verperfilnoregistrado
+		for (int i = 0; i < usuarios.length; i++) {
+			basededatos.Usuario_Registrado usuario = usuarios[i];
+			Listadeusuarios_item item = new Listadeusuarios_item(listaUsuarios, usuario);
+
 			item.getMainContainer().addClickListener(event -> {
-				Verperfilnoregistrado();
+				Verperfilnoregistrado(usuario);
 			});
-			listaUsuarios.getMainContainer().as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class)
-					.add(item);
+			listaUsuarios.getMainContainer().as(VerticalLayout.class).add(item);
 		}
 		this.getUsersContainer().add(listaUsuarios);
 	}
 
-	public void Verperfilnoregistrado() {
-		_verperfilnoregistrado = new Verperfilnoregistrado(this);
+	public void Verperfilnoregistrado(basededatos.Usuario_Registrado usuario) {
+		_verperfilnoregistrado = new Verperfilnoregistrado(this, usuario);
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verperfilnoregistrado);

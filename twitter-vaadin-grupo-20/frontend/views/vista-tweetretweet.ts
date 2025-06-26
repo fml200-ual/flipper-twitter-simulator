@@ -183,6 +183,18 @@ export class VistaTweetretweet extends LitElement {
         width: 16px;
         height: 16px;
       }
+
+      .like-button {
+        color: #e0245e; /* Rojo para el corazón */
+        font-size: 1.3em;
+        margin-right: 5px;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .like-button:hover {
+          transform: scale(1.1);
+      }
     `;
   }
 
@@ -225,7 +237,7 @@ export class VistaTweetretweet extends LitElement {
    <span id="fechaPublicacion">3 sept 2023</span>
    <div class="acciones" id="div3">
     <span id="numMegusta">12</span>
-    <vaadin-icon title="Me gusta" icon="vaadin:heart" size="16" id="iconoMeGusta"></vaadin-icon>
+    <vaadin-icon class="like-button" title="Me gusta" icon="vaadin:heart" size="16" id="iconoMeGusta"></vaadin-icon>
     <span id="numeroRetweets">12</span>
     <vaadin-icon title="Retweet" icon="vaadin:retweet" size="16" id="iconoRetweet"></vaadin-icon>
     <span id="numeroRetweets1">12</span>

@@ -2,6 +2,7 @@ package interfaz;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
+import basededatos.Usuario_Registrado;
 import mds2.MainView.Pantalla;
 import vistas.VistaVerlistaseguidoresnoregistrado;
 
@@ -9,10 +10,14 @@ public class Verlistaseguidoresnoregistrado extends VistaVerlistaseguidoresnoreg
 	public Verperfilnoregistrado _verperfilnoregistrado;
 	public Listadeusuarios _listadeusuarios;
 
-	public Verlistaseguidoresnoregistrado(Verperfilnoregistrado verperfilnoregistrado) {
+	public Verlistaseguidoresnoregistrado(Verperfilnoregistrado verperfilnoregistrado, Usuario_Registrado u) {
+		super();
 		this._verperfilnoregistrado = verperfilnoregistrado;
 
-		Listadeusuarios();
+		this.getNoFollowersMessage().setVisible(false);
+		this.getUsername().setText("@" + u.getNickname());
+
+		Listadeusuarios(u);
 
 		this.getBackButton().addClickListener(event -> {
 			Pantalla.MainView.removeAll();
@@ -20,28 +25,11 @@ public class Verlistaseguidoresnoregistrado extends VistaVerlistaseguidoresnoreg
 		});
 	}
 
-	public void Listadeusuarios() {
-		// Ocultar mensaje de "no hay seguidores"
-		this.getNoFollowersMessage().setVisible(false);
+	public void Listadeusuarios(basededatos.Usuario_Registrado usuario) {
+		// Usar el constructor específico que maneja seguidores automáticamente (igual
+		// que registrados)
+		_listadeusuarios = new Listadeusuarios(this, usuario);
 
-		// Crear lista de usuarios seguidores para usuario no registrado
-		_listadeusuarios = new Listadeusuarios(this);
-
-		for (int i = 0; i < 5; i++) {
-			Listadeusuarios_item item = new Listadeusuarios_item(_listadeusuarios);
-			// Agregar ClickListener personalizado para navegar a Verperfilnoregistrado
-			item.getMainContainer().addClickListener(event -> {
-				Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
-				Pantalla.MainView.removeAll();
-				Pantalla.MainView.add(_verperfilnoregistrado);
-			});
-			_listadeusuarios.getMainContainer().as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class)
-					.add(item);
-		}
-
-		// Agregar la lista al contenedor de seguidores de la vista
-		this.getFollowersListContainer().as(VerticalLayout.class)
-				.add(_listadeusuarios);
+		this.getFollowersListContainer().as(VerticalLayout.class).add(_listadeusuarios);
 	}
-
 }

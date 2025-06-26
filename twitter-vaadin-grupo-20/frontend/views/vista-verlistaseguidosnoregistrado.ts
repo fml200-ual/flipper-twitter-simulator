@@ -5,24 +5,24 @@ import '@vaadin/button/src/vaadin-button.js';
 
 @customElement('vista-verlistaseguidosnoregistrado')
 export class VistaVerlistaseguidosnoregistrado extends LitElement {
-  
-  connectedCallback() {
-    super.connectedCallback();
-    // Forzar estilos globales para asegurar pantalla completa
-    document.body.style.margin = '0';
-    document.body.style.padding = '0';
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.margin = '0';
-    document.documentElement.style.padding = '0';
-    document.documentElement.style.height = '100%';
-    document.body.style.height = '100%';
-  }
-  
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    // Restaurar estilos cuando el componente se desconecte
-    document.body.style.overflow = '';
-  }
+
+    connectedCallback() {
+        super.connectedCallback();
+        // Forzar estilos globales para asegurar pantalla completa
+        document.body.style.margin = '0';
+        document.body.style.padding = '0';
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.margin = '0';
+        document.documentElement.style.padding = '0';
+        document.documentElement.style.height = '100%';
+        document.body.style.height = '100%';
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        // Restaurar estilos cuando el componente se desconecte
+        document.body.style.overflow = '';
+    }
     static get styles() {
         return css`            :host {
                 display: flex;
@@ -106,20 +106,8 @@ export class VistaVerlistaseguidosnoregistrado extends LitElement {
                 font-size: 1.1em;
                 padding: var(--lumo-space-xl);
             }
-
-            #show-more-followed-button-no-reg { /* Nuevo ID específico */
-                background-color: #00FFFF; /* Botón "Mostrar más seguidos" turquesa */
-                color: black;
-                padding: var(--lumo-space-s) var(--lumo-space-l);
-                border-radius: 20px;
-                font-weight: bold;
-                margin-top: var(--lumo-space-m);
-                cursor: pointer;
-                border: none;
-                font-size: 1.1em;
-            }
         `;
-    }    render() {
+    } render() {
         return html`
             <div style="
                 display: flex;
@@ -211,19 +199,8 @@ export class VistaVerlistaseguidosnoregistrado extends LitElement {
                     ">
                         <span id="no-followed-message-no-reg" style="color: gray; font-size: 1.1em; padding: 2rem;">No hay seguidos para mostrar.</span>
                     </vaadin-vertical-layout>
-
-                    <vaadin-button id="show-more-followed-button-no-reg" style="
-                        background-color: #00FFFF;
-                        color: black;
-                        padding: 0.5rem 1.5rem;
-                        border-radius: 20px;
-                        font-weight: bold;
-                        margin-top: 1rem;
-                        cursor: pointer;
-                        border: none;
-                        font-size: 1.1em;
-                    ">Mostrar más seguidos</vaadin-button>
                 </vaadin-vertical-layout>
             </div>
         `;
-    }}
+    }
+}

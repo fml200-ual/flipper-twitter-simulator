@@ -13,7 +13,7 @@ import com.vaadin.flow.component.button.Button;
 @JsModule("./views/vista-verlistaseguidosnoregistrado.ts")
 public class VistaVerlistaseguidosnoregistrado extends LitTemplate {
 
-    public Element getMainLayout() {
+	public Element getMainLayout() {
 		return mainLayout;
 	}
 
@@ -77,14 +77,6 @@ public class VistaVerlistaseguidosnoregistrado extends LitTemplate {
 		this.backButton = backButton;
 	}
 
-	public Button getShowMoreFollowedButtonNoReg() {
-		return showMoreFollowedButtonNoReg;
-	}
-
-	public void setShowMoreFollowedButtonNoReg(Button showMoreFollowedButtonNoReg) {
-		this.showMoreFollowedButtonNoReg = showMoreFollowedButtonNoReg;
-	}
-
 	@Id("main-layout")
 	private Element mainLayout;
 	@Id("header-container")
@@ -101,11 +93,9 @@ public class VistaVerlistaseguidosnoregistrado extends LitTemplate {
 	private Element followedListContainerNoReg;
 	@Id("back-button")
 	private Button backButton;
-	@Id("show-more-followed-button-no-reg")
-	private Button showMoreFollowedButtonNoReg;
 
 	public VistaVerlistaseguidosnoregistrado() {
-        // You can initialise any data required for the connected UI components here.
-    }
+		// You can initialise any data required for the connected UI components here.
+	}
 
 }

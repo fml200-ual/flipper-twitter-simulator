@@ -5,9 +5,24 @@ import mds2.MainView.Pantalla;
 public class TweetRetweetpropio extends TweetRetweetregistrado {
 	public Darretweet _darretweet;
 	public Escribircomentario _escribircomentario;
-
-	public TweetRetweetpropio() {
-		// Constructor logic if needed
+	public TweetRetweetpropio(basededatos.Tweet tweet) {
+		super(tweet);
+		// Configurar eventos de interacción
+		configurarEventosInteraccion();
+	}
+	
+	/**
+	 * Configurar eventos para retweet y comentario
+	 */
+	private void configurarEventosInteraccion() {
+		// Configurar eventos para usar los métodos específicos de esta clase
+		this.getIconoRetweet().addClickListener(event -> {
+			Darretweet();
+		});
+		
+		this.getIconoComentarios().addClickListener(event -> {
+			Escribircomentario();
+		});
 	}
 
 	public void Darretweet() {
