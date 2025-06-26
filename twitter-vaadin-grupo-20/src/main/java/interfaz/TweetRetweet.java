@@ -7,7 +7,7 @@ public class TweetRetweet extends VistaTweetretweet {
 	/**
 	 * Configurar imagen de perfil del usuario principal usando la misma técnica exitosa de los perfiles
 	 */
-	public void configurarImagenPerfilPrincipal(basededatos.Usuario_Registrado usuario) {
+	protected void configurarImagenPerfilPrincipal(basededatos.Usuario_Registrado usuario) {
 		String fotoPerfilUrl = (usuario != null) ? usuario.getFotoPerfilURL() : null;
 		boolean tieneFoto = fotoPerfilUrl != null && !fotoPerfilUrl.trim().isEmpty() &&
 				!fotoPerfilUrl.equals("default-profile.jpg") && !fotoPerfilUrl.equals("null");
@@ -29,7 +29,7 @@ public class TweetRetweet extends VistaTweetretweet {
 	/**
 	 * Configurar imagen de perfil del usuario citado usando la misma técnica exitosa de los perfiles
 	 */
-	public void configurarImagenPerfilCitado(basededatos.Usuario_Registrado usuarioCitado) {
+	protected void configurarImagenPerfilCitado(basededatos.Usuario_Registrado usuarioCitado) {
 		String fotoPerfilCitadoUrl = (usuarioCitado != null) ? usuarioCitado.getFotoPerfilURL() : null;
 		boolean tieneFoto = fotoPerfilCitadoUrl != null && !fotoPerfilCitadoUrl.trim().isEmpty() &&
 				!fotoPerfilCitadoUrl.equals("default-profile.jpg") && !fotoPerfilCitadoUrl.equals("null");

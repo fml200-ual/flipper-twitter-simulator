@@ -21,8 +21,7 @@ public class TweetRetweetregistrado extends TweetRetweet {
 			}
 			this.configurarImagenPerfilCitado(usuarioCitado);
 
-			// Mostrar multimedia si existe
-			this.mostrarMultimediaTweet(tweet);
+
 		}
 
 		// Configurar eventos de interacción

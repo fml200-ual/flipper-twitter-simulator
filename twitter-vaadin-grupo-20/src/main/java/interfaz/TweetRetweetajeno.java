@@ -15,6 +15,9 @@ public class TweetRetweetajeno extends TweetRetweetregistrado {
 		
 		// Configurar eventos de interacción adicionales
 		configurarEventosInteraccion();
+
+					// Mostrar multimedia si existe
+			this.mostrarMultimediaTweet(tweet);
 	}
 	
 	/**
