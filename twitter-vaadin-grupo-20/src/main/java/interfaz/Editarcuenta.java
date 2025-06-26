@@ -2,13 +2,13 @@ package interfaz;
 
 import mds2.MainView;
 import mds2.MainView.Pantalla;
-import mds2.MainView.Usuario;
 import vistas.VistaEditarcuenta;
-
-import com.github.fge.jsonschema.main.cli.Main;
 
 import basededatos.BDPrincipal;
 import basededatos.Usuario_Registrado;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
 
 public class Editarcuenta extends VistaEditarcuenta {
 	// private event _eliminarcuenta;
@@ -22,6 +22,11 @@ public class Editarcuenta extends VistaEditarcuenta {
 		super();
 		this._verpropioperfil = _verpropioperfil;
 		this.u = u;
+
+		System.out.println("🔧 INICIANDO Editarcuenta - VERSIÓN CORREGIDA 2.0");
+
+		// Inicializar contenedores de preview
+		inicializarPreviewContainers();
 
 		// Rellenar datos actuales del usuario
 		rellenarDatosUsuario();
@@ -37,6 +42,15 @@ public class Editarcuenta extends VistaEditarcuenta {
 			if (nick != null && !nick.isEmpty()) {
 				this.getArrobField().setValue("@" + nick);
 			}
+		});
+		
+		// Listeners para preview de imágenes
+		this.getFotoPerfilField().addValueChangeListener(event -> {
+			updateImagePreview(event.getValue(), "profile");
+		});
+
+		this.getFondoField().addValueChangeListener(event -> {
+			updateImagePreview(event.getValue(), "background");
 		});
 	}
 
@@ -201,5 +215,170 @@ public class Editarcuenta extends VistaEditarcuenta {
 	public void Cancelar() {
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(Pantalla.Anterior);
+	}
+	
+	/**
+	 * Inicializar contenedores para preview de imágenes
+	 */
+	private void inicializarPreviewContainers() {
+		try {
+			// Usar directamente los contenedores existentes de la vista (perfilPreviewContainer, fondoPreviewContainer)
+			// No crear contenedores adicionales - usar los que ya están en el HTML
+			
+			// Limpiar los contenedores existentes
+			this.getPerfilPreviewContainer().removeAll();
+			this.getFondoPreviewContainer().removeAll();
+			
+			// Asegurar que los contenedores de la vista estén visibles
+			this.getPerfilPreviewContainer().setVisible(true);
+			this.getFondoPreviewContainer().setVisible(true);
+			
+			System.out.println("✅ Contenedores de preview inicializados - usando divs existentes del HTML en Editarcuenta");
+			
+		} catch (Exception e) {
+			System.err.println("Error inicializando contenedores de preview: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	private void updateImagePreview(String url, String type) {
+		try {
+			if (url != null && !url.trim().isEmpty()) {
+				System.out.println("Actualizando preview de " + type + " con URL: " + url);
+				
+				// Validar que la URL sea de imagen
+				if (esUrlValida(url)) {
+					if ("profile".equals(type)) {
+						mostrarPreviewImagenPerfil(url);
+					} else if ("background".equals(type)) {
+						mostrarPreviewImagenFondo(url);
+					}
+				} else {
+					limpiarPreview(type);
+					mostrarNotificacion("URL de imagen no válida", "error");
+				}
+			} else {
+				limpiarPreview(type);
+			}
+		} catch (Exception e) {
+			System.err.println("Error en preview de imagen: " + e.getMessage());
+			limpiarPreview(type);
+		}
+	}
+	
+	/**
+	 * Validar si la URL es válida para imagen
+	 */
+	private boolean esUrlValida(String url) {
+		if (url == null || url.trim().isEmpty()) {
+			return false;
+		}
+		
+		url = url.toLowerCase();
+		
+		// Verificar si termina con extensiones de imagen
+		if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") || 
+			url.endsWith(".gif") || url.endsWith(".webp") || url.endsWith(".bmp")) {
+			return true;
+		}
+		
+		// Verificar si es de sitios conocidos de imágenes
+		if (url.contains("imgur.com") || url.contains("imagebb.com") || 
+			url.contains("unsplash.com") || url.contains("images.")) {
+			return true;
+		}
+		
+		// Por defecto, asumir que puede ser válida si empieza con http
+		return url.startsWith("http");
+	}
+	
+	/**
+	 * Mostrar preview de imagen de perfil
+	 */
+	private void mostrarPreviewImagenPerfil(String url) {
+		// Usar directamente el contenedor del HTML
+		this.getPerfilPreviewContainer().removeAll();
+		
+		try {
+			Image imagen = new Image(url, "Preview foto de perfil");
+			imagen.getStyle()
+				.set("width", "50px")
+				.set("height", "50px")
+				.set("border-radius", "50%")
+				.set("object-fit", "cover")
+				.set("border", "2px solid #00FFFF")
+				.set("box-shadow", "0 0 5px #00FFFF");
+			
+			// Agregar directamente al div del HTML
+			this.getPerfilPreviewContainer().add(imagen);
+			System.out.println("✅ Imagen de perfil agregada al preview en Editarcuenta: " + url);
+		} catch (Exception e) {
+			Div urlInfo = new Div();
+			urlInfo.setText("Error cargando imagen");
+			urlInfo.getStyle()
+				.set("font-size", "10px")
+				.set("color", "#ff4444")
+				.set("text-align", "center");
+			this.getPerfilPreviewContainer().add(urlInfo);
+			System.out.println("❌ Error cargando imagen de perfil en Editarcuenta: " + url);
+		}
+	}
+	
+	/**
+	 * Mostrar preview de imagen de fondo
+	 */
+	private void mostrarPreviewImagenFondo(String url) {
+		// Usar directamente el contenedor del HTML
+		this.getFondoPreviewContainer().removeAll();
+		
+		try {
+			Image imagen = new Image(url, "Preview imagen de fondo");
+			imagen.getStyle()
+				.set("width", "50px")
+				.set("height", "30px")
+				.set("border-radius", "8px")
+				.set("object-fit", "cover")
+				.set("border", "2px solid #00FFFF")
+				.set("box-shadow", "0 0 5px #00FFFF");
+			
+			// Agregar directamente al div del HTML
+			this.getFondoPreviewContainer().add(imagen);
+			System.out.println("✅ Imagen de fondo agregada al preview en Editarcuenta: " + url);
+		} catch (Exception e) {
+			Div urlInfo = new Div();
+			urlInfo.setText("Error cargando imagen");
+			urlInfo.getStyle()
+				.set("font-size", "10px")
+				.set("color", "#ff4444")
+				.set("text-align", "center");
+			this.getFondoPreviewContainer().add(urlInfo);
+			System.out.println("❌ Error cargando imagen de fondo en Editarcuenta: " + url);
+		}
+	}
+	/**
+	 * Limpiar preview de imagen
+	 */
+	private void limpiarPreview(String tipo) {
+		System.out.println("Limpiando preview de tipo: " + tipo + " en Editarcuenta");
+		if ("profile".equals(tipo)) {
+			this.getPerfilPreviewContainer().removeAll();
+		} else if ("background".equals(tipo)) {
+			this.getFondoPreviewContainer().removeAll();
+		}
+	}
+	
+	/**
+	 * Mostrar notificación
+	 */
+	private void mostrarNotificacion(String mensaje, String tipo) {
+		Notification.Position position = Notification.Position.BOTTOM_CENTER;
+		int duration = 3000;
+		
+		if ("error".equals(tipo)) {
+			duration = 4000;
+			position = Notification.Position.MIDDLE;
+		}
+		
+		Notification.show(mensaje, duration, position);
 	}
 }

@@ -4,6 +4,9 @@ import mds2.MainView.Pantalla;
 import vistas.VistaRegistrarse;
 import basededatos.BDPrincipal;
 import java.util.Date;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
 
 public class Registrarse extends VistaRegistrarse {
 	// private event _mensajedeerrorregistro;
@@ -17,6 +20,8 @@ public class Registrarse extends VistaRegistrarse {
 	public Registrarse(ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado) {
 		super();
 		this._aCT01UsuarioNoRegistrado = _aCT01UsuarioNoRegistrado;
+		// Inicializar contenedores de preview
+		inicializarPreviewContainers();
 		// Ensamblado dinámico - Configurar listeners para todos los botones y campos
 		setupRegisterButtons();
 		setupFormValidation();
@@ -26,11 +31,16 @@ public class Registrarse extends VistaRegistrarse {
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(_aCT01UsuarioNoRegistrado);
 		});
+		
+		// Mostrar preview de prueba para verificar que funciona
+		// mostrarPreviewDePrueba(); // Descomentar para probar
 	}
 
 	public Registrarse(Iniciarsesin _iniciarsesin) {
 		super();
 		this._iniciarsesin = _iniciarsesin;
+		// Inicializar contenedores de preview
+		inicializarPreviewContainers();
 		// Ensamblado dinámico - Configurar listeners para todos los botones y campos
 		setupRegisterButtons();
 		setupFormValidation();
@@ -40,6 +50,9 @@ public class Registrarse extends VistaRegistrarse {
 			Pantalla.MainView.removeAll();
 			Pantalla.MainView.add(_iniciarsesin);
 		});
+		
+		// Mostrar preview de prueba para verificar que funciona
+		// mostrarPreviewDePrueba(); // Descomentar para probar
 	}
 
 	private void setupRegisterButtons() {
@@ -194,12 +207,169 @@ public class Registrarse extends VistaRegistrarse {
 		return nick != null && nick.matches("^[a-zA-Z0-9_-]+$");
 	}
 
-	private void updateImagePreview(String url, String type) {
-		// Simular actualización de preview de imagen
-		if (url != null && !url.trim().isEmpty()) {
-			System.out.println("Actualizando preview de " + type + " con URL: " + url);
-			// Aquí se podría implementar lógica para mostrar preview real
+	/**
+	 * Inicializar contenedores para preview de imágenes
+	 */
+	private void inicializarPreviewContainers() {
+		try {
+			// Usar directamente los contenedores existentes de la vista (profileImagePreview, backgroundImagePreview)
+			// No crear contenedores adicionales - usar los que ya están en el HTML
+			
+			// Limpiar los contenedores existentes
+			this.getProfileImagePreview().removeAll();
+			this.getBackgroundImagePreview().removeAll();
+			
+			// Asegurar que los contenedores de la vista estén visibles
+			this.getProfileImagePreview().setVisible(true);
+			this.getBackgroundImagePreview().setVisible(true);
+			
+			System.out.println("Contenedores de preview inicializados - usando divs existentes del HTML");
+			
+		} catch (Exception e) {
+			System.err.println("Error inicializando contenedores de preview: " + e.getMessage());
+			e.printStackTrace();
 		}
+	}
+
+	private void updateImagePreview(String url, String type) {
+		try {
+			if (url != null && !url.trim().isEmpty()) {
+				System.out.println("Actualizando preview de " + type + " con URL: " + url);
+				
+				// Validar que la URL sea de imagen
+				if (esUrlValida(url)) {
+					if ("profile".equals(type)) {
+						mostrarPreviewImagenPerfil(url);
+					} else if ("background".equals(type)) {
+						mostrarPreviewImagenFondo(url);
+					}
+				} else {
+					limpiarPreview(type);
+					mostrarNotificacion("URL de imagen no válida", "error");
+				}
+			} else {
+				limpiarPreview(type);
+			}
+		} catch (Exception e) {
+			System.err.println("Error en preview de imagen: " + e.getMessage());
+			limpiarPreview(type);
+		}
+	}
+	
+	/**
+	 * Validar si la URL es válida para imagen
+	 */
+	private boolean esUrlValida(String url) {
+		if (url == null || url.trim().isEmpty()) {
+			return false;
+		}
+		
+		url = url.toLowerCase();
+		
+		// Verificar si termina con extensiones de imagen
+		if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") || 
+			url.endsWith(".gif") || url.endsWith(".webp") || url.endsWith(".bmp")) {
+			return true;
+		}
+		
+		// Verificar si es de sitios conocidos de imágenes
+		if (url.contains("imgur.com") || url.contains("imagebb.com") || 
+			url.contains("unsplash.com") || url.contains("images.")) {
+			return true;
+		}
+		
+		// Por defecto, asumir que puede ser válida si empieza con http
+		return url.startsWith("http");
+	}
+	
+	/**
+	 * Mostrar preview de imagen de perfil
+	 */
+	private void mostrarPreviewImagenPerfil(String url) {
+		// Usar directamente el contenedor del HTML
+		this.getProfileImagePreview().removeAll();
+		
+		try {
+			Image imagen = new Image(url, "Preview foto de perfil");
+			imagen.getStyle()
+				.set("width", "50px")
+				.set("height", "50px")
+				.set("border-radius", "50%")
+				.set("object-fit", "cover")
+				.set("border", "2px solid #00FFFF")
+				.set("box-shadow", "0 0 5px #00FFFF");
+			
+			// Agregar directamente al div del HTML
+			this.getProfileImagePreview().add(imagen);
+			System.out.println("✅ Imagen de perfil agregada al preview: " + url);
+		} catch (Exception e) {
+			Div urlInfo = new Div();
+			urlInfo.setText("Error cargando imagen");
+			urlInfo.getStyle()
+				.set("font-size", "10px")
+				.set("color", "#ff4444")
+				.set("text-align", "center");
+			this.getProfileImagePreview().add(urlInfo);
+			System.out.println("❌ Error cargando imagen de perfil: " + url);
+		}
+	}
+	
+	/**
+	 * Mostrar preview de imagen de fondo
+	 */
+	private void mostrarPreviewImagenFondo(String url) {
+		// Usar directamente el contenedor del HTML
+		this.getBackgroundImagePreview().removeAll();
+		
+		try {
+			Image imagen = new Image(url, "Preview imagen de fondo");
+			imagen.getStyle()
+				.set("width", "50px")
+				.set("height", "30px")
+				.set("border-radius", "8px")
+				.set("object-fit", "cover")
+				.set("border", "2px solid #00FFFF")
+				.set("box-shadow", "0 0 5px #00FFFF");
+			
+			// Agregar directamente al div del HTML
+			this.getBackgroundImagePreview().add(imagen);
+			System.out.println("✅ Imagen de fondo agregada al preview: " + url);
+		} catch (Exception e) {
+			Div urlInfo = new Div();
+			urlInfo.setText("Error cargando imagen");
+			urlInfo.getStyle()
+				.set("font-size", "10px")
+				.set("color", "#ff4444")
+				.set("text-align", "center");
+			this.getBackgroundImagePreview().add(urlInfo);
+			System.out.println("❌ Error cargando imagen de fondo: " + url);
+		}
+	}
+	/**
+	 * Limpiar preview de imagen
+	 */
+	private void limpiarPreview(String tipo) {
+		System.out.println("Limpiando preview de tipo: " + tipo);
+		if ("profile".equals(tipo)) {
+			this.getProfileImagePreview().removeAll();
+		} else if ("background".equals(tipo)) {
+			this.getBackgroundImagePreview().removeAll();
+		}
+	}
+	
+	/**
+	 * Mostrar notificación
+	 */
+	private void mostrarNotificacion(String mensaje, String tipo) {
+		Notification.Position position = Notification.Position.BOTTOM_CENTER;
+		int duration = 3000;
+		
+		if ("error".equals(tipo)) {
+			duration = 4000;
+			position = Notification.Position.MIDDLE;
+		}
+		
+		Notification.show(mensaje, duration, position);
 	}
 
 	private void procesarRegistro() {

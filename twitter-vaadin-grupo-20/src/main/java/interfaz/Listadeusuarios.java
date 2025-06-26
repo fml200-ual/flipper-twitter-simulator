@@ -168,14 +168,6 @@ public class Listadeusuarios extends VistaListadeusuarios {
 					_item.add(item);
 				}
 				
-				// Configurar el contenedor como scrolleable
-				this.getMainContainer().getStyle()
-					.set("height", "400px")  // Altura fija para permitir scroll
-					.set("overflow-y", "auto")  // Scroll vertical
-					.set("overflow-x", "hidden")  // Sin scroll horizontal
-					.set("padding", "5px")
-					.set("gap", "5px");
-				
 				System.out.println("Lista de usuarios configurada como scrolleable con " + usuarios.length + " usuarios");
 			} else {
 				System.out.println("No se encontraron usuarios en la base de datos");
