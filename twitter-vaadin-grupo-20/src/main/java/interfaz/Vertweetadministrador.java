@@ -43,6 +43,7 @@ public class Vertweetadministrador extends TweetRetwetadministrador {
 			if (_tweet.getPublicado_por() != null) {
 				this.getSpanHandleUsuario().setText("@" + _tweet.getPublicado_por().getNickname());
 				this.getSpanNombreUsuario().setText(_tweet.getPublicado_por().getNickname());
+				configurarImagenPerfilPrincipal(_tweet.getPublicado_por());
 			}
 
 			// Fecha de publicación
@@ -58,6 +59,9 @@ public class Vertweetadministrador extends TweetRetwetadministrador {
 			this.getSpanContadorMeGusta().setText(String.valueOf(likesCount));
 			this.getSpanContadorRetweet().setText(String.valueOf(retweetsCount));
 			this.getSpanContadorComentarios().setText(String.valueOf(comentariosCount));
+
+			// Mostrar multimedia del tweet (si existe)
+			mostrarMultimediaTweet(_tweet);
 
 		} catch (Exception e) {
 			System.err.println("Error cargando datos del tweet: " + e.getMessage());
