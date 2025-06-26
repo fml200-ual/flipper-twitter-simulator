@@ -3,7 +3,6 @@ package basededatos;
 import java.util.Date;
 import org.orm.PersistentTransaction;
 
-
 public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iAdministrador {
 	public BD_Hashtag bd_hashtag = new BD_Hashtag();
 	public BD_Tweet bd_tweet = new BD_Tweet();
@@ -40,16 +39,18 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 	}
 
 	public void cambiarContrasena(int id_usuario, String contrasena) {
-	try {
+		try {
 			this.bd_userR.cambiarContrasena(id_usuario, contrasena);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public Usuario_Registrado registrar(String nickname, String descripcion, String imagenFondoURL, String fotoPerfilURL, String correoElectronico, String contrasena, Date fechaRegistro) {
+	public Usuario_Registrado registrar(String nickname, String descripcion, String imagenFondoURL,
+			String fotoPerfilURL, String correoElectronico, String contrasena, Date fechaRegistro) {
 		try {
-			return this.bd_userR.registrar(nickname, descripcion, imagenFondoURL, fotoPerfilURL, correoElectronico, contrasena, fechaRegistro);
+			return this.bd_userR.registrar(nickname, descripcion, imagenFondoURL, fotoPerfilURL, correoElectronico,
+					contrasena, fechaRegistro);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,25 +75,30 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		return null;
 	}
 
-	public Usuario_Registrado modificarPerfilSimple(int id_usuario, String nickname, String descripcion, String imagenFondoURL, String fotoPerfilURL, String contrasena) {
+	public Usuario_Registrado modificarPerfilSimple(int id_usuario, String nickname, String descripcion,
+			String imagenFondoURL, String fotoPerfilURL, String contrasena) {
 		try {
-			return this.bd_userR.modificarPerfilSimple(id_usuario, nickname, descripcion, imagenFondoURL, fotoPerfilURL, contrasena);
+			return this.bd_userR.modificarPerfilSimple(id_usuario, nickname, descripcion, imagenFondoURL, fotoPerfilURL,
+					contrasena);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public Usuario_Registrado modificarPerfilCompleto(int id_usuario, String nickname, String descripcion, String imagenFondoURL, String fotoPerfilURL, String correoElectronico, String contrasena) {
+	public Usuario_Registrado modificarPerfilCompleto(int id_usuario, String nickname, String descripcion,
+			String imagenFondoURL, String fotoPerfilURL, String correoElectronico, String contrasena) {
 		try {
-			return this.bd_userR.modificarPerfilCompleto(id_usuario, nickname, descripcion, imagenFondoURL, fotoPerfilURL, correoElectronico, contrasena);
+			return this.bd_userR.modificarPerfilCompleto(id_usuario, nickname, descripcion, imagenFondoURL,
+					fotoPerfilURL, correoElectronico, contrasena);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public Usuario_Registrado publicarTweet(int id_usuario, String contenidoTweet, Date fechaPublicacion, String URLDocumento, String tipoDocumento, String[] hashtags, String[] menciones) {
+	public Usuario_Registrado publicarTweet(int id_usuario, String contenidoTweet, Date fechaPublicacion,
+			String URLDocumento, String tipoDocumento, String[] hashtags, String[] menciones) {
 		try {
 			int id_tweet = this.bd_tweet.nuevoTweet(id_usuario, contenidoTweet, fechaPublicacion, menciones);
 			if (tipoDocumento != null) {
@@ -100,7 +106,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			}
 			if (hashtags != null) {
 				this.bd_hashtag.nuevoTweetHashtag(id_tweet, hashtags);
-			}			
+			}
 			return this.bd_userR.obtenerUsuarioByID(id_usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,9 +114,11 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		return null;
 	}
 
-	public Usuario_Registrado publicarComentario(int id_usuario, int id_tweet, String contenidoComentario, String URLDocumento, Date fechaPublicacion, String tipoDocumento) {
+	public Usuario_Registrado publicarComentario(int id_usuario, int id_tweet, String contenidoComentario,
+			String URLDocumento, Date fechaPublicacion, String tipoDocumento) {
 		try {
-			int id_comentario = this.bd_comentario.nuevoComentario(id_usuario, id_tweet, contenidoComentario, fechaPublicacion);
+			int id_comentario = this.bd_comentario.nuevoComentario(id_usuario, id_tweet, contenidoComentario,
+					fechaPublicacion);
 			if (tipoDocumento != null) {
 				this.bd_documento.nuevoDocumentoComentario(id_comentario, URLDocumento, tipoDocumento);
 			}
@@ -165,9 +173,11 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		return null;
 	}
 
-	public Usuario_Registrado publicarRetweet(int id_usuario, int id_tweetRetweeteado, String contenidoRetweet, String URLDocumento, String tipoDocumento, Date fechaPublicacion, String[] hashtags, String[] menciones) {
+	public Usuario_Registrado publicarRetweet(int id_usuario, int id_tweetRetweeteado, String contenidoRetweet,
+			String URLDocumento, String tipoDocumento, Date fechaPublicacion, String[] hashtags, String[] menciones) {
 		try {
-			int id_tweet = this.bd_tweet.nuevoRetweet(id_usuario, id_tweetRetweeteado, contenidoRetweet, fechaPublicacion, menciones);
+			int id_tweet = this.bd_tweet.nuevoRetweet(id_usuario, id_tweetRetweeteado, contenidoRetweet,
+					fechaPublicacion, menciones);
 			if (tipoDocumento != null) {
 				this.bd_documento.nuevoDocumentoTweet(id_tweet, URLDocumento, tipoDocumento);
 			}
@@ -242,7 +252,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		}
 		return new Tweet[0];
 	}
-	
+
 	public Tweet[] cargarTweetsPorUsuario(int id_usuario) {
 		try {
 			return this.bd_tweet.cargarTweetsPorUsuario(id_usuario);
@@ -251,7 +261,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		}
 		return new Tweet[0];
 	}
-	
+
 	public Tweet[] cargarTweetsQueGustan(int id_usuario) {
 		try {
 			return this.bd_tweet.cargarTweetsQueGustan(id_usuario);
@@ -260,7 +270,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		}
 		return new Tweet[0];
 	}
-	
+
 	public Tweet[] cargarRetweets(int id_usuario) {
 		try {
 			return this.bd_tweet.cargarRetweets(id_usuario);
@@ -269,7 +279,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		}
 		return new Tweet[0];
 	}
-	
+
 	public void eliminarTweet(int id_tweet) {
 		try {
 			this.bd_tweet.eliminarTweet(id_tweet);
@@ -277,7 +287,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarComentario(int id_comentario) {
 		try {
 			this.bd_comentario.eliminarComentario(id_comentario);
@@ -303,14 +313,15 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		}
 		return null;
 	}
-		// METODOLOGÍA ACTIVIDAD 12: Cargar comentarios de un tweet específico
+
+	// METODOLOGÍA ACTIVIDAD 12: Cargar comentarios de un tweet específico
 	public Comentario[] cargarComentariosDeTweet(int id_tweet) {
 		try {
 			System.out.println("Cargando comentarios del tweet ID: " + id_tweet);
-			
+
 			// Obtener el tweet primero
 			Tweet tweet = this.obtenerTweetByID(id_tweet);
-			
+
 			if (tweet != null && tweet.tiene != null) {
 				// Convertir la colección de comentarios a array
 				basededatos.Comentario[] comentarios = tweet.tiene.toArray();
@@ -320,14 +331,14 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 				System.out.println("No se encontraron comentarios para el tweet ID: " + id_tweet);
 				return new Comentario[0];
 			}
-			
+
 		} catch (Exception e) {
 			System.err.println("Error cargando comentarios del tweet: " + e.getMessage());
 			e.printStackTrace();
 			return new Comentario[0];
 		}
 	}
-	
+
 	public Usuario_Registrado obtenerUsuarioByID(int id_usuario) {
 		try {
 			return this.bd_userR.obtenerUsuarioByID(id_usuario);
@@ -345,7 +356,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		}
 		return null;
 	}
-	
+
 	public Usuario_Registrado quitarSeguimiento(int id_usuario, int id_usuario_quitadoSeguimiento) {
 		try {
 			return this.bd_userR.quitarSeguimiento(id_usuario, id_usuario_quitadoSeguimiento);
@@ -354,27 +365,29 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		}
 		return null;
 	}
-	
+
 	public Usuario_Registrado activarCuenta(String correoElectronico, String nickname) {
 		try {
 			System.out.println("Activando cuenta para email: " + correoElectronico + ", nickname: " + nickname);
-			
+
 			// Buscar el usuario por correo electrónico
 			Usuario_Registrado usuario = this.bd_userR.validacionCorreo(correoElectronico);
 			System.out.println("Usuario encontrado por email: " + (usuario != null ? usuario.getNickname() : "NULL"));
-			
+
 			if (usuario != null) {
 				// Verificar que coincida el nickname
 				if (usuario.getNickname().equals(nickname)) {
-					System.out.println("Cuenta activada exitosamente para usuario: " + nickname + " (ID: " + usuario.getId_usuario() + ")");
+					System.out.println("Cuenta activada exitosamente para usuario: " + nickname + " (ID: "
+							+ usuario.getId_usuario() + ")");
 					return usuario;
 				} else {
-					System.err.println("Error: Nickname no coincide. Esperado: " + nickname + ", Encontrado: " + usuario.getNickname());
+					System.err.println("Error: Nickname no coincide. Esperado: " + nickname + ", Encontrado: "
+							+ usuario.getNickname());
 					return null;
 				}
 			} else {
 				System.err.println("Error: No se encontró usuario con email: " + correoElectronico);
-				
+
 				// Como fallback, intentar buscar por nickname directamente
 				try {
 					PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
@@ -382,11 +395,11 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 					Usuario_Registrado usuarioPorNick = Usuario_RegistradoDAO
 							.loadUsuario_RegistradoByQuery("Nickname = '" + nickname + "'", null);
 					t.commit();
-					
+
 					if (usuarioPorNick != null) {
-						System.out.println("Usuario encontrado por nickname: " + usuarioPorNick.getNickname() + 
+						System.out.println("Usuario encontrado por nickname: " + usuarioPorNick.getNickname() +
 								" con email: " + usuarioPorNick.getCorreoElectronico());
-						
+
 						// Verificar si los emails coinciden (case insensitive)
 						if (usuarioPorNick.getCorreoElectronico().equalsIgnoreCase(correoElectronico)) {
 							System.out.println("Cuenta activada exitosamente (fallback) para usuario: " + nickname);
@@ -396,7 +409,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 				} catch (Exception fallbackEx) {
 					System.err.println("Error en búsqueda fallback: " + fallbackEx.getMessage());
 				}
-				
+
 				return null;
 			}
 		} catch (Exception e) {
@@ -414,7 +427,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			return null;
 		}
 	}
-	
+
 	public void dejarDeSeguir(int idSeguidor, int idSeguido) {
 		try {
 			this.bd_userR.dejarDeSeguir(idSeguidor, idSeguido);
@@ -422,7 +435,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Hashtag[] buscarHashtag(String hashtag) {
 		try {
 			return this.bd_hashtag.buscarHashtag(hashtag);
@@ -443,7 +456,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Cargar lista de usuarios seguidos por un usuario
 	 */
@@ -455,7 +468,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Contar número de seguidores de un usuario
 	 */
@@ -467,7 +480,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Contar número de seguidos de un usuario
 	 */
@@ -479,7 +492,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Contar número de likes de un tweet
 	 */
@@ -491,7 +504,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Contar número de retweets de un tweet
 	 */
@@ -503,7 +516,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Contar número de comentarios de un tweet
 	 */
@@ -515,7 +528,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Contar número de likes de un comentario
 	 */
@@ -527,7 +540,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Contar número de tweets que usan un hashtag
 	 */
@@ -539,7 +552,7 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Cargar tweets de un hashtag específico
 	 */
@@ -551,5 +564,5 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			return new Tweet[0];
 		}
 	}
-	
+
 }

@@ -45,7 +45,7 @@ public class ACT04SistemadeCorreo {
 		this.codigoGenerado = codigo;
 		this.emailDestinatario = destinatario;
 		this.tiempoGeneracion = System.currentTimeMillis();
-		
+
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com"); // Servidor SMTP de Gmail
 		prop.put("mail.smtp.port", "587");
@@ -78,39 +78,39 @@ public class ACT04SistemadeCorreo {
 		if (this.codigoGenerado == null || codigoIngresado == null) {
 			return false;
 		}
-		
+
 		// Verificar expiración (5 minutos)
 		long tiempoActual = System.currentTimeMillis();
 		if (tiempoActual - this.tiempoGeneracion > TIEMPO_EXPIRACION) {
 			System.out.println("Código expirado");
 			return false;
 		}
-		
+
 		// Verificar que el código coincida
 		boolean esValido = this.codigoGenerado.equals(codigoIngresado.trim());
 		System.out.println("Validando código: " + codigoIngresado + " vs " + this.codigoGenerado + " = " + esValido);
-		
+
 		if (esValido) {
 			// Limpiar el código después de usarlo (uso único)
 			this.codigoGenerado = null;
 			this.emailDestinatario = null;
 			this.tiempoGeneracion = 0;
 		}
-		
+
 		return esValido;
 	}
-	
+
 	/* ============ MÉTODO PARA OBTENER EL ÚLTIMO CÓDIGO GENERADO ============ */
 	public String obtenerCodigoGenerado() {
 		return this.codigoGenerado;
 	}
-	
+
 	/* ============ MÉTODO PARA VERIFICAR SI HAY UN CÓDIGO ACTIVO ============ */
 	public boolean hayCodigoActivo() {
 		if (this.codigoGenerado == null) {
 			return false;
 		}
-		
+
 		long tiempoActual = System.currentTimeMillis();
 		return (tiempoActual - this.tiempoGeneracion) <= TIEMPO_EXPIRACION;
 	}
