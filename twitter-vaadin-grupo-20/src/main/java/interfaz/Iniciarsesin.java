@@ -1,6 +1,5 @@
 package interfaz;
 
-import mds2.MainView.Credenciales;
 import mds2.MainView.Pantalla;
 import mds2.MainView.TipoUser;
 import mds2.MainView.Usuario;
@@ -119,6 +118,7 @@ public class Iniciarsesin extends VistaIniciarsesin {
 			if (administrador != null) {
 				System.out.println("Login exitoso como administrador: " + administrador.getNickname());
 				Usuario.tipoUsuario = TipoUser.ADMINISTRADOR;
+				Usuario.administrador = administrador;
 				navegarAAdministrador(administrador);
 				return;
 			} else if (usuarioRegistrado != null) {

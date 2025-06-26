@@ -115,9 +115,9 @@ public class TweetRetweetajeno extends TweetRetweetregistrado {
 			}
 			
 			int idUsuarioActual = MainView.Usuario.usuarioRegistrado.getId_usuario();
-					// Obtener el tweet del que quitar me gusta
-			basededatos.Tweet tweet = getTweet();
+			// Obtener el tweet del que quitar me gusta
 			
+
 			if (tweet == null) {
 				System.err.println("Error: No se pudo obtener el tweet para quitar me gusta");
 				return;

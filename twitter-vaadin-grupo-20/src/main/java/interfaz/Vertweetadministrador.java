@@ -6,85 +6,73 @@ import mds2.MainView.Pantalla;
 public class Vertweetadministrador extends TweetRetwetadministrador {
 	public Listadetweetsyretweetsadministrador_item _listadetweetsyretweetsadministrador;
 	public Verperfiladministrador _verperfiladministrador;
+	public basededatos.Tweet _tweet;
 
 	public Vertweetadministrador(Listadetweetsyretweetsadministrador_item _listadetweetsyretweetsadministrador,
 			Tweet tweet) {
 		super();
 		this._listadetweetsyretweetsadministrador = _listadetweetsyretweetsadministrador;
+		this._tweet = tweet;
 
 		this.getLayoutPublicacionCitada().setVisible(false);
 
 		// Añadir botón de regreso
 		volver();
-		this.Listadecomentariosadministrador(tweet);
-		rellenarDatosTweet(tweet);
+		this.Listadecomentariosadministrador(_tweet);
+		cargarDatosTweet();
 
 		this.getAvatarDivPrincipal().addClickListener(event -> {
 			Verperfiladministrador();
 		});
 
 		this.getBotonEliminarTweet().addClickListener(event -> {
-			this.Eliminarpublicacin(tweet);
+			this.Eliminarpublicacin(_tweet);
 		});
 	}
 
-	private void rellenarDatosTweet(Tweet tweet) {
-		if (tweet == null)
+	private void cargarDatosTweet() {
+		if (_tweet == null)
 			return;
-
 		try {
-			// Obtener datos del usuario que publicó el tweet
-			basededatos.Usuario_Registrado usuario = tweet.getPublicado_por();
-			if (usuario != null) {
-				// Establecer nombre y handle del usuario
-				this.getSpanNombreUsuario().setText(usuario.getNickname());
-				this.getSpanHandleUsuario().setText("@" + usuario.getNickname());
+			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
+
+			// Contenido del tweet
+			this.getPTextoPublicacion().setText(_tweet.getContenidoTweet() != null ? _tweet.getContenidoTweet() : "");
+
+			// Datos del usuario
+			if (_tweet.getPublicado_por() != null) {
+				this.getSpanHandleUsuario().setText("@" + _tweet.getPublicado_por().getNickname());
+				this.getSpanNombreUsuario().setText(_tweet.getPublicado_por().getNickname());
 			}
 
-			// Establecer contenido del tweet
-			String contenido = "";
-			if (tweet.getTweet_retweeteado() != null) {
-				// Es un retweet
-				contenido = "RT: " + (tweet.getTweet_retweeteado().getContenidoTweet() != null
-						? tweet.getTweet_retweeteado().getContenidoTweet()
-						: "");
-				// Si el retweet tiene comentario adicional
-				if (tweet.getContenidoTweet() != null && !tweet.getContenidoTweet().trim().isEmpty()) {
-					contenido = tweet.getContenidoTweet() + "\n\n" + contenido;
-				}
-			} else {
-				// Es un tweet original
-				contenido = tweet.getContenidoTweet() != null ? tweet.getContenidoTweet() : "";
-			}
-			this.getPTextoPublicacion().setText(contenido);
-
-			// Establecer fecha de publicación
-			if (tweet.getFechaPublicacion() != null) {
-				this.getSpanFecha().setText(tweet.getFechaPublicacion().toString());
+			// Fecha de publicación
+			if (_tweet.getFechaPublicacion() != null) {
+				this.getSpanFecha().setText(_tweet.getFechaPublicacion().toString());
 			}
 
-			// Contar likes (me gusta)
-			int likesCount = tweet.recibe_me_gusta != null ? tweet.recibe_me_gusta.size() : 0;
+			// Contadores
+			int likesCount = bd.contarLikesTweet(_tweet.getORMID());
+			int retweetsCount = bd.contarRetweetsTweet(_tweet.getORMID());
+			int comentariosCount = bd.contarComentariosTweet(_tweet.getORMID());
+
 			this.getSpanContadorMeGusta().setText(String.valueOf(likesCount));
-
-			// Contar retweets
-			int retweetsCount = tweet.retweets != null ? tweet.retweets.size() : 0;
 			this.getSpanContadorRetweet().setText(String.valueOf(retweetsCount));
-
-			// Contar comentarios
-			int commentsCount = tweet.tiene != null ? tweet.tiene.size() : 0;
-			this.getSpanContadorComentarios().setText(String.valueOf(commentsCount));
+			this.getSpanContadorComentarios().setText(String.valueOf(comentariosCount));
 
 		} catch (Exception e) {
-			// En caso de error, mostrar información básica
-			this.getPTextoPublicacion().setText("Error al cargar tweet");
-			this.getSpanNombreUsuario().setText("Usuario desconocido");
-			this.getSpanHandleUsuario().setText("@desconocido");
+			System.err.println("Error cargando datos del tweet: " + e.getMessage());
+			// Valores por defecto en caso de error
+			this.getPTextoPublicacion().setText("Error cargando tweet");
+			this.getSpanHandleUsuario().setText("@usuario");
+			this.getSpanFecha().setText("--");
+			this.getSpanContadorMeGusta().setText("0");
+			this.getSpanContadorRetweet().setText("0");
+			this.getSpanContadorComentarios().setText("0");
 		}
 	}
 
 	public void Verperfiladministrador() {
-		_verperfiladministrador = new Verperfiladministrador(this);
+		_verperfiladministrador = new Verperfiladministrador(this, _tweet.getPublicado_por());
 		Pantalla.Anterior = Pantalla.MainView.getComponentAt(0);
 		Pantalla.MainView.removeAll();
 		Pantalla.MainView.add(_verperfiladministrador);

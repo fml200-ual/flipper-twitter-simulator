@@ -226,85 +226,138 @@ public class BD_Usuario_Registrado {
 		try {
 			user = Usuario_RegistradoDAO.getUsuario_RegistradoByORMID(id_usuario);
 
-			PropiedadesBaneo pb = user.getPropiedadesBaneo();
-			if (pb != null) {
-				PropiedadesBaneoDAO.deleteAndDissociate(pb);
-			}
+			// PASO 1: Eliminar TODAS las menciones usando SQL nativo para evitar cascadas
+			// problemáticas
+			// Esto evita completamente el problema de ObjectDeletedException
+			org.orm.PersistentSession session = ProyectoMDS120242025PersistentManager.instance().getSession();
 
-			PropiedadesSeguidos[] ps = user.seguidosPropiedadesseguidoss.toArray();
-			for (int i = 0; i < ps.length; i++) {
-				PropiedadesSeguidosDAO.deleteAndDissociate(ps[i]);
-			}
+			// Eliminar menciones donde el usuario es mencionado
+			session.createSQLQuery(
+					"DELETE FROM propiedadesmencion WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+							+ id_usuario)
+					.executeUpdate();
 
-			PropiedadesSeguidos[] ps2 = user.seguidoresPropiedadesseguidoss.toArray();
-			for (int i = 0; i < ps2.length; i++) {
-				PropiedadesSeguidosDAO.deleteAndDissociate(ps2[i]);
-			}
+			// Eliminar menciones en tweets del usuario
+			session.createSQLQuery("DELETE FROM propiedadesmencion WHERE TweetId_tweet IN " +
+					"(SELECT Id_tweet FROM tweet WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+					+ id_usuario + ")")
+					.executeUpdate();
 
-			PropiedadesMencion[] pm = user.propiedadesMencions.toArray();
-			for (int i = 0; i < pm.length; i++) {
-				PropiedadesMencionDAO.delete(pm[i]);
-			}
+			// PASO 2: Limpiar todas las asociaciones many-to-many usando SQL nativo
+			// Eliminar me gustas de tweets del usuario (todos los usuarios que dieron like)
+			session.createSQLQuery(
+					"DELETE FROM tweet_usuario_registrado2 WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+							+ id_usuario)
+					.executeUpdate();
 
-			Retweet[] rts = user.retweets.toArray();
-			for (int i = 0; i < rts.length; i++) {
-				RetweetDAO.delete(rts[i]);
-			}
+			// Eliminar TODOS los me gustas de tweets del usuario (de cualquier usuario)
+			session.createSQLQuery("DELETE FROM tweet_usuario_registrado2 WHERE TweetId_tweet IN " +
+					"(SELECT Id_tweet FROM tweet WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+					+ id_usuario + ")")
+					.executeUpdate();
 
-			Tweet[] tweets = user.tweets.toArray();
-			for (int i = 0; i < tweets.length; i++) {
-				Tweet tweet = tweets[i];
-				Comentario[] comentarios = tweet.tiene.toArray();
-				for (int j = 0; j < comentarios.length; j++) {
-					Comentario comentario = comentarios[j];
-					Documento doc = comentario.getDocumento();
-					if (doc != null) {
-						DocumentoDAO.delete(doc);
-					}
-					ComentarioDAO.deleteAndDissociate(comentario);
-				}
-				Retweet[] rts2 = tweet.retweets.toArray();
-				for (int j = 0; j < rts2.length; j++) {
-					RetweetDAO.delete(rts2[j]);
-				}
-				Hashtag[] hgs = tweet.tiene_hashtag.toArray();
-				for (int j = 0; j < hgs.length; j++) {
-					if (hgs[j].pertenece.size() == 1) {
-						HashtagDAO.deleteAndDissociate(hgs[j]);
-					}
-				}
-				PropiedadesMencion[] pm2 = tweet.propiedadesMencions.toArray();
-				for (int j = 0; j < pm2.length; j++) {
-					PropiedadesMencionDAO.delete(pm2[j]);
-				}
+			// Eliminar me gustas de comentarios del usuario (todos los usuarios que dieron
+			// like)
+			session.createSQLQuery(
+					"DELETE FROM comentario_usuario_registrado2 WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+							+ id_usuario)
+					.executeUpdate();
 
-				Documento doc = tweet.getDocumento();
-				if (doc != null) {
-					DocumentoDAO.delete(doc);
-				}
-				TweetDAO.deleteAndDissociate(tweet);
-			}
+			// Eliminar TODOS los me gustas de comentarios del usuario (de cualquier
+			// usuario)
+			session.createSQLQuery("DELETE FROM comentario_usuario_registrado2 WHERE ComentarioId_comentario IN " +
+					"(SELECT Id_comentario FROM comentario WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+					+ id_usuario + ")")
+					.executeUpdate();
 
-			Comentario[] comentarios = user.comentarios_publicados.toArray();
-			for (int i = 0; i < comentarios.length; i++) {
-				Comentario comentario = comentarios[i];
-				Documento doc = comentario.getDocumento();
-				if (doc != null) {
-					DocumentoDAO.delete(doc);
-				}
-				ComentarioDAO.deleteAndDissociate(comentario);
-			}
+			// Eliminar usuarios bloqueados
+			session.createSQLQuery(
+					"DELETE FROM usuario_registrado_usuario_registrado2 WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario2 = "
+							+ id_usuario +
+							" OR Usuario_RegistradoUsuario_AutentificadoId_usuario = " + id_usuario)
+					.executeUpdate();
 
-			Usuario_Autentificado userAux = Usuario_AutentificadoDAO.loadUsuario_AutentificadoByQuery(
-					"Nickname = '" + user.getNickname() + "' AND Contrasena = '" + user.getContrasena() + "'", null);
+			// PASO 3: Eliminar propiedades de baneo
+			session.createSQLQuery(
+					"DELETE FROM propiedadesbaneo WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+							+ id_usuario)
+					.executeUpdate();
 
-			Usuario_AutentificadoDAO.delete(userAux);
+			// PASO 4: Eliminar relaciones de seguimiento
+			session.createSQLQuery(
+					"DELETE FROM propiedadesseguidos WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario2 = "
+							+ id_usuario +
+							" OR Usuario_RegistradoUsuario_AutentificadoId_usuario = " + id_usuario)
+					.executeUpdate();
 
-			Usuario_RegistradoDAO.deleteAndDissociate(user);
+			// PASO 5: Eliminar retweets del usuario
+			session.createSQLQuery(
+					"DELETE FROM retweet WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = " + id_usuario)
+					.executeUpdate();
+
+			// PASO 6: Eliminar retweets de tweets del usuario
+			session.createSQLQuery("DELETE FROM retweet WHERE TweetId_tweet IN " +
+					"(SELECT Id_tweet FROM tweet WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+					+ id_usuario + ")")
+					.executeUpdate();
+
+			// PASO 7: Eliminar TODOS los me gustas de comentarios que están en tweets del
+			// usuario
+			session.createSQLQuery("DELETE FROM comentario_usuario_registrado2 WHERE ComentarioId_comentario IN " +
+					"(SELECT Id_comentario FROM comentario WHERE TweetId_tweet IN " +
+					"(SELECT Id_tweet FROM tweet WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+					+ id_usuario + "))")
+					.executeUpdate();
+
+			// PASO 8: Eliminar comentarios del usuario
+			session.createSQLQuery(
+					"DELETE FROM comentario WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = " + id_usuario)
+					.executeUpdate();
+
+			// PASO 9: Eliminar comentarios en tweets del usuario
+			session.createSQLQuery("DELETE FROM comentario WHERE TweetId_tweet IN " +
+					"(SELECT Id_tweet FROM tweet WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+					+ id_usuario + ")")
+					.executeUpdate();
+
+			// PASO 10: Manejar hashtags (eliminar solo los que no tienen otros tweets)
+			session.createSQLQuery("DELETE FROM hashtag_tweet2 WHERE TweetId_tweet IN " +
+					"(SELECT Id_tweet FROM tweet WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+					+ id_usuario + ")")
+					.executeUpdate();
+
+			// PASO 12: Eliminar tweets del usuario de forma segura
+			// Primero, eliminar la auto-referencia (poner TweetId_tweet = NULL en tweets
+			// que referencian tweets del usuario)
+			session.createSQLQuery("UPDATE tweet SET TweetId_tweet = NULL WHERE TweetId_tweet IN " +
+					"(SELECT Id_tweet FROM (SELECT Id_tweet FROM tweet WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = "
+					+ id_usuario + ") AS temp)")
+					.executeUpdate();
+
+			// Ahora eliminar todos los tweets del usuario sin problemas de FK
+			session.createSQLQuery(
+					"DELETE FROM tweet WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = " + id_usuario)
+					.executeUpdate();
+
+			// PASO 13: Los documentos se pueden dejar (pueden ser compartidos por otros
+			// tweets/comentarios)
+			// O eliminar solo después de verificar que no están en uso
+
+			// PASO 14: Eliminar usuario registrado (antes que usuario autentificado)
+			session.createSQLQuery(
+					"DELETE FROM usuario_registrado WHERE Usuario_AutentificadoId_usuario = " + id_usuario)
+					.executeUpdate();
+
+			// PASO 15: Eliminar usuario autentificado
+			session.createSQLQuery("DELETE FROM usuario_autentificado WHERE Id_usuario = " + id_usuario)
+					.executeUpdate();
+
+			// PASO 16: Al final, hacer commit sin flush intermedio
 			t.commit();
 		} catch (Exception e) {
 			t.rollback();
 			e.printStackTrace();
+			throw new PersistentException("Error al eliminar usuario: " + e.getMessage(), e);
 		}
 		ProyectoMDS120242025PersistentManager.instance().disposePersistentManager();
 	}
@@ -645,7 +698,7 @@ public class BD_Usuario_Registrado {
 				.getSession().beginTransaction();
 		try {
 			// Buscar directamente en la tabla de relación many-to-many
-			String query = "SELECT COUNT(*) FROM Tweet_Usuario_Registrado " +
+			String query = "SELECT COUNT(*) FROM tweet_usuario_registrado2 " +
 					"WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario +
 					" AND TweetId_tweet = " + idTweet;
 
@@ -676,7 +729,7 @@ public class BD_Usuario_Registrado {
 				.getSession().beginTransaction();
 		try {
 			// Buscar directamente en la tabla de relación many-to-many
-			String query = "SELECT COUNT(*) FROM Comentario_Usuario_Registrado2 " +
+			String query = "SELECT COUNT(*) FROM comentario_usuario_registrado2 " +
 					"WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario +
 					" AND ComentarioId_comentario = " + idComentario;
 
