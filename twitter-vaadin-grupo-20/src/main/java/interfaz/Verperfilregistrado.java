@@ -3,6 +3,7 @@ package interfaz;
 import mds2.MainView;
 import mds2.MainView.Pantalla;
 import basededatos.BDPrincipal;
+import basededatos.Usuario_Registrado;
 
 public class Verperfilregistrado extends Verperfil {
 	// private event _bloquearusuario;
@@ -35,10 +36,6 @@ public class Verperfilregistrado extends Verperfil {
 
 		// Establecer el estado inicial del botón de bloquear/desbloquear
 		establecerEstadoInicialBotones();
-
-		// Texto por defecto para seguir (se actualiza en
-		// establecerEstadoInicialBotones)
-		this.getEditAccountButton().setText("Seguir");
 
 		System.out.println("=== A punto de llamar Agrupartweets() ===");
 		this.Agrupartweets(u);
@@ -91,10 +88,6 @@ public class Verperfilregistrado extends Verperfil {
 
 		// Establecer el estado inicial del botón de bloquear/desbloquear
 		establecerEstadoInicialBotones();
-
-		// Texto por defecto para seguir (se actualiza en
-		// establecerEstadoInicialBotones)
-		this.getEditAccountButton().setText("Seguir");
 
 		System.out.println("=== A punto de llamar Agrupartweets() ===");
 		this.Agrupartweets(u);
@@ -307,10 +300,7 @@ public class Verperfilregistrado extends Verperfil {
 			// Usar BDPrincipal directamente para operaciones de seguimiento
 			BDPrincipal bd = new BDPrincipal();
 
-			// Verificar si el usuario actual está siguiendo al usuario del perfil
-			boolean sigoAlUsuario = verificarSiEstaSiendoSeguido(usuarioActual, this.u);
-
-			if (sigoAlUsuario) {
+			if (this.getEditAccountButton().getText().equals("Dejar de seguir")) {
 				// Dejar de seguir
 				bd.quitarSeguimiento(usuarioActual.getId_usuario(), this.u.getId_usuario());
 
@@ -395,7 +385,7 @@ public class Verperfilregistrado extends Verperfil {
 			this.getBanProfileButton().setText(estaBloqueado ? "Desbloquear" : "Bloquear");
 
 			// Verificar si el usuario está siendo seguido
-			boolean estaSiendoSeguido = verificarSiEstaSiendoSeguido(usuarioActual, u);
+			boolean estaSiendoSeguido = verificarSiEstaSiendoSeguido();
 			this.getEditAccountButton().setText(estaSiendoSeguido ? "Dejar de seguir" : "Seguir");
 
 			System.out.println("Estado inicial de botones establecido para usuario: " + u.getNickname() +
@@ -462,33 +452,33 @@ public class Verperfilregistrado extends Verperfil {
 	 * Verifica si un usuario está siendo seguido por el usuario actual
 	 * Consulta la BD directamente para obtener el estado actual
 	 */
-	@SuppressWarnings("unchecked")
-	private boolean verificarSiEstaSiendoSeguido(basededatos.Usuario_Registrado usuarioActual,
-			basededatos.Usuario_Registrado usuarioDestino) {
+	private boolean verificarSiEstaSiendoSeguido() {
 		try {
 			// Usar BDPrincipal para consultar directamente el estado de seguimiento
 			BDPrincipal bd = new BDPrincipal();
+			basededatos.Usuario_Registrado usuarioActual = MainView.obtenerUsuarioActual();
 
-			// Cargar el usuario actual actualizado desde la BD
-			basededatos.Usuario_Registrado usuarioActualActualizado = bd
-					.cargarUsuarioPorId(usuarioActual.getId_usuario());
+			if (usuarioActual == null || this.u == null) {
+				return false;
+			}
 
-			if (usuarioActualActualizado != null && usuarioActualActualizado.seguidosPropiedadesseguidoss != null) {
-				// Acceder a la colección seguidosPropiedadesseguidoss del usuario actual
-				for (java.util.Iterator<basededatos.PropiedadesSeguidos> iter = usuarioActualActualizado.seguidosPropiedadesseguidoss
-						.getIterator(); iter.hasNext();) {
-					basededatos.PropiedadesSeguidos seguimiento = iter.next();
-					if (seguimiento.getSeguidosUsuario_registrado().getId_usuario() == usuarioDestino.getId_usuario()) {
-						System.out.println("Usuario " + usuarioDestino.getNickname() + " está siendo seguido por "
-								+ usuarioActual.getNickname());
-						return true;
+			// Cargar los usuarios que sigue el usuario actual (no los que sigue el usuario
+			// del perfil)
+			Usuario_Registrado[] seguidos = bd.cargarSeguidos(usuarioActual.getId_usuario());
+
+			if (seguidos != null) {
+				for (Usuario_Registrado seguido : seguidos) {
+					if (seguido.getId_usuario() == this.u.getId_usuario()) {
+						System.out.println("Usuario actual " + usuarioActual.getNickname() + " está siguiendo a "
+								+ this.u.getNickname());
+						return true; // El usuario actual está siguiendo al usuario del perfil
 					}
 				}
 			}
 
-			System.out.println("Usuario " + usuarioDestino.getNickname() + " NO está siendo seguido por "
-					+ usuarioActual.getNickname());
-			return false;
+			System.out.println("Usuario actual " + usuarioActual.getNickname() + " NO está siguiendo a "
+					+ this.u.getNickname());
+			return false; // No está siguiendo al usuario del perfil
 		} catch (Exception e) {
 			System.err.println("Error verificando estado de seguimiento: " + e.getMessage());
 			e.printStackTrace();
