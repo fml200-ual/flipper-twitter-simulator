@@ -22,15 +22,12 @@ public class ACT04SistemadeCorreo {
 	private static final String SMTP_PASS = "nhvflcjrelbnnbng"; // app-password de Gmail
 	/* :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
 
-<<<<<<< HEAD
-=======
 	// ============ ALMACENAMIENTO DEL CÓDIGO EN MEMORIA ============
 	private String codigoGenerado;
 	private String emailDestinatario;
 	private long tiempoGeneracion;
 	private static final long TIEMPO_EXPIRACION = 5 * 60 * 1000; // 5 minutos en milisegundos
 
->>>>>>> 1761fd75fafc45d30cc66f67ab635285a6a7bf9a
 	/* ============ CONSTRUCTOR ============ */
 	public ACT04SistemadeCorreo() {
 
@@ -38,41 +35,6 @@ public class ACT04SistemadeCorreo {
 
 	/* ============ MÉTODO PARA GENERAR CÓDIGO ALEATORIO ============ */
 	public String generarCodigo() {
-<<<<<<< HEAD
-	SecureRandom random = new SecureRandom();
-	int codigo = 1000 + random.nextInt(9000); // Genera un número entre 1000 y 9999
-	return String.valueOf(codigo);
-	}
-
-	public void enviarCorreo(String destinatario, String codigo) {
-	Properties prop = new Properties();
-	prop.put("mail.smtp.host", "smtp.gmail.com"); // Servidor SMTP de Gmail
-	prop.put("mail.smtp.port", "587");
-	prop.put("mail.smtp.auth", "true");
-	prop.put("mail.smtp.starttls.enable", "true");
-
-	Session session = Session.getInstance(prop, new Authenticator() {
-	protected PasswordAuthentication getPasswordAuthentication() {
-	return new PasswordAuthentication(SMTP_USER, SMTP_PASS);
-	}
-	});
-
-	try {
-	Message mensaje = new MimeMessage(session);
-	mensaje.setFrom(new InternetAddress(SMTP_USER));
-	mensaje.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
-	mensaje.setSubject("Código de Verificación");
-	mensaje.setText("Tu código de verificación es: " + codigo);
-
-	Transport.send(mensaje);
-	System.out.println("Correo enviado con éxito.");
-	} catch (MessagingException e) {
-	e.printStackTrace();
-	}
-
-	}
-}
-=======
 		SecureRandom random = new SecureRandom();
 		int codigo = 1000 + random.nextInt(9000); // Genera un número entre 1000 y 9999
 		return String.valueOf(codigo);
@@ -182,4 +144,3 @@ public class ACT04SistemadeCorreo {
 		System.out.println("=== FIN DE LA PRUEBA ===");
 	}
 }
->>>>>>> 1761fd75fafc45d30cc66f67ab635285a6a7bf9a

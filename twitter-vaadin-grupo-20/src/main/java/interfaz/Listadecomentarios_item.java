@@ -65,6 +65,8 @@ public class Listadecomentarios_item extends VistaListadecomentarios_item {
 			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd MMM yyyy");
 			this.getLabel_fechaComentario().setText(sdf.format(c.getFechaPublicacion()));
 		}
+		// Mostrar multimedia del comentario (si existe)
+		TweetRetweet.mostrarMultimediaComentario(this.getvL_listacomentarios_mainContainer().as(com.vaadin.flow.component.orderedlayout.VerticalLayout.class), c);
 				// ✅ MEJORA: Reemplazar "Y" por número real de me gusta
 		configurarContadorMeGusta();
 		
@@ -72,6 +74,7 @@ public class Listadecomentarios_item extends VistaListadecomentarios_item {
 		configurarEventoMeGusta();
 				// TODO: Configurar click listener cuando esté disponible el componente adecuado
 		// this.getvL_listacomentarios_mainContainer().addClickListener(event -> Mostrarmscomentarios());
+		
 	}
 		/**
 	 * Configura el avatar con el número real de me gusta en lugar de "Y"

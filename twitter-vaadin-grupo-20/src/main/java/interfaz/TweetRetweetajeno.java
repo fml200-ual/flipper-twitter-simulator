@@ -7,7 +7,8 @@ public class TweetRetweetajeno extends TweetRetweetregistrado {
 	// private event _darmegusta;
 	// private event _eliminarmegusta;
 	public Darretweet _darretweet;
-	public Escribircomentario _escribircomentario;	public TweetRetweetajeno(basededatos.Tweet tweet) {
+	public Escribircomentario _escribircomentario;	
+	public TweetRetweetajeno(basededatos.Tweet tweet) {
 		super(tweet);
 		// METODOLOGÍA ACTIVIDAD 12: Configurar eventos de me gusta
 		configurarEventosMeGusta();

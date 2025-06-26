@@ -7,7 +7,6 @@ public class TweetRetweetpropio extends TweetRetweetregistrado {
 	public Escribircomentario _escribircomentario;
 	public TweetRetweetpropio(basededatos.Tweet tweet) {
 		super(tweet);
-		
 		// Configurar eventos de interacción
 		configurarEventosInteraccion();
 	}

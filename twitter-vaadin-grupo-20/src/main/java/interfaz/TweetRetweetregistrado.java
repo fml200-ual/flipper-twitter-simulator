@@ -8,7 +8,23 @@ public class TweetRetweetregistrado extends TweetRetweet {
 	public TweetRetweetregistrado(basededatos.Tweet tweet) {
 		super();
 		this.tweet = tweet;
-		
+
+		// Configurar imágenes y multimedia usando la lógica centralizada del padre
+		if (tweet != null) {
+			basededatos.Usuario_Registrado usuarioPrincipal = tweet.getPublicado_por();
+			this.configurarImagenPerfilPrincipal(usuarioPrincipal);
+
+			// Si el tweet es un retweet, configurar imagen del citado
+			basededatos.Usuario_Registrado usuarioCitado = null;
+			if (tweet.getTweet_retweeteado() != null) {
+				usuarioCitado = tweet.getTweet_retweeteado().getPublicado_por();
+			}
+			this.configurarImagenPerfilCitado(usuarioCitado);
+
+			// Mostrar multimedia si existe
+			this.mostrarMultimediaTweet(tweet);
+		}
+
 		// Configurar eventos de interacción
 		configurarEventosInteraccion();
 	}

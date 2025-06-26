@@ -31,6 +31,7 @@ public class Vercomentario extends VistaVercomentario {
 				this.getCommenterUsername().setText(c.getPublicado_por().getNickname());
 				this.getCommenterHandle().setText("@" + c.getPublicado_por().getNickname());
 			}
+
 			
 			// Rellenar fecha
 			if (c.getFechaPublicacion() != null) {
@@ -46,6 +47,6 @@ public class Vercomentario extends VistaVercomentario {
 			System.err.println("Error obteniendo likes del comentario: " + e.getMessage());
 			this.getCommentLikeCount().setText("0");
 		}
-		}
+			}
 	}
 }

@@ -21,12 +21,7 @@ public class Registrarse extends VistaRegistrarse {
 	public Registrarse(ACT01UsuarioNoRegistrado _aCT01UsuarioNoRegistrado) {
 		super();
 		this._aCT01UsuarioNoRegistrado = _aCT01UsuarioNoRegistrado;
-<<<<<<< HEAD
-		// Inicializar contenedores de preview
-		inicializarPreviewContainers();
-=======
 		this._sistemaCorreo = new ACT04SistemadeCorreo(); // Inicializar el sistema de correo
->>>>>>> 1761fd75fafc45d30cc66f67ab635285a6a7bf9a
 		// Ensamblado dinámico - Configurar listeners para todos los botones y campos
 		setupRegisterButtons();
 		setupFormValidation();
@@ -44,12 +39,7 @@ public class Registrarse extends VistaRegistrarse {
 	public Registrarse(Iniciarsesin _iniciarsesin) {
 		super();
 		this._iniciarsesin = _iniciarsesin;
-<<<<<<< HEAD
-		// Inicializar contenedores de preview
-		inicializarPreviewContainers();
-=======
 		this._sistemaCorreo = new ACT04SistemadeCorreo(); // Inicializar el sistema de correo
->>>>>>> 1761fd75fafc45d30cc66f67ab635285a6a7bf9a
 		// Ensamblado dinámico - Configurar listeners para todos los botones y campos
 		setupRegisterButtons();
 		setupFormValidation();
