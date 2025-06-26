@@ -2,10 +2,7 @@ package interfaz;
 
 import mds2.MainView;
 import mds2.MainView.Pantalla;
-import mds2.MainView.Usuario;
 import vistas.VistaEditarcuenta;
-
-import com.github.fge.jsonschema.main.cli.Main;
 
 import basededatos.BDPrincipal;
 import basededatos.Usuario_Registrado;
@@ -64,8 +61,8 @@ public class Editarcuenta extends VistaEditarcuenta {
 
 			System.out.println("Datos del usuario cargados en el formulario de edición");
 		}
-	}	
-	
+	}
+
 	public void guardarCambios() {
 		if (u == null) {
 			System.err.println("No hay usuario para modificar");
@@ -144,13 +141,12 @@ public class Editarcuenta extends VistaEditarcuenta {
 			Errordeedicin();
 		}
 
-				// Actualizar las imágenes del perfil y el avatar superior tras guardar cambios
+		// Actualizar las imágenes del perfil y el avatar superior tras guardar cambios
 		if (_verpropioperfil != null) {
 			_verpropioperfil.actualizarImagenesPerfil();
 		}
 	}
-	
-	
+
 	public void Eliminarcuenta() {
 		if (u == null) {
 			System.err.println("No hay usuario para eliminar");

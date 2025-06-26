@@ -22,7 +22,6 @@ public class Agrupartweetsgustados extends VistaAgrupartweetsgustados {
 		Listadetweetsyretweets(o);
 	}
 
-	// TODO: Falta para los demas actores
 	public void Listadetweetsyretweets(basededatos.Usuario_Registrado usuario) {
 		BDPrincipal bd = new BDPrincipal();
 		Tweet[] tweets = bd.cargarTweetsQueGustan(usuario.getId_usuario());

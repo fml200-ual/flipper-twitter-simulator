@@ -12,9 +12,6 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-import basededatos.BDPrincipal;
-import basededatos.Usuario_Registrado;
-import mds2.MainView;
 import mds2.MainView.Pantalla;
 import mds2.MainView.TipoUser;
 import mds2.MainView.Usuario;
@@ -126,7 +123,7 @@ public class Verperfiladministrador extends Verperfil {
 					this.getJoinDate().setText("Se unió en " + sdf.format(u.getFechaDeRegistro()));
 				} // Calcular y mostrar contadores reales de seguidores y seguidos desde la base
 					// de datos
-				// mostrar imagen de perfil
+					// mostrar imagen de perfil
 				configurarImagenesPerfil(u);
 
 				try {

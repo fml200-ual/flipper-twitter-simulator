@@ -198,7 +198,9 @@ public class Introducircdigodeverificacin extends VistaIntroducircdigodeverifica
 
 			// Validar usando la instancia del sistema de correo
 			if (_aCT04SistemadeCorreo != null) {
-				return _aCT04SistemadeCorreo.validarCodigo(code);
+				boolean esValido = _aCT04SistemadeCorreo.validarCodigo(code);
+				System.out.println("Resultado de validación: " + esValido);
+				return esValido;
 			} else {
 				System.out.println("Error: Sistema de correo no inicializado");
 				return false;
@@ -222,6 +224,8 @@ public class Introducircdigodeverificacin extends VistaIntroducircdigodeverifica
 				String nick = _registrarse.getNickField().getValue().trim();
 				String email = _registrarse.getEmailField().getValue().trim();
 
+				System.out.println("Intentando activar cuenta para: " + email + " con nickname: " + nick);
+
 				// Seguir el patrón: usuario = iactor.LoadUserById(ID)
 				// o en este caso, activar la cuenta del usuario recién registrado
 				basededatos.Usuario_Registrado usuarioVerificado = iactor.activarCuenta(email, nick);
@@ -241,10 +245,18 @@ public class Introducircdigodeverificacin extends VistaIntroducircdigodeverifica
 					mds2.MainView.Usuario.usuarioRegistrado = usuarioVerificado;
 
 					System.out.println("Usuario automáticamente logueado después del registro");
+
+					// Mostrar mensaje de éxito
+					showTemporaryMessage(
+							"¡Registro completado exitosamente! Bienvenido " + usuarioVerificado.getNickname(), false);
+
 				} else {
-					// Error en la activación
-					System.err.println("Error al activar la cuenta");
-					Mensajedeerrordecdigo();
+					// Error en la activación - pero el código era válido
+					System.err.println("Error al activar la cuenta - posiblemente datos inconsistentes");
+					showTemporaryMessage("Error en el sistema. Por favor contacta al administrador.", true);
+
+					// No limpiar los campos aquí, ya que el código era válido
+					// El problema está en la base de datos, no en el código ingresado
 				}
 			} else {
 				// Fallback: volver a la vista principal sin login automático
@@ -257,7 +269,10 @@ public class Introducircdigodeverificacin extends VistaIntroducircdigodeverifica
 		} catch (Exception e) {
 			System.err.println("Error al completar registro: " + e.getMessage());
 			e.printStackTrace();
-			Mensajedeerrordecdigo();
+			showTemporaryMessage("Error del sistema al completar el registro", true);
+
+			// En caso de error del sistema, no llamar Mensajedeerrordecdigo()
+			// ya que el código era válido
 		}
 	}
 
@@ -317,31 +332,123 @@ public class Introducircdigodeverificacin extends VistaIntroducircdigodeverifica
 			// Limpiar los campos para el nuevo código
 			clearCodeInputs();
 
-			// Simular envío de nuevo código
+			// Verificar que el sistema de correo esté inicializado
 			if (_aCT04SistemadeCorreo == null) {
-				// _aCT04SistemadeCorreo = new ACT04SistemadeCorreo(this);
+				_aCT04SistemadeCorreo = new ACT04SistemadeCorreo();
+				System.out.println("Sistema de correo inicializado para reenvío");
 			}
 
-			// Deshabilitar el botón temporalmente para evitar spam
-			if (this.getResendCodeButton() != null) {
-				this.getResendCodeButton().setEnabled(false);
-				this.getResendCodeButton().setText("Código enviado...");
+			// Obtener el email del usuario desde el registro
+			String emailUsuario = null;
+			if (_registrarse != null) {
+				emailUsuario = _registrarse.getEmailField().getValue();
+				if (emailUsuario != null && !emailUsuario.trim().isEmpty()) {
+					emailUsuario = emailUsuario.trim();
 
-				// Re-habilitar después de 5 segundos usando JavaScript
-				this.getElement().executeJs("""
-						setTimeout(() => {
-							const button = document.querySelector('#resendCodeButton');
-							if (button) {
-								button.disabled = false;
-								button.textContent = 'Reenviar código';
-							}
-						}, 5000);
-						""");
+					// Validar formato de email
+					if (isValidEmail(emailUsuario)) {
+						// Generar nuevo código de verificación
+						String nuevoCodigo = _aCT04SistemadeCorreo.generarCodigo();
+						System.out.println("Nuevo código generado: " + nuevoCodigo);
+
+						// Enviar el nuevo código por correo
+						_aCT04SistemadeCorreo.enviarCorreo(emailUsuario, nuevoCodigo);
+						System.out.println("Nuevo código de verificación enviado a: " + emailUsuario);
+
+						// Deshabilitar el botón temporalmente para evitar spam
+						if (this.getResendCodeButton() != null) {
+							this.getResendCodeButton().setEnabled(false);
+							this.getResendCodeButton().setText("Código enviado...");
+
+							// Re-habilitar después de 30 segundos usando JavaScript
+							this.getElement().executeJs("""
+									setTimeout(() => {
+										const button = document.querySelector('#resendCodeButton');
+										if (button) {
+											button.disabled = false;
+											button.textContent = 'Reenviar código';
+										}
+									}, 30000);
+									""");
+						}
+
+						// Mostrar mensaje de confirmación temporal
+						showTemporaryMessage("Nuevo código enviado a " + emailUsuario, false);
+
+					} else {
+						System.err.println("Email inválido: " + emailUsuario);
+						showTemporaryMessage("Error: Email inválido", true);
+					}
+				} else {
+					System.err.println("Email no encontrado en el registro");
+					showTemporaryMessage("Error: No se pudo obtener el email", true);
+				}
+			} else {
+				System.err.println("Referencia a registro no encontrada");
+				showTemporaryMessage("Error: No se pudo reenviar el código", true);
 			}
 
-			System.out.println("Nuevo código de verificación enviado");
 		} catch (Exception e) {
-			System.out.println("Error al reenviar código: " + e.getMessage());
+			System.err.println("Error al reenviar código: " + e.getMessage());
+			e.printStackTrace();
+			showTemporaryMessage("Error al reenviar código", true);
+
+			// Re-habilitar el botón en caso de error
+			if (this.getResendCodeButton() != null) {
+				this.getResendCodeButton().setEnabled(true);
+				this.getResendCodeButton().setText("Reenviar código");
+			}
+		}
+	}
+
+	/**
+	 * Método auxiliar para validar formato de email
+	 */
+	private boolean isValidEmail(String email) {
+		if (email == null || email.trim().isEmpty()) {
+			return false;
+		}
+		return email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+	}
+
+	/**
+	 * Método auxiliar para mostrar mensajes temporales al usuario
+	 */
+	private void showTemporaryMessage(String mensaje, boolean isError) {
+		try {
+			String color = isError ? "#FF0000" : "#00FF00";
+			String script = String.format("""
+					// Crear elemento de mensaje temporal
+					const messageDiv = document.createElement('div');
+					messageDiv.textContent = '%s';
+					messageDiv.style.cssText = `
+						position: fixed;
+						top: 20px;
+						right: 20px;
+						background-color: rgba(0, 0, 0, 0.9);
+						color: %s;
+						padding: 10px 20px;
+						border-radius: 5px;
+						border: 1px solid %s;
+						z-index: 9999;
+						font-weight: bold;
+						box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+					`;
+
+					// Agregar al body
+					document.body.appendChild(messageDiv);
+
+					// Remover después de 5 segundos
+					setTimeout(() => {
+						if (messageDiv.parentNode) {
+							messageDiv.parentNode.removeChild(messageDiv);
+						}
+					}, 5000);
+					""", mensaje, color, color);
+
+			this.getElement().executeJs(script);
+		} catch (Exception e) {
+			System.err.println("Error al mostrar mensaje temporal: " + e.getMessage());
 		}
 	}
 }

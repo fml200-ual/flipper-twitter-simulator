@@ -1,6 +1,5 @@
 package interfaz;
 
-import basededatos.Tweet;
 import mds2.MainView.Pantalla;
 
 public class Verretweetpropio extends TweetRetweetpropio {

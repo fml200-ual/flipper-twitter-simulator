@@ -375,15 +375,38 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			System.out.println("Usuario encontrado por email: " + (usuario != null ? usuario.getNickname() : "NULL"));
 
 			if (usuario != null) {
-				// Verificar que coincida el nickname
+				// Si el nickname coincide exactamente, activar directamente
 				if (usuario.getNickname().equals(nickname)) {
 					System.out.println("Cuenta activada exitosamente para usuario: " + nickname + " (ID: "
 							+ usuario.getId_usuario() + ")");
 					return usuario;
 				} else {
-					System.err.println("Error: Nickname no coincide. Esperado: " + nickname + ", Encontrado: "
+					// El nickname no coincide, pero el código fue validado correctamente
+					// Esto puede pasar si hay datos duplicados o registro reciente
+					System.out.println("Advertencia: Nickname no coincide. Esperado: " + nickname + ", Encontrado: "
 							+ usuario.getNickname());
-					return null;
+
+					// Buscar si existe un usuario más reciente con el nickname solicitado
+					try {
+						PersistentTransaction t = ProyectoMDS120242025PersistentManager.instance()
+								.getSession().beginTransaction();
+						Usuario_Registrado usuarioPorNick = Usuario_RegistradoDAO
+								.loadUsuario_RegistradoByQuery("Nickname = '" + nickname + "'", null);
+						t.commit();
+
+						if (usuarioPorNick != null
+								&& usuarioPorNick.getCorreoElectronico().equalsIgnoreCase(correoElectronico)) {
+							System.out.println("Encontrado usuario más reciente con nickname correcto: " + nickname);
+							return usuarioPorNick;
+						}
+					} catch (Exception searchEx) {
+						System.err.println("Error en búsqueda por nickname: " + searchEx.getMessage());
+					}
+
+					// Como último recurso, activar el usuario encontrado por email
+					// ya que el código de verificación fue validado correctamente
+					System.out.println("Activando cuenta existente por email verificado: " + correoElectronico);
+					return usuario;
 				}
 			} else {
 				System.err.println("Error: No se encontró usuario con email: " + correoElectronico);

@@ -1,6 +1,5 @@
 package interfaz;
 
-import java.util.Vector;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
