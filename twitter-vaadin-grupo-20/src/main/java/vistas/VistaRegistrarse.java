@@ -52,10 +52,9 @@ public class VistaRegistrarse extends LitTemplate {
 	private Icon backgroundImagePreviewIcon;
 	@Id("descriptionField")
 	private TextArea descriptionField;
-	@Id("googleLoginButton")
-	private Button googleLoginButton;
 	@Id("registerButton")
 	private Button registerButton;
+
 	public VistaRegistrarse() {
 		// You can initialise any data required for the connected UI components here.
 	}
@@ -190,14 +189,6 @@ public class VistaRegistrarse extends LitTemplate {
 
 	public void setDescriptionField(TextArea descriptionField) {
 		this.descriptionField = descriptionField;
-	}
-
-	public Button getGoogleLoginButton() {
-		return googleLoginButton;
-	}
-
-	public void setGoogleLoginButton(Button googleLoginButton) {
-		this.googleLoginButton = googleLoginButton;
 	}
 
 	public Button getRegisterButton() {
