@@ -140,16 +140,6 @@ export class VistaPublicacinvistaadministrador extends LitElement {
         box-sizing: border-box;
       }
       
-      .mostrar-mas {
-        color: #2E8B57;
-        margin-top: 15px;
-        font-size: 1.1em;
-        cursor: pointer;
-        text-decoration: none;
-        text-align: center;
-      }
-      .mostrar-mas:hover { text-decoration: underline; }
-      
       /* --- ESTILOS PARA EL BOTÓN DE VOLVER --- */
       .boton-volver {
         background-color: transparent;
@@ -225,7 +215,6 @@ export class VistaPublicacinvistaadministrador extends LitElement {
  </vaadin-vertical-layout>
  <div class="comentarios-contenedor" id="contenedorComentarios">
  </div>
- <a href="#" class="mostrar-mas" id="linkMostrarMas">Mostrar más comentarios</a>
 </div>
 `;
   }

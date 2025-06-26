@@ -79,8 +79,6 @@ public class VistaPublicacinvistaadministrador extends LitTemplate {
 	private Icon iconoComentar;
 	@Id("contenedorComentarios")
 	private Div contenedorComentarios;
-	@Id("linkMostrarMas")
-	private Element linkMostrarMas;
 
 	public VistaPublicacinvistaadministrador() {
 		// You can initialise any data required for the connected UI components here.
@@ -332,14 +330,6 @@ public class VistaPublicacinvistaadministrador extends LitTemplate {
 
 	public void setContenedorComentarios(Div contenedorComentarios) {
 		this.contenedorComentarios = contenedorComentarios;
-	}
-
-	public Element getLinkMostrarMas() {
-		return linkMostrarMas;
-	}
-
-	public void setLinkMostrarMas(Element linkMostrarMas) {
-		this.linkMostrarMas = linkMostrarMas;
 	}
 
 }

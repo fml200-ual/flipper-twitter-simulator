@@ -19,7 +19,6 @@ public class Vercomentarioadministrador extends Publicacinvistaadministrador {
 		this.getSpanContadorComentarios().setVisible(false);
 		this.getIconoComentar().setVisible(false);
 		this.getLayoutPublicacionCitada().setVisible(false);
-		this.getLinkMostrarMas().setVisible(false);
 		this.getBotonEliminarTweet().setText("Eliminar comentario");
 
 		this.getBotonEliminarTweet().addClickListener(event -> {

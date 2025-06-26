@@ -20,8 +20,6 @@ public class VistaVerhashtag extends LitTemplate {
 	private H1 h1;
 	@Id("main-layout")
 	private Element mainLayout;
-	@Id("show-more-button")
-	private Button showMoreButton;
 
 	public VistaVerhashtag() {
 		// You can initialise any data required for the connected UI components here.
@@ -49,14 +47,6 @@ public class VistaVerhashtag extends LitTemplate {
 
 	public void setMainLayout(Element mainLayout) {
 		this.mainLayout = mainLayout;
-	}
-
-	public Button getShowMoreButton() {
-		return showMoreButton;
-	}
-
-	public void setShowMoreButton(Button showMoreButton) {
-		this.showMoreButton = showMoreButton;
 	}
 
 	public Button getVolverButton() {

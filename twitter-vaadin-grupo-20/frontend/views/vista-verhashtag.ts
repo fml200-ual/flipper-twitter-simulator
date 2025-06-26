@@ -127,14 +127,6 @@ export class VistaVerhashtag extends LitElement {
                 color: #00FFFF; /* Color de los iconos */
             }
 
-            #show-more-button {
-                --lumo-primary-color: #00FFFF;
-                --lumo-primary-contrast-color: black;
-                margin-top: var(--lumo-space-l);
-                font-weight: bold;
-                font-size: 1.1em;
-            }
-
             #volver-button {
                 --lumo-primary-color: #333;
                 --lumo-primary-contrast-color: white;
@@ -155,7 +147,6 @@ export class VistaVerhashtag extends LitElement {
  <vaadin-button id="volver-button" style="align-self: flex-start; margin: 10px;">← Volver</vaadin-button>
  <h1 style="align-self: center;" id="h1">#Hashtag</h1>
  <vaadin-vertical-layout id="main-layout" style="width: 100%; height: 100%; flex-shrink: 1;"></vaadin-vertical-layout>
- <vaadin-button id="show-more-button" style="align-self: center;">Mostrar más</vaadin-button>
 </vaadin-vertical-layout>
 `;
     }

@@ -77,14 +77,6 @@ public class VistaVerlistadeseguidosregistrado extends LitTemplate {
 		this.noFollowedMessage = noFollowedMessage;
 	}
 
-	public Button getShowMoreFollowedButton() {
-		return showMoreFollowedButton;
-	}
-
-	public void setShowMoreFollowedButton(Button showMoreFollowedButton) {
-		this.showMoreFollowedButton = showMoreFollowedButton;
-	}
-
 	public Button getBackButton() {
 		return backButton;
 	}
@@ -109,8 +101,6 @@ public class VistaVerlistadeseguidosregistrado extends LitTemplate {
 	private Element followedListContainer;
 	@Id("no-followed-message")
 	private Span noFollowedMessage;
-	@Id("show-more-followed-button")
-	private Button showMoreFollowedButton;
 	@Id("back-button")
 	private Button backButton;
 
