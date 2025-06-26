@@ -170,18 +170,7 @@ export class VistaRegistrarse extends LitElement {
         border: 2px solid #00FFFF; /* Borde cian para todos los botones */
       }
 
-      #googleLoginButton {
-        background-color: #fff; /* White background for Google button */
-        color: #000; /* Black text for Google button */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #googleLoginButton .google-icon {
-        width: 20px; /* Size for Google icon */
-        height: 20px;
-        margin-left: var(--lumo-space-s);
-      }      #registerButton {
+      #registerButton {
         background-color: #00FFFF; /* Cyan background for Register button */
         color: #000; /* Black text for Register button */
       }
@@ -259,10 +248,6 @@ export class VistaRegistrarse extends LitElement {
  </vaadin-horizontal-layout>
  <vaadin-text-area label="Descripción" id="descriptionField"></vaadin-text-area>
  <vaadin-horizontal-layout class="button-group">
-  <vaadin-button id="googleLoginButton" tabindex="0">
-    Iniciar Sesión con 
-   <img src="./img/googleIcon.png" alt="Google Logo" class="google-icon" onerror="">
-  </vaadin-button>
   <vaadin-button id="registerButton" tabindex="0">
     Registrarse 
   </vaadin-button>
