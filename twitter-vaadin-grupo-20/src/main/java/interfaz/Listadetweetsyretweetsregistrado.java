@@ -14,4 +14,15 @@ public class Listadetweetsyretweetsregistrado extends Listadetweetsyretweets {
 		this._verhashtagregistrado = verhashtagregistrado;
 	}
 
+	// Constructor sin parámetros para casos especiales
+	public Listadetweetsyretweetsregistrado() {
+		super();
+	}
+
+	public void cargarRetweetsDelUsuario(basededatos.Usuario_Registrado usuario) {
+		// Método para cargar retweets del usuario específico
+		System.out.println("Cargando retweets del usuario: " + usuario.getNickname());
+		// Aquí se implementaría la lógica para cargar retweets desde la base de datos
+	}
+
 }

@@ -324,7 +324,7 @@ public class BD_Tweet {
 					.getSession().beginTransaction();
 			try {
 				// Buscar directamente en la tabla de relación many-to-many
-				String query = "SELECT COUNT(*) FROM Tweet_Usuario_Registrado " +
+				String query = "SELECT COUNT(*) FROM tweet_usuario_registrado2 " +
 							   "WHERE Usuario_RegistradoUsuario_AutentificadoId_usuario = " + idUsuario + 
 							   " AND TweetId_tweet = " + idTweet;
 				

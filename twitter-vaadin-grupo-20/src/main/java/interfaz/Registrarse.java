@@ -221,15 +221,9 @@ public class Registrarse extends VistaRegistrarse {
 			}
 			if (fotoPerfilURL == null || fotoPerfilURL.trim().isEmpty()) {
 				fotoPerfilURL = "default-profile.jpg";
-			} else {
-				// Validar y truncar URL de foto de perfil si es muy larga
-				fotoPerfilURL = validarYTruncarURL(fotoPerfilURL, "foto de perfil");
 			}
 			if (imagenFondoURL == null || imagenFondoURL.trim().isEmpty()) {
 				imagenFondoURL = "default-background.jpg";
-			} else {
-				// Validar y truncar URL de imagen de fondo si es muy larga
-				imagenFondoURL = validarYTruncarURL(imagenFondoURL, "imagen de fondo");
 			}
 
 			System.out.println("Procesando registro para usuario: " + nick);
@@ -327,31 +321,6 @@ public class Registrarse extends VistaRegistrarse {
 		}
 
 		return true; // No hay duplicados
-	}
-
-	private String validarYTruncarURL(String url, String tipoImagen) {
-		if (url == null || url.trim().isEmpty()) {
-			return url;
-		}
-
-		String urlLimpia = url.trim();
-		
-		// Límite de 255 caracteres para evitar errores de base de datos
-		final int LIMITE_URL = 255;
-		
-		if (urlLimpia.length() > LIMITE_URL) {
-			System.out.println("⚠️ URL de " + tipoImagen + " demasiado larga (" + urlLimpia.length() + " caracteres). Truncando a " + LIMITE_URL + " caracteres.");
-			urlLimpia = urlLimpia.substring(0, LIMITE_URL);
-			
-			// Mostrar advertencia al usuario
-			if (tipoImagen.equals("foto de perfil")) {
-				this.getProfilePhotoUrlField().setHelperText("URL truncada automáticamente (máx. " + LIMITE_URL + " caracteres)");
-			} else if (tipoImagen.equals("imagen de fondo")) {
-				this.getBackgroundUrlField().setHelperText("URL truncada automáticamente (máx. " + LIMITE_URL + " caracteres)");
-			}
-		}
-		
-		return urlLimpia;
 	}
 
 	public void IniciarsesinconGoogle() {

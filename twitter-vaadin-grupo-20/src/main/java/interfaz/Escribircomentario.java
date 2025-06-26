@@ -114,18 +114,27 @@ public class Escribircomentario extends Escribirgeneral {
 			// Crear instancia de la base de datos
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
 			
+			// Obtener información de multimedia si existe
+			String urlMultimedia = this.getURLMultimedia(); // Método heredado de Escribirgeneral
+			String tipoDocumento = this.getTipoDocumento(); // Método heredado de Escribirgeneral
+			
+			System.out.println("Comentario con multimedia - URL: " + urlMultimedia + ", Tipo: " + tipoDocumento);
+			
 			// Publicar comentario usando método ORM
 			basededatos.Usuario_Registrado usuarioActualizado = bd.publicarComentario(
 				idUsuarioActual,
 				tweetOriginal.getId_tweet(),
 				contenidoComentario,
-				null, // URL documento
+				urlMultimedia, // URL documento multimedia
 				new java.util.Date(),
-				null  // tipo documento
+				tipoDocumento  // Tipo documento detectado automáticamente
 			);
 			
 			if (usuarioActualizado != null) {
 				System.out.println("Comentario publicado exitosamente");
+				
+				// Limpiar multimedia después de publicar
+				this.limpiarMultimedia();
 				
 				// Actualizar usuario actual en memoria
 				MainView.Usuario.usuarioRegistrado = usuarioActualizado;
