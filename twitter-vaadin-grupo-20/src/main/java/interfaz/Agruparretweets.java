@@ -2,9 +2,7 @@ package interfaz;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-import mds2.MainView.Pantalla;
 import mds2.MainView.Usuario;
-import basededatos.Administrador;
 import basededatos.BDPrincipal;
 import basededatos.Tweet;
 import basededatos.Usuario_Registrado;
@@ -24,7 +22,6 @@ public class Agruparretweets extends VistaAgruparretweets {
 		Listadetweetsyretweets(o);
 	}
 
-	// TODO: Falta para los demas actores
 	public void Listadetweetsyretweets(basededatos.Usuario_Registrado usuario) {
 		BDPrincipal bd = new BDPrincipal();
 		Tweet[] tweets = bd.cargarRetweets(usuario.getId_usuario());

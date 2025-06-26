@@ -1,6 +1,5 @@
 package interfaz;
 
-import basededatos.BDPrincipal;
 import vistas.VistaListadenotificaciones_item;
 
 public class Listadenotificaciones_item extends VistaListadenotificaciones_item {

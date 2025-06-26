@@ -6,7 +6,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import basededatos.BDPrincipal;
 import basededatos.Usuario_Registrado;
-import mds2.MainView;
 import mds2.MainView.Pantalla;
 import vistas.VistaListadeusuarios;
 
@@ -29,7 +28,7 @@ public class Listadeusuarios extends VistaListadeusuarios {
 		this._verlistaseguidosnoregistrado = _verlistaseguidosnoregistrado;
 	}
 
-	public Listadeusuarios(Verlistaseguidosnoregistrado _verlistaseguidosnoregistrado, 
+	public Listadeusuarios(Verlistaseguidosnoregistrado _verlistaseguidosnoregistrado,
 			basededatos.Usuario_Registrado u) {
 		super();
 		this._verlistaseguidosnoregistrado = _verlistaseguidosnoregistrado;
@@ -44,7 +43,7 @@ public class Listadeusuarios extends VistaListadeusuarios {
 				Pantalla.MainView.removeAll();
 				// Crear nueva vista de perfil no registrado para el seguido
 				Verperfilnoregistrado nuevoPerfil = new Verperfilnoregistrado(
-					_verlistaseguidosnoregistrado._verperfilnoregistrado._listafijadeusuariosnoregistrado, seguido);
+						_verlistaseguidosnoregistrado._verperfilnoregistrado._listafijadeusuariosnoregistrado, seguido);
 				Pantalla.MainView.add(nuevoPerfil);
 			});
 			this.getMainContainer().as(VerticalLayout.class).add(item);
@@ -53,11 +52,11 @@ public class Listadeusuarios extends VistaListadeusuarios {
 
 		// Configurar como scrolleable
 		this.getMainContainer().getStyle()
-			.set("height", "400px")
-			.set("overflow-y", "auto")
-			.set("overflow-x", "hidden")
-			.set("padding", "5px")
-			.set("gap", "5px");
+				.set("height", "400px")
+				.set("overflow-y", "auto")
+				.set("overflow-x", "hidden")
+				.set("padding", "5px")
+				.set("gap", "5px");
 	}
 
 	public Listadeusuarios(Verlistaseguidoresnoregistrado _verlistaseguidoresnoregistrado) {
@@ -65,7 +64,7 @@ public class Listadeusuarios extends VistaListadeusuarios {
 		this._verlistaseguidoresnoregistrado = _verlistaseguidoresnoregistrado;
 	}
 
-	public Listadeusuarios(Verlistaseguidoresnoregistrado _verlistaseguidoresnoregistrado, 
+	public Listadeusuarios(Verlistaseguidoresnoregistrado _verlistaseguidoresnoregistrado,
 			basededatos.Usuario_Registrado u) {
 		super();
 		this._verlistaseguidoresnoregistrado = _verlistaseguidoresnoregistrado;
@@ -80,7 +79,8 @@ public class Listadeusuarios extends VistaListadeusuarios {
 				Pantalla.MainView.removeAll();
 				// Crear nueva vista de perfil no registrado para el seguidor
 				Verperfilnoregistrado nuevoPerfil = new Verperfilnoregistrado(
-					_verlistaseguidoresnoregistrado._verperfilnoregistrado._listafijadeusuariosnoregistrado, seguidor);
+						_verlistaseguidoresnoregistrado._verperfilnoregistrado._listafijadeusuariosnoregistrado,
+						seguidor);
 				Pantalla.MainView.add(nuevoPerfil);
 			});
 			this.getMainContainer().as(VerticalLayout.class).add(item);
@@ -89,11 +89,11 @@ public class Listadeusuarios extends VistaListadeusuarios {
 
 		// Configurar como scrolleable
 		this.getMainContainer().getStyle()
-			.set("height", "400px")
-			.set("overflow-y", "auto")
-			.set("overflow-x", "hidden")
-			.set("padding", "5px")
-			.set("gap", "5px");
+				.set("height", "400px")
+				.set("overflow-y", "auto")
+				.set("overflow-x", "hidden")
+				.set("padding", "5px")
+				.set("gap", "5px");
 	}
 
 	public Listadeusuarios(Verlistadeseguidosregistrado _verlistadeseguidosregistrado,
@@ -117,11 +117,11 @@ public class Listadeusuarios extends VistaListadeusuarios {
 
 		// Configurar como scrolleable
 		this.getMainContainer().getStyle()
-			.set("height", "400px")
-			.set("overflow-y", "auto")
-			.set("overflow-x", "hidden")
-			.set("padding", "5px")
-			.set("gap", "5px");
+				.set("height", "400px")
+				.set("overflow-y", "auto")
+				.set("overflow-x", "hidden")
+				.set("padding", "5px")
+				.set("gap", "5px");
 	}
 
 	public Listadeusuarios(Verlistadeseguidoresregistrado _verlistadeseguidoresregistrado,
@@ -142,47 +142,13 @@ public class Listadeusuarios extends VistaListadeusuarios {
 			this.getMainContainer().as(VerticalLayout.class).add(item);
 			_item.add(item);
 		}
-		
+
 		// Configurar como scrolleable
 		this.getMainContainer().getStyle()
-			.set("height", "400px")
-			.set("overflow-y", "auto")
-			.set("overflow-x", "hidden")
-			.set("padding", "5px")
-			.set("gap", "5px");
-	}
-
-	private void inicializar() {
-		try {
-			// Cargar usuarios reales de la base de datos
-			Usuario_Registrado[] usuarios = ((basededatos.BDPrincipal) MainView.Usuario.usuarioNoRegistradoInterfaz)
-					.cargarUsuarios();
-
-			if (usuarios != null && usuarios.length > 0) {
-				System.out.println("Cargando " + usuarios.length + " usuarios en lista scrolleable");
-				
-				// Crear items con datos reales - todos los usuarios para hacer scroll
-				for (int i = 0; i < usuarios.length; i++) {
-					Listadeusuarios_item item = new Listadeusuarios_item(this, usuarios[i]);
-					this.getMainContainer().as(VerticalLayout.class).add(item);
-					_item.add(item);
-				}
-				
-				// Configurar el contenedor como scrolleable
-				this.getMainContainer().getStyle()
-					.set("height", "400px")  // Altura fija para permitir scroll
-					.set("overflow-y", "auto")  // Scroll vertical
-					.set("overflow-x", "hidden")  // Sin scroll horizontal
-					.set("padding", "5px")
-					.set("gap", "5px");
-				
-				System.out.println("Lista de usuarios configurada como scrolleable con " + usuarios.length + " usuarios");
-			} else {
-				System.out.println("No se encontraron usuarios en la base de datos");
-			}
-		} catch (Exception e) {
-			System.err.println("Error cargando usuarios: " + e.getMessage());
-			e.printStackTrace();
-		}
+				.set("height", "400px")
+				.set("overflow-y", "auto")
+				.set("overflow-x", "hidden")
+				.set("padding", "5px")
+				.set("gap", "5px");
 	}
 }

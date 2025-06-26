@@ -2,6 +2,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "ACT04SistemadeCorreo",
+      "request": "launch",
+      "mainClass": "interfaz.ACT04SistemadeCorreo",
+      "projectName": "twitter-vaadin-grupo-20"
+    },
+    {
+      "type": "java",
       "name": "DeleteProyectoMDS120242025Data",
       "request": "launch",
       "mainClass": "ormsamples.DeleteProyectoMDS120242025Data",
