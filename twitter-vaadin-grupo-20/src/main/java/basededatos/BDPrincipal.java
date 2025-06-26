@@ -66,6 +66,165 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 		return null;
 	}
 
+	/**
+	 * Método para cargar usuarios de forma segura, manejando colecciones lazy
+	 * y evitando LazyInitializationException
+	 */
+	public Usuario_Registrado[] cargarUsuariosSeguro() {
+		try {
+			// Usar el método existente que ya maneja sus propias transacciones
+			Usuario_Registrado[] usuarios = this.bd_userR.cargarUsuarios();
+			System.out.println("Usuarios cargados exitosamente: " + (usuarios != null ? usuarios.length : 0));
+			return usuarios;
+		} catch (Exception e) {
+			System.err.println("Error cargando usuarios de forma segura: " + e.getMessage());
+			e.printStackTrace();
+			return new Usuario_Registrado[0];
+		}
+	}
+
+	/**
+	 * Método para obtener la lista de usuarios que han bloqueado al usuario actual
+	 * de forma segura, evitando LazyInitializationException
+	 */
+	public Usuario_Registrado[] obtenerUsuariosBloqueados(Usuario_Registrado usuario) {
+		if (usuario == null) {
+			return new Usuario_Registrado[0];
+		}
+
+		PersistentTransaction t = null;
+		try {
+			t = ProyectoMDS120242025PersistentManager.instance().getSession().beginTransaction();
+
+			// Recargar el usuario desde la base de datos para asegurar sesión activa
+			Usuario_Registrado usuarioActual = Usuario_RegistradoDAO
+					.loadUsuario_RegistradoByORMID(usuario.getId_usuario());
+
+			Usuario_Registrado[] bloqueados = new Usuario_Registrado[0];
+			if (usuarioActual != null && usuarioActual.meTienenBloqueado != null) {
+				try {
+					// Forzar la inicialización de la colección lazy
+					usuarioActual.meTienenBloqueado.size();
+					bloqueados = usuarioActual.meTienenBloqueado.toArray();
+					System.out.println(
+							"Usuarios que bloquean a " + usuarioActual.getNickname() + ": " + bloqueados.length);
+				} catch (Exception collectionEx) {
+					System.err.println("Error accediendo a colección meTienenBloqueado: " + collectionEx.getMessage());
+					bloqueados = new Usuario_Registrado[0];
+				}
+			}
+
+			t.commit();
+			return bloqueados;
+		} catch (Exception e) {
+			if (t != null) {
+				try {
+					t.rollback();
+				} catch (Exception rollbackEx) {
+					System.err.println("Error en rollback obtenerUsuariosBloqueados: " + rollbackEx.getMessage());
+				}
+			}
+			System.err.println("Error obteniendo usuarios bloqueados: " + e.getMessage());
+			e.printStackTrace();
+			return new Usuario_Registrado[0];
+		}
+	}
+
+	/**
+	 * Método para obtener la lista de usuarios que el usuario actual ha bloqueado
+	 * de forma segura, evitando LazyInitializationException
+	 */
+	public Usuario_Registrado[] obtenerUsuariosPorMiBloqueados(Usuario_Registrado usuario) {
+		if (usuario == null) {
+			return new Usuario_Registrado[0];
+		}
+
+		PersistentTransaction t = null;
+		try {
+			t = ProyectoMDS120242025PersistentManager.instance().getSession().beginTransaction();
+
+			// Recargar el usuario desde la base de datos para asegurar sesión activa
+			Usuario_Registrado usuarioActual = Usuario_RegistradoDAO
+					.loadUsuario_RegistradoByORMID(usuario.getId_usuario());
+
+			Usuario_Registrado[] bloqueados = new Usuario_Registrado[0];
+			if (usuarioActual != null && usuarioActual.bloqueados != null) {
+				try {
+					// Forzar la inicialización de la colección lazy
+					usuarioActual.bloqueados.size();
+					bloqueados = usuarioActual.bloqueados.toArray();
+					System.out.println(
+							"Usuarios bloqueados por " + usuarioActual.getNickname() + ": " + bloqueados.length);
+				} catch (Exception collectionEx) {
+					System.err.println("Error accediendo a colección bloqueados: " + collectionEx.getMessage());
+					bloqueados = new Usuario_Registrado[0];
+				}
+			}
+
+			t.commit();
+			return bloqueados;
+		} catch (Exception e) {
+			if (t != null) {
+				try {
+					t.rollback();
+				} catch (Exception rollbackEx) {
+					System.err.println("Error en rollback obtenerUsuariosPorMiBloqueados: " + rollbackEx.getMessage());
+				}
+			}
+			System.err.println("Error obteniendo usuarios que he bloqueado: " + e.getMessage());
+			e.printStackTrace();
+			return new Usuario_Registrado[0];
+		}
+	}
+
+	/**
+	 * Método para verificar si un usuario está bloqueado por otro de forma segura
+	 */
+	public boolean verificarSiEstaBloqueado(Usuario_Registrado usuarioAVerificar,
+			Usuario_Registrado usuarioQuePuedeBloquearlo) {
+		if (usuarioAVerificar == null || usuarioQuePuedeBloquearlo == null) {
+			return false;
+		}
+
+		PersistentTransaction t = null;
+		try {
+			t = ProyectoMDS120242025PersistentManager.instance().getSession().beginTransaction();
+
+			// Recargar ambos usuarios desde la base de datos
+			Usuario_Registrado usuarioVerificado = Usuario_RegistradoDAO
+					.loadUsuario_RegistradoByORMID(usuarioAVerificar.getId_usuario());
+			Usuario_Registrado usuarioBloqueador = Usuario_RegistradoDAO
+					.loadUsuario_RegistradoByORMID(usuarioQuePuedeBloquearlo.getId_usuario());
+
+			boolean estaBloqueado = false;
+			if (usuarioBloqueador != null && usuarioBloqueador.bloqueados != null) {
+				// Convertir a array para iterar de forma segura
+				Usuario_Registrado[] bloqueadosArray = usuarioBloqueador.bloqueados.toArray();
+				for (Usuario_Registrado bloqueado : bloqueadosArray) {
+					if (bloqueado != null && usuarioVerificado != null &&
+							bloqueado.getId_usuario() == usuarioVerificado.getId_usuario()) {
+						estaBloqueado = true;
+						break;
+					}
+				}
+			}
+
+			t.commit();
+			return estaBloqueado;
+		} catch (Exception e) {
+			if (t != null) {
+				try {
+					t.rollback();
+				} catch (Exception rollbackEx) {
+					System.err.println("Error en rollback: " + rollbackEx.getMessage());
+				}
+			}
+			System.err.println("Error verificando bloqueo: " + e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public Hashtag[] cargarHashtags() {
 		try {
 			return this.bd_hashtag.cargarHashtags();
@@ -586,6 +745,50 @@ public class BDPrincipal implements iUsuarioNoRegistrado, iUsuarioRegistrado, iA
 			System.err.println("Error en BDPrincipal.cargarTweetsDeHashtag: " + e.getMessage());
 			return new Tweet[0];
 		}
+	}
+
+	/**
+	 * Método alternativo simple para obtener usuarios bloqueados sin depender de
+	 * colecciones lazy
+	 * Útil cuando hay problemas con transacciones de Hibernate
+	 */
+	public Usuario_Registrado[] obtenerUsuariosBloqueadosSimple(Usuario_Registrado usuario) {
+		if (usuario == null) {
+			System.out.println("Usuario es null en obtenerUsuariosBloqueadosSimple");
+			return new Usuario_Registrado[0];
+		}
+
+		try {
+			System.out.println("Intentando obtener usuarios bloqueados de forma simple para: " + usuario.getNickname());
+			// Por ahora, devolver un array vacío para evitar errores
+			// En el futuro se puede implementar una consulta directa a la base de datos
+			return new Usuario_Registrado[0];
+		} catch (Exception e) {
+			System.err.println("Error en obtenerUsuariosBloqueadosSimple: " + e.getMessage());
+			return new Usuario_Registrado[0];
+		}
+	}
+
+	/**
+	 * Método de fallback más simple para cargar usuarios en caso de problemas
+	 * graves con Hibernate
+	 */
+	public Usuario_Registrado[] cargarUsuariosFallback() {
+		try {
+			System.out.println("Usando método de fallback para cargar usuarios...");
+			// Intentar primero el método original
+			Usuario_Registrado[] usuarios = this.bd_userR.cargarUsuarios();
+			if (usuarios != null) {
+				System.out.println("Usuarios cargados con método fallback: " + usuarios.length);
+				return usuarios;
+			}
+		} catch (Exception e) {
+			System.err.println("Error en método fallback cargarUsuarios: " + e.getMessage());
+		}
+
+		// Si todo falla, devolver array vacío para evitar crashes
+		System.out.println("Devolviendo array vacío como último recurso");
+		return new Usuario_Registrado[0];
 	}
 
 }

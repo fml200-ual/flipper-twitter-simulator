@@ -37,8 +37,8 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 
 		this.getSpanListaTweetsRecientes().setVisible(false);
 
-		        // Configurar el avatar superior con la imagen del usuario
-        configurarAvatarSuperior();
+		// Configurar el avatar superior con la imagen del usuario
+		configurarAvatarSuperior();
 
 		Listafijadeusuariosregistrado();
 		Listafijadehashtagsregistrado();
@@ -121,7 +121,7 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 		_listadetweetsyretweetsregistrado = new Listadetweetsyretweetsregistrado(this);
 		Tweet[] tweets = Usuario.iAdministrador.cargarTweets();
 
-		for (int i = 0; i < Math.min(5, tweets.length); i++) {
+		for (int i = 0; i < tweets.length; i++) {
 			Tweet tweet = tweets[i];
 			if (tweet != null) {
 				Listadetweetsyretweetsregistrado_item item = new Listadetweetsyretweetsregistrado_item(
@@ -134,38 +134,38 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 
 		this.getVerticalLayoutListaTweets().as(VerticalLayout.class).add(_listadetweetsyretweetsregistrado);
 	}
-	
+
 	// Constructor sin datos (para compatibilidad temporal)
 	public ACT02UsuarioRegistrado(MainView mainView) {
 		this(mainView, null);
 	}
 
-	    /**
-     * Configurar el avatar superior con la imagen de perfil del usuario logueado
-     */
-    private void configurarAvatarSuperior() {
-        if (u != null && u.getFotoPerfilURL() != null && !u.getFotoPerfilURL().isEmpty() 
-            && !u.getFotoPerfilURL().equals("default-profile.jpg")) {
-            // Configurar el avatar con la imagen de perfil del usuario
-            this.getImagenAdministrador().setSrc(u.getFotoPerfilURL());
-            this.getImagenAdministrador().setAlt("Avatar de " + u.getNickname());
-            System.out.println("Avatar superior configurado para: " + u.getNickname());
-        } else {
-            // Usar imagen por defecto
-            this.getImagenAdministrador().setSrc("https://icons.getbootstrap.com/assets/icons/person.svg");
-            this.getImagenAdministrador().setAlt("Avatar por defecto");
-        }
-    }
-    
-    /**
-     * Método público para actualizar el avatar superior tras cambios de perfil
-     */
-    public void actualizarAvatarSuperior() {
-        try {
-            configurarAvatarSuperior();
-            System.out.println("Avatar superior actualizado");
-        } catch (Exception e) {
-            System.err.println("Error actualizando avatar superior: " + e.getMessage());
-        }
-    }
+	/**
+	 * Configurar el avatar superior con la imagen de perfil del usuario logueado
+	 */
+	private void configurarAvatarSuperior() {
+		if (u != null && u.getFotoPerfilURL() != null && !u.getFotoPerfilURL().isEmpty()
+				&& !u.getFotoPerfilURL().equals("default-profile.jpg")) {
+			// Configurar el avatar con la imagen de perfil del usuario
+			this.getImagenAdministrador().setSrc(u.getFotoPerfilURL());
+			this.getImagenAdministrador().setAlt("Avatar de " + u.getNickname());
+			System.out.println("Avatar superior configurado para: " + u.getNickname());
+		} else {
+			// Usar imagen por defecto
+			this.getImagenAdministrador().setSrc("https://icons.getbootstrap.com/assets/icons/person.svg");
+			this.getImagenAdministrador().setAlt("Avatar por defecto");
+		}
+	}
+
+	/**
+	 * Método público para actualizar el avatar superior tras cambios de perfil
+	 */
+	public void actualizarAvatarSuperior() {
+		try {
+			configurarAvatarSuperior();
+			System.out.println("Avatar superior actualizado");
+		} catch (Exception e) {
+			System.err.println("Error actualizando avatar superior: " + e.getMessage());
+		}
+	}
 }

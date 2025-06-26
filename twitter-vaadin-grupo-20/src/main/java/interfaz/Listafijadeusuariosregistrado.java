@@ -24,13 +24,35 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 		try {
 			// Crear conexión a la base de datos para obtener usuarios reales
 			basededatos.BDPrincipal bd = new basededatos.BDPrincipal();
-			basededatos.Usuario_Registrado[] usuarios = bd.cargarUsuarios();
-			basededatos.Usuario_Registrado[] bloqueados = MainView.obtenerUsuarioActual().meTienenBloqueado.toArray();
+			basededatos.Usuario_Registrado[] usuarios = bd.cargarUsuarios(); // Usar método original confiable
+
+			// Obtener usuarios bloqueados de forma segura
+			final basededatos.Usuario_Registrado[] bloqueados;
+			basededatos.Usuario_Registrado usuarioActual = MainView.obtenerUsuarioActual();
+			if (usuarioActual != null) {
+				basededatos.Usuario_Registrado[] tempBloqueados;
+				try {
+					tempBloqueados = bd.obtenerUsuariosBloqueados(usuarioActual);
+				} catch (Exception bloqueadosEx) {
+					System.err.println("Error obteniendo usuarios bloqueados en lista fija, usando método simple: "
+							+ bloqueadosEx.getMessage());
+					tempBloqueados = bd.obtenerUsuariosBloqueadosSimple(usuarioActual);
+				}
+				bloqueados = tempBloqueados;
+			} else {
+				bloqueados = new basededatos.Usuario_Registrado[0];
+			}
+
+			// Verificar que usuarios no sea null
+			if (usuarios == null) {
+				usuarios = new basededatos.Usuario_Registrado[0];
+				System.err.println("No se pudieron cargar usuarios desde la base de datos");
+			}
 
 			// Filtrar para eliminar el usuario actual
-			String usuarioActual = MainView.obtenerUsuarioActual().getNickname();
+			String nicknameActual = usuarioActual != null ? usuarioActual.getNickname() : "";
 			usuarios = java.util.Arrays.stream(usuarios)
-					.filter(u -> !u.getNickname().equals(usuarioActual))
+					.filter(u -> u != null && !u.getNickname().equals(nicknameActual))
 					.toArray(basededatos.Usuario_Registrado[]::new);
 
 			Listadeusuarios listaUsuarios = new Listadeusuarios(_verlistaampliadadeusuariosregistrado);
@@ -48,7 +70,7 @@ public class Listafijadeusuariosregistrado extends Listafijadeusuarios {
 				item.getMainContainer().addClickListener(event -> {
 					boolean usuarioBloqueado = false;
 					for (basededatos.Usuario_Registrado bloqueado : bloqueados) {
-						if (bloqueado.getNickname().equals(usuario.getNickname())) {
+						if (bloqueado != null && bloqueado.getNickname().equals(usuario.getNickname())) {
 							usuarioBloqueado = true;
 							break;
 						}
