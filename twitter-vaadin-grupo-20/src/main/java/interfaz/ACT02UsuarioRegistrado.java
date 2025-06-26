@@ -5,6 +5,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import basededatos.Tweet;
 import mds2.MainView;
 import mds2.MainView.Pantalla;
+import mds2.MainView.TipoUser;
 import mds2.MainView.Usuario;
 
 public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
@@ -55,6 +56,7 @@ public class ACT02UsuarioRegistrado extends ACT06SesinIniciada {
 		this.getBotonMasHashtags()
 				.addClickListener(event -> _listafijadehashtagsregistrado.Verlistaampliadadehashtagsregistrado());
 		this.getBotonCerrarSesionPrimerBoton().addClickListener(event -> {
+			Usuario.tipoUsuario = TipoUser.NO_REGISTRADO;
 			this.Cerrarsesin();
 		});
 		this.getBotonEscribirTweet().addClickListener(event -> {
