@@ -261,7 +261,40 @@ export class VistaVerperfil extends LitElement {
         background-color: var(--danger-color-hover);
       }
     `;
-  } render() {
+  }
+
+  firstUpdated() {
+    this.setupTabNavigation();
+  }
+
+  private setupTabNavigation() {
+    const userTweetsTab = this.shadowRoot?.querySelector('#userTweetsTab') as HTMLButtonElement;
+    const likedTweetsTab = this.shadowRoot?.querySelector('#likedTweetsTab') as HTMLButtonElement;
+    const retweetsTab = this.shadowRoot?.querySelector('#retweetsTab') as HTMLButtonElement;
+
+    if (userTweetsTab && likedTweetsTab && retweetsTab) {
+      userTweetsTab.addEventListener('click', () => this.setActiveTab('userTweetsTab'));
+      likedTweetsTab.addEventListener('click', () => this.setActiveTab('likedTweetsTab'));
+      retweetsTab.addEventListener('click', () => this.setActiveTab('retweetsTab'));
+    }
+  }
+
+  private setActiveTab(activeTabId: string) {
+    const tabs = this.shadowRoot?.querySelectorAll('.tabs button:not(.danger-button)');
+
+    if (tabs) {
+      tabs.forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      const activeTab = this.shadowRoot?.querySelector(`#${activeTabId}`);
+      if (activeTab) {
+        activeTab.classList.add('active');
+      }
+    }
+  }
+
+  render() {
     return html`
 <vaadin-button class="back-button" id="backButton">← Volver</vaadin-button>
 <div class="view-wrapper" id="viewWrapper">
