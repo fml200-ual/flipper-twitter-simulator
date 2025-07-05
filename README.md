@@ -104,7 +104,7 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE)
 
 ## Contacto
 
-- Autor: [fml200-ual](https://github.com/fml200-ual)
+- Autor: [fml200-ual](https://github.com/fml200-ual) y [aek676](https://github.com/aek676)
 - ¿Dudas o sugerencias? Abre un issue en el repositorio.
 
 ---
